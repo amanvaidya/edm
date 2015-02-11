@@ -36,7 +36,7 @@
         leds_invert(4);
     if (strchr (data, '4'))
         leds_invert(8);     
- /*
+ */
   printf("broadcast message received from %d.%d: '%s'\n",
          from->u8[0], from->u8[1], (char *)packetbuf_dataptr());
  */
