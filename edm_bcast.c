@@ -28,7 +28,7 @@
  {
     char* data = packetbuf_dataptr();
 
-    if (strchr (data, '1'))
+/*    if (strchr (data, '1'))
 	leds_invert(1);
     if (strchr (data, '2'))
 	leds_invert(2);
@@ -40,7 +40,7 @@
   printf("broadcast message received from %d.%d: '%s'\n",
          from->u8[0], from->u8[1], (char *)packetbuf_dataptr());
  */
- ;
+/* ;*/
  }
 
  /*---------------------------------------------------------------------------*/
