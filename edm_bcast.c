@@ -68,7 +68,7 @@
 
     PROCESS_WAIT_EVENT();
 
-    if(ev == PROCESS_EVENT_TIMER) {
+    if(ev == PROCESS_EVENT_INTR) {
 	etimer_reset(&et_blink);
 
         val1 = val2 = val3 = val4 = 1;
