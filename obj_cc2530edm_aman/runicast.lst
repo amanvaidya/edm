@@ -1,0 +1,2253 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:30 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module runicast
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _stunicast_receiver
+                                     13 	.globl _stunicast_send
+                                     14 	.globl _stunicast_cancel
+                                     15 	.globl _stunicast_send_stubborn
+                                     16 	.globl _stunicast_close
+                                     17 	.globl _stunicast_open
+                                     18 	.globl _queuebuf_free
+                                     19 	.globl _queuebuf_to_packetbuf
+                                     20 	.globl _queuebuf_new_from_packetbuf
+                                     21 	.globl _channel_set_attributes
+                                     22 	.globl _packetbuf_attr
+                                     23 	.globl _packetbuf_set_attr
+                                     24 	.globl _packetbuf_clear
+                                     25 	.globl _ACTIVE
+                                     26 	.globl _TX_BYTE
+                                     27 	.globl _RX_BYTE
+                                     28 	.globl _ERR
+                                     29 	.globl _FE
+                                     30 	.globl _SLAVE
+                                     31 	.globl _RE
+                                     32 	.globl _MODE
+                                     33 	.globl _T3OVFIF
+                                     34 	.globl _T3CH0IF
+                                     35 	.globl _T3CH1IF
+                                     36 	.globl _T4OVFIF
+                                     37 	.globl _T4CH0IF
+                                     38 	.globl _T4CH1IF
+                                     39 	.globl _OVFIM
+                                     40 	.globl _B_0
+                                     41 	.globl _B_1
+                                     42 	.globl _B_2
+                                     43 	.globl _B_3
+                                     44 	.globl _B_4
+                                     45 	.globl _B_5
+                                     46 	.globl _B_6
+                                     47 	.globl _B_7
+                                     48 	.globl _P2IF
+                                     49 	.globl _UTX0IF
+                                     50 	.globl _UTX1IF
+                                     51 	.globl _P1IF
+                                     52 	.globl _WDTIF
+                                     53 	.globl _ACC_0
+                                     54 	.globl _ACC_1
+                                     55 	.globl _ACC_2
+                                     56 	.globl _ACC_3
+                                     57 	.globl _ACC_4
+                                     58 	.globl _ACC_5
+                                     59 	.globl _ACC_6
+                                     60 	.globl _ACC_7
+                                     61 	.globl _P
+                                     62 	.globl _F1
+                                     63 	.globl _OV
+                                     64 	.globl _RS0
+                                     65 	.globl _RS1
+                                     66 	.globl _F0
+                                     67 	.globl _AC
+                                     68 	.globl _CY
+                                     69 	.globl _DMAIF
+                                     70 	.globl _T1IF
+                                     71 	.globl _T2IF
+                                     72 	.globl _T3IF
+                                     73 	.globl _T4IF
+                                     74 	.globl _P0IF
+                                     75 	.globl _STIF
+                                     76 	.globl _DMAIE
+                                     77 	.globl _T1IE
+                                     78 	.globl _T2IE
+                                     79 	.globl _T3IE
+                                     80 	.globl _T4IE
+                                     81 	.globl _P0IE
+                                     82 	.globl _RFERRIE
+                                     83 	.globl _ADCIE
+                                     84 	.globl _URX0IE
+                                     85 	.globl _URX1IE
+                                     86 	.globl _ENCIE
+                                     87 	.globl _STIE
+                                     88 	.globl _EA
+                                     89 	.globl _P2_0
+                                     90 	.globl _P2_1
+                                     91 	.globl _P2_2
+                                     92 	.globl _P2_3
+                                     93 	.globl _P2_4
+                                     94 	.globl _P2_5
+                                     95 	.globl _P2_6
+                                     96 	.globl _P2_7
+                                     97 	.globl _ENCIF_0
+                                     98 	.globl _ENCIF_1
+                                     99 	.globl _P1_0
+                                    100 	.globl _P1_1
+                                    101 	.globl _P1_2
+                                    102 	.globl _P1_3
+                                    103 	.globl _P1_4
+                                    104 	.globl _P1_5
+                                    105 	.globl _P1_6
+                                    106 	.globl _P1_7
+                                    107 	.globl _IT0
+                                    108 	.globl _RFERRIF
+                                    109 	.globl _IT1
+                                    110 	.globl _URX0IF
+                                    111 	.globl _ADCIF
+                                    112 	.globl _URX1IF
+                                    113 	.globl _P0_0
+                                    114 	.globl _P0_1
+                                    115 	.globl _P0_2
+                                    116 	.globl _P0_3
+                                    117 	.globl _P0_4
+                                    118 	.globl _P0_5
+                                    119 	.globl _P0_6
+                                    120 	.globl _P0_7
+                                    121 	.globl _WDCTL
+                                    122 	.globl _U1GCR
+                                    123 	.globl _U1UCR
+                                    124 	.globl _U1BAUD
+                                    125 	.globl _U1DBUF
+                                    126 	.globl _U1CSR
+                                    127 	.globl _U0GCR
+                                    128 	.globl _U0UCR
+                                    129 	.globl _U0BAUD
+                                    130 	.globl _U0DBUF
+                                    131 	.globl _U0CSR
+                                    132 	.globl _TIMIF
+                                    133 	.globl _T4CC1
+                                    134 	.globl _T4CCTL1
+                                    135 	.globl _T4CC0
+                                    136 	.globl _T4CCTL0
+                                    137 	.globl _T4CTL
+                                    138 	.globl _T4CNT
+                                    139 	.globl _T3CC1
+                                    140 	.globl _T3CCTL1
+                                    141 	.globl _T3CC0
+                                    142 	.globl _T3CCTL0
+                                    143 	.globl _T3CTL
+                                    144 	.globl _T3CNT
+                                    145 	.globl _T2MSEL
+                                    146 	.globl _T2IRQM
+                                    147 	.globl _T2MOVF2
+                                    148 	.globl _T2MOVF1
+                                    149 	.globl _T2MOVF0
+                                    150 	.globl _T2M1
+                                    151 	.globl _T2M0
+                                    152 	.globl _T2IRQF
+                                    153 	.globl _T2EVTCFG
+                                    154 	.globl _T2CTRL
+                                    155 	.globl _T1STAT
+                                    156 	.globl _T1CCTL2
+                                    157 	.globl _T1CCTL1
+                                    158 	.globl _T1CCTL0
+                                    159 	.globl _T1CTL
+                                    160 	.globl _T1CNTH
+                                    161 	.globl _T1CNTL
+                                    162 	.globl _T1CC2H
+                                    163 	.globl _T1CC2L
+                                    164 	.globl _T1CC1H
+                                    165 	.globl _T1CC1L
+                                    166 	.globl _T1CC0H
+                                    167 	.globl _T1CC0L
+                                    168 	.globl _CLKCONSTA
+                                    169 	.globl _CLKCONCMD
+                                    170 	.globl _SLEEPSTA
+                                    171 	.globl _SLEEPCMD
+                                    172 	.globl _STLOAD
+                                    173 	.globl _ST2
+                                    174 	.globl _ST1
+                                    175 	.globl _ST0
+                                    176 	.globl _RFERRF
+                                    177 	.globl _RFIRQF0
+                                    178 	.globl _RFST
+                                    179 	.globl _RFD
+                                    180 	.globl _RFIRQF1
+                                    181 	.globl _PSBANK
+                                    182 	.globl _FMAP
+                                    183 	.globl _MEMCTR
+                                    184 	.globl __XPAGE
+                                    185 	.globl _MPAGE
+                                    186 	.globl _PMUX
+                                    187 	.globl _P2DIR
+                                    188 	.globl _P1DIR
+                                    189 	.globl _P0DIR
+                                    190 	.globl _P2INP
+                                    191 	.globl _P1INP
+                                    192 	.globl _P2SEL
+                                    193 	.globl _P1SEL
+                                    194 	.globl _P0SEL
+                                    195 	.globl _APCFG
+                                    196 	.globl _PERCFG
+                                    197 	.globl _P0INP
+                                    198 	.globl _P2IEN
+                                    199 	.globl _P1IEN
+                                    200 	.globl _P0IEN
+                                    201 	.globl _PICTL
+                                    202 	.globl _P2IFG
+                                    203 	.globl _P1IFG
+                                    204 	.globl _P0IFG
+                                    205 	.globl _DMAREQ
+                                    206 	.globl _DMAARM
+                                    207 	.globl _DMA0CFGH
+                                    208 	.globl _DMA0CFGL
+                                    209 	.globl _DMA1CFGH
+                                    210 	.globl _DMA1CFGL
+                                    211 	.globl _DMAIRQ
+                                    212 	.globl _ENCCS
+                                    213 	.globl _ENCDO
+                                    214 	.globl _ENCDI
+                                    215 	.globl _RNDH
+                                    216 	.globl _RNDL
+                                    217 	.globl _ADCH
+                                    218 	.globl _ADCL
+                                    219 	.globl _ADCCON3
+                                    220 	.globl _ADCCON2
+                                    221 	.globl _ADCCON1
+                                    222 	.globl _B
+                                    223 	.globl _IRCON2
+                                    224 	.globl _ACC
+                                    225 	.globl _PSW
+                                    226 	.globl _IRCON
+                                    227 	.globl _IP1
+                                    228 	.globl _IEN1
+                                    229 	.globl _IP0
+                                    230 	.globl _IEN0
+                                    231 	.globl _P2
+                                    232 	.globl _S1CON
+                                    233 	.globl _IEN2
+                                    234 	.globl _S0CON
+                                    235 	.globl _DPS
+                                    236 	.globl _P1
+                                    237 	.globl _TCON
+                                    238 	.globl _PCON
+                                    239 	.globl _DPH1
+                                    240 	.globl _DPL1
+                                    241 	.globl _DPH0
+                                    242 	.globl _DPL0
+                                    243 	.globl _SP
+                                    244 	.globl _P0
+                                    245 	.globl _X_IEEE_ADDR
+                                    246 	.globl _X_INFOPAGE
+                                    247 	.globl _X_P2DIR
+                                    248 	.globl _X_P1DIR
+                                    249 	.globl _X_P0DIR
+                                    250 	.globl _X_U1GCR
+                                    251 	.globl _X_U1UCR
+                                    252 	.globl _X_U1BAUD
+                                    253 	.globl _X_U1DBUF
+                                    254 	.globl _X_U1CSR
+                                    255 	.globl _X_P2INP
+                                    256 	.globl _X_P1INP
+                                    257 	.globl _X_P2SEL
+                                    258 	.globl _X_P1SEL
+                                    259 	.globl _X_P0SEL
+                                    260 	.globl _X_APCFG
+                                    261 	.globl _X_PERCFG
+                                    262 	.globl _X_T4CC1
+                                    263 	.globl _X_T4CCTL1
+                                    264 	.globl _X_T4CC0
+                                    265 	.globl _X_T4CCTL0
+                                    266 	.globl _X_T4CTL
+                                    267 	.globl _X_T4CNT
+                                    268 	.globl _X_RFIRQF0
+                                    269 	.globl _X_T1CCTL2
+                                    270 	.globl _X_T1CCTL1
+                                    271 	.globl _X_T1CCTL0
+                                    272 	.globl _X_T1CTL
+                                    273 	.globl _X_T1CNTH
+                                    274 	.globl _X_T1CNTL
+                                    275 	.globl _X_RFST
+                                    276 	.globl _X_T1CC2H
+                                    277 	.globl _X_T1CC2L
+                                    278 	.globl _X_T1CC1H
+                                    279 	.globl _X_T1CC1L
+                                    280 	.globl _X_T1CC0H
+                                    281 	.globl _X_T1CC0L
+                                    282 	.globl _X_RFD
+                                    283 	.globl _X_TIMIF
+                                    284 	.globl _X_DMAREQ
+                                    285 	.globl _X_DMAARM
+                                    286 	.globl _X_DMA0CFGH
+                                    287 	.globl _X_DMA0CFGL
+                                    288 	.globl _X_DMA1CFGH
+                                    289 	.globl _X_DMA1CFGL
+                                    290 	.globl _X_DMAIRQ
+                                    291 	.globl _X_T3CC1
+                                    292 	.globl _X_T3CCTL1
+                                    293 	.globl _X_T3CC0
+                                    294 	.globl _X_T3CCTL0
+                                    295 	.globl _X_T3CTL
+                                    296 	.globl _X_T3CNT
+                                    297 	.globl _X_WDCTL
+                                    298 	.globl _X_MEMCTR
+                                    299 	.globl _X_CLKCONCMD
+                                    300 	.globl _X_U0GCR
+                                    301 	.globl _X_U0UCR
+                                    302 	.globl _X_T2MSEL
+                                    303 	.globl _X_U0BAUD
+                                    304 	.globl _X_U0DBUF
+                                    305 	.globl _X_RFERRF
+                                    306 	.globl _X_SLEEPCMD
+                                    307 	.globl _X_RNDH
+                                    308 	.globl _X_RNDL
+                                    309 	.globl _X_ADCH
+                                    310 	.globl _X_ADCL
+                                    311 	.globl _X_ADCCON3
+                                    312 	.globl _X_ADCCON2
+                                    313 	.globl _X_ADCCON1
+                                    314 	.globl _X_ENCCS
+                                    315 	.globl _X_ENCDO
+                                    316 	.globl _X_ENCDI
+                                    317 	.globl _X_T1STAT
+                                    318 	.globl _X_PMUX
+                                    319 	.globl _X_STLOAD
+                                    320 	.globl _X_P2IEN
+                                    321 	.globl _X_P0IEN
+                                    322 	.globl _X_T2IRQM
+                                    323 	.globl _X_T2MOVF2
+                                    324 	.globl _X_T2MOVF1
+                                    325 	.globl _X_T2MOVF0
+                                    326 	.globl _X_T2M1
+                                    327 	.globl _X_T2M0
+                                    328 	.globl _X_T2IRQF
+                                    329 	.globl _X_P2
+                                    330 	.globl _X_PSBANK
+                                    331 	.globl _X_FMAP
+                                    332 	.globl _X_CLKCONSTA
+                                    333 	.globl _X_SLEEPSTA
+                                    334 	.globl _X_T2EVTCFG
+                                    335 	.globl _X_ST2
+                                    336 	.globl _X_ST1
+                                    337 	.globl _X_ST0
+                                    338 	.globl _X_T2CTRL
+                                    339 	.globl _X__XPAGE
+                                    340 	.globl _X_MPAGE
+                                    341 	.globl _X_RFIRQF1
+                                    342 	.globl _X_P1
+                                    343 	.globl _X_P0INP
+                                    344 	.globl _X_P1IEN
+                                    345 	.globl _X_PICTL
+                                    346 	.globl _X_P2IFG
+                                    347 	.globl _X_P1IFG
+                                    348 	.globl _X_P0IFG
+                                    349 	.globl _X_U0CSR
+                                    350 	.globl _X_P0
+                                    351 	.globl _USBF5
+                                    352 	.globl _USBF4
+                                    353 	.globl _USBF3
+                                    354 	.globl _USBF2
+                                    355 	.globl _USBF1
+                                    356 	.globl _USBF0
+                                    357 	.globl _USBCNTH
+                                    358 	.globl _USBCNTL
+                                    359 	.globl _USBCNT0
+                                    360 	.globl _USBCSOH
+                                    361 	.globl _USBCSOL
+                                    362 	.globl _USBMAXO
+                                    363 	.globl _USBCSIH
+                                    364 	.globl _USBCSIL
+                                    365 	.globl _USBCS0
+                                    366 	.globl _USBMAXI
+                                    367 	.globl _USBCTRL
+                                    368 	.globl _USBINDEX
+                                    369 	.globl _USBFRMH
+                                    370 	.globl _USBFRML
+                                    371 	.globl _USBCIE
+                                    372 	.globl _USBOIE
+                                    373 	.globl _USBIIE
+                                    374 	.globl _USBCIF
+                                    375 	.globl _USBOIF
+                                    376 	.globl _USBIIF
+                                    377 	.globl _USBPOW
+                                    378 	.globl _USBADDR
+                                    379 	.globl _CSPT
+                                    380 	.globl _CSPZ
+                                    381 	.globl _CSPY
+                                    382 	.globl _CSPX
+                                    383 	.globl _CSPSTAT
+                                    384 	.globl _CSPCTRL
+                                    385 	.globl _CSPPROG23
+                                    386 	.globl _CSPPROG22
+                                    387 	.globl _CSPPROG21
+                                    388 	.globl _CSPPROG20
+                                    389 	.globl _CSPPROG19
+                                    390 	.globl _CSPPROG18
+                                    391 	.globl _CSPPROG17
+                                    392 	.globl _CSPPROG16
+                                    393 	.globl _CSPPROG15
+                                    394 	.globl _CSPPROG14
+                                    395 	.globl _CSPPROG13
+                                    396 	.globl _CSPPROG12
+                                    397 	.globl _CSPPROG11
+                                    398 	.globl _CSPPROG10
+                                    399 	.globl _CSPPROG9
+                                    400 	.globl _CSPPROG8
+                                    401 	.globl _CSPPROG7
+                                    402 	.globl _CSPPROG6
+                                    403 	.globl _CSPPROG5
+                                    404 	.globl _CSPPROG4
+                                    405 	.globl _CSPPROG3
+                                    406 	.globl _CSPPROG2
+                                    407 	.globl _CSPPROG1
+                                    408 	.globl _CSPPROG0
+                                    409 	.globl _RFC_OBS_CTRL2
+                                    410 	.globl _RFC_OBS_CTRL1
+                                    411 	.globl _RFC_OBS_CTRL0
+                                    412 	.globl _TXFILTCFG
+                                    413 	.globl _PTEST1
+                                    414 	.globl _PTEST0
+                                    415 	.globl _ATEST
+                                    416 	.globl _DACTEST2
+                                    417 	.globl _DACTEST1
+                                    418 	.globl _DACTEST0
+                                    419 	.globl _MDMTEST1
+                                    420 	.globl _MDMTEST0
+                                    421 	.globl _ADCTEST2
+                                    422 	.globl _ADCTEST1
+                                    423 	.globl _ADCTEST0
+                                    424 	.globl _AGCCTRL3
+                                    425 	.globl _AGCCTRL2
+                                    426 	.globl _AGCCTRL1
+                                    427 	.globl _AGCCTRL0
+                                    428 	.globl _FSCAL3
+                                    429 	.globl _FSCAL2
+                                    430 	.globl _FSCAL1
+                                    431 	.globl _FSCAL0
+                                    432 	.globl _FSCTRL
+                                    433 	.globl _RXCTRL
+                                    434 	.globl _FREQEST
+                                    435 	.globl _MDMCTRL1
+                                    436 	.globl _MDMCTRL0
+                                    437 	.globl _RFRND
+                                    438 	.globl _RFERRM
+                                    439 	.globl _RFIRQM1
+                                    440 	.globl _RFIRQM0
+                                    441 	.globl _TXLAST_PTR
+                                    442 	.globl _TXFIRST_PTR
+                                    443 	.globl _RXP1_PTR
+                                    444 	.globl _RXLAST_PTR
+                                    445 	.globl _RXFIRST_PTR
+                                    446 	.globl _TXFIFOCNT
+                                    447 	.globl _RXFIFOCNT
+                                    448 	.globl _RXFIRST
+                                    449 	.globl _RSSISTAT
+                                    450 	.globl _RSSI
+                                    451 	.globl _CCACTRL1
+                                    452 	.globl _CCACTRL0
+                                    453 	.globl _FSMCTRL
+                                    454 	.globl _FIFOPCTRL
+                                    455 	.globl _FSMSTAT1
+                                    456 	.globl _FSMSTAT0
+                                    457 	.globl _TXCTRL
+                                    458 	.globl _TXPOWER
+                                    459 	.globl _FREQCTRL
+                                    460 	.globl _FREQTUNE
+                                    461 	.globl _RXMASKCLR
+                                    462 	.globl _RXMASKSET
+                                    463 	.globl _RXENABLE
+                                    464 	.globl _FRMCTRL1
+                                    465 	.globl _FRMCTRL0
+                                    466 	.globl _SRCEXTEN2
+                                    467 	.globl _SRCEXTEN1
+                                    468 	.globl _SRCEXTEN0
+                                    469 	.globl _SRCSHORTEN2
+                                    470 	.globl _SRCSHORTEN1
+                                    471 	.globl _SRCSHORTEN0
+                                    472 	.globl _SRCMATCH
+                                    473 	.globl _FRMFILT1
+                                    474 	.globl _FRMFILT0
+                                    475 	.globl _SHORT_ADDR1
+                                    476 	.globl _SHORT_ADDR0
+                                    477 	.globl _PAN_ID1
+                                    478 	.globl _PAN_ID0
+                                    479 	.globl _EXT_ADDR7
+                                    480 	.globl _EXT_ADDR6
+                                    481 	.globl _EXT_ADDR5
+                                    482 	.globl _EXT_ADDR4
+                                    483 	.globl _EXT_ADDR3
+                                    484 	.globl _EXT_ADDR2
+                                    485 	.globl _EXT_ADDR1
+                                    486 	.globl _EXT_ADDR0
+                                    487 	.globl _SRCSHORTPENDEN2
+                                    488 	.globl _SRCSHORTPENDEN1
+                                    489 	.globl _SRCSHORTPENDEN0
+                                    490 	.globl _SRCEXTPENDEN2
+                                    491 	.globl _SRCEXTPENDEN1
+                                    492 	.globl _SRCEXTPENDEN0
+                                    493 	.globl _SRCRESINDEX
+                                    494 	.globl _SRCRESMASK2
+                                    495 	.globl _SRCRESMASK1
+                                    496 	.globl _SRCRESMASK0
+                                    497 	.globl _SRC_ADDR_TABLE
+                                    498 	.globl _TXFIFO
+                                    499 	.globl _RXFIFO
+                                    500 	.globl _RFCORE_RAM
+                                    501 	.globl _CMPCTL
+                                    502 	.globl _OPAMPS
+                                    503 	.globl _OPAMPC
+                                    504 	.globl _STCV2
+                                    505 	.globl _STCV1
+                                    506 	.globl _STCV0
+                                    507 	.globl _STCS
+                                    508 	.globl _STCC
+                                    509 	.globl _T1CC4H
+                                    510 	.globl _T1CC4L
+                                    511 	.globl _T1CC3H
+                                    512 	.globl _T1CC3L
+                                    513 	.globl _XX_T1CC2H
+                                    514 	.globl _XX_T1CC2L
+                                    515 	.globl _XX_T1CC1H
+                                    516 	.globl _XX_T1CC1L
+                                    517 	.globl _XX_T1CC0H
+                                    518 	.globl _XX_T1CC0L
+                                    519 	.globl _T1CCTL4
+                                    520 	.globl _T1CCTL3
+                                    521 	.globl _XX_T1CCTL2
+                                    522 	.globl _XX_T1CCTL1
+                                    523 	.globl _XX_T1CCTL0
+                                    524 	.globl _CLD
+                                    525 	.globl _IRCTL
+                                    526 	.globl _CHIPINFO1
+                                    527 	.globl _CHIPINFO0
+                                    528 	.globl _FWDATA
+                                    529 	.globl _FADDRH
+                                    530 	.globl _FADDRL
+                                    531 	.globl _FCTL
+                                    532 	.globl _IVCTRL
+                                    533 	.globl _BATTMON
+                                    534 	.globl _SRCRC
+                                    535 	.globl _DBGDATA
+                                    536 	.globl _TESTREG0
+                                    537 	.globl _CHIPID
+                                    538 	.globl _CHVER
+                                    539 	.globl _OBSSEL5
+                                    540 	.globl _OBSSEL4
+                                    541 	.globl _OBSSEL3
+                                    542 	.globl _OBSSEL2
+                                    543 	.globl _OBSSEL1
+                                    544 	.globl _OBSSEL0
+                                    545 	.globl _I2CIO
+                                    546 	.globl _I2CWC
+                                    547 	.globl _I2CADDR
+                                    548 	.globl _I2CDATA
+                                    549 	.globl _I2CSTAT
+                                    550 	.globl _I2CCFG
+                                    551 	.globl _OPAMPMC
+                                    552 	.globl _MONMUX
+                                    553 	.globl _runicast_open
+                                    554 	.globl _runicast_close
+                                    555 	.globl _runicast_is_transmitting
+                                    556 	.globl _runicast_send
+                                    557 ;--------------------------------------------------------
+                                    558 ; special function registers
+                                    559 ;--------------------------------------------------------
+                                    560 	.area RSEG    (ABS,DATA)
+      000000                        561 	.org 0x0000
+                           000080   562 _P0	=	0x0080
+                           000081   563 _SP	=	0x0081
+                           000082   564 _DPL0	=	0x0082
+                           000083   565 _DPH0	=	0x0083
+                           000084   566 _DPL1	=	0x0084
+                           000085   567 _DPH1	=	0x0085
+                           000087   568 _PCON	=	0x0087
+                           000088   569 _TCON	=	0x0088
+                           000090   570 _P1	=	0x0090
+                           000092   571 _DPS	=	0x0092
+                           000098   572 _S0CON	=	0x0098
+                           00009A   573 _IEN2	=	0x009a
+                           00009B   574 _S1CON	=	0x009b
+                           0000A0   575 _P2	=	0x00a0
+                           0000A8   576 _IEN0	=	0x00a8
+                           0000A9   577 _IP0	=	0x00a9
+                           0000B8   578 _IEN1	=	0x00b8
+                           0000B9   579 _IP1	=	0x00b9
+                           0000C0   580 _IRCON	=	0x00c0
+                           0000D0   581 _PSW	=	0x00d0
+                           0000E0   582 _ACC	=	0x00e0
+                           0000E8   583 _IRCON2	=	0x00e8
+                           0000F0   584 _B	=	0x00f0
+                           0000B4   585 _ADCCON1	=	0x00b4
+                           0000B5   586 _ADCCON2	=	0x00b5
+                           0000B6   587 _ADCCON3	=	0x00b6
+                           0000BA   588 _ADCL	=	0x00ba
+                           0000BB   589 _ADCH	=	0x00bb
+                           0000BC   590 _RNDL	=	0x00bc
+                           0000BD   591 _RNDH	=	0x00bd
+                           0000B1   592 _ENCDI	=	0x00b1
+                           0000B2   593 _ENCDO	=	0x00b2
+                           0000B3   594 _ENCCS	=	0x00b3
+                           0000D1   595 _DMAIRQ	=	0x00d1
+                           0000D2   596 _DMA1CFGL	=	0x00d2
+                           0000D3   597 _DMA1CFGH	=	0x00d3
+                           0000D4   598 _DMA0CFGL	=	0x00d4
+                           0000D5   599 _DMA0CFGH	=	0x00d5
+                           0000D6   600 _DMAARM	=	0x00d6
+                           0000D7   601 _DMAREQ	=	0x00d7
+                           000089   602 _P0IFG	=	0x0089
+                           00008A   603 _P1IFG	=	0x008a
+                           00008B   604 _P2IFG	=	0x008b
+                           00008C   605 _PICTL	=	0x008c
+                           0000AB   606 _P0IEN	=	0x00ab
+                           00008D   607 _P1IEN	=	0x008d
+                           0000AC   608 _P2IEN	=	0x00ac
+                           00008F   609 _P0INP	=	0x008f
+                           0000F1   610 _PERCFG	=	0x00f1
+                           0000F2   611 _APCFG	=	0x00f2
+                           0000F3   612 _P0SEL	=	0x00f3
+                           0000F4   613 _P1SEL	=	0x00f4
+                           0000F5   614 _P2SEL	=	0x00f5
+                           0000F6   615 _P1INP	=	0x00f6
+                           0000F7   616 _P2INP	=	0x00f7
+                           0000FD   617 _P0DIR	=	0x00fd
+                           0000FE   618 _P1DIR	=	0x00fe
+                           0000FF   619 _P2DIR	=	0x00ff
+                           0000AE   620 _PMUX	=	0x00ae
+                           000093   621 _MPAGE	=	0x0093
+                           000093   622 __XPAGE	=	0x0093
+                           0000C7   623 _MEMCTR	=	0x00c7
+                           00009F   624 _FMAP	=	0x009f
+                           00009F   625 _PSBANK	=	0x009f
+                           000091   626 _RFIRQF1	=	0x0091
+                           0000D9   627 _RFD	=	0x00d9
+                           0000E1   628 _RFST	=	0x00e1
+                           0000E9   629 _RFIRQF0	=	0x00e9
+                           0000BF   630 _RFERRF	=	0x00bf
+                           000095   631 _ST0	=	0x0095
+                           000096   632 _ST1	=	0x0096
+                           000097   633 _ST2	=	0x0097
+                           0000AD   634 _STLOAD	=	0x00ad
+                           0000BE   635 _SLEEPCMD	=	0x00be
+                           00009D   636 _SLEEPSTA	=	0x009d
+                           0000C6   637 _CLKCONCMD	=	0x00c6
+                           00009E   638 _CLKCONSTA	=	0x009e
+                           0000DA   639 _T1CC0L	=	0x00da
+                           0000DB   640 _T1CC0H	=	0x00db
+                           0000DC   641 _T1CC1L	=	0x00dc
+                           0000DD   642 _T1CC1H	=	0x00dd
+                           0000DE   643 _T1CC2L	=	0x00de
+                           0000DF   644 _T1CC2H	=	0x00df
+                           0000E2   645 _T1CNTL	=	0x00e2
+                           0000E3   646 _T1CNTH	=	0x00e3
+                           0000E4   647 _T1CTL	=	0x00e4
+                           0000E5   648 _T1CCTL0	=	0x00e5
+                           0000E6   649 _T1CCTL1	=	0x00e6
+                           0000E7   650 _T1CCTL2	=	0x00e7
+                           0000AF   651 _T1STAT	=	0x00af
+                           000094   652 _T2CTRL	=	0x0094
+                           00009C   653 _T2EVTCFG	=	0x009c
+                           0000A1   654 _T2IRQF	=	0x00a1
+                           0000A2   655 _T2M0	=	0x00a2
+                           0000A3   656 _T2M1	=	0x00a3
+                           0000A4   657 _T2MOVF0	=	0x00a4
+                           0000A5   658 _T2MOVF1	=	0x00a5
+                           0000A6   659 _T2MOVF2	=	0x00a6
+                           0000A7   660 _T2IRQM	=	0x00a7
+                           0000C3   661 _T2MSEL	=	0x00c3
+                           0000CA   662 _T3CNT	=	0x00ca
+                           0000CB   663 _T3CTL	=	0x00cb
+                           0000CC   664 _T3CCTL0	=	0x00cc
+                           0000CD   665 _T3CC0	=	0x00cd
+                           0000CE   666 _T3CCTL1	=	0x00ce
+                           0000CF   667 _T3CC1	=	0x00cf
+                           0000EA   668 _T4CNT	=	0x00ea
+                           0000EB   669 _T4CTL	=	0x00eb
+                           0000EC   670 _T4CCTL0	=	0x00ec
+                           0000ED   671 _T4CC0	=	0x00ed
+                           0000EE   672 _T4CCTL1	=	0x00ee
+                           0000EF   673 _T4CC1	=	0x00ef
+                           0000D8   674 _TIMIF	=	0x00d8
+                           000086   675 _U0CSR	=	0x0086
+                           0000C1   676 _U0DBUF	=	0x00c1
+                           0000C2   677 _U0BAUD	=	0x00c2
+                           0000C4   678 _U0UCR	=	0x00c4
+                           0000C5   679 _U0GCR	=	0x00c5
+                           0000F8   680 _U1CSR	=	0x00f8
+                           0000F9   681 _U1DBUF	=	0x00f9
+                           0000FA   682 _U1BAUD	=	0x00fa
+                           0000FB   683 _U1UCR	=	0x00fb
+                           0000FC   684 _U1GCR	=	0x00fc
+                           0000C9   685 _WDCTL	=	0x00c9
+                                    686 ;--------------------------------------------------------
+                                    687 ; special function bits
+                                    688 ;--------------------------------------------------------
+                                    689 	.area RSEG    (ABS,DATA)
+      000000                        690 	.org 0x0000
+                           000087   691 _P0_7	=	0x0087
+                           000086   692 _P0_6	=	0x0086
+                           000085   693 _P0_5	=	0x0085
+                           000084   694 _P0_4	=	0x0084
+                           000083   695 _P0_3	=	0x0083
+                           000082   696 _P0_2	=	0x0082
+                           000081   697 _P0_1	=	0x0081
+                           000080   698 _P0_0	=	0x0080
+                           00008F   699 _URX1IF	=	0x008f
+                           00008D   700 _ADCIF	=	0x008d
+                           00008B   701 _URX0IF	=	0x008b
+                           00008A   702 _IT1	=	0x008a
+                           000089   703 _RFERRIF	=	0x0089
+                           000088   704 _IT0	=	0x0088
+                           000097   705 _P1_7	=	0x0097
+                           000096   706 _P1_6	=	0x0096
+                           000095   707 _P1_5	=	0x0095
+                           000094   708 _P1_4	=	0x0094
+                           000093   709 _P1_3	=	0x0093
+                           000092   710 _P1_2	=	0x0092
+                           000091   711 _P1_1	=	0x0091
+                           000090   712 _P1_0	=	0x0090
+                           000099   713 _ENCIF_1	=	0x0099
+                           000098   714 _ENCIF_0	=	0x0098
+                           0000A7   715 _P2_7	=	0x00a7
+                           0000A6   716 _P2_6	=	0x00a6
+                           0000A5   717 _P2_5	=	0x00a5
+                           0000A4   718 _P2_4	=	0x00a4
+                           0000A3   719 _P2_3	=	0x00a3
+                           0000A2   720 _P2_2	=	0x00a2
+                           0000A1   721 _P2_1	=	0x00a1
+                           0000A0   722 _P2_0	=	0x00a0
+                           0000AF   723 _EA	=	0x00af
+                           0000AD   724 _STIE	=	0x00ad
+                           0000AC   725 _ENCIE	=	0x00ac
+                           0000AB   726 _URX1IE	=	0x00ab
+                           0000AA   727 _URX0IE	=	0x00aa
+                           0000A9   728 _ADCIE	=	0x00a9
+                           0000A8   729 _RFERRIE	=	0x00a8
+                           0000BD   730 _P0IE	=	0x00bd
+                           0000BC   731 _T4IE	=	0x00bc
+                           0000BB   732 _T3IE	=	0x00bb
+                           0000BA   733 _T2IE	=	0x00ba
+                           0000B9   734 _T1IE	=	0x00b9
+                           0000B8   735 _DMAIE	=	0x00b8
+                           0000C7   736 _STIF	=	0x00c7
+                           0000C5   737 _P0IF	=	0x00c5
+                           0000C4   738 _T4IF	=	0x00c4
+                           0000C3   739 _T3IF	=	0x00c3
+                           0000C2   740 _T2IF	=	0x00c2
+                           0000C1   741 _T1IF	=	0x00c1
+                           0000C0   742 _DMAIF	=	0x00c0
+                           0000D7   743 _CY	=	0x00d7
+                           0000D6   744 _AC	=	0x00d6
+                           0000D5   745 _F0	=	0x00d5
+                           0000D4   746 _RS1	=	0x00d4
+                           0000D3   747 _RS0	=	0x00d3
+                           0000D2   748 _OV	=	0x00d2
+                           0000D1   749 _F1	=	0x00d1
+                           0000D0   750 _P	=	0x00d0
+                           0000E7   751 _ACC_7	=	0x00e7
+                           0000E6   752 _ACC_6	=	0x00e6
+                           0000E5   753 _ACC_5	=	0x00e5
+                           0000E4   754 _ACC_4	=	0x00e4
+                           0000E3   755 _ACC_3	=	0x00e3
+                           0000E2   756 _ACC_2	=	0x00e2
+                           0000E1   757 _ACC_1	=	0x00e1
+                           0000E0   758 _ACC_0	=	0x00e0
+                           0000EC   759 _WDTIF	=	0x00ec
+                           0000EB   760 _P1IF	=	0x00eb
+                           0000EA   761 _UTX1IF	=	0x00ea
+                           0000E9   762 _UTX0IF	=	0x00e9
+                           0000E8   763 _P2IF	=	0x00e8
+                           0000F7   764 _B_7	=	0x00f7
+                           0000F6   765 _B_6	=	0x00f6
+                           0000F5   766 _B_5	=	0x00f5
+                           0000F4   767 _B_4	=	0x00f4
+                           0000F3   768 _B_3	=	0x00f3
+                           0000F2   769 _B_2	=	0x00f2
+                           0000F1   770 _B_1	=	0x00f1
+                           0000F0   771 _B_0	=	0x00f0
+                           0000DE   772 _OVFIM	=	0x00de
+                           0000DD   773 _T4CH1IF	=	0x00dd
+                           0000DC   774 _T4CH0IF	=	0x00dc
+                           0000DB   775 _T4OVFIF	=	0x00db
+                           0000DA   776 _T3CH1IF	=	0x00da
+                           0000D9   777 _T3CH0IF	=	0x00d9
+                           0000D8   778 _T3OVFIF	=	0x00d8
+                           0000FF   779 _MODE	=	0x00ff
+                           0000FE   780 _RE	=	0x00fe
+                           0000FD   781 _SLAVE	=	0x00fd
+                           0000FC   782 _FE	=	0x00fc
+                           0000FB   783 _ERR	=	0x00fb
+                           0000FA   784 _RX_BYTE	=	0x00fa
+                           0000F9   785 _TX_BYTE	=	0x00f9
+                           0000F8   786 _ACTIVE	=	0x00f8
+                                    787 ;--------------------------------------------------------
+                                    788 ; overlayable register banks
+                                    789 ;--------------------------------------------------------
+                                    790 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        791 	.ds 8
+                                    792 ;--------------------------------------------------------
+                                    793 ; internal ram data
+                                    794 ;--------------------------------------------------------
+                                    795 	.area DSEG    (DATA)
+                                    796 ;--------------------------------------------------------
+                                    797 ; overlayable items in internal ram 
+                                    798 ;--------------------------------------------------------
+                                    799 ;--------------------------------------------------------
+                                    800 ; indirectly addressable internal ram data
+                                    801 ;--------------------------------------------------------
+                                    802 	.area ISEG    (DATA)
+                                    803 ;--------------------------------------------------------
+                                    804 ; absolute internal ram data
+                                    805 ;--------------------------------------------------------
+                                    806 	.area IABS    (ABS,DATA)
+                                    807 	.area IABS    (ABS,DATA)
+                                    808 ;--------------------------------------------------------
+                                    809 ; bit data
+                                    810 ;--------------------------------------------------------
+                                    811 	.area BSEG    (BIT)
+                                    812 ;--------------------------------------------------------
+                                    813 ; paged external ram data
+                                    814 ;--------------------------------------------------------
+                                    815 	.area PSEG    (PAG,XDATA)
+                                    816 ;--------------------------------------------------------
+                                    817 ; external ram data
+                                    818 ;--------------------------------------------------------
+                                    819 	.area XSEG    (XDATA)
+                           0061A6   820 _MONMUX	=	0x61a6
+                           0061A6   821 _OPAMPMC	=	0x61a6
+                           006230   822 _I2CCFG	=	0x6230
+                           006231   823 _I2CSTAT	=	0x6231
+                           006232   824 _I2CDATA	=	0x6232
+                           006233   825 _I2CADDR	=	0x6233
+                           006234   826 _I2CWC	=	0x6234
+                           006235   827 _I2CIO	=	0x6235
+                           006243   828 _OBSSEL0	=	0x6243
+                           006244   829 _OBSSEL1	=	0x6244
+                           006245   830 _OBSSEL2	=	0x6245
+                           006246   831 _OBSSEL3	=	0x6246
+                           006247   832 _OBSSEL4	=	0x6247
+                           006248   833 _OBSSEL5	=	0x6248
+                           006249   834 _CHVER	=	0x6249
+                           00624A   835 _CHIPID	=	0x624a
+                           00624B   836 _TESTREG0	=	0x624b
+                           006260   837 _DBGDATA	=	0x6260
+                           006262   838 _SRCRC	=	0x6262
+                           006264   839 _BATTMON	=	0x6264
+                           006265   840 _IVCTRL	=	0x6265
+                           006270   841 _FCTL	=	0x6270
+                           006271   842 _FADDRL	=	0x6271
+                           006272   843 _FADDRH	=	0x6272
+                           006273   844 _FWDATA	=	0x6273
+                           006276   845 _CHIPINFO0	=	0x6276
+                           006277   846 _CHIPINFO1	=	0x6277
+                           006281   847 _IRCTL	=	0x6281
+                           006290   848 _CLD	=	0x6290
+                           0062A0   849 _XX_T1CCTL0	=	0x62a0
+                           0062A1   850 _XX_T1CCTL1	=	0x62a1
+                           0062A2   851 _XX_T1CCTL2	=	0x62a2
+                           0062A3   852 _T1CCTL3	=	0x62a3
+                           0062A4   853 _T1CCTL4	=	0x62a4
+                           0062A6   854 _XX_T1CC0L	=	0x62a6
+                           0062A7   855 _XX_T1CC0H	=	0x62a7
+                           0062A8   856 _XX_T1CC1L	=	0x62a8
+                           0062A9   857 _XX_T1CC1H	=	0x62a9
+                           0062AA   858 _XX_T1CC2L	=	0x62aa
+                           0062AB   859 _XX_T1CC2H	=	0x62ab
+                           0062AC   860 _T1CC3L	=	0x62ac
+                           0062AD   861 _T1CC3H	=	0x62ad
+                           0062AE   862 _T1CC4L	=	0x62ae
+                           0062AF   863 _T1CC4H	=	0x62af
+                           0062B0   864 _STCC	=	0x62b0
+                           0062B1   865 _STCS	=	0x62b1
+                           0062B2   866 _STCV0	=	0x62b2
+                           0062B3   867 _STCV1	=	0x62b3
+                           0062B4   868 _STCV2	=	0x62b4
+                           0062C0   869 _OPAMPC	=	0x62c0
+                           0062C1   870 _OPAMPS	=	0x62c1
+                           0062D0   871 _CMPCTL	=	0x62d0
+                           006000   872 _RFCORE_RAM	=	0x6000
+                           006000   873 _RXFIFO	=	0x6000
+                           006080   874 _TXFIFO	=	0x6080
+                           006100   875 _SRC_ADDR_TABLE	=	0x6100
+                           006160   876 _SRCRESMASK0	=	0x6160
+                           006161   877 _SRCRESMASK1	=	0x6161
+                           006162   878 _SRCRESMASK2	=	0x6162
+                           006163   879 _SRCRESINDEX	=	0x6163
+                           006164   880 _SRCEXTPENDEN0	=	0x6164
+                           006165   881 _SRCEXTPENDEN1	=	0x6165
+                           006166   882 _SRCEXTPENDEN2	=	0x6166
+                           006167   883 _SRCSHORTPENDEN0	=	0x6167
+                           006168   884 _SRCSHORTPENDEN1	=	0x6168
+                           006169   885 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   886 _EXT_ADDR0	=	0x616a
+                           00616B   887 _EXT_ADDR1	=	0x616b
+                           00616C   888 _EXT_ADDR2	=	0x616c
+                           00616D   889 _EXT_ADDR3	=	0x616d
+                           00616E   890 _EXT_ADDR4	=	0x616e
+                           00616F   891 _EXT_ADDR5	=	0x616f
+                           006170   892 _EXT_ADDR6	=	0x6170
+                           006171   893 _EXT_ADDR7	=	0x6171
+                           006172   894 _PAN_ID0	=	0x6172
+                           006173   895 _PAN_ID1	=	0x6173
+                           006174   896 _SHORT_ADDR0	=	0x6174
+                           006175   897 _SHORT_ADDR1	=	0x6175
+                           006180   898 _FRMFILT0	=	0x6180
+                           006181   899 _FRMFILT1	=	0x6181
+                           006182   900 _SRCMATCH	=	0x6182
+                           006183   901 _SRCSHORTEN0	=	0x6183
+                           006184   902 _SRCSHORTEN1	=	0x6184
+                           006185   903 _SRCSHORTEN2	=	0x6185
+                           006186   904 _SRCEXTEN0	=	0x6186
+                           006187   905 _SRCEXTEN1	=	0x6187
+                           006188   906 _SRCEXTEN2	=	0x6188
+                           006189   907 _FRMCTRL0	=	0x6189
+                           00618A   908 _FRMCTRL1	=	0x618a
+                           00618B   909 _RXENABLE	=	0x618b
+                           00618C   910 _RXMASKSET	=	0x618c
+                           00618D   911 _RXMASKCLR	=	0x618d
+                           00618E   912 _FREQTUNE	=	0x618e
+                           00618F   913 _FREQCTRL	=	0x618f
+                           006190   914 _TXPOWER	=	0x6190
+                           006191   915 _TXCTRL	=	0x6191
+                           006192   916 _FSMSTAT0	=	0x6192
+                           006193   917 _FSMSTAT1	=	0x6193
+                           006194   918 _FIFOPCTRL	=	0x6194
+                           006195   919 _FSMCTRL	=	0x6195
+                           006196   920 _CCACTRL0	=	0x6196
+                           006197   921 _CCACTRL1	=	0x6197
+                           006198   922 _RSSI	=	0x6198
+                           006199   923 _RSSISTAT	=	0x6199
+                           00619A   924 _RXFIRST	=	0x619a
+                           00619B   925 _RXFIFOCNT	=	0x619b
+                           00619C   926 _TXFIFOCNT	=	0x619c
+                           00619D   927 _RXFIRST_PTR	=	0x619d
+                           00619E   928 _RXLAST_PTR	=	0x619e
+                           00619F   929 _RXP1_PTR	=	0x619f
+                           0061A1   930 _TXFIRST_PTR	=	0x61a1
+                           0061A2   931 _TXLAST_PTR	=	0x61a2
+                           0061A3   932 _RFIRQM0	=	0x61a3
+                           0061A4   933 _RFIRQM1	=	0x61a4
+                           0061A5   934 _RFERRM	=	0x61a5
+                           0061A7   935 _RFRND	=	0x61a7
+                           0061A8   936 _MDMCTRL0	=	0x61a8
+                           0061A9   937 _MDMCTRL1	=	0x61a9
+                           0061AA   938 _FREQEST	=	0x61aa
+                           0061AB   939 _RXCTRL	=	0x61ab
+                           0061AC   940 _FSCTRL	=	0x61ac
+                           0061AD   941 _FSCAL0	=	0x61ad
+                           0061AE   942 _FSCAL1	=	0x61ae
+                           0061AF   943 _FSCAL2	=	0x61af
+                           0061B0   944 _FSCAL3	=	0x61b0
+                           0061B1   945 _AGCCTRL0	=	0x61b1
+                           0061B2   946 _AGCCTRL1	=	0x61b2
+                           0061B3   947 _AGCCTRL2	=	0x61b3
+                           0061B4   948 _AGCCTRL3	=	0x61b4
+                           0061B5   949 _ADCTEST0	=	0x61b5
+                           0061B6   950 _ADCTEST1	=	0x61b6
+                           0061B7   951 _ADCTEST2	=	0x61b7
+                           0061B8   952 _MDMTEST0	=	0x61b8
+                           0061B9   953 _MDMTEST1	=	0x61b9
+                           0061BA   954 _DACTEST0	=	0x61ba
+                           0061BB   955 _DACTEST1	=	0x61bb
+                           0061BC   956 _DACTEST2	=	0x61bc
+                           0061BD   957 _ATEST	=	0x61bd
+                           0061BE   958 _PTEST0	=	0x61be
+                           0061BF   959 _PTEST1	=	0x61bf
+                           0061FA   960 _TXFILTCFG	=	0x61fa
+                           0061EB   961 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   962 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   963 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   964 _CSPPROG0	=	0x61c0
+                           0061C1   965 _CSPPROG1	=	0x61c1
+                           0061C2   966 _CSPPROG2	=	0x61c2
+                           0061C3   967 _CSPPROG3	=	0x61c3
+                           0061C4   968 _CSPPROG4	=	0x61c4
+                           0061C5   969 _CSPPROG5	=	0x61c5
+                           0061C6   970 _CSPPROG6	=	0x61c6
+                           0061C7   971 _CSPPROG7	=	0x61c7
+                           0061C8   972 _CSPPROG8	=	0x61c8
+                           0061C9   973 _CSPPROG9	=	0x61c9
+                           0061CA   974 _CSPPROG10	=	0x61ca
+                           0061CB   975 _CSPPROG11	=	0x61cb
+                           0061CC   976 _CSPPROG12	=	0x61cc
+                           0061CD   977 _CSPPROG13	=	0x61cd
+                           0061CE   978 _CSPPROG14	=	0x61ce
+                           0061CF   979 _CSPPROG15	=	0x61cf
+                           0061D0   980 _CSPPROG16	=	0x61d0
+                           0061D1   981 _CSPPROG17	=	0x61d1
+                           0061D2   982 _CSPPROG18	=	0x61d2
+                           0061D3   983 _CSPPROG19	=	0x61d3
+                           0061D4   984 _CSPPROG20	=	0x61d4
+                           0061D5   985 _CSPPROG21	=	0x61d5
+                           0061D6   986 _CSPPROG22	=	0x61d6
+                           0061D7   987 _CSPPROG23	=	0x61d7
+                           0061E0   988 _CSPCTRL	=	0x61e0
+                           0061E1   989 _CSPSTAT	=	0x61e1
+                           0061E2   990 _CSPX	=	0x61e2
+                           0061E3   991 _CSPY	=	0x61e3
+                           0061E4   992 _CSPZ	=	0x61e4
+                           0061E5   993 _CSPT	=	0x61e5
+                           006200   994 _USBADDR	=	0x6200
+                           006201   995 _USBPOW	=	0x6201
+                           006202   996 _USBIIF	=	0x6202
+                           006204   997 _USBOIF	=	0x6204
+                           006206   998 _USBCIF	=	0x6206
+                           006207   999 _USBIIE	=	0x6207
+                           006209  1000 _USBOIE	=	0x6209
+                           00620B  1001 _USBCIE	=	0x620b
+                           00620C  1002 _USBFRML	=	0x620c
+                           00620D  1003 _USBFRMH	=	0x620d
+                           00620E  1004 _USBINDEX	=	0x620e
+                           00620F  1005 _USBCTRL	=	0x620f
+                           006210  1006 _USBMAXI	=	0x6210
+                           006211  1007 _USBCS0	=	0x6211
+                           006211  1008 _USBCSIL	=	0x6211
+                           006212  1009 _USBCSIH	=	0x6212
+                           006213  1010 _USBMAXO	=	0x6213
+                           006214  1011 _USBCSOL	=	0x6214
+                           006215  1012 _USBCSOH	=	0x6215
+                           006216  1013 _USBCNT0	=	0x6216
+                           006216  1014 _USBCNTL	=	0x6216
+                           006217  1015 _USBCNTH	=	0x6217
+                           006220  1016 _USBF0	=	0x6220
+                           006222  1017 _USBF1	=	0x6222
+                           006224  1018 _USBF2	=	0x6224
+                           006226  1019 _USBF3	=	0x6226
+                           006228  1020 _USBF4	=	0x6228
+                           00622A  1021 _USBF5	=	0x622a
+                           007080  1022 _X_P0	=	0x7080
+                           007086  1023 _X_U0CSR	=	0x7086
+                           007089  1024 _X_P0IFG	=	0x7089
+                           00708A  1025 _X_P1IFG	=	0x708a
+                           00708B  1026 _X_P2IFG	=	0x708b
+                           00708C  1027 _X_PICTL	=	0x708c
+                           00708D  1028 _X_P1IEN	=	0x708d
+                           00708F  1029 _X_P0INP	=	0x708f
+                           007090  1030 _X_P1	=	0x7090
+                           007091  1031 _X_RFIRQF1	=	0x7091
+                           007093  1032 _X_MPAGE	=	0x7093
+                           007093  1033 _X__XPAGE	=	0x7093
+                           007094  1034 _X_T2CTRL	=	0x7094
+                           007095  1035 _X_ST0	=	0x7095
+                           007096  1036 _X_ST1	=	0x7096
+                           007097  1037 _X_ST2	=	0x7097
+                           00709C  1038 _X_T2EVTCFG	=	0x709c
+                           00709D  1039 _X_SLEEPSTA	=	0x709d
+                           00709E  1040 _X_CLKCONSTA	=	0x709e
+                           00709F  1041 _X_FMAP	=	0x709f
+                           00709F  1042 _X_PSBANK	=	0x709f
+                           0070A0  1043 _X_P2	=	0x70a0
+                           0070A1  1044 _X_T2IRQF	=	0x70a1
+                           0070A2  1045 _X_T2M0	=	0x70a2
+                           0070A3  1046 _X_T2M1	=	0x70a3
+                           0070A4  1047 _X_T2MOVF0	=	0x70a4
+                           0070A5  1048 _X_T2MOVF1	=	0x70a5
+                           0070A6  1049 _X_T2MOVF2	=	0x70a6
+                           0070A7  1050 _X_T2IRQM	=	0x70a7
+                           0070AB  1051 _X_P0IEN	=	0x70ab
+                           0070AC  1052 _X_P2IEN	=	0x70ac
+                           0070AD  1053 _X_STLOAD	=	0x70ad
+                           0070AE  1054 _X_PMUX	=	0x70ae
+                           0070AF  1055 _X_T1STAT	=	0x70af
+                           0070B1  1056 _X_ENCDI	=	0x70b1
+                           0070B2  1057 _X_ENCDO	=	0x70b2
+                           0070B3  1058 _X_ENCCS	=	0x70b3
+                           0070B4  1059 _X_ADCCON1	=	0x70b4
+                           0070B5  1060 _X_ADCCON2	=	0x70b5
+                           0070B6  1061 _X_ADCCON3	=	0x70b6
+                           0070BA  1062 _X_ADCL	=	0x70ba
+                           0070BB  1063 _X_ADCH	=	0x70bb
+                           0070BC  1064 _X_RNDL	=	0x70bc
+                           0070BD  1065 _X_RNDH	=	0x70bd
+                           0070BE  1066 _X_SLEEPCMD	=	0x70be
+                           0070BF  1067 _X_RFERRF	=	0x70bf
+                           0070C1  1068 _X_U0DBUF	=	0x70c1
+                           0070C2  1069 _X_U0BAUD	=	0x70c2
+                           0070C3  1070 _X_T2MSEL	=	0x70c3
+                           0070C4  1071 _X_U0UCR	=	0x70c4
+                           0070C5  1072 _X_U0GCR	=	0x70c5
+                           0070C6  1073 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1074 _X_MEMCTR	=	0x70c7
+                           0070C9  1075 _X_WDCTL	=	0x70c9
+                           0070CA  1076 _X_T3CNT	=	0x70ca
+                           0070CB  1077 _X_T3CTL	=	0x70cb
+                           0070CC  1078 _X_T3CCTL0	=	0x70cc
+                           0070CD  1079 _X_T3CC0	=	0x70cd
+                           0070CE  1080 _X_T3CCTL1	=	0x70ce
+                           0070CF  1081 _X_T3CC1	=	0x70cf
+                           0070D1  1082 _X_DMAIRQ	=	0x70d1
+                           0070D2  1083 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1084 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1085 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1086 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1087 _X_DMAARM	=	0x70d6
+                           0070D7  1088 _X_DMAREQ	=	0x70d7
+                           0070D8  1089 _X_TIMIF	=	0x70d8
+                           0070D9  1090 _X_RFD	=	0x70d9
+                           0070DA  1091 _X_T1CC0L	=	0x70da
+                           0070DB  1092 _X_T1CC0H	=	0x70db
+                           0070DC  1093 _X_T1CC1L	=	0x70dc
+                           0070DD  1094 _X_T1CC1H	=	0x70dd
+                           0070DE  1095 _X_T1CC2L	=	0x70de
+                           0070DF  1096 _X_T1CC2H	=	0x70df
+                           0070E1  1097 _X_RFST	=	0x70e1
+                           0070E2  1098 _X_T1CNTL	=	0x70e2
+                           0070E3  1099 _X_T1CNTH	=	0x70e3
+                           0070E4  1100 _X_T1CTL	=	0x70e4
+                           0070E5  1101 _X_T1CCTL0	=	0x70e5
+                           0070E6  1102 _X_T1CCTL1	=	0x70e6
+                           0070E7  1103 _X_T1CCTL2	=	0x70e7
+                           0070E9  1104 _X_RFIRQF0	=	0x70e9
+                           0070EA  1105 _X_T4CNT	=	0x70ea
+                           0070EB  1106 _X_T4CTL	=	0x70eb
+                           0070EC  1107 _X_T4CCTL0	=	0x70ec
+                           0070ED  1108 _X_T4CC0	=	0x70ed
+                           0070EE  1109 _X_T4CCTL1	=	0x70ee
+                           0070EF  1110 _X_T4CC1	=	0x70ef
+                           0070F1  1111 _X_PERCFG	=	0x70f1
+                           0070F2  1112 _X_APCFG	=	0x70f2
+                           0070F3  1113 _X_P0SEL	=	0x70f3
+                           0070F4  1114 _X_P1SEL	=	0x70f4
+                           0070F5  1115 _X_P2SEL	=	0x70f5
+                           0070F6  1116 _X_P1INP	=	0x70f6
+                           0070F7  1117 _X_P2INP	=	0x70f7
+                           0070F8  1118 _X_U1CSR	=	0x70f8
+                           0070F9  1119 _X_U1DBUF	=	0x70f9
+                           0070FA  1120 _X_U1BAUD	=	0x70fa
+                           0070FB  1121 _X_U1UCR	=	0x70fb
+                           0070FC  1122 _X_U1GCR	=	0x70fc
+                           0070FD  1123 _X_P0DIR	=	0x70fd
+                           0070FE  1124 _X_P1DIR	=	0x70fe
+                           0070FF  1125 _X_P2DIR	=	0x70ff
+                           007800  1126 _X_INFOPAGE	=	0x7800
+                           00780C  1127 _X_IEEE_ADDR	=	0x780c
+                                   1128 ;--------------------------------------------------------
+                                   1129 ; absolute external ram data
+                                   1130 ;--------------------------------------------------------
+                                   1131 	.area XABS    (ABS,XDATA)
+                                   1132 ;--------------------------------------------------------
+                                   1133 ; external initialized ram data
+                                   1134 ;--------------------------------------------------------
+                                   1135 	.area XISEG   (XDATA)
+                                   1136 	.area HOME    (CODE)
+                                   1137 	.area GSINIT0 (CODE)
+                                   1138 	.area GSINIT1 (CODE)
+                                   1139 	.area GSINIT2 (CODE)
+                                   1140 	.area GSINIT3 (CODE)
+                                   1141 	.area GSINIT4 (CODE)
+                                   1142 	.area GSINIT5 (CODE)
+                                   1143 	.area GSINIT  (CODE)
+                                   1144 	.area GSFINAL (CODE)
+                                   1145 	.area CSEG    (CODE)
+                                   1146 ;--------------------------------------------------------
+                                   1147 ; global & static initialisations
+                                   1148 ;--------------------------------------------------------
+                                   1149 	.area HOME    (CODE)
+                                   1150 	.area GSINIT  (CODE)
+                                   1151 	.area GSFINAL (CODE)
+                                   1152 	.area GSINIT  (CODE)
+                                   1153 ;--------------------------------------------------------
+                                   1154 ; Home
+                                   1155 ;--------------------------------------------------------
+                                   1156 	.area HOME    (CODE)
+                                   1157 	.area HOME    (CODE)
+                                   1158 ;--------------------------------------------------------
+                                   1159 ; code
+                                   1160 ;--------------------------------------------------------
+                                   1161 	.area CSEG    (CODE)
+                                   1162 ;------------------------------------------------------------
+                                   1163 ;Allocation info for local variables in function 'sent_by_stunicast'
+                                   1164 ;------------------------------------------------------------
+                                   1165 ;status                    Allocated to stack - sp -9
+                                   1166 ;num_tx                    Allocated to stack - sp -11
+                                   1167 ;stunicast                 Allocated to registers r5 r6 r7 
+                                   1168 ;c                         Allocated to stack - sp -2
+                                   1169 ;sloc0                     Allocated to stack - sp -5
+                                   1170 ;sloc1                     Allocated to stack - sp -4
+                                   1171 ;------------------------------------------------------------
+                                   1172 ;	/home/user/contiki/core/net/rime/runicast.c:73: sent_by_stunicast(struct stunicast_conn *stunicast, int status, int num_tx)
+                                   1173 ;	-----------------------------------------
+                                   1174 ;	 function sent_by_stunicast
+                                   1175 ;	-----------------------------------------
+      000000                       1176 _sent_by_stunicast:
+                           000007  1177 	ar7 = 0x07
+                           000006  1178 	ar6 = 0x06
+                           000005  1179 	ar5 = 0x05
+                           000004  1180 	ar4 = 0x04
+                           000003  1181 	ar3 = 0x03
+                           000002  1182 	ar2 = 0x02
+                           000001  1183 	ar1 = 0x01
+                           000000  1184 	ar0 = 0x00
+      000000 E5 81            [12] 1185 	mov	a,sp
+      000002 24 06            [12] 1186 	add	a,#0x06
+      000004 F5 81            [12] 1187 	mov	sp,a
+      000006 AD 82            [24] 1188 	mov	r5,dpl
+      000008 AE 83            [24] 1189 	mov	r6,dph
+      00000A AF F0            [24] 1190 	mov	r7,b
+                                   1191 ;	/home/user/contiki/core/net/rime/runicast.c:75: struct runicast_conn *c = (struct runicast_conn *)stunicast;
+      00000C A8 81            [24] 1192 	mov	r0,sp
+      00000E 18               [12] 1193 	dec	r0
+      00000F 18               [12] 1194 	dec	r0
+      000010 A6 05            [24] 1195 	mov	@r0,ar5
+      000012 08               [12] 1196 	inc	r0
+      000013 A6 06            [24] 1197 	mov	@r0,ar6
+      000015 08               [12] 1198 	inc	r0
+      000016 A6 07            [24] 1199 	mov	@r0,ar7
+                                   1200 ;	/home/user/contiki/core/net/rime/runicast.c:81: if(packetbuf_attr(PACKETBUF_ATTR_PACKET_TYPE) == PACKETBUF_ATTR_PACKET_TYPE_DATA) {
+      000018 75 82 0E         [24] 1201 	mov	dpl,#0x0E
+      00001B 12r00r00         [24] 1202 	lcall	_packetbuf_attr
+      00001E E5 82            [12] 1203 	mov	a,dpl
+      000020 85 83 F0         [24] 1204 	mov	b,dph
+      000023 45 F0            [12] 1205 	orl	a,b
+      000025 60 03            [24] 1206 	jz	00120$
+      000027 02r01rC2         [24] 1207 	ljmp	00109$
+      00002A                       1208 00120$:
+                                   1209 ;	/home/user/contiki/core/net/rime/runicast.c:83: c->rxmit += 1;
+      00002A A8 81            [24] 1210 	mov	r0,sp
+      00002C 18               [12] 1211 	dec	r0
+      00002D 18               [12] 1212 	dec	r0
+      00002E 74 34            [12] 1213 	mov	a,#0x34
+      000030 26               [12] 1214 	add	a,@r0
+      000031 FA               [12] 1215 	mov	r2,a
+      000032 E4               [12] 1216 	clr	a
+      000033 08               [12] 1217 	inc	r0
+      000034 36               [12] 1218 	addc	a,@r0
+      000035 FB               [12] 1219 	mov	r3,a
+      000036 08               [12] 1220 	inc	r0
+      000037 86 04            [24] 1221 	mov	ar4,@r0
+      000039 8A 82            [24] 1222 	mov	dpl,r2
+      00003B 8B 83            [24] 1223 	mov	dph,r3
+      00003D 8C F0            [24] 1224 	mov	b,r4
+      00003F 12r00r00         [24] 1225 	lcall	__gptrget
+      000042 FF               [12] 1226 	mov	r7,a
+      000043 E5 81            [12] 1227 	mov	a,sp
+      000045 24 FB            [12] 1228 	add	a,#0xfb
+      000047 F8               [12] 1229 	mov	r0,a
+      000048 EF               [12] 1230 	mov	a,r7
+      000049 04               [12] 1231 	inc	a
+      00004A F6               [12] 1232 	mov	@r0,a
+      00004B 8A 82            [24] 1233 	mov	dpl,r2
+      00004D 8B 83            [24] 1234 	mov	dph,r3
+      00004F 8C F0            [24] 1235 	mov	b,r4
+      000051 E5 81            [12] 1236 	mov	a,sp
+      000053 24 FB            [12] 1237 	add	a,#0xfb
+      000055 F8               [12] 1238 	mov	r0,a
+      000056 E6               [12] 1239 	mov	a,@r0
+      000057 12r00r00         [24] 1240 	lcall	__gptrput
+                                   1241 ;	/home/user/contiki/core/net/rime/runicast.c:92: if(c->rxmit >= c->max_rxmit) {
+      00005A A8 81            [24] 1242 	mov	r0,sp
+      00005C 18               [12] 1243 	dec	r0
+      00005D 18               [12] 1244 	dec	r0
+      00005E 74 35            [12] 1245 	mov	a,#0x35
+      000060 26               [12] 1246 	add	a,@r0
+      000061 FD               [12] 1247 	mov	r5,a
+      000062 E4               [12] 1248 	clr	a
+      000063 08               [12] 1249 	inc	r0
+      000064 36               [12] 1250 	addc	a,@r0
+      000065 FE               [12] 1251 	mov	r6,a
+      000066 08               [12] 1252 	inc	r0
+      000067 86 07            [24] 1253 	mov	ar7,@r0
+      000069 8D 82            [24] 1254 	mov	dpl,r5
+      00006B 8E 83            [24] 1255 	mov	dph,r6
+      00006D 8F F0            [24] 1256 	mov	b,r7
+      00006F 12r00r00         [24] 1257 	lcall	__gptrget
+      000072 FD               [12] 1258 	mov	r5,a
+      000073 E5 81            [12] 1259 	mov	a,sp
+      000075 24 FB            [12] 1260 	add	a,#0xfb
+      000077 F8               [12] 1261 	mov	r0,a
+      000078 C3               [12] 1262 	clr	c
+      000079 E6               [12] 1263 	mov	a,@r0
+      00007A 9D               [12] 1264 	subb	a,r5
+      00007B 50 03            [24] 1265 	jnc	00121$
+      00007D 02r01rC2         [24] 1266 	ljmp	00109$
+      000080                       1267 00121$:
+                                   1268 ;	/home/user/contiki/core/net/rime/runicast.c:94: c->is_tx = 0;
+      000080 A8 81            [24] 1269 	mov	r0,sp
+      000082 18               [12] 1270 	dec	r0
+      000083 18               [12] 1271 	dec	r0
+      000084 74 33            [12] 1272 	mov	a,#0x33
+      000086 26               [12] 1273 	add	a,@r0
+      000087 FD               [12] 1274 	mov	r5,a
+      000088 E4               [12] 1275 	clr	a
+      000089 08               [12] 1276 	inc	r0
+      00008A 36               [12] 1277 	addc	a,@r0
+      00008B FE               [12] 1278 	mov	r6,a
+      00008C 08               [12] 1279 	inc	r0
+      00008D 86 07            [24] 1280 	mov	ar7,@r0
+      00008F 8D 82            [24] 1281 	mov	dpl,r5
+      000091 8E 83            [24] 1282 	mov	dph,r6
+      000093 8F F0            [24] 1283 	mov	b,r7
+      000095 E4               [12] 1284 	clr	a
+      000096 12r00r00         [24] 1285 	lcall	__gptrput
+                                   1286 ;	/home/user/contiki/core/net/rime/runicast.c:95: stunicast_cancel(&c->c);
+      000099 A8 81            [24] 1287 	mov	r0,sp
+      00009B 18               [12] 1288 	dec	r0
+      00009C 18               [12] 1289 	dec	r0
+      00009D 86 82            [24] 1290 	mov	dpl,@r0
+      00009F 08               [12] 1291 	inc	r0
+      0000A0 86 83            [24] 1292 	mov	dph,@r0
+      0000A2 08               [12] 1293 	inc	r0
+      0000A3 86 F0            [24] 1294 	mov	b,@r0
+      0000A5 C0 04            [24] 1295 	push	ar4
+      0000A7 C0 03            [24] 1296 	push	ar3
+      0000A9 C0 02            [24] 1297 	push	ar2
+      0000AB 12r00r00         [24] 1298 	lcall	_stunicast_cancel
+      0000AE D0 02            [24] 1299 	pop	ar2
+      0000B0 D0 03            [24] 1300 	pop	ar3
+      0000B2 D0 04            [24] 1301 	pop	ar4
+                                   1302 ;	/home/user/contiki/core/net/rime/runicast.c:96: if(c->u->timedout) {
+      0000B4 A8 81            [24] 1303 	mov	r0,sp
+      0000B6 18               [12] 1304 	dec	r0
+      0000B7 18               [12] 1305 	dec	r0
+      0000B8 74 2F            [12] 1306 	mov	a,#0x2F
+      0000BA 26               [12] 1307 	add	a,@r0
+      0000BB FD               [12] 1308 	mov	r5,a
+      0000BC E4               [12] 1309 	clr	a
+      0000BD 08               [12] 1310 	inc	r0
+      0000BE 36               [12] 1311 	addc	a,@r0
+      0000BF FE               [12] 1312 	mov	r6,a
+      0000C0 08               [12] 1313 	inc	r0
+      0000C1 86 07            [24] 1314 	mov	ar7,@r0
+      0000C3 8D 82            [24] 1315 	mov	dpl,r5
+      0000C5 8E 83            [24] 1316 	mov	dph,r6
+      0000C7 8F F0            [24] 1317 	mov	b,r7
+      0000C9 12r00r00         [24] 1318 	lcall	__gptrget
+      0000CC FD               [12] 1319 	mov	r5,a
+      0000CD A3               [24] 1320 	inc	dptr
+      0000CE 12r00r00         [24] 1321 	lcall	__gptrget
+      0000D1 FE               [12] 1322 	mov	r6,a
+      0000D2 A3               [24] 1323 	inc	dptr
+      0000D3 12r00r00         [24] 1324 	lcall	__gptrget
+      0000D6 FF               [12] 1325 	mov	r7,a
+      0000D7 74 04            [12] 1326 	mov	a,#0x04
+      0000D9 2D               [12] 1327 	add	a,r5
+      0000DA FD               [12] 1328 	mov	r5,a
+      0000DB E4               [12] 1329 	clr	a
+      0000DC 3E               [12] 1330 	addc	a,r6
+      0000DD FE               [12] 1331 	mov	r6,a
+      0000DE 8D 82            [24] 1332 	mov	dpl,r5
+      0000E0 8E 83            [24] 1333 	mov	dph,r6
+      0000E2 8F F0            [24] 1334 	mov	b,r7
+      0000E4 E5 81            [12] 1335 	mov	a,sp
+      0000E6 24 FC            [12] 1336 	add	a,#0xfc
+      0000E8 F8               [12] 1337 	mov	r0,a
+      0000E9 12r00r00         [24] 1338 	lcall	__gptrget
+      0000EC F6               [12] 1339 	mov	@r0,a
+      0000ED A3               [24] 1340 	inc	dptr
+      0000EE 12r00r00         [24] 1341 	lcall	__gptrget
+      0000F1 08               [12] 1342 	inc	r0
+      0000F2 F6               [12] 1343 	mov	@r0,a
+      0000F3 E5 81            [12] 1344 	mov	a,sp
+      0000F5 24 FC            [12] 1345 	add	a,#0xfc
+      0000F7 F8               [12] 1346 	mov	r0,a
+      0000F8 E6               [12] 1347 	mov	a,@r0
+      0000F9 08               [12] 1348 	inc	r0
+      0000FA 46               [12] 1349 	orl	a,@r0
+      0000FB 60 6F            [24] 1350 	jz	00104$
+                                   1351 ;	/home/user/contiki/core/net/rime/runicast.c:97: c->u->timedout(c, stunicast_receiver(&c->c), c->rxmit);
+      0000FD 8A 82            [24] 1352 	mov	dpl,r2
+      0000FF 8B 83            [24] 1353 	mov	dph,r3
+      000101 8C F0            [24] 1354 	mov	b,r4
+      000103 E5 81            [12] 1355 	mov	a,sp
+      000105 24 FB            [12] 1356 	add	a,#0xfb
+      000107 F8               [12] 1357 	mov	r0,a
+      000108 12r00r00         [24] 1358 	lcall	__gptrget
+      00010B F6               [12] 1359 	mov	@r0,a
+      00010C A8 81            [24] 1360 	mov	r0,sp
+      00010E 18               [12] 1361 	dec	r0
+      00010F 18               [12] 1362 	dec	r0
+      000110 86 82            [24] 1363 	mov	dpl,@r0
+      000112 08               [12] 1364 	inc	r0
+      000113 86 83            [24] 1365 	mov	dph,@r0
+      000115 08               [12] 1366 	inc	r0
+      000116 86 F0            [24] 1367 	mov	b,@r0
+      000118 C0 04            [24] 1368 	push	ar4
+      00011A C0 03            [24] 1369 	push	ar3
+      00011C C0 02            [24] 1370 	push	ar2
+      00011E 12r00r00         [24] 1371 	lcall	_stunicast_receiver
+      000121 AD 82            [24] 1372 	mov	r5,dpl
+      000123 AE 83            [24] 1373 	mov	r6,dph
+      000125 AF F0            [24] 1374 	mov	r7,b
+      000127 D0 02            [24] 1375 	pop	ar2
+      000129 D0 03            [24] 1376 	pop	ar3
+      00012B D0 04            [24] 1377 	pop	ar4
+      00012D C0 04            [24] 1378 	push	ar4
+      00012F C0 03            [24] 1379 	push	ar3
+      000131 C0 02            [24] 1380 	push	ar2
+      000133 E5 81            [12] 1381 	mov	a,sp
+      000135 24 F8            [12] 1382 	add	a,#0xf8
+      000137 F8               [12] 1383 	mov	r0,a
+      000138 E6               [12] 1384 	mov	a,@r0
+      000139 C0 E0            [24] 1385 	push	acc
+      00013B C0 05            [24] 1386 	push	ar5
+      00013D C0 06            [24] 1387 	push	ar6
+      00013F C0 07            [24] 1388 	push	ar7
+      000141 12r01r46         [24] 1389 	lcall	00123$
+      000144 80 1A            [24] 1390 	sjmp	00124$
+      000146                       1391 00123$:
+      000146 E5 81            [12] 1392 	mov	a,sp
+      000148 24 F3            [12] 1393 	add	a,#0xf3
+      00014A F8               [12] 1394 	mov	r0,a
+      00014B E6               [12] 1395 	mov	a,@r0
+      00014C C0 E0            [24] 1396 	push	acc
+      00014E 08               [12] 1397 	inc	r0
+      00014F E6               [12] 1398 	mov	a,@r0
+      000150 C0 E0            [24] 1399 	push	acc
+      000152 E5 81            [12] 1400 	mov	a,sp
+      000154 24 F3            [12] 1401 	add	a,#0xf3
+      000156 F8               [12] 1402 	mov	r0,a
+      000157 86 82            [24] 1403 	mov	dpl,@r0
+      000159 08               [12] 1404 	inc	r0
+      00015A 86 83            [24] 1405 	mov	dph,@r0
+      00015C 08               [12] 1406 	inc	r0
+      00015D 86 F0            [24] 1407 	mov	b,@r0
+      00015F 22               [24] 1408 	ret
+      000160                       1409 00124$:
+      000160 E5 81            [12] 1410 	mov	a,sp
+      000162 24 FC            [12] 1411 	add	a,#0xfc
+      000164 F5 81            [12] 1412 	mov	sp,a
+      000166 D0 02            [24] 1413 	pop	ar2
+      000168 D0 03            [24] 1414 	pop	ar3
+      00016A D0 04            [24] 1415 	pop	ar4
+      00016C                       1416 00104$:
+                                   1417 ;	/home/user/contiki/core/net/rime/runicast.c:99: c->rxmit = 0;
+      00016C 8A 82            [24] 1418 	mov	dpl,r2
+      00016E 8B 83            [24] 1419 	mov	dph,r3
+      000170 8C F0            [24] 1420 	mov	b,r4
+      000172 E4               [12] 1421 	clr	a
+      000173 12r00r00         [24] 1422 	lcall	__gptrput
+                                   1423 ;	/home/user/contiki/core/net/rime/runicast.c:103: c->sndnxt = (c->sndnxt + 1) % (1 << RUNICAST_PACKET_ID_BITS);
+      000176 A8 81            [24] 1424 	mov	r0,sp
+      000178 18               [12] 1425 	dec	r0
+      000179 18               [12] 1426 	dec	r0
+      00017A 74 32            [12] 1427 	mov	a,#0x32
+      00017C 26               [12] 1428 	add	a,@r0
+      00017D FD               [12] 1429 	mov	r5,a
+      00017E E4               [12] 1430 	clr	a
+      00017F 08               [12] 1431 	inc	r0
+      000180 36               [12] 1432 	addc	a,@r0
+      000181 FE               [12] 1433 	mov	r6,a
+      000182 08               [12] 1434 	inc	r0
+      000183 86 07            [24] 1435 	mov	ar7,@r0
+      000185 8D 82            [24] 1436 	mov	dpl,r5
+      000187 8E 83            [24] 1437 	mov	dph,r6
+      000189 8F F0            [24] 1438 	mov	b,r7
+      00018B 12r00r00         [24] 1439 	lcall	__gptrget
+      00018E FC               [12] 1440 	mov	r4,a
+      00018F 7B 00            [12] 1441 	mov	r3,#0x00
+      000191 0C               [12] 1442 	inc	r4
+      000192 BC 00 01         [24] 1443 	cjne	r4,#0x00,00125$
+      000195 0B               [12] 1444 	inc	r3
+      000196                       1445 00125$:
+      000196 C0 07            [24] 1446 	push	ar7
+      000198 C0 06            [24] 1447 	push	ar6
+      00019A C0 05            [24] 1448 	push	ar5
+      00019C 74 04            [12] 1449 	mov	a,#0x04
+      00019E C0 E0            [24] 1450 	push	acc
+      0001A0 E4               [12] 1451 	clr	a
+      0001A1 C0 E0            [24] 1452 	push	acc
+      0001A3 8C 82            [24] 1453 	mov	dpl,r4
+      0001A5 8B 83            [24] 1454 	mov	dph,r3
+      0001A7 12r00r00         [24] 1455 	lcall	__modsint
+      0001AA AB 82            [24] 1456 	mov	r3,dpl
+      0001AC AC 83            [24] 1457 	mov	r4,dph
+      0001AE 15 81            [12] 1458 	dec	sp
+      0001B0 15 81            [12] 1459 	dec	sp
+      0001B2 D0 05            [24] 1460 	pop	ar5
+      0001B4 D0 06            [24] 1461 	pop	ar6
+      0001B6 D0 07            [24] 1462 	pop	ar7
+      0001B8 8D 82            [24] 1463 	mov	dpl,r5
+      0001BA 8E 83            [24] 1464 	mov	dph,r6
+      0001BC 8F F0            [24] 1465 	mov	b,r7
+      0001BE EB               [12] 1466 	mov	a,r3
+      0001BF 12r00r00         [24] 1467 	lcall	__gptrput
+      0001C2                       1468 00109$:
+      0001C2 E5 81            [12] 1469 	mov	a,sp
+      0001C4 24 FA            [12] 1470 	add	a,#0xFA
+      0001C6 F5 81            [12] 1471 	mov	sp,a
+      0001C8 22               [24] 1472 	ret
+                                   1473 ;------------------------------------------------------------
+                                   1474 ;Allocation info for local variables in function 'recv_from_stunicast'
+                                   1475 ;------------------------------------------------------------
+                                   1476 ;from                      Allocated to stack - sp -10
+                                   1477 ;stunicast                 Allocated to registers r5 r6 r7 
+                                   1478 ;c                         Allocated to stack - sp -2
+                                   1479 ;packet_seqno              Allocated to registers r6 r7 
+                                   1480 ;q                         Allocated to registers r3 r4 r5 
+                                   1481 ;sloc0                     Allocated to stack - sp -5
+                                   1482 ;------------------------------------------------------------
+                                   1483 ;	/home/user/contiki/core/net/rime/runicast.c:114: recv_from_stunicast(struct stunicast_conn *stunicast, const rimeaddr_t *from)
+                                   1484 ;	-----------------------------------------
+                                   1485 ;	 function recv_from_stunicast
+                                   1486 ;	-----------------------------------------
+      0001C9                       1487 _recv_from_stunicast:
+      0001C9 E5 81            [12] 1488 	mov	a,sp
+      0001CB 24 06            [12] 1489 	add	a,#0x06
+      0001CD F5 81            [12] 1490 	mov	sp,a
+      0001CF AD 82            [24] 1491 	mov	r5,dpl
+      0001D1 AE 83            [24] 1492 	mov	r6,dph
+      0001D3 AF F0            [24] 1493 	mov	r7,b
+                                   1494 ;	/home/user/contiki/core/net/rime/runicast.c:116: struct runicast_conn *c = (struct runicast_conn *)stunicast;
+      0001D5 A8 81            [24] 1495 	mov	r0,sp
+      0001D7 18               [12] 1496 	dec	r0
+      0001D8 18               [12] 1497 	dec	r0
+      0001D9 A6 05            [24] 1498 	mov	@r0,ar5
+      0001DB 08               [12] 1499 	inc	r0
+      0001DC A6 06            [24] 1500 	mov	@r0,ar6
+      0001DE 08               [12] 1501 	inc	r0
+      0001DF A6 07            [24] 1502 	mov	@r0,ar7
+                                   1503 ;	/home/user/contiki/core/net/rime/runicast.c:125: if(packetbuf_attr(PACKETBUF_ATTR_PACKET_TYPE) ==
+      0001E1 75 82 0E         [24] 1504 	mov	dpl,#0x0E
+      0001E4 12r00r00         [24] 1505 	lcall	_packetbuf_attr
+      0001E7 AB 82            [24] 1506 	mov	r3,dpl
+      0001E9 AC 83            [24] 1507 	mov	r4,dph
+      0001EB BB 01 05         [24] 1508 	cjne	r3,#0x01,00135$
+      0001EE BC 00 02         [24] 1509 	cjne	r4,#0x00,00135$
+      0001F1 80 03            [24] 1510 	sjmp	00136$
+      0001F3                       1511 00135$:
+      0001F3 02r03r34         [24] 1512 	ljmp	00113$
+      0001F6                       1513 00136$:
+                                   1514 ;	/home/user/contiki/core/net/rime/runicast.c:132: if(packetbuf_attr(PACKETBUF_ATTR_PACKET_ID) == c->sndnxt) {
+      0001F6 75 82 0D         [24] 1515 	mov	dpl,#0x0D
+      0001F9 12r00r00         [24] 1516 	lcall	_packetbuf_attr
+      0001FC AB 82            [24] 1517 	mov	r3,dpl
+      0001FE AC 83            [24] 1518 	mov	r4,dph
+      000200 A8 81            [24] 1519 	mov	r0,sp
+      000202 18               [12] 1520 	dec	r0
+      000203 18               [12] 1521 	dec	r0
+      000204 E5 81            [12] 1522 	mov	a,sp
+      000206 24 FB            [12] 1523 	add	a,#0xfb
+      000208 F9               [12] 1524 	mov	r1,a
+      000209 74 32            [12] 1525 	mov	a,#0x32
+      00020B 26               [12] 1526 	add	a,@r0
+      00020C F7               [12] 1527 	mov	@r1,a
+      00020D E4               [12] 1528 	clr	a
+      00020E 08               [12] 1529 	inc	r0
+      00020F 36               [12] 1530 	addc	a,@r0
+      000210 09               [12] 1531 	inc	r1
+      000211 F7               [12] 1532 	mov	@r1,a
+      000212 08               [12] 1533 	inc	r0
+      000213 09               [12] 1534 	inc	r1
+      000214 E6               [12] 1535 	mov	a,@r0
+      000215 F7               [12] 1536 	mov	@r1,a
+      000216 E5 81            [12] 1537 	mov	a,sp
+      000218 24 FB            [12] 1538 	add	a,#0xfb
+      00021A F8               [12] 1539 	mov	r0,a
+      00021B 86 82            [24] 1540 	mov	dpl,@r0
+      00021D 08               [12] 1541 	inc	r0
+      00021E 86 83            [24] 1542 	mov	dph,@r0
+      000220 08               [12] 1543 	inc	r0
+      000221 86 F0            [24] 1544 	mov	b,@r0
+      000223 12r00r00         [24] 1545 	lcall	__gptrget
+      000226 FA               [12] 1546 	mov	r2,a
+      000227 FE               [12] 1547 	mov	r6,a
+      000228 7F 00            [12] 1548 	mov	r7,#0x00
+      00022A EB               [12] 1549 	mov	a,r3
+      00022B B5 06 06         [24] 1550 	cjne	a,ar6,00137$
+      00022E EC               [12] 1551 	mov	a,r4
+      00022F B5 07 02         [24] 1552 	cjne	a,ar7,00137$
+      000232 80 03            [24] 1553 	sjmp	00138$
+      000234                       1554 00137$:
+      000234 02r04r62         [24] 1555 	ljmp	00115$
+      000237                       1556 00138$:
+                                   1557 ;	/home/user/contiki/core/net/rime/runicast.c:137: c->sndnxt = (c->sndnxt + 1) % (1 << RUNICAST_PACKET_ID_BITS);
+      000237 7C 00            [12] 1558 	mov	r4,#0x00
+      000239 0A               [12] 1559 	inc	r2
+      00023A BA 00 01         [24] 1560 	cjne	r2,#0x00,00139$
+      00023D 0C               [12] 1561 	inc	r4
+      00023E                       1562 00139$:
+      00023E 74 04            [12] 1563 	mov	a,#0x04
+      000240 C0 E0            [24] 1564 	push	acc
+      000242 E4               [12] 1565 	clr	a
+      000243 C0 E0            [24] 1566 	push	acc
+      000245 8A 82            [24] 1567 	mov	dpl,r2
+      000247 8C 83            [24] 1568 	mov	dph,r4
+      000249 12r00r00         [24] 1569 	lcall	__modsint
+      00024C AB 82            [24] 1570 	mov	r3,dpl
+      00024E 15 81            [12] 1571 	dec	sp
+      000250 15 81            [12] 1572 	dec	sp
+      000252 E5 81            [12] 1573 	mov	a,sp
+      000254 24 FB            [12] 1574 	add	a,#0xfb
+      000256 F8               [12] 1575 	mov	r0,a
+      000257 86 82            [24] 1576 	mov	dpl,@r0
+      000259 08               [12] 1577 	inc	r0
+      00025A 86 83            [24] 1578 	mov	dph,@r0
+      00025C 08               [12] 1579 	inc	r0
+      00025D 86 F0            [24] 1580 	mov	b,@r0
+      00025F EB               [12] 1581 	mov	a,r3
+      000260 12r00r00         [24] 1582 	lcall	__gptrput
+                                   1583 ;	/home/user/contiki/core/net/rime/runicast.c:138: c->is_tx = 0;
+      000263 A8 81            [24] 1584 	mov	r0,sp
+      000265 18               [12] 1585 	dec	r0
+      000266 18               [12] 1586 	dec	r0
+      000267 74 33            [12] 1587 	mov	a,#0x33
+      000269 26               [12] 1588 	add	a,@r0
+      00026A FA               [12] 1589 	mov	r2,a
+      00026B E4               [12] 1590 	clr	a
+      00026C 08               [12] 1591 	inc	r0
+      00026D 36               [12] 1592 	addc	a,@r0
+      00026E FB               [12] 1593 	mov	r3,a
+      00026F 08               [12] 1594 	inc	r0
+      000270 86 04            [24] 1595 	mov	ar4,@r0
+      000272 8A 82            [24] 1596 	mov	dpl,r2
+      000274 8B 83            [24] 1597 	mov	dph,r3
+      000276 8C F0            [24] 1598 	mov	b,r4
+      000278 E4               [12] 1599 	clr	a
+      000279 12r00r00         [24] 1600 	lcall	__gptrput
+                                   1601 ;	/home/user/contiki/core/net/rime/runicast.c:139: stunicast_cancel(&c->c);
+      00027C A8 81            [24] 1602 	mov	r0,sp
+      00027E 18               [12] 1603 	dec	r0
+      00027F 18               [12] 1604 	dec	r0
+      000280 86 82            [24] 1605 	mov	dpl,@r0
+      000282 08               [12] 1606 	inc	r0
+      000283 86 83            [24] 1607 	mov	dph,@r0
+      000285 08               [12] 1608 	inc	r0
+      000286 86 F0            [24] 1609 	mov	b,@r0
+      000288 12r00r00         [24] 1610 	lcall	_stunicast_cancel
+                                   1611 ;	/home/user/contiki/core/net/rime/runicast.c:140: if(c->u->sent != NULL) {
+      00028B A8 81            [24] 1612 	mov	r0,sp
+      00028D 18               [12] 1613 	dec	r0
+      00028E 18               [12] 1614 	dec	r0
+      00028F 74 2F            [12] 1615 	mov	a,#0x2F
+      000291 26               [12] 1616 	add	a,@r0
+      000292 FA               [12] 1617 	mov	r2,a
+      000293 E4               [12] 1618 	clr	a
+      000294 08               [12] 1619 	inc	r0
+      000295 36               [12] 1620 	addc	a,@r0
+      000296 FB               [12] 1621 	mov	r3,a
+      000297 08               [12] 1622 	inc	r0
+      000298 86 04            [24] 1623 	mov	ar4,@r0
+      00029A 8A 82            [24] 1624 	mov	dpl,r2
+      00029C 8B 83            [24] 1625 	mov	dph,r3
+      00029E 8C F0            [24] 1626 	mov	b,r4
+      0002A0 12r00r00         [24] 1627 	lcall	__gptrget
+      0002A3 FA               [12] 1628 	mov	r2,a
+      0002A4 A3               [24] 1629 	inc	dptr
+      0002A5 12r00r00         [24] 1630 	lcall	__gptrget
+      0002A8 FB               [12] 1631 	mov	r3,a
+      0002A9 A3               [24] 1632 	inc	dptr
+      0002AA 12r00r00         [24] 1633 	lcall	__gptrget
+      0002AD FC               [12] 1634 	mov	r4,a
+      0002AE 74 02            [12] 1635 	mov	a,#0x02
+      0002B0 2A               [12] 1636 	add	a,r2
+      0002B1 FA               [12] 1637 	mov	r2,a
+      0002B2 E4               [12] 1638 	clr	a
+      0002B3 3B               [12] 1639 	addc	a,r3
+      0002B4 FB               [12] 1640 	mov	r3,a
+      0002B5 8A 82            [24] 1641 	mov	dpl,r2
+      0002B7 8B 83            [24] 1642 	mov	dph,r3
+      0002B9 8C F0            [24] 1643 	mov	b,r4
+      0002BB 12r00r00         [24] 1644 	lcall	__gptrget
+      0002BE FB               [12] 1645 	mov	r3,a
+      0002BF A3               [24] 1646 	inc	dptr
+      0002C0 12r00r00         [24] 1647 	lcall	__gptrget
+      0002C3 FC               [12] 1648 	mov	r4,a
+      0002C4 4B               [12] 1649 	orl	a,r3
+      0002C5 70 03            [24] 1650 	jnz	00140$
+      0002C7 02r04r62         [24] 1651 	ljmp	00115$
+      0002CA                       1652 00140$:
+                                   1653 ;	/home/user/contiki/core/net/rime/runicast.c:141: c->u->sent(c, stunicast_receiver(&c->c), c->rxmit);
+      0002CA A8 81            [24] 1654 	mov	r0,sp
+      0002CC 18               [12] 1655 	dec	r0
+      0002CD 18               [12] 1656 	dec	r0
+      0002CE 74 34            [12] 1657 	mov	a,#0x34
+      0002D0 26               [12] 1658 	add	a,@r0
+      0002D1 FA               [12] 1659 	mov	r2,a
+      0002D2 E4               [12] 1660 	clr	a
+      0002D3 08               [12] 1661 	inc	r0
+      0002D4 36               [12] 1662 	addc	a,@r0
+      0002D5 FE               [12] 1663 	mov	r6,a
+      0002D6 08               [12] 1664 	inc	r0
+      0002D7 86 07            [24] 1665 	mov	ar7,@r0
+      0002D9 8A 82            [24] 1666 	mov	dpl,r2
+      0002DB 8E 83            [24] 1667 	mov	dph,r6
+      0002DD 8F F0            [24] 1668 	mov	b,r7
+      0002DF 12r00r00         [24] 1669 	lcall	__gptrget
+      0002E2 FA               [12] 1670 	mov	r2,a
+      0002E3 A8 81            [24] 1671 	mov	r0,sp
+      0002E5 18               [12] 1672 	dec	r0
+      0002E6 18               [12] 1673 	dec	r0
+      0002E7 86 82            [24] 1674 	mov	dpl,@r0
+      0002E9 08               [12] 1675 	inc	r0
+      0002EA 86 83            [24] 1676 	mov	dph,@r0
+      0002EC 08               [12] 1677 	inc	r0
+      0002ED 86 F0            [24] 1678 	mov	b,@r0
+      0002EF C0 04            [24] 1679 	push	ar4
+      0002F1 C0 03            [24] 1680 	push	ar3
+      0002F3 C0 02            [24] 1681 	push	ar2
+      0002F5 12r00r00         [24] 1682 	lcall	_stunicast_receiver
+      0002F8 AD 82            [24] 1683 	mov	r5,dpl
+      0002FA AE 83            [24] 1684 	mov	r6,dph
+      0002FC AF F0            [24] 1685 	mov	r7,b
+      0002FE D0 02            [24] 1686 	pop	ar2
+      000300 D0 03            [24] 1687 	pop	ar3
+      000302 D0 04            [24] 1688 	pop	ar4
+      000304 C0 04            [24] 1689 	push	ar4
+      000306 C0 03            [24] 1690 	push	ar3
+      000308 C0 02            [24] 1691 	push	ar2
+      00030A C0 05            [24] 1692 	push	ar5
+      00030C C0 06            [24] 1693 	push	ar6
+      00030E C0 07            [24] 1694 	push	ar7
+      000310 12r03r15         [24] 1695 	lcall	00141$
+      000313 80 12            [24] 1696 	sjmp	00142$
+      000315                       1697 00141$:
+      000315 C0 03            [24] 1698 	push	ar3
+      000317 C0 04            [24] 1699 	push	ar4
+      000319 E5 81            [12] 1700 	mov	a,sp
+      00031B 24 F4            [12] 1701 	add	a,#0xf4
+      00031D F8               [12] 1702 	mov	r0,a
+      00031E 86 82            [24] 1703 	mov	dpl,@r0
+      000320 08               [12] 1704 	inc	r0
+      000321 86 83            [24] 1705 	mov	dph,@r0
+      000323 08               [12] 1706 	inc	r0
+      000324 86 F0            [24] 1707 	mov	b,@r0
+      000326 22               [24] 1708 	ret
+      000327                       1709 00142$:
+      000327 E5 81            [12] 1710 	mov	a,sp
+      000329 24 FC            [12] 1711 	add	a,#0xfc
+      00032B F5 81            [12] 1712 	mov	sp,a
+      00032D D0 03            [24] 1713 	pop	ar3
+      00032F D0 04            [24] 1714 	pop	ar4
+      000331 02r04r62         [24] 1715 	ljmp	00115$
+                                   1716 ;	/home/user/contiki/core/net/rime/runicast.c:148: RIMESTATS_ADD(badackrx);
+      000334                       1717 00113$:
+                                   1718 ;	/home/user/contiki/core/net/rime/runicast.c:150: } else if(packetbuf_attr(PACKETBUF_ATTR_PACKET_TYPE) ==
+      000334 75 82 0E         [24] 1719 	mov	dpl,#0x0E
+      000337 12r00r00         [24] 1720 	lcall	_packetbuf_attr
+      00033A E5 82            [12] 1721 	mov	a,dpl
+      00033C 85 83 F0         [24] 1722 	mov	b,dph
+      00033F 45 F0            [12] 1723 	orl	a,b
+      000341 60 03            [24] 1724 	jz	00143$
+      000343 02r04r62         [24] 1725 	ljmp	00115$
+      000346                       1726 00143$:
+                                   1727 ;	/home/user/contiki/core/net/rime/runicast.c:162: packet_seqno = packetbuf_attr(PACKETBUF_ATTR_PACKET_ID);
+      000346 75 82 0D         [24] 1728 	mov	dpl,#0x0D
+      000349 12r00r00         [24] 1729 	lcall	_packetbuf_attr
+      00034C AE 82            [24] 1730 	mov	r6,dpl
+      00034E AF 83            [24] 1731 	mov	r7,dph
+                                   1732 ;	/home/user/contiki/core/net/rime/runicast.c:166: q = queuebuf_new_from_packetbuf();
+      000350 C0 07            [24] 1733 	push	ar7
+      000352 C0 06            [24] 1734 	push	ar6
+      000354 12r00r00         [24] 1735 	lcall	_queuebuf_new_from_packetbuf
+      000357 AB 82            [24] 1736 	mov	r3,dpl
+      000359 AC 83            [24] 1737 	mov	r4,dph
+      00035B AD F0            [24] 1738 	mov	r5,b
+      00035D D0 06            [24] 1739 	pop	ar6
+      00035F D0 07            [24] 1740 	pop	ar7
+                                   1741 ;	/home/user/contiki/core/net/rime/runicast.c:167: if(q != NULL) {
+      000361 EB               [12] 1742 	mov	a,r3
+      000362 4C               [12] 1743 	orl	a,r4
+      000363 70 03            [24] 1744 	jnz	00144$
+      000365 02r03rF6         [24] 1745 	ljmp	00107$
+      000368                       1746 00144$:
+                                   1747 ;	/home/user/contiki/core/net/rime/runicast.c:172: packetbuf_clear();
+      000368 C0 07            [24] 1748 	push	ar7
+      00036A C0 06            [24] 1749 	push	ar6
+      00036C C0 05            [24] 1750 	push	ar5
+      00036E C0 04            [24] 1751 	push	ar4
+      000370 C0 03            [24] 1752 	push	ar3
+      000372 12r00r00         [24] 1753 	lcall	_packetbuf_clear
+                                   1754 ;	/home/user/contiki/core/net/rime/runicast.c:177: packetbuf_set_attr(PACKETBUF_ATTR_PACKET_TYPE, PACKETBUF_ATTR_PACKET_TYPE_ACK);
+      000375 74 01            [12] 1755 	mov	a,#0x01
+      000377 C0 E0            [24] 1756 	push	acc
+      000379 E4               [12] 1757 	clr	a
+      00037A C0 E0            [24] 1758 	push	acc
+      00037C 75 82 0E         [24] 1759 	mov	dpl,#0x0E
+      00037F 12r00r00         [24] 1760 	lcall	_packetbuf_set_attr
+      000382 15 81            [12] 1761 	dec	sp
+      000384 15 81            [12] 1762 	dec	sp
+      000386 D0 03            [24] 1763 	pop	ar3
+      000388 D0 04            [24] 1764 	pop	ar4
+      00038A D0 05            [24] 1765 	pop	ar5
+      00038C D0 06            [24] 1766 	pop	ar6
+      00038E D0 07            [24] 1767 	pop	ar7
+                                   1768 ;	/home/user/contiki/core/net/rime/runicast.c:178: packetbuf_set_attr(PACKETBUF_ATTR_PACKET_ID, packet_seqno);
+      000390 C0 07            [24] 1769 	push	ar7
+      000392 C0 06            [24] 1770 	push	ar6
+      000394 C0 05            [24] 1771 	push	ar5
+      000396 C0 04            [24] 1772 	push	ar4
+      000398 C0 03            [24] 1773 	push	ar3
+      00039A C0 06            [24] 1774 	push	ar6
+      00039C C0 07            [24] 1775 	push	ar7
+      00039E 75 82 0D         [24] 1776 	mov	dpl,#0x0D
+      0003A1 12r00r00         [24] 1777 	lcall	_packetbuf_set_attr
+      0003A4 15 81            [12] 1778 	dec	sp
+      0003A6 15 81            [12] 1779 	dec	sp
+                                   1780 ;	/home/user/contiki/core/net/rime/runicast.c:179: stunicast_send(&c->c, from);
+      0003A8 E5 81            [12] 1781 	mov	a,sp
+      0003AA 24 F1            [12] 1782 	add	a,#0xf1
+      0003AC F8               [12] 1783 	mov	r0,a
+      0003AD E6               [12] 1784 	mov	a,@r0
+      0003AE C0 E0            [24] 1785 	push	acc
+      0003B0 08               [12] 1786 	inc	r0
+      0003B1 E6               [12] 1787 	mov	a,@r0
+      0003B2 C0 E0            [24] 1788 	push	acc
+      0003B4 08               [12] 1789 	inc	r0
+      0003B5 E6               [12] 1790 	mov	a,@r0
+      0003B6 C0 E0            [24] 1791 	push	acc
+      0003B8 E5 81            [12] 1792 	mov	a,sp
+      0003BA 24 F6            [12] 1793 	add	a,#0xf6
+      0003BC F8               [12] 1794 	mov	r0,a
+      0003BD 86 82            [24] 1795 	mov	dpl,@r0
+      0003BF 08               [12] 1796 	inc	r0
+      0003C0 86 83            [24] 1797 	mov	dph,@r0
+      0003C2 08               [12] 1798 	inc	r0
+      0003C3 86 F0            [24] 1799 	mov	b,@r0
+      0003C5 12r00r00         [24] 1800 	lcall	_stunicast_send
+      0003C8 15 81            [12] 1801 	dec	sp
+      0003CA 15 81            [12] 1802 	dec	sp
+      0003CC 15 81            [12] 1803 	dec	sp
+      0003CE D0 03            [24] 1804 	pop	ar3
+      0003D0 D0 04            [24] 1805 	pop	ar4
+      0003D2 D0 05            [24] 1806 	pop	ar5
+                                   1807 ;	/home/user/contiki/core/net/rime/runicast.c:182: queuebuf_to_packetbuf(q);
+      0003D4 8B 82            [24] 1808 	mov	dpl,r3
+      0003D6 8C 83            [24] 1809 	mov	dph,r4
+      0003D8 8D F0            [24] 1810 	mov	b,r5
+      0003DA C0 05            [24] 1811 	push	ar5
+      0003DC C0 04            [24] 1812 	push	ar4
+      0003DE C0 03            [24] 1813 	push	ar3
+      0003E0 12r00r00         [24] 1814 	lcall	_queuebuf_to_packetbuf
+      0003E3 D0 03            [24] 1815 	pop	ar3
+      0003E5 D0 04            [24] 1816 	pop	ar4
+      0003E7 D0 05            [24] 1817 	pop	ar5
+                                   1818 ;	/home/user/contiki/core/net/rime/runicast.c:183: queuebuf_free(q);
+      0003E9 8B 82            [24] 1819 	mov	dpl,r3
+      0003EB 8C 83            [24] 1820 	mov	dph,r4
+      0003ED 8D F0            [24] 1821 	mov	b,r5
+      0003EF 12r00r00         [24] 1822 	lcall	_queuebuf_free
+      0003F2 D0 06            [24] 1823 	pop	ar6
+      0003F4 D0 07            [24] 1824 	pop	ar7
+      0003F6                       1825 00107$:
+                                   1826 ;	/home/user/contiki/core/net/rime/runicast.c:190: if(c->u->recv != NULL) {
+      0003F6 A8 81            [24] 1827 	mov	r0,sp
+      0003F8 18               [12] 1828 	dec	r0
+      0003F9 18               [12] 1829 	dec	r0
+      0003FA 74 2F            [12] 1830 	mov	a,#0x2F
+      0003FC 26               [12] 1831 	add	a,@r0
+      0003FD FB               [12] 1832 	mov	r3,a
+      0003FE E4               [12] 1833 	clr	a
+      0003FF 08               [12] 1834 	inc	r0
+      000400 36               [12] 1835 	addc	a,@r0
+      000401 FC               [12] 1836 	mov	r4,a
+      000402 08               [12] 1837 	inc	r0
+      000403 86 05            [24] 1838 	mov	ar5,@r0
+      000405 8B 82            [24] 1839 	mov	dpl,r3
+      000407 8C 83            [24] 1840 	mov	dph,r4
+      000409 8D F0            [24] 1841 	mov	b,r5
+      00040B 12r00r00         [24] 1842 	lcall	__gptrget
+      00040E FB               [12] 1843 	mov	r3,a
+      00040F A3               [24] 1844 	inc	dptr
+      000410 12r00r00         [24] 1845 	lcall	__gptrget
+      000413 FC               [12] 1846 	mov	r4,a
+      000414 A3               [24] 1847 	inc	dptr
+      000415 12r00r00         [24] 1848 	lcall	__gptrget
+      000418 FD               [12] 1849 	mov	r5,a
+      000419 8B 82            [24] 1850 	mov	dpl,r3
+      00041B 8C 83            [24] 1851 	mov	dph,r4
+      00041D 8D F0            [24] 1852 	mov	b,r5
+      00041F 12r00r00         [24] 1853 	lcall	__gptrget
+      000422 FC               [12] 1854 	mov	r4,a
+      000423 A3               [24] 1855 	inc	dptr
+      000424 12r00r00         [24] 1856 	lcall	__gptrget
+      000427 FD               [12] 1857 	mov	r5,a
+      000428 4C               [12] 1858 	orl	a,r4
+      000429 60 37            [24] 1859 	jz	00115$
+                                   1860 ;	/home/user/contiki/core/net/rime/runicast.c:191: c->u->recv(c, from, packet_seqno);
+      00042B C0 05            [24] 1861 	push	ar5
+      00042D C0 04            [24] 1862 	push	ar4
+      00042F C0 06            [24] 1863 	push	ar6
+      000431 E5 81            [12] 1864 	mov	a,sp
+      000433 24 F3            [12] 1865 	add	a,#0xf3
+      000435 F8               [12] 1866 	mov	r0,a
+      000436 E6               [12] 1867 	mov	a,@r0
+      000437 C0 E0            [24] 1868 	push	acc
+      000439 08               [12] 1869 	inc	r0
+      00043A E6               [12] 1870 	mov	a,@r0
+      00043B C0 E0            [24] 1871 	push	acc
+      00043D 08               [12] 1872 	inc	r0
+      00043E E6               [12] 1873 	mov	a,@r0
+      00043F C0 E0            [24] 1874 	push	acc
+      000441 12r04r46         [24] 1875 	lcall	00146$
+      000444 80 12            [24] 1876 	sjmp	00147$
+      000446                       1877 00146$:
+      000446 C0 04            [24] 1878 	push	ar4
+      000448 C0 05            [24] 1879 	push	ar5
+      00044A E5 81            [12] 1880 	mov	a,sp
+      00044C 24 F4            [12] 1881 	add	a,#0xf4
+      00044E F8               [12] 1882 	mov	r0,a
+      00044F 86 82            [24] 1883 	mov	dpl,@r0
+      000451 08               [12] 1884 	inc	r0
+      000452 86 83            [24] 1885 	mov	dph,@r0
+      000454 08               [12] 1886 	inc	r0
+      000455 86 F0            [24] 1887 	mov	b,@r0
+      000457 22               [24] 1888 	ret
+      000458                       1889 00147$:
+      000458 E5 81            [12] 1890 	mov	a,sp
+      00045A 24 FC            [12] 1891 	add	a,#0xfc
+      00045C F5 81            [12] 1892 	mov	sp,a
+      00045E D0 04            [24] 1893 	pop	ar4
+      000460 D0 05            [24] 1894 	pop	ar5
+      000462                       1895 00115$:
+      000462 E5 81            [12] 1896 	mov	a,sp
+      000464 24 FA            [12] 1897 	add	a,#0xFA
+      000466 F5 81            [12] 1898 	mov	sp,a
+      000468 22               [24] 1899 	ret
+                                   1900 ;------------------------------------------------------------
+                                   1901 ;Allocation info for local variables in function 'runicast_open'
+                                   1902 ;------------------------------------------------------------
+                                   1903 ;channel                   Allocated to stack - sp -3
+                                   1904 ;u                         Allocated to stack - sp -6
+                                   1905 ;c                         Allocated to registers r5 r6 r7 
+                                   1906 ;------------------------------------------------------------
+                                   1907 ;	/home/user/contiki/core/net/rime/runicast.c:200: runicast_open(struct runicast_conn *c, uint16_t channel,
+                                   1908 ;	-----------------------------------------
+                                   1909 ;	 function runicast_open
+                                   1910 ;	-----------------------------------------
+      000469                       1911 _runicast_open:
+      000469 AD 82            [24] 1912 	mov	r5,dpl
+      00046B AE 83            [24] 1913 	mov	r6,dph
+      00046D AF F0            [24] 1914 	mov	r7,b
+                                   1915 ;	/home/user/contiki/core/net/rime/runicast.c:203: stunicast_open(&c->c, channel, &runicast);
+      00046F C0 07            [24] 1916 	push	ar7
+      000471 C0 06            [24] 1917 	push	ar6
+      000473 C0 05            [24] 1918 	push	ar5
+      000475 74r0A            [12] 1919 	mov	a,#_runicast
+      000477 C0 E0            [24] 1920 	push	acc
+      000479 74s00            [12] 1921 	mov	a,#(_runicast >> 8)
+      00047B C0 E0            [24] 1922 	push	acc
+      00047D 74 80            [12] 1923 	mov	a,#0x80
+      00047F C0 E0            [24] 1924 	push	acc
+      000481 E5 81            [12] 1925 	mov	a,sp
+      000483 24 F7            [12] 1926 	add	a,#0xf7
+      000485 F8               [12] 1927 	mov	r0,a
+      000486 E6               [12] 1928 	mov	a,@r0
+      000487 C0 E0            [24] 1929 	push	acc
+      000489 08               [12] 1930 	inc	r0
+      00048A E6               [12] 1931 	mov	a,@r0
+      00048B C0 E0            [24] 1932 	push	acc
+      00048D 8D 82            [24] 1933 	mov	dpl,r5
+      00048F 8E 83            [24] 1934 	mov	dph,r6
+      000491 8F F0            [24] 1935 	mov	b,r7
+      000493 12r00r00         [24] 1936 	lcall	_stunicast_open
+      000496 E5 81            [12] 1937 	mov	a,sp
+      000498 24 FB            [12] 1938 	add	a,#0xfb
+      00049A F5 81            [12] 1939 	mov	sp,a
+                                   1940 ;	/home/user/contiki/core/net/rime/runicast.c:204: channel_set_attributes(channel, attributes);
+      00049C 74r00            [12] 1941 	mov	a,#_attributes
+      00049E C0 E0            [24] 1942 	push	acc
+      0004A0 74s00            [12] 1943 	mov	a,#(_attributes >> 8)
+      0004A2 C0 E0            [24] 1944 	push	acc
+      0004A4 74 80            [12] 1945 	mov	a,#0x80
+      0004A6 C0 E0            [24] 1946 	push	acc
+      0004A8 E5 81            [12] 1947 	mov	a,sp
+      0004AA 24 F7            [12] 1948 	add	a,#0xf7
+      0004AC F8               [12] 1949 	mov	r0,a
+      0004AD 86 82            [24] 1950 	mov	dpl,@r0
+      0004AF 08               [12] 1951 	inc	r0
+      0004B0 86 83            [24] 1952 	mov	dph,@r0
+      0004B2 12r00r00         [24] 1953 	lcall	_channel_set_attributes
+      0004B5 15 81            [12] 1954 	dec	sp
+      0004B7 15 81            [12] 1955 	dec	sp
+      0004B9 15 81            [12] 1956 	dec	sp
+      0004BB D0 05            [24] 1957 	pop	ar5
+      0004BD D0 06            [24] 1958 	pop	ar6
+      0004BF D0 07            [24] 1959 	pop	ar7
+                                   1960 ;	/home/user/contiki/core/net/rime/runicast.c:205: c->u = u;
+      0004C1 74 2F            [12] 1961 	mov	a,#0x2F
+      0004C3 2D               [12] 1962 	add	a,r5
+      0004C4 FA               [12] 1963 	mov	r2,a
+      0004C5 E4               [12] 1964 	clr	a
+      0004C6 3E               [12] 1965 	addc	a,r6
+      0004C7 FB               [12] 1966 	mov	r3,a
+      0004C8 8F 04            [24] 1967 	mov	ar4,r7
+      0004CA 8A 82            [24] 1968 	mov	dpl,r2
+      0004CC 8B 83            [24] 1969 	mov	dph,r3
+      0004CE 8C F0            [24] 1970 	mov	b,r4
+      0004D0 E5 81            [12] 1971 	mov	a,sp
+      0004D2 24 FA            [12] 1972 	add	a,#0xfa
+      0004D4 F8               [12] 1973 	mov	r0,a
+      0004D5 E6               [12] 1974 	mov	a,@r0
+      0004D6 12r00r00         [24] 1975 	lcall	__gptrput
+      0004D9 A3               [24] 1976 	inc	dptr
+      0004DA 08               [12] 1977 	inc	r0
+      0004DB E6               [12] 1978 	mov	a,@r0
+      0004DC 12r00r00         [24] 1979 	lcall	__gptrput
+      0004DF A3               [24] 1980 	inc	dptr
+      0004E0 08               [12] 1981 	inc	r0
+      0004E1 E6               [12] 1982 	mov	a,@r0
+      0004E2 12r00r00         [24] 1983 	lcall	__gptrput
+                                   1984 ;	/home/user/contiki/core/net/rime/runicast.c:206: c->is_tx = 0;
+      0004E5 74 33            [12] 1985 	mov	a,#0x33
+      0004E7 2D               [12] 1986 	add	a,r5
+      0004E8 FA               [12] 1987 	mov	r2,a
+      0004E9 E4               [12] 1988 	clr	a
+      0004EA 3E               [12] 1989 	addc	a,r6
+      0004EB FB               [12] 1990 	mov	r3,a
+      0004EC 8F 04            [24] 1991 	mov	ar4,r7
+      0004EE 8A 82            [24] 1992 	mov	dpl,r2
+      0004F0 8B 83            [24] 1993 	mov	dph,r3
+      0004F2 8C F0            [24] 1994 	mov	b,r4
+      0004F4 E4               [12] 1995 	clr	a
+      0004F5 12r00r00         [24] 1996 	lcall	__gptrput
+                                   1997 ;	/home/user/contiki/core/net/rime/runicast.c:207: c->rxmit = 0;
+      0004F8 74 34            [12] 1998 	mov	a,#0x34
+      0004FA 2D               [12] 1999 	add	a,r5
+      0004FB FA               [12] 2000 	mov	r2,a
+      0004FC E4               [12] 2001 	clr	a
+      0004FD 3E               [12] 2002 	addc	a,r6
+      0004FE FB               [12] 2003 	mov	r3,a
+      0004FF 8F 04            [24] 2004 	mov	ar4,r7
+      000501 8A 82            [24] 2005 	mov	dpl,r2
+      000503 8B 83            [24] 2006 	mov	dph,r3
+      000505 8C F0            [24] 2007 	mov	b,r4
+      000507 E4               [12] 2008 	clr	a
+      000508 12r00r00         [24] 2009 	lcall	__gptrput
+                                   2010 ;	/home/user/contiki/core/net/rime/runicast.c:208: c->sndnxt = 0;
+      00050B 74 32            [12] 2011 	mov	a,#0x32
+      00050D 2D               [12] 2012 	add	a,r5
+      00050E FD               [12] 2013 	mov	r5,a
+      00050F E4               [12] 2014 	clr	a
+      000510 3E               [12] 2015 	addc	a,r6
+      000511 FE               [12] 2016 	mov	r6,a
+      000512 8D 82            [24] 2017 	mov	dpl,r5
+      000514 8E 83            [24] 2018 	mov	dph,r6
+      000516 8F F0            [24] 2019 	mov	b,r7
+      000518 E4               [12] 2020 	clr	a
+      000519 02r00r00         [24] 2021 	ljmp	__gptrput
+                                   2022 ;------------------------------------------------------------
+                                   2023 ;Allocation info for local variables in function 'runicast_close'
+                                   2024 ;------------------------------------------------------------
+                                   2025 ;c                         Allocated to registers r5 r6 r7 
+                                   2026 ;------------------------------------------------------------
+                                   2027 ;	/home/user/contiki/core/net/rime/runicast.c:212: runicast_close(struct runicast_conn *c)
+                                   2028 ;	-----------------------------------------
+                                   2029 ;	 function runicast_close
+                                   2030 ;	-----------------------------------------
+      00051C                       2031 _runicast_close:
+                                   2032 ;	/home/user/contiki/core/net/rime/runicast.c:214: stunicast_close(&c->c);
+      00051C 02r00r00         [24] 2033 	ljmp	_stunicast_close
+                                   2034 ;------------------------------------------------------------
+                                   2035 ;Allocation info for local variables in function 'runicast_is_transmitting'
+                                   2036 ;------------------------------------------------------------
+                                   2037 ;c                         Allocated to registers r5 r6 r7 
+                                   2038 ;------------------------------------------------------------
+                                   2039 ;	/home/user/contiki/core/net/rime/runicast.c:218: runicast_is_transmitting(struct runicast_conn *c)
+                                   2040 ;	-----------------------------------------
+                                   2041 ;	 function runicast_is_transmitting
+                                   2042 ;	-----------------------------------------
+      00051F                       2043 _runicast_is_transmitting:
+      00051F AD 82            [24] 2044 	mov	r5,dpl
+      000521 AE 83            [24] 2045 	mov	r6,dph
+      000523 AF F0            [24] 2046 	mov	r7,b
+                                   2047 ;	/home/user/contiki/core/net/rime/runicast.c:220: return c->is_tx;
+      000525 74 33            [12] 2048 	mov	a,#0x33
+      000527 2D               [12] 2049 	add	a,r5
+      000528 FD               [12] 2050 	mov	r5,a
+      000529 E4               [12] 2051 	clr	a
+      00052A 3E               [12] 2052 	addc	a,r6
+      00052B FE               [12] 2053 	mov	r6,a
+      00052C 8D 82            [24] 2054 	mov	dpl,r5
+      00052E 8E 83            [24] 2055 	mov	dph,r6
+      000530 8F F0            [24] 2056 	mov	b,r7
+      000532 12r00r00         [24] 2057 	lcall	__gptrget
+      000535 F5 82            [12] 2058 	mov	dpl,a
+      000537 22               [24] 2059 	ret
+                                   2060 ;------------------------------------------------------------
+                                   2061 ;Allocation info for local variables in function 'runicast_send'
+                                   2062 ;------------------------------------------------------------
+                                   2063 ;receiver                  Allocated to stack - sp -4
+                                   2064 ;max_retransmissions       Allocated to stack - sp -5
+                                   2065 ;c                         Allocated to registers r5 r6 r7 
+                                   2066 ;ret                       Allocated to registers r6 r7 
+                                   2067 ;------------------------------------------------------------
+                                   2068 ;	/home/user/contiki/core/net/rime/runicast.c:224: runicast_send(struct runicast_conn *c, const rimeaddr_t *receiver,
+                                   2069 ;	-----------------------------------------
+                                   2070 ;	 function runicast_send
+                                   2071 ;	-----------------------------------------
+      000538                       2072 _runicast_send:
+                                   2073 ;	/home/user/contiki/core/net/rime/runicast.c:228: if(runicast_is_transmitting(c)) {
+      000538 AD 82            [24] 2074 	mov	r5,dpl
+      00053A AE 83            [24] 2075 	mov	r6,dph
+      00053C AF F0            [24] 2076 	mov	r7,b
+      00053E C0 07            [24] 2077 	push	ar7
+      000540 C0 06            [24] 2078 	push	ar6
+      000542 C0 05            [24] 2079 	push	ar5
+      000544 12r05r1F         [24] 2080 	lcall	_runicast_is_transmitting
+      000547 E5 82            [12] 2081 	mov	a,dpl
+      000549 D0 05            [24] 2082 	pop	ar5
+      00054B D0 06            [24] 2083 	pop	ar6
+      00054D D0 07            [24] 2084 	pop	ar7
+      00054F 60 04            [24] 2085 	jz	00102$
+                                   2086 ;	/home/user/contiki/core/net/rime/runicast.c:231: return 0;
+      000551 90 00 00         [24] 2087 	mov	dptr,#0x0000
+      000554 22               [24] 2088 	ret
+      000555                       2089 00102$:
+                                   2090 ;	/home/user/contiki/core/net/rime/runicast.c:233: packetbuf_set_attr(PACKETBUF_ATTR_RELIABLE, 1);
+      000555 C0 07            [24] 2091 	push	ar7
+      000557 C0 06            [24] 2092 	push	ar6
+      000559 C0 05            [24] 2093 	push	ar5
+      00055B 74 01            [12] 2094 	mov	a,#0x01
+      00055D C0 E0            [24] 2095 	push	acc
+      00055F E4               [12] 2096 	clr	a
+      000560 C0 E0            [24] 2097 	push	acc
+      000562 75 82 0C         [24] 2098 	mov	dpl,#0x0C
+      000565 12r00r00         [24] 2099 	lcall	_packetbuf_set_attr
+      000568 15 81            [12] 2100 	dec	sp
+      00056A 15 81            [12] 2101 	dec	sp
+                                   2102 ;	/home/user/contiki/core/net/rime/runicast.c:234: packetbuf_set_attr(PACKETBUF_ATTR_PACKET_TYPE, PACKETBUF_ATTR_PACKET_TYPE_DATA);
+      00056C E4               [12] 2103 	clr	a
+      00056D C0 E0            [24] 2104 	push	acc
+      00056F C0 E0            [24] 2105 	push	acc
+      000571 75 82 0E         [24] 2106 	mov	dpl,#0x0E
+      000574 12r00r00         [24] 2107 	lcall	_packetbuf_set_attr
+      000577 15 81            [12] 2108 	dec	sp
+      000579 15 81            [12] 2109 	dec	sp
+      00057B D0 05            [24] 2110 	pop	ar5
+      00057D D0 06            [24] 2111 	pop	ar6
+      00057F D0 07            [24] 2112 	pop	ar7
+                                   2113 ;	/home/user/contiki/core/net/rime/runicast.c:235: packetbuf_set_attr(PACKETBUF_ATTR_PACKET_ID, c->sndnxt);
+      000581 74 32            [12] 2114 	mov	a,#0x32
+      000583 2D               [12] 2115 	add	a,r5
+      000584 FA               [12] 2116 	mov	r2,a
+      000585 E4               [12] 2117 	clr	a
+      000586 3E               [12] 2118 	addc	a,r6
+      000587 FB               [12] 2119 	mov	r3,a
+      000588 8F 04            [24] 2120 	mov	ar4,r7
+      00058A 8A 82            [24] 2121 	mov	dpl,r2
+      00058C 8B 83            [24] 2122 	mov	dph,r3
+      00058E 8C F0            [24] 2123 	mov	b,r4
+      000590 12r00r00         [24] 2124 	lcall	__gptrget
+      000593 FA               [12] 2125 	mov	r2,a
+      000594 7C 00            [12] 2126 	mov	r4,#0x00
+      000596 C0 07            [24] 2127 	push	ar7
+      000598 C0 06            [24] 2128 	push	ar6
+      00059A C0 05            [24] 2129 	push	ar5
+      00059C C0 02            [24] 2130 	push	ar2
+      00059E C0 04            [24] 2131 	push	ar4
+      0005A0 75 82 0D         [24] 2132 	mov	dpl,#0x0D
+      0005A3 12r00r00         [24] 2133 	lcall	_packetbuf_set_attr
+      0005A6 15 81            [12] 2134 	dec	sp
+      0005A8 15 81            [12] 2135 	dec	sp
+                                   2136 ;	/home/user/contiki/core/net/rime/runicast.c:236: packetbuf_set_attr(PACKETBUF_ATTR_MAX_MAC_TRANSMISSIONS, 3);
+      0005AA 74 03            [12] 2137 	mov	a,#0x03
+      0005AC C0 E0            [24] 2138 	push	acc
+      0005AE E4               [12] 2139 	clr	a
+      0005AF C0 E0            [24] 2140 	push	acc
+      0005B1 75 82 09         [24] 2141 	mov	dpl,#0x09
+      0005B4 12r00r00         [24] 2142 	lcall	_packetbuf_set_attr
+      0005B7 15 81            [12] 2143 	dec	sp
+      0005B9 15 81            [12] 2144 	dec	sp
+      0005BB D0 05            [24] 2145 	pop	ar5
+      0005BD D0 06            [24] 2146 	pop	ar6
+      0005BF D0 07            [24] 2147 	pop	ar7
+                                   2148 ;	/home/user/contiki/core/net/rime/runicast.c:237: c->max_rxmit = max_retransmissions;
+      0005C1 74 35            [12] 2149 	mov	a,#0x35
+      0005C3 2D               [12] 2150 	add	a,r5
+      0005C4 FA               [12] 2151 	mov	r2,a
+      0005C5 E4               [12] 2152 	clr	a
+      0005C6 3E               [12] 2153 	addc	a,r6
+      0005C7 FB               [12] 2154 	mov	r3,a
+      0005C8 8F 04            [24] 2155 	mov	ar4,r7
+      0005CA 8A 82            [24] 2156 	mov	dpl,r2
+      0005CC 8B 83            [24] 2157 	mov	dph,r3
+      0005CE 8C F0            [24] 2158 	mov	b,r4
+      0005D0 E5 81            [12] 2159 	mov	a,sp
+      0005D2 24 FB            [12] 2160 	add	a,#0xfb
+      0005D4 F8               [12] 2161 	mov	r0,a
+      0005D5 E6               [12] 2162 	mov	a,@r0
+      0005D6 12r00r00         [24] 2163 	lcall	__gptrput
+                                   2164 ;	/home/user/contiki/core/net/rime/runicast.c:238: c->rxmit = 0;
+      0005D9 74 34            [12] 2165 	mov	a,#0x34
+      0005DB 2D               [12] 2166 	add	a,r5
+      0005DC FA               [12] 2167 	mov	r2,a
+      0005DD E4               [12] 2168 	clr	a
+      0005DE 3E               [12] 2169 	addc	a,r6
+      0005DF FB               [12] 2170 	mov	r3,a
+      0005E0 8F 04            [24] 2171 	mov	ar4,r7
+      0005E2 8A 82            [24] 2172 	mov	dpl,r2
+      0005E4 8B 83            [24] 2173 	mov	dph,r3
+      0005E6 8C F0            [24] 2174 	mov	b,r4
+      0005E8 E4               [12] 2175 	clr	a
+      0005E9 12r00r00         [24] 2176 	lcall	__gptrput
+                                   2177 ;	/home/user/contiki/core/net/rime/runicast.c:239: c->is_tx = 1;
+      0005EC 74 33            [12] 2178 	mov	a,#0x33
+      0005EE 2D               [12] 2179 	add	a,r5
+      0005EF FA               [12] 2180 	mov	r2,a
+      0005F0 E4               [12] 2181 	clr	a
+      0005F1 3E               [12] 2182 	addc	a,r6
+      0005F2 FB               [12] 2183 	mov	r3,a
+      0005F3 8F 04            [24] 2184 	mov	ar4,r7
+      0005F5 8A 82            [24] 2185 	mov	dpl,r2
+      0005F7 8B 83            [24] 2186 	mov	dph,r3
+      0005F9 8C F0            [24] 2187 	mov	b,r4
+      0005FB 74 01            [12] 2188 	mov	a,#0x01
+      0005FD 12r00r00         [24] 2189 	lcall	__gptrput
+                                   2190 ;	/home/user/contiki/core/net/rime/runicast.c:244: ret = stunicast_send_stubborn(&c->c, receiver, REXMIT_TIME);
+      000600 C0 04            [24] 2191 	push	ar4
+      000602 C0 03            [24] 2192 	push	ar3
+      000604 C0 02            [24] 2193 	push	ar2
+      000606 74 80            [12] 2194 	mov	a,#0x80
+      000608 C0 E0            [24] 2195 	push	acc
+      00060A E4               [12] 2196 	clr	a
+      00060B C0 E0            [24] 2197 	push	acc
+      00060D E5 81            [12] 2198 	mov	a,sp
+      00060F 24 F7            [12] 2199 	add	a,#0xf7
+      000611 F8               [12] 2200 	mov	r0,a
+      000612 E6               [12] 2201 	mov	a,@r0
+      000613 C0 E0            [24] 2202 	push	acc
+      000615 08               [12] 2203 	inc	r0
+      000616 E6               [12] 2204 	mov	a,@r0
+      000617 C0 E0            [24] 2205 	push	acc
+      000619 08               [12] 2206 	inc	r0
+      00061A E6               [12] 2207 	mov	a,@r0
+      00061B C0 E0            [24] 2208 	push	acc
+      00061D 8D 82            [24] 2209 	mov	dpl,r5
+      00061F 8E 83            [24] 2210 	mov	dph,r6
+      000621 8F F0            [24] 2211 	mov	b,r7
+      000623 12r00r00         [24] 2212 	lcall	_stunicast_send_stubborn
+      000626 AE 82            [24] 2213 	mov	r6,dpl
+      000628 AF 83            [24] 2214 	mov	r7,dph
+      00062A E5 81            [12] 2215 	mov	a,sp
+      00062C 24 FB            [12] 2216 	add	a,#0xfb
+      00062E F5 81            [12] 2217 	mov	sp,a
+      000630 D0 02            [24] 2218 	pop	ar2
+      000632 D0 03            [24] 2219 	pop	ar3
+      000634 D0 04            [24] 2220 	pop	ar4
+                                   2221 ;	/home/user/contiki/core/net/rime/runicast.c:245: if(!ret) {
+      000636 EE               [12] 2222 	mov	a,r6
+      000637 4F               [12] 2223 	orl	a,r7
+      000638 70 0A            [24] 2224 	jnz	00104$
+                                   2225 ;	/home/user/contiki/core/net/rime/runicast.c:246: c->is_tx = 0;
+      00063A 8A 82            [24] 2226 	mov	dpl,r2
+      00063C 8B 83            [24] 2227 	mov	dph,r3
+      00063E 8C F0            [24] 2228 	mov	b,r4
+      000640 E4               [12] 2229 	clr	a
+      000641 12r00r00         [24] 2230 	lcall	__gptrput
+      000644                       2231 00104$:
+                                   2232 ;	/home/user/contiki/core/net/rime/runicast.c:248: return ret;
+      000644 8E 82            [24] 2233 	mov	dpl,r6
+      000646 8F 83            [24] 2234 	mov	dph,r7
+      000648 22               [24] 2235 	ret
+                                   2236 	.area CSEG    (CODE)
+                                   2237 	.area CONST   (CODE)
+      000000                       2238 _attributes:
+      000000 0E                    2239 	.db #0x0E	; 14
+      000001 01                    2240 	.db #0x01	; 1
+      000002 0D                    2241 	.db #0x0D	; 13
+      000003 02                    2242 	.db #0x02	; 2
+      000004 19                    2243 	.db #0x19	; 25
+      000005 10                    2244 	.db #0x10	; 16
+      000006 18                    2245 	.db #0x18	; 24
+      000007 10                    2246 	.db #0x10	; 16
+      000008 00                    2247 	.db #0x00	; 0
+      000009 00                    2248 	.db #0x00	; 0
+      00000A                       2249 _runicast:
+      00000ArC9s01                 2250 	.byte _recv_from_stunicast,(_recv_from_stunicast >> 8)
+      00000Cr00s00                 2251 	.byte _sent_by_stunicast,(_sent_by_stunicast >> 8)
+                                   2252 	.area XINIT   (CODE)
+                                   2253 	.area CABS    (ABS,CODE)

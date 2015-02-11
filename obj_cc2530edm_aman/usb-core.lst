@@ -1,0 +1,2189 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:57 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module usb_core
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _usb_class_get_string_descriptor
+                                     13 	.globl _usb_arch_send_pending
+                                     14 	.globl _usb_arch_get_global_events
+                                     15 	.globl _usb_arch_set_global_event_process
+                                     16 	.globl _usb_arch_set_address
+                                     17 	.globl _usb_arch_get_ep_status
+                                     18 	.globl _usb_arch_set_configuration
+                                     19 	.globl _usb_arch_halt_endpoint
+                                     20 	.globl _usb_arch_control_stall
+                                     21 	.globl _usb_arch_discard_all_buffers
+                                     22 	.globl _usb_arch_disable_endpoint
+                                     23 	.globl _usb_arch_setup_interrupt_endpoint
+                                     24 	.globl _usb_arch_setup_bulk_endpoint
+                                     25 	.globl _usb_arch_setup
+                                     26 	.globl _usb_get_ep_events
+                                     27 	.globl _usb_set_ep_event_process
+                                     28 	.globl _usb_submit_xmit_buffer
+                                     29 	.globl _usb_submit_recv_buffer
+                                     30 	.globl _process_interrupt
+                                     31 	.globl _process_start
+                                     32 	.globl _usb_process
+                                     33 	.globl _usb_setup_buffer
+                                     34 	.globl _usb_set_global_event_process
+                                     35 	.globl _usb_get_global_events
+                                     36 	.globl _usb_send_ctrl_response
+                                     37 	.globl _usb_error_stall
+                                     38 	.globl _usb_send_ctrl_status
+                                     39 	.globl _usb_get_ctrl_data
+                                     40 	.globl _usb_setup
+                                     41 	.globl _usb_register_request_handler
+                                     42 	.globl _usb_prepend_request_handler
+                                     43 	.globl _usb_get_current_configuration
+                                     44 	.globl _usb_setup_bulk_endpoint
+                                     45 	.globl _usb_setup_interrupt_endpoint
+                                     46 	.globl _usb_disable_endpoint
+                                     47 	.globl _usb_discard_all_buffers
+                                     48 	.globl _usb_halt_endpoint
+                                     49 	.globl _usb_send_pending
+                                     50 ;--------------------------------------------------------
+                                     51 ; special function registers
+                                     52 ;--------------------------------------------------------
+                                     53 	.area RSEG    (ABS,DATA)
+      000000                         54 	.org 0x0000
+                                     55 ;--------------------------------------------------------
+                                     56 ; special function bits
+                                     57 ;--------------------------------------------------------
+                                     58 	.area RSEG    (ABS,DATA)
+      000000                         59 	.org 0x0000
+                                     60 ;--------------------------------------------------------
+                                     61 ; overlayable register banks
+                                     62 ;--------------------------------------------------------
+                                     63 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         64 	.ds 8
+                                     65 ;--------------------------------------------------------
+                                     66 ; internal ram data
+                                     67 ;--------------------------------------------------------
+                                     68 	.area DSEG    (DATA)
+                                     69 ;--------------------------------------------------------
+                                     70 ; overlayable items in internal ram 
+                                     71 ;--------------------------------------------------------
+                                     72 ;--------------------------------------------------------
+                                     73 ; indirectly addressable internal ram data
+                                     74 ;--------------------------------------------------------
+                                     75 	.area ISEG    (DATA)
+                                     76 ;--------------------------------------------------------
+                                     77 ; absolute internal ram data
+                                     78 ;--------------------------------------------------------
+                                     79 	.area IABS    (ABS,DATA)
+                                     80 	.area IABS    (ABS,DATA)
+                                     81 ;--------------------------------------------------------
+                                     82 ; bit data
+                                     83 ;--------------------------------------------------------
+                                     84 	.area BSEG    (BIT)
+                                     85 ;--------------------------------------------------------
+                                     86 ; paged external ram data
+                                     87 ;--------------------------------------------------------
+                                     88 	.area PSEG    (PAG,XDATA)
+                                     89 ;--------------------------------------------------------
+                                     90 ; external ram data
+                                     91 ;--------------------------------------------------------
+                                     92 	.area XSEG    (XDATA)
+      000000                         93 _usb_setup_buffer::
+      000000                         94 	.ds 8
+      000008                         95 _ctrl_buffer:
+      000008                         96 	.ds 14
+      000016                         97 _usb_device_status:
+      000016                         98 	.ds 2
+      000018                         99 _usb_configuration_value:
+      000018                        100 	.ds 1
+      000019                        101 _get_endpoint_status_status_1_106:
+      000019                        102 	.ds 2
+                                    103 ;--------------------------------------------------------
+                                    104 ; absolute external ram data
+                                    105 ;--------------------------------------------------------
+                                    106 	.area XABS    (ABS,XDATA)
+                                    107 ;--------------------------------------------------------
+                                    108 ; external initialized ram data
+                                    109 ;--------------------------------------------------------
+                                    110 	.area XISEG   (XDATA)
+      000000                        111 _usb_request_handler_hooks:
+      000000                        112 	.ds 3
+      000003                        113 _usb_flags:
+      000003                        114 	.ds 1
+      000004                        115 _global_user_event_pocess:
+      000004                        116 	.ds 3
+      000007                        117 _global_user_events:
+      000007                        118 	.ds 2
+      000009                        119 _error_stall:
+      000009                        120 	.ds 1
+      00000A                        121 _data_callback:
+      00000A                        122 	.ds 2
+      00000C                        123 _ctrl_data:
+      00000C                        124 	.ds 3
+      00000F                        125 _ctrl_data_len:
+      00000F                        126 	.ds 2
+      000011                        127 _standard_request_hook:
+      000011                        128 	.ds 6
+      000017                        129 _usb_process::
+      000017                        130 	.ds 9
+                                    131 	.area HOME    (CODE)
+                                    132 	.area GSINIT0 (CODE)
+                                    133 	.area GSINIT1 (CODE)
+                                    134 	.area GSINIT2 (CODE)
+                                    135 	.area GSINIT3 (CODE)
+                                    136 	.area GSINIT4 (CODE)
+                                    137 	.area GSINIT5 (CODE)
+                                    138 	.area GSINIT  (CODE)
+                                    139 	.area GSFINAL (CODE)
+                                    140 	.area CSEG    (CODE)
+                                    141 ;--------------------------------------------------------
+                                    142 ; global & static initialisations
+                                    143 ;--------------------------------------------------------
+                                    144 	.area HOME    (CODE)
+                                    145 	.area GSINIT  (CODE)
+                                    146 	.area GSFINAL (CODE)
+                                    147 	.area GSINIT  (CODE)
+                                    148 ;--------------------------------------------------------
+                                    149 ; Home
+                                    150 ;--------------------------------------------------------
+                                    151 	.area HOME    (CODE)
+                                    152 	.area HOME    (CODE)
+                                    153 ;--------------------------------------------------------
+                                    154 ; code
+                                    155 ;--------------------------------------------------------
+                                    156 	.area CSEG    (CODE)
+                                    157 ;------------------------------------------------------------
+                                    158 ;Allocation info for local variables in function 'usb_set_global_event_process'
+                                    159 ;------------------------------------------------------------
+                                    160 ;p                         Allocated to registers 
+                                    161 ;------------------------------------------------------------
+                                    162 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:42: usb_set_global_event_process(struct process *p)
+                                    163 ;	-----------------------------------------
+                                    164 ;	 function usb_set_global_event_process
+                                    165 ;	-----------------------------------------
+      000000                        166 _usb_set_global_event_process:
+                           000007   167 	ar7 = 0x07
+                           000006   168 	ar6 = 0x06
+                           000005   169 	ar5 = 0x05
+                           000004   170 	ar4 = 0x04
+                           000003   171 	ar3 = 0x03
+                           000002   172 	ar2 = 0x02
+                           000001   173 	ar1 = 0x01
+                           000000   174 	ar0 = 0x00
+      000000 AF F0            [24]  175 	mov	r7,b
+      000002 AE 83            [24]  176 	mov	r6,dph
+      000004 E5 82            [12]  177 	mov	a,dpl
+      000006 90r00r04         [24]  178 	mov	dptr,#_global_user_event_pocess
+      000009 F0               [24]  179 	movx	@dptr,a
+      00000A EE               [12]  180 	mov	a,r6
+      00000B A3               [24]  181 	inc	dptr
+      00000C F0               [24]  182 	movx	@dptr,a
+      00000D EF               [12]  183 	mov	a,r7
+      00000E A3               [24]  184 	inc	dptr
+      00000F F0               [24]  185 	movx	@dptr,a
+                                    186 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:44: global_user_event_pocess = p;
+      000010 22               [24]  187 	ret
+                                    188 ;------------------------------------------------------------
+                                    189 ;Allocation info for local variables in function 'usb_get_global_events'
+                                    190 ;------------------------------------------------------------
+                                    191 ;e                         Allocated to registers r6 r7 
+                                    192 ;------------------------------------------------------------
+                                    193 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:47: usb_get_global_events(void)
+                                    194 ;	-----------------------------------------
+                                    195 ;	 function usb_get_global_events
+                                    196 ;	-----------------------------------------
+      000011                        197 _usb_get_global_events:
+                                    198 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:49: unsigned int e = global_user_events;
+      000011 90r00r07         [24]  199 	mov	dptr,#_global_user_events
+      000014 E0               [24]  200 	movx	a,@dptr
+      000015 FE               [12]  201 	mov	r6,a
+      000016 A3               [24]  202 	inc	dptr
+      000017 E0               [24]  203 	movx	a,@dptr
+      000018 FF               [12]  204 	mov	r7,a
+                                    205 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:50: global_user_events = 0;
+      000019 90r00r07         [24]  206 	mov	dptr,#_global_user_events
+      00001C E4               [12]  207 	clr	a
+      00001D F0               [24]  208 	movx	@dptr,a
+      00001E E4               [12]  209 	clr	a
+      00001F A3               [24]  210 	inc	dptr
+      000020 F0               [24]  211 	movx	@dptr,a
+                                    212 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:51: return e;
+      000021 8E 82            [24]  213 	mov	dpl,r6
+      000023 8F 83            [24]  214 	mov	dph,r7
+      000025 22               [24]  215 	ret
+                                    216 ;------------------------------------------------------------
+                                    217 ;Allocation info for local variables in function 'notify_user'
+                                    218 ;------------------------------------------------------------
+                                    219 ;e                         Allocated to registers r6 r7 
+                                    220 ;------------------------------------------------------------
+                                    221 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:55: notify_user(unsigned int e)
+                                    222 ;	-----------------------------------------
+                                    223 ;	 function notify_user
+                                    224 ;	-----------------------------------------
+      000026                        225 _notify_user:
+      000026 AE 82            [24]  226 	mov	r6,dpl
+      000028 AF 83            [24]  227 	mov	r7,dph
+                                    228 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:57: global_user_events |= e;
+      00002A 90r00r07         [24]  229 	mov	dptr,#_global_user_events
+      00002D E0               [24]  230 	movx	a,@dptr
+      00002E FC               [12]  231 	mov	r4,a
+      00002F A3               [24]  232 	inc	dptr
+      000030 E0               [24]  233 	movx	a,@dptr
+      000031 FD               [12]  234 	mov	r5,a
+      000032 90r00r07         [24]  235 	mov	dptr,#_global_user_events
+      000035 EE               [12]  236 	mov	a,r6
+      000036 4C               [12]  237 	orl	a,r4
+      000037 F0               [24]  238 	movx	@dptr,a
+      000038 EF               [12]  239 	mov	a,r7
+      000039 4D               [12]  240 	orl	a,r5
+      00003A A3               [24]  241 	inc	dptr
+      00003B F0               [24]  242 	movx	@dptr,a
+                                    243 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:58: if(global_user_event_pocess) {
+      00003C 90r00r04         [24]  244 	mov	dptr,#_global_user_event_pocess
+      00003F E0               [24]  245 	movx	a,@dptr
+      000040 FD               [12]  246 	mov	r5,a
+      000041 A3               [24]  247 	inc	dptr
+      000042 E0               [24]  248 	movx	a,@dptr
+      000043 FE               [12]  249 	mov	r6,a
+      000044 A3               [24]  250 	inc	dptr
+      000045 E0               [24]  251 	movx	a,@dptr
+      000046 FF               [12]  252 	mov	r7,a
+      000047 ED               [12]  253 	mov	a,r5
+      000048 4E               [12]  254 	orl	a,r6
+      000049 60 09            [24]  255 	jz	00103$
+                                    256 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:59: process_interrupt(global_user_event_pocess);
+      00004B 8D 82            [24]  257 	mov	dpl,r5
+      00004D 8E 83            [24]  258 	mov	dph,r6
+      00004F 8F F0            [24]  259 	mov	b,r7
+      000051 02r00r00         [24]  260 	ljmp	_process_interrupt
+      000054                        261 00103$:
+      000054 22               [24]  262 	ret
+                                    263 ;------------------------------------------------------------
+                                    264 ;Allocation info for local variables in function 'usb_send_ctrl_response'
+                                    265 ;------------------------------------------------------------
+                                    266 ;len                       Allocated to stack - sp -3
+                                    267 ;data                      Allocated to registers r5 r6 r7 
+                                    268 ;------------------------------------------------------------
+                                    269 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:65: usb_send_ctrl_response(const uint8_t * data, unsigned int len)
+                                    270 ;	-----------------------------------------
+                                    271 ;	 function usb_send_ctrl_response
+                                    272 ;	-----------------------------------------
+      000055                        273 _usb_send_ctrl_response:
+      000055 AD 82            [24]  274 	mov	r5,dpl
+      000057 AE 83            [24]  275 	mov	r6,dph
+      000059 AF F0            [24]  276 	mov	r7,b
+                                    277 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:67: if(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)
+      00005B 90r00r10         [24]  278 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      00005E E0               [24]  279 	movx	a,@dptr
+      00005F FB               [12]  280 	mov	r3,a
+      000060 A3               [24]  281 	inc	dptr
+      000061 E0               [24]  282 	movx	a,@dptr
+      000062 FC               [12]  283 	mov	r4,a
+      000063 EB               [12]  284 	mov	a,r3
+      000064 30 E0 01         [24]  285 	jnb	acc.0,00102$
+                                    286 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:68: return;
+      000067 22               [24]  287 	ret
+      000068                        288 00102$:
+                                    289 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:69: if(len >= usb_setup_buffer.wLength) {
+      000068 90r00r06         [24]  290 	mov	dptr,#(_usb_setup_buffer + 0x0006)
+      00006B E0               [24]  291 	movx	a,@dptr
+      00006C FB               [12]  292 	mov	r3,a
+      00006D A3               [24]  293 	inc	dptr
+      00006E E0               [24]  294 	movx	a,@dptr
+      00006F FC               [12]  295 	mov	r4,a
+      000070 E5 81            [12]  296 	mov	a,sp
+      000072 24 FD            [12]  297 	add	a,#0xfd
+      000074 F8               [12]  298 	mov	r0,a
+      000075 C3               [12]  299 	clr	c
+      000076 E6               [12]  300 	mov	a,@r0
+      000077 9B               [12]  301 	subb	a,r3
+      000078 08               [12]  302 	inc	r0
+      000079 E6               [12]  303 	mov	a,@r0
+      00007A 9C               [12]  304 	subb	a,r4
+      00007B 40 0A            [24]  305 	jc	00104$
+                                    306 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:70: len = usb_setup_buffer.wLength;     /* Truncate if too long */
+      00007D E5 81            [12]  307 	mov	a,sp
+      00007F 24 FD            [12]  308 	add	a,#0xfd
+      000081 F8               [12]  309 	mov	r0,a
+      000082 A6 03            [24]  310 	mov	@r0,ar3
+      000084 08               [12]  311 	inc	r0
+      000085 A6 04            [24]  312 	mov	@r0,ar4
+      000087                        313 00104$:
+                                    314 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:72: ctrl_buffer.flags = USB_BUFFER_NOTIFY | USB_BUFFER_IN;
+      000087 90r00r10         [24]  315 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      00008A 74 48            [12]  316 	mov	a,#0x48
+      00008C F0               [24]  317 	movx	@dptr,a
+      00008D E4               [12]  318 	clr	a
+      00008E A3               [24]  319 	inc	dptr
+      00008F F0               [24]  320 	movx	@dptr,a
+                                    321 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:73: if(len < usb_setup_buffer.wLength) {
+      000090 90r00r06         [24]  322 	mov	dptr,#(_usb_setup_buffer + 0x0006)
+      000093 E0               [24]  323 	movx	a,@dptr
+      000094 FB               [12]  324 	mov	r3,a
+      000095 A3               [24]  325 	inc	dptr
+      000096 E0               [24]  326 	movx	a,@dptr
+      000097 FC               [12]  327 	mov	r4,a
+      000098 E5 81            [12]  328 	mov	a,sp
+      00009A 24 FD            [12]  329 	add	a,#0xfd
+      00009C F8               [12]  330 	mov	r0,a
+      00009D C3               [12]  331 	clr	c
+      00009E E6               [12]  332 	mov	a,@r0
+      00009F 9B               [12]  333 	subb	a,r3
+      0000A0 08               [12]  334 	inc	r0
+      0000A1 E6               [12]  335 	mov	a,@r0
+      0000A2 9C               [12]  336 	subb	a,r4
+      0000A3 50 13            [24]  337 	jnc	00106$
+                                    338 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:74: ctrl_buffer.flags |= USB_BUFFER_SHORT_END;
+      0000A5 90r00r10         [24]  339 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0000A8 E0               [24]  340 	movx	a,@dptr
+      0000A9 FB               [12]  341 	mov	r3,a
+      0000AA A3               [24]  342 	inc	dptr
+      0000AB E0               [24]  343 	movx	a,@dptr
+      0000AC FC               [12]  344 	mov	r4,a
+      0000AD 43 03 02         [24]  345 	orl	ar3,#0x02
+      0000B0 90r00r10         [24]  346 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0000B3 EB               [12]  347 	mov	a,r3
+      0000B4 F0               [24]  348 	movx	@dptr,a
+      0000B5 EC               [12]  349 	mov	a,r4
+      0000B6 A3               [24]  350 	inc	dptr
+      0000B7 F0               [24]  351 	movx	@dptr,a
+      0000B8                        352 00106$:
+                                    353 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:76: ctrl_buffer.next = NULL;
+      0000B8 90r00r08         [24]  354 	mov	dptr,#_ctrl_buffer
+      0000BB E4               [12]  355 	clr	a
+      0000BC F0               [24]  356 	movx	@dptr,a
+      0000BD E4               [12]  357 	clr	a
+      0000BE A3               [24]  358 	inc	dptr
+      0000BF F0               [24]  359 	movx	@dptr,a
+      0000C0 E4               [12]  360 	clr	a
+      0000C1 A3               [24]  361 	inc	dptr
+      0000C2 F0               [24]  362 	movx	@dptr,a
+                                    363 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:77: ctrl_buffer.data = (uint8_t *) data;
+      0000C3 90r00r0B         [24]  364 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      0000C6 ED               [12]  365 	mov	a,r5
+      0000C7 F0               [24]  366 	movx	@dptr,a
+      0000C8 EE               [12]  367 	mov	a,r6
+      0000C9 A3               [24]  368 	inc	dptr
+      0000CA F0               [24]  369 	movx	@dptr,a
+      0000CB EF               [12]  370 	mov	a,r7
+      0000CC A3               [24]  371 	inc	dptr
+      0000CD F0               [24]  372 	movx	@dptr,a
+                                    373 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:78: ctrl_buffer.left = len;
+      0000CE 90r00r0E         [24]  374 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0000D1 E5 81            [12]  375 	mov	a,sp
+      0000D3 24 FD            [12]  376 	add	a,#0xfd
+      0000D5 F8               [12]  377 	mov	r0,a
+      0000D6 E6               [12]  378 	mov	a,@r0
+      0000D7 F0               [24]  379 	movx	@dptr,a
+      0000D8 08               [12]  380 	inc	r0
+      0000D9 E6               [12]  381 	mov	a,@r0
+      0000DA A3               [24]  382 	inc	dptr
+      0000DB F0               [24]  383 	movx	@dptr,a
+                                    384 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:79: ctrl_buffer.id = IN_ID;
+      0000DC 90r00r12         [24]  385 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      0000DF 74 03            [12]  386 	mov	a,#0x03
+      0000E1 F0               [24]  387 	movx	@dptr,a
+      0000E2 E4               [12]  388 	clr	a
+      0000E3 A3               [24]  389 	inc	dptr
+      0000E4 F0               [24]  390 	movx	@dptr,a
+      0000E5 E4               [12]  391 	clr	a
+      0000E6 A3               [24]  392 	inc	dptr
+      0000E7 F0               [24]  393 	movx	@dptr,a
+      0000E8 E4               [12]  394 	clr	a
+      0000E9 A3               [24]  395 	inc	dptr
+      0000EA F0               [24]  396 	movx	@dptr,a
+                                    397 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:80: usb_submit_xmit_buffer(0, &ctrl_buffer);
+      0000EB 74r08            [12]  398 	mov	a,#_ctrl_buffer
+      0000ED C0 E0            [24]  399 	push	acc
+      0000EF 74s00            [12]  400 	mov	a,#(_ctrl_buffer >> 8)
+      0000F1 C0 E0            [24]  401 	push	acc
+      0000F3 E4               [12]  402 	clr	a
+      0000F4 C0 E0            [24]  403 	push	acc
+      0000F6 75 82 00         [24]  404 	mov	dpl,#0x00
+      0000F9 12r00r00         [24]  405 	lcall	_usb_submit_xmit_buffer
+      0000FC 15 81            [12]  406 	dec	sp
+      0000FE 15 81            [12]  407 	dec	sp
+      000100 15 81            [12]  408 	dec	sp
+      000102 22               [24]  409 	ret
+                                    410 ;------------------------------------------------------------
+                                    411 ;Allocation info for local variables in function 'usb_error_stall'
+                                    412 ;------------------------------------------------------------
+                                    413 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:86: usb_error_stall()
+                                    414 ;	-----------------------------------------
+                                    415 ;	 function usb_error_stall
+                                    416 ;	-----------------------------------------
+      000103                        417 _usb_error_stall:
+                                    418 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:88: error_stall = 1;
+      000103 90r00r09         [24]  419 	mov	dptr,#_error_stall
+      000106 74 01            [12]  420 	mov	a,#0x01
+      000108 F0               [24]  421 	movx	@dptr,a
+                                    422 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:89: usb_arch_control_stall(0);
+      000109 75 82 00         [24]  423 	mov	dpl,#0x00
+      00010C 02r00r00         [24]  424 	ljmp	_usb_arch_control_stall
+                                    425 ;------------------------------------------------------------
+                                    426 ;Allocation info for local variables in function 'usb_send_ctrl_status'
+                                    427 ;------------------------------------------------------------
+                                    428 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:93: usb_send_ctrl_status()
+                                    429 ;	-----------------------------------------
+                                    430 ;	 function usb_send_ctrl_status
+                                    431 ;	-----------------------------------------
+      00010F                        432 _usb_send_ctrl_status:
+                                    433 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:95: if(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)
+      00010F 90r00r10         [24]  434 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      000112 E0               [24]  435 	movx	a,@dptr
+      000113 FE               [12]  436 	mov	r6,a
+      000114 A3               [24]  437 	inc	dptr
+      000115 E0               [24]  438 	movx	a,@dptr
+      000116 FF               [12]  439 	mov	r7,a
+      000117 EE               [12]  440 	mov	a,r6
+      000118 30 E0 01         [24]  441 	jnb	acc.0,00102$
+                                    442 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:96: return;
+      00011B 22               [24]  443 	ret
+      00011C                        444 00102$:
+                                    445 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:97: ctrl_buffer.flags = USB_BUFFER_NOTIFY | USB_BUFFER_IN;
+      00011C 90r00r10         [24]  446 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      00011F 74 48            [12]  447 	mov	a,#0x48
+      000121 F0               [24]  448 	movx	@dptr,a
+      000122 E4               [12]  449 	clr	a
+      000123 A3               [24]  450 	inc	dptr
+      000124 F0               [24]  451 	movx	@dptr,a
+                                    452 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:98: ctrl_buffer.next = NULL;
+      000125 90r00r08         [24]  453 	mov	dptr,#_ctrl_buffer
+      000128 E4               [12]  454 	clr	a
+      000129 F0               [24]  455 	movx	@dptr,a
+      00012A E4               [12]  456 	clr	a
+      00012B A3               [24]  457 	inc	dptr
+      00012C F0               [24]  458 	movx	@dptr,a
+      00012D E4               [12]  459 	clr	a
+      00012E A3               [24]  460 	inc	dptr
+      00012F F0               [24]  461 	movx	@dptr,a
+                                    462 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:99: ctrl_buffer.data = NULL;
+      000130 90r00r0B         [24]  463 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      000133 E4               [12]  464 	clr	a
+      000134 F0               [24]  465 	movx	@dptr,a
+      000135 E4               [12]  466 	clr	a
+      000136 A3               [24]  467 	inc	dptr
+      000137 F0               [24]  468 	movx	@dptr,a
+      000138 E4               [12]  469 	clr	a
+      000139 A3               [24]  470 	inc	dptr
+      00013A F0               [24]  471 	movx	@dptr,a
+                                    472 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:100: ctrl_buffer.left = 0;
+      00013B 90r00r0E         [24]  473 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      00013E E4               [12]  474 	clr	a
+      00013F F0               [24]  475 	movx	@dptr,a
+      000140 E4               [12]  476 	clr	a
+      000141 A3               [24]  477 	inc	dptr
+      000142 F0               [24]  478 	movx	@dptr,a
+                                    479 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:101: ctrl_buffer.id = STATUS_IN_ID;
+      000143 90r00r12         [24]  480 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      000146 74 05            [12]  481 	mov	a,#0x05
+      000148 F0               [24]  482 	movx	@dptr,a
+      000149 E4               [12]  483 	clr	a
+      00014A A3               [24]  484 	inc	dptr
+      00014B F0               [24]  485 	movx	@dptr,a
+      00014C E4               [12]  486 	clr	a
+      00014D A3               [24]  487 	inc	dptr
+      00014E F0               [24]  488 	movx	@dptr,a
+      00014F E4               [12]  489 	clr	a
+      000150 A3               [24]  490 	inc	dptr
+      000151 F0               [24]  491 	movx	@dptr,a
+                                    492 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:102: usb_submit_xmit_buffer(0, &ctrl_buffer);
+      000152 74r08            [12]  493 	mov	a,#_ctrl_buffer
+      000154 C0 E0            [24]  494 	push	acc
+      000156 74s00            [12]  495 	mov	a,#(_ctrl_buffer >> 8)
+      000158 C0 E0            [24]  496 	push	acc
+      00015A E4               [12]  497 	clr	a
+      00015B C0 E0            [24]  498 	push	acc
+      00015D 75 82 00         [24]  499 	mov	dpl,#0x00
+      000160 12r00r00         [24]  500 	lcall	_usb_submit_xmit_buffer
+      000163 15 81            [12]  501 	dec	sp
+      000165 15 81            [12]  502 	dec	sp
+      000167 15 81            [12]  503 	dec	sp
+      000169 22               [24]  504 	ret
+                                    505 ;------------------------------------------------------------
+                                    506 ;Allocation info for local variables in function 'usb_get_ctrl_data'
+                                    507 ;------------------------------------------------------------
+                                    508 ;length                    Allocated to stack - sp -3
+                                    509 ;cb                        Allocated to stack - sp -5
+                                    510 ;data                      Allocated to registers r5 r6 r7 
+                                    511 ;------------------------------------------------------------
+                                    512 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:112: usb_get_ctrl_data(uint8_t * data, unsigned int length,
+                                    513 ;	-----------------------------------------
+                                    514 ;	 function usb_get_ctrl_data
+                                    515 ;	-----------------------------------------
+      00016A                        516 _usb_get_ctrl_data:
+      00016A AD 82            [24]  517 	mov	r5,dpl
+      00016C AE 83            [24]  518 	mov	r6,dph
+      00016E AF F0            [24]  519 	mov	r7,b
+                                    520 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:115: if(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)
+      000170 90r00r10         [24]  521 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      000173 E0               [24]  522 	movx	a,@dptr
+      000174 FB               [12]  523 	mov	r3,a
+      000175 A3               [24]  524 	inc	dptr
+      000176 E0               [24]  525 	movx	a,@dptr
+      000177 FC               [12]  526 	mov	r4,a
+      000178 EB               [12]  527 	mov	a,r3
+      000179 30 E0 01         [24]  528 	jnb	acc.0,00102$
+                                    529 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:116: return;
+      00017C 22               [24]  530 	ret
+      00017D                        531 00102$:
+                                    532 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:118: data_callback = cb;
+      00017D E5 81            [12]  533 	mov	a,sp
+      00017F 24 FB            [12]  534 	add	a,#0xfb
+      000181 F8               [12]  535 	mov	r0,a
+      000182 90r00r0A         [24]  536 	mov	dptr,#_data_callback
+      000185 E6               [12]  537 	mov	a,@r0
+      000186 F0               [24]  538 	movx	@dptr,a
+      000187 08               [12]  539 	inc	r0
+      000188 E6               [12]  540 	mov	a,@r0
+      000189 A3               [24]  541 	inc	dptr
+      00018A F0               [24]  542 	movx	@dptr,a
+                                    543 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:119: ctrl_data = data;
+      00018B 90r00r0C         [24]  544 	mov	dptr,#_ctrl_data
+      00018E ED               [12]  545 	mov	a,r5
+      00018F F0               [24]  546 	movx	@dptr,a
+      000190 EE               [12]  547 	mov	a,r6
+      000191 A3               [24]  548 	inc	dptr
+      000192 F0               [24]  549 	movx	@dptr,a
+      000193 EF               [12]  550 	mov	a,r7
+      000194 A3               [24]  551 	inc	dptr
+      000195 F0               [24]  552 	movx	@dptr,a
+                                    553 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:120: ctrl_data_len = length;
+      000196 E5 81            [12]  554 	mov	a,sp
+      000198 24 FD            [12]  555 	add	a,#0xfd
+      00019A F8               [12]  556 	mov	r0,a
+      00019B 86 03            [24]  557 	mov	ar3,@r0
+      00019D 08               [12]  558 	inc	r0
+      00019E 86 04            [24]  559 	mov	ar4,@r0
+      0001A0 90r00r0F         [24]  560 	mov	dptr,#_ctrl_data_len
+      0001A3 EB               [12]  561 	mov	a,r3
+      0001A4 F0               [24]  562 	movx	@dptr,a
+      0001A5 EC               [12]  563 	mov	a,r4
+      0001A6 A3               [24]  564 	inc	dptr
+      0001A7 F0               [24]  565 	movx	@dptr,a
+                                    566 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:121: ctrl_buffer.flags = USB_BUFFER_NOTIFY;
+      0001A8 90r00r10         [24]  567 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0001AB 74 08            [12]  568 	mov	a,#0x08
+      0001AD F0               [24]  569 	movx	@dptr,a
+      0001AE E4               [12]  570 	clr	a
+      0001AF A3               [24]  571 	inc	dptr
+      0001B0 F0               [24]  572 	movx	@dptr,a
+                                    573 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:122: ctrl_buffer.next = NULL;
+      0001B1 90r00r08         [24]  574 	mov	dptr,#_ctrl_buffer
+      0001B4 E4               [12]  575 	clr	a
+      0001B5 F0               [24]  576 	movx	@dptr,a
+      0001B6 E4               [12]  577 	clr	a
+      0001B7 A3               [24]  578 	inc	dptr
+      0001B8 F0               [24]  579 	movx	@dptr,a
+      0001B9 E4               [12]  580 	clr	a
+      0001BA A3               [24]  581 	inc	dptr
+      0001BB F0               [24]  582 	movx	@dptr,a
+                                    583 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:123: ctrl_buffer.data = data;
+      0001BC 90r00r0B         [24]  584 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      0001BF ED               [12]  585 	mov	a,r5
+      0001C0 F0               [24]  586 	movx	@dptr,a
+      0001C1 EE               [12]  587 	mov	a,r6
+      0001C2 A3               [24]  588 	inc	dptr
+      0001C3 F0               [24]  589 	movx	@dptr,a
+      0001C4 EF               [12]  590 	mov	a,r7
+      0001C5 A3               [24]  591 	inc	dptr
+      0001C6 F0               [24]  592 	movx	@dptr,a
+                                    593 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:124: ctrl_buffer.left = length;
+      0001C7 90r00r0E         [24]  594 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0001CA EB               [12]  595 	mov	a,r3
+      0001CB F0               [24]  596 	movx	@dptr,a
+      0001CC EC               [12]  597 	mov	a,r4
+      0001CD A3               [24]  598 	inc	dptr
+      0001CE F0               [24]  599 	movx	@dptr,a
+                                    600 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:125: ctrl_buffer.id = OUT_ID;
+      0001CF 90r00r12         [24]  601 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      0001D2 74 02            [12]  602 	mov	a,#0x02
+      0001D4 F0               [24]  603 	movx	@dptr,a
+      0001D5 E4               [12]  604 	clr	a
+      0001D6 A3               [24]  605 	inc	dptr
+      0001D7 F0               [24]  606 	movx	@dptr,a
+      0001D8 E4               [12]  607 	clr	a
+      0001D9 A3               [24]  608 	inc	dptr
+      0001DA F0               [24]  609 	movx	@dptr,a
+      0001DB E4               [12]  610 	clr	a
+      0001DC A3               [24]  611 	inc	dptr
+      0001DD F0               [24]  612 	movx	@dptr,a
+                                    613 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:126: usb_submit_recv_buffer(0, &ctrl_buffer);
+      0001DE 74r08            [12]  614 	mov	a,#_ctrl_buffer
+      0001E0 C0 E0            [24]  615 	push	acc
+      0001E2 74s00            [12]  616 	mov	a,#(_ctrl_buffer >> 8)
+      0001E4 C0 E0            [24]  617 	push	acc
+      0001E6 E4               [12]  618 	clr	a
+      0001E7 C0 E0            [24]  619 	push	acc
+      0001E9 75 82 00         [24]  620 	mov	dpl,#0x00
+      0001EC 12r00r00         [24]  621 	lcall	_usb_submit_recv_buffer
+      0001EF 15 81            [12]  622 	dec	sp
+      0001F1 15 81            [12]  623 	dec	sp
+      0001F3 15 81            [12]  624 	dec	sp
+      0001F5 22               [24]  625 	ret
+                                    626 ;------------------------------------------------------------
+                                    627 ;Allocation info for local variables in function 'get_device_descriptor'
+                                    628 ;------------------------------------------------------------
+                                    629 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:139: get_device_descriptor()
+                                    630 ;	-----------------------------------------
+                                    631 ;	 function get_device_descriptor
+                                    632 ;	-----------------------------------------
+      0001F6                        633 _get_device_descriptor:
+                                    634 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:141: usb_send_ctrl_response((unsigned char *)&device_descriptor,
+      0001F6 7Er00            [12]  635 	mov	r6,#_device_descriptor
+      0001F8 7Fs00            [12]  636 	mov	r7,#(_device_descriptor >> 8)
+      0001FA 7D 80            [12]  637 	mov	r5,#0x80
+      0001FC 74 12            [12]  638 	mov	a,#0x12
+      0001FE C0 E0            [24]  639 	push	acc
+      000200 E4               [12]  640 	clr	a
+      000201 C0 E0            [24]  641 	push	acc
+      000203 8E 82            [24]  642 	mov	dpl,r6
+      000205 8F 83            [24]  643 	mov	dph,r7
+      000207 8D F0            [24]  644 	mov	b,r5
+      000209 12r00r55         [24]  645 	lcall	_usb_send_ctrl_response
+      00020C 15 81            [12]  646 	dec	sp
+      00020E 15 81            [12]  647 	dec	sp
+      000210 22               [24]  648 	ret
+                                    649 ;------------------------------------------------------------
+                                    650 ;Allocation info for local variables in function 'get_string_descriptor'
+                                    651 ;------------------------------------------------------------
+                                    652 ;descriptor                Allocated to registers r5 r6 r7 
+                                    653 ;------------------------------------------------------------
+                                    654 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:146: get_string_descriptor()
+                                    655 ;	-----------------------------------------
+                                    656 ;	 function get_string_descriptor
+                                    657 ;	-----------------------------------------
+      000211                        658 _get_string_descriptor:
+                                    659 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:187: LOW_BYTE(usb_setup_buffer.wValue));
+      000211 90r00r02         [24]  660 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      000214 E0               [24]  661 	movx	a,@dptr
+      000215 FE               [12]  662 	mov	r6,a
+      000216 A3               [24]  663 	inc	dptr
+      000217 E0               [24]  664 	movx	a,@dptr
+                                    665 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:186: usb_class_get_string_descriptor(usb_setup_buffer.wIndex,
+      000218 90r00r04         [24]  666 	mov	dptr,#(_usb_setup_buffer + 0x0004)
+      00021B E0               [24]  667 	movx	a,@dptr
+      00021C FD               [12]  668 	mov	r5,a
+      00021D A3               [24]  669 	inc	dptr
+      00021E E0               [24]  670 	movx	a,@dptr
+      00021F FF               [12]  671 	mov	r7,a
+      000220 C0 06            [24]  672 	push	ar6
+      000222 8D 82            [24]  673 	mov	dpl,r5
+      000224 8F 83            [24]  674 	mov	dph,r7
+      000226 12r00r00         [24]  675 	lcall	_usb_class_get_string_descriptor
+      000229 AD 82            [24]  676 	mov	r5,dpl
+      00022B AE 83            [24]  677 	mov	r6,dph
+      00022D AF F0            [24]  678 	mov	r7,b
+      00022F 15 81            [12]  679 	dec	sp
+                                    680 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:188: if(!descriptor) {
+      000231 ED               [12]  681 	mov	a,r5
+      000232 4E               [12]  682 	orl	a,r6
+      000233 70 03            [24]  683 	jnz	00102$
+                                    684 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:189: usb_error_stall();
+                                    685 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:190: return;
+      000235 02r01r03         [24]  686 	ljmp	_usb_error_stall
+      000238                        687 00102$:
+                                    688 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:193: descriptor->bLength);
+      000238 8D 82            [24]  689 	mov	dpl,r5
+      00023A 8E 83            [24]  690 	mov	dph,r6
+      00023C 8F F0            [24]  691 	mov	b,r7
+      00023E 12r00r00         [24]  692 	lcall	__gptrget
+      000241 FC               [12]  693 	mov	r4,a
+      000242 7B 00            [12]  694 	mov	r3,#0x00
+                                    695 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:192: usb_send_ctrl_response((const unsigned char *)descriptor,
+      000244 C0 04            [24]  696 	push	ar4
+      000246 C0 03            [24]  697 	push	ar3
+      000248 8D 82            [24]  698 	mov	dpl,r5
+      00024A 8E 83            [24]  699 	mov	dph,r6
+      00024C 8F F0            [24]  700 	mov	b,r7
+      00024E 12r00r55         [24]  701 	lcall	_usb_send_ctrl_response
+      000251 15 81            [12]  702 	dec	sp
+      000253 15 81            [12]  703 	dec	sp
+      000255 22               [24]  704 	ret
+                                    705 ;------------------------------------------------------------
+                                    706 ;Allocation info for local variables in function 'get_configuration_descriptor'
+                                    707 ;------------------------------------------------------------
+                                    708 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:198: get_configuration_descriptor()
+                                    709 ;	-----------------------------------------
+                                    710 ;	 function get_configuration_descriptor
+                                    711 ;	-----------------------------------------
+      000256                        712 _get_configuration_descriptor:
+                                    713 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:201: configuration_head->wTotalLength);
+      000256 90r00r00         [24]  714 	mov	dptr,#_configuration_head
+      000259 E0               [24]  715 	movx	a,@dptr
+      00025A FD               [12]  716 	mov	r5,a
+      00025B A3               [24]  717 	inc	dptr
+      00025C E0               [24]  718 	movx	a,@dptr
+      00025D FE               [12]  719 	mov	r6,a
+      00025E A3               [24]  720 	inc	dptr
+      00025F E0               [24]  721 	movx	a,@dptr
+      000260 FF               [12]  722 	mov	r7,a
+      000261 74 02            [12]  723 	mov	a,#0x02
+      000263 2D               [12]  724 	add	a,r5
+      000264 FA               [12]  725 	mov	r2,a
+      000265 E4               [12]  726 	clr	a
+      000266 3E               [12]  727 	addc	a,r6
+      000267 FB               [12]  728 	mov	r3,a
+      000268 8F 04            [24]  729 	mov	ar4,r7
+      00026A 8A 82            [24]  730 	mov	dpl,r2
+      00026C 8B 83            [24]  731 	mov	dph,r3
+      00026E 8C F0            [24]  732 	mov	b,r4
+      000270 12r00r00         [24]  733 	lcall	__gptrget
+      000273 FA               [12]  734 	mov	r2,a
+      000274 A3               [24]  735 	inc	dptr
+      000275 12r00r00         [24]  736 	lcall	__gptrget
+      000278 FB               [12]  737 	mov	r3,a
+                                    738 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:200: usb_send_ctrl_response((unsigned char *)configuration_head,
+      000279 C0 02            [24]  739 	push	ar2
+      00027B C0 03            [24]  740 	push	ar3
+      00027D 8D 82            [24]  741 	mov	dpl,r5
+      00027F 8E 83            [24]  742 	mov	dph,r6
+      000281 8F F0            [24]  743 	mov	b,r7
+      000283 12r00r55         [24]  744 	lcall	_usb_send_ctrl_response
+      000286 15 81            [12]  745 	dec	sp
+      000288 15 81            [12]  746 	dec	sp
+      00028A 22               [24]  747 	ret
+                                    748 ;------------------------------------------------------------
+                                    749 ;Allocation info for local variables in function 'get_configuration'
+                                    750 ;------------------------------------------------------------
+                                    751 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:205: get_configuration()
+                                    752 ;	-----------------------------------------
+                                    753 ;	 function get_configuration
+                                    754 ;	-----------------------------------------
+      00028B                        755 _get_configuration:
+                                    756 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:207: usb_send_ctrl_response((unsigned char *)&usb_configuration_value,
+      00028B 74 01            [12]  757 	mov	a,#0x01
+      00028D C0 E0            [24]  758 	push	acc
+      00028F E4               [12]  759 	clr	a
+      000290 C0 E0            [24]  760 	push	acc
+      000292 90r00r18         [24]  761 	mov	dptr,#_usb_configuration_value
+      000295 75 F0 00         [24]  762 	mov	b,#0x00
+      000298 12r00r55         [24]  763 	lcall	_usb_send_ctrl_response
+      00029B 15 81            [12]  764 	dec	sp
+      00029D 15 81            [12]  765 	dec	sp
+      00029F 22               [24]  766 	ret
+                                    767 ;------------------------------------------------------------
+                                    768 ;Allocation info for local variables in function 'set_configuration'
+                                    769 ;------------------------------------------------------------
+                                    770 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:213: set_configuration()
+                                    771 ;	-----------------------------------------
+                                    772 ;	 function set_configuration
+                                    773 ;	-----------------------------------------
+      0002A0                        774 _set_configuration:
+                                    775 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:215: notify_user(USB_EVENT_CONFIG);
+      0002A0 90 00 01         [24]  776 	mov	dptr,#0x0001
+      0002A3 12r00r26         [24]  777 	lcall	_notify_user
+                                    778 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:216: if(usb_configuration_value != LOW_BYTE(usb_setup_buffer.wValue)) {
+      0002A6 90r00r02         [24]  779 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      0002A9 E0               [24]  780 	movx	a,@dptr
+      0002AA FE               [12]  781 	mov	r6,a
+      0002AB A3               [24]  782 	inc	dptr
+      0002AC E0               [24]  783 	movx	a,@dptr
+      0002AD 90r00r18         [24]  784 	mov	dptr,#_usb_configuration_value
+      0002B0 E0               [24]  785 	movx	a,@dptr
+      0002B1 FF               [12]  786 	mov	r7,a
+      0002B2 B5 06 02         [24]  787 	cjne	a,ar6,00109$
+      0002B5 80 11            [24]  788 	sjmp	00102$
+      0002B7                        789 00109$:
+                                    790 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:217: usb_configuration_value = LOW_BYTE(usb_setup_buffer.wValue);
+      0002B7 90r00r18         [24]  791 	mov	dptr,#_usb_configuration_value
+      0002BA EE               [12]  792 	mov	a,r6
+      0002BB F0               [24]  793 	movx	@dptr,a
+                                    794 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:218: usb_arch_set_configuration(usb_configuration_value);
+      0002BC 8E 82            [24]  795 	mov	dpl,r6
+      0002BE 12r00r00         [24]  796 	lcall	_usb_arch_set_configuration
+                                    797 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:219: usb_send_ctrl_status();
+      0002C1 12r01r0F         [24]  798 	lcall	_usb_send_ctrl_status
+                                    799 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:220: return 1;
+      0002C4 90 00 01         [24]  800 	mov	dptr,#0x0001
+      0002C7 22               [24]  801 	ret
+      0002C8                        802 00102$:
+                                    803 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:222: usb_send_ctrl_status();
+      0002C8 12r01r0F         [24]  804 	lcall	_usb_send_ctrl_status
+                                    805 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:223: return 0;
+      0002CB 90 00 00         [24]  806 	mov	dptr,#0x0000
+      0002CE 22               [24]  807 	ret
+                                    808 ;------------------------------------------------------------
+                                    809 ;Allocation info for local variables in function 'get_device_status'
+                                    810 ;------------------------------------------------------------
+                                    811 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:228: get_device_status()
+                                    812 ;	-----------------------------------------
+                                    813 ;	 function get_device_status
+                                    814 ;	-----------------------------------------
+      0002CF                        815 _get_device_status:
+                                    816 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:231: usb_send_ctrl_response((const unsigned char *)&usb_device_status,
+      0002CF 7Er16            [12]  817 	mov	r6,#_usb_device_status
+      0002D1 7Fs00            [12]  818 	mov	r7,#(_usb_device_status >> 8)
+      0002D3 7D 00            [12]  819 	mov	r5,#0x00
+      0002D5 74 02            [12]  820 	mov	a,#0x02
+      0002D7 C0 E0            [24]  821 	push	acc
+      0002D9 E4               [12]  822 	clr	a
+      0002DA C0 E0            [24]  823 	push	acc
+      0002DC 8E 82            [24]  824 	mov	dpl,r6
+      0002DE 8F 83            [24]  825 	mov	dph,r7
+      0002E0 8D F0            [24]  826 	mov	b,r5
+      0002E2 12r00r55         [24]  827 	lcall	_usb_send_ctrl_response
+      0002E5 15 81            [12]  828 	dec	sp
+      0002E7 15 81            [12]  829 	dec	sp
+      0002E9 22               [24]  830 	ret
+                                    831 ;------------------------------------------------------------
+                                    832 ;Allocation info for local variables in function 'get_endpoint_status'
+                                    833 ;------------------------------------------------------------
+                                    834 ;status                    Allocated with name '_get_endpoint_status_status_1_106'
+                                    835 ;------------------------------------------------------------
+                                    836 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:236: get_endpoint_status()
+                                    837 ;	-----------------------------------------
+                                    838 ;	 function get_endpoint_status
+                                    839 ;	-----------------------------------------
+      0002EA                        840 _get_endpoint_status:
+                                    841 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:241: if((usb_setup_buffer.wIndex & 0x7f) == 0) {
+      0002EA 90r00r04         [24]  842 	mov	dptr,#(_usb_setup_buffer + 0x0004)
+      0002ED E0               [24]  843 	movx	a,@dptr
+      0002EE FE               [12]  844 	mov	r6,a
+      0002EF A3               [24]  845 	inc	dptr
+      0002F0 E0               [24]  846 	movx	a,@dptr
+      0002F1 FF               [12]  847 	mov	r7,a
+      0002F2 EE               [12]  848 	mov	a,r6
+      0002F3 54 7F            [12]  849 	anl	a,#0x7F
+      0002F5 60 02            [24]  850 	jz	00110$
+      0002F7 80 1B            [24]  851 	sjmp	00102$
+      0002F9                        852 00110$:
+                                    853 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:242: usb_send_ctrl_response((const unsigned char *)&zero_word,
+      0002F9 7Cr01            [12]  854 	mov	r4,#_zero_word
+      0002FB 7Ds00            [12]  855 	mov	r5,#(_zero_word >> 8)
+      0002FD 7B 80            [12]  856 	mov	r3,#0x80
+      0002FF 74 02            [12]  857 	mov	a,#0x02
+      000301 C0 E0            [24]  858 	push	acc
+      000303 E4               [12]  859 	clr	a
+      000304 C0 E0            [24]  860 	push	acc
+      000306 8C 82            [24]  861 	mov	dpl,r4
+      000308 8D 83            [24]  862 	mov	dph,r5
+      00030A 8B F0            [24]  863 	mov	b,r3
+      00030C 12r00r55         [24]  864 	lcall	_usb_send_ctrl_response
+      00030F 15 81            [12]  865 	dec	sp
+      000311 15 81            [12]  866 	dec	sp
+      000313 22               [24]  867 	ret
+      000314                        868 00102$:
+                                    869 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:245: status = usb_arch_get_ep_status(usb_setup_buffer.wIndex);
+      000314 8E 82            [24]  870 	mov	dpl,r6
+      000316 12r00r00         [24]  871 	lcall	_usb_arch_get_ep_status
+      000319 E5 82            [12]  872 	mov	a,dpl
+      00031B 85 83 F0         [24]  873 	mov	b,dph
+      00031E 90r00r19         [24]  874 	mov	dptr,#_get_endpoint_status_status_1_106
+      000321 F0               [24]  875 	movx	@dptr,a
+      000322 E5 F0            [12]  876 	mov	a,b
+      000324 A3               [24]  877 	inc	dptr
+      000325 F0               [24]  878 	movx	@dptr,a
+                                    879 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:246: usb_send_ctrl_response((uint8_t *) & status, sizeof(status));
+      000326 7Er19            [12]  880 	mov	r6,#_get_endpoint_status_status_1_106
+      000328 7Fs00            [12]  881 	mov	r7,#(_get_endpoint_status_status_1_106 >> 8)
+      00032A 7D 00            [12]  882 	mov	r5,#0x00
+      00032C 74 02            [12]  883 	mov	a,#0x02
+      00032E C0 E0            [24]  884 	push	acc
+      000330 E4               [12]  885 	clr	a
+      000331 C0 E0            [24]  886 	push	acc
+      000333 8E 82            [24]  887 	mov	dpl,r6
+      000335 8F 83            [24]  888 	mov	dph,r7
+      000337 8D F0            [24]  889 	mov	b,r5
+      000339 12r00r55         [24]  890 	lcall	_usb_send_ctrl_response
+      00033C 15 81            [12]  891 	dec	sp
+      00033E 15 81            [12]  892 	dec	sp
+      000340 22               [24]  893 	ret
+                                    894 ;------------------------------------------------------------
+                                    895 ;Allocation info for local variables in function 'get_interface_status'
+                                    896 ;------------------------------------------------------------
+                                    897 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:251: get_interface_status()
+                                    898 ;	-----------------------------------------
+                                    899 ;	 function get_interface_status
+                                    900 ;	-----------------------------------------
+      000341                        901 _get_interface_status:
+                                    902 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:254: usb_send_ctrl_response((const unsigned char *)&zero_word,
+      000341 7Er01            [12]  903 	mov	r6,#_zero_word
+      000343 7Fs00            [12]  904 	mov	r7,#(_zero_word >> 8)
+      000345 7D 80            [12]  905 	mov	r5,#0x80
+      000347 74 02            [12]  906 	mov	a,#0x02
+      000349 C0 E0            [24]  907 	push	acc
+      00034B E4               [12]  908 	clr	a
+      00034C C0 E0            [24]  909 	push	acc
+      00034E 8E 82            [24]  910 	mov	dpl,r6
+      000350 8F 83            [24]  911 	mov	dph,r7
+      000352 8D F0            [24]  912 	mov	b,r5
+      000354 12r00r55         [24]  913 	lcall	_usb_send_ctrl_response
+      000357 15 81            [12]  914 	dec	sp
+      000359 15 81            [12]  915 	dec	sp
+      00035B 22               [24]  916 	ret
+                                    917 ;------------------------------------------------------------
+                                    918 ;Allocation info for local variables in function 'get_interface'
+                                    919 ;------------------------------------------------------------
+                                    920 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:259: get_interface()
+                                    921 ;	-----------------------------------------
+                                    922 ;	 function get_interface
+                                    923 ;	-----------------------------------------
+      00035C                        924 _get_interface:
+                                    925 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:262: if(usb_configuration_value == 0)
+      00035C 90r00r18         [24]  926 	mov	dptr,#_usb_configuration_value
+      00035F E0               [24]  927 	movx	a,@dptr
+      000360 FF               [12]  928 	mov	r7,a
+      000361 70 03            [24]  929 	jnz	00102$
+                                    930 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:263: usb_error_stall();
+      000363 02r01r03         [24]  931 	ljmp	_usb_error_stall
+      000366                        932 00102$:
+                                    933 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:265: usb_send_ctrl_response(&zero_byte, sizeof(zero_byte));
+      000366 74 01            [12]  934 	mov	a,#0x01
+      000368 C0 E0            [24]  935 	push	acc
+      00036A E4               [12]  936 	clr	a
+      00036B C0 E0            [24]  937 	push	acc
+      00036D 90r00r00         [24]  938 	mov	dptr,#_zero_byte
+      000370 75 F0 80         [24]  939 	mov	b,#0x80
+      000373 12r00r55         [24]  940 	lcall	_usb_send_ctrl_response
+      000376 15 81            [12]  941 	dec	sp
+      000378 15 81            [12]  942 	dec	sp
+      00037A 22               [24]  943 	ret
+                                    944 ;------------------------------------------------------------
+                                    945 ;Allocation info for local variables in function 'handle_standard_requests'
+                                    946 ;------------------------------------------------------------
+                                    947 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:271: handle_standard_requests()
+                                    948 ;	-----------------------------------------
+                                    949 ;	 function handle_standard_requests
+                                    950 ;	-----------------------------------------
+      00037B                        951 _handle_standard_requests:
+                                    952 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:273: switch (usb_setup_buffer.bmRequestType) {
+      00037B 90r00r00         [24]  953 	mov	dptr,#_usb_setup_buffer
+      00037E E0               [24]  954 	movx	a,@dptr
+      00037F FF               [12]  955 	mov	r7,a
+      000380 BF 00 03         [24]  956 	cjne	r7,#0x00,00204$
+      000383 02r04r24         [24]  957 	ljmp	00121$
+      000386                        958 00204$:
+      000386 BF 01 03         [24]  959 	cjne	r7,#0x01,00205$
+      000389 02r04r4A         [24]  960 	ljmp	00128$
+      00038C                        961 00205$:
+      00038C BF 02 03         [24]  962 	cjne	r7,#0x02,00206$
+      00038F 02r04r5B         [24]  963 	ljmp	00132$
+      000392                        964 00206$:
+      000392 BF 80 02         [24]  965 	cjne	r7,#0x80,00207$
+      000395 80 0E            [24]  966 	sjmp	00101$
+      000397                        967 00207$:
+      000397 BF 81 02         [24]  968 	cjne	r7,#0x81,00208$
+      00039A 80 62            [24]  969 	sjmp	00113$
+      00039C                        970 00208$:
+      00039C BF 82 03         [24]  971 	cjne	r7,#0x82,00209$
+      00039F 02r04r11         [24]  972 	ljmp	00117$
+      0003A2                        973 00209$:
+      0003A2 02r04r9E         [24]  974 	ljmp	00140$
+                                    975 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:274: case 0x80:                   /* standard device IN requests */
+      0003A5                        976 00101$:
+                                    977 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:275: switch (usb_setup_buffer.bRequest) {
+      0003A5 90r00r01         [24]  978 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      0003A8 E0               [24]  979 	movx	a,@dptr
+      0003A9 FF               [12]  980 	mov	r7,a
+      0003AA 60 42            [24]  981 	jz	00109$
+      0003AC BF 06 02         [24]  982 	cjne	r7,#0x06,00211$
+      0003AF 80 0A            [24]  983 	sjmp	00102$
+      0003B1                        984 00211$:
+      0003B1 BF 08 02         [24]  985 	cjne	r7,#0x08,00212$
+      0003B4 80 32            [24]  986 	sjmp	00108$
+      0003B6                        987 00212$:
+                                    988 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:276: case GET_DESCRIPTOR:
+      0003B6 BF 0A 41         [24]  989 	cjne	r7,#0x0A,00111$
+      0003B9 80 39            [24]  990 	sjmp	00110$
+      0003BB                        991 00102$:
+                                    992 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:277: switch (HIGH_BYTE(usb_setup_buffer.wValue)) {
+      0003BB 90r00r02         [24]  993 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      0003BE E0               [24]  994 	movx	a,@dptr
+      0003BF FE               [12]  995 	mov	r6,a
+      0003C0 A3               [24]  996 	inc	dptr
+      0003C1 E0               [24]  997 	movx	a,@dptr
+      0003C2 FF               [12]  998 	mov	r7,a
+      0003C3 BF 01 02         [24]  999 	cjne	r7,#0x01,00214$
+      0003C6 80 0A            [24] 1000 	sjmp	00103$
+      0003C8                       1001 00214$:
+      0003C8 BF 02 02         [24] 1002 	cjne	r7,#0x02,00215$
+      0003CB 80 0B            [24] 1003 	sjmp	00104$
+      0003CD                       1004 00215$:
+                                   1005 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:278: case DEVICE:
+      0003CD BF 03 14         [24] 1006 	cjne	r7,#0x03,00106$
+      0003D0 80 0C            [24] 1007 	sjmp	00105$
+      0003D2                       1008 00103$:
+                                   1009 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:279: get_device_descriptor();
+      0003D2 12r01rF6         [24] 1010 	lcall	_get_device_descriptor
+                                   1011 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:280: break;
+      0003D5 02r04rA2         [24] 1012 	ljmp	00141$
+                                   1013 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:281: case CONFIGURATION:
+      0003D8                       1014 00104$:
+                                   1015 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:282: get_configuration_descriptor();
+      0003D8 12r02r56         [24] 1016 	lcall	_get_configuration_descriptor
+                                   1017 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:283: break;
+      0003DB 02r04rA2         [24] 1018 	ljmp	00141$
+                                   1019 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:284: case STRING:
+      0003DE                       1020 00105$:
+                                   1021 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:285: get_string_descriptor();
+      0003DE 12r02r11         [24] 1022 	lcall	_get_string_descriptor
+                                   1023 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:286: break;
+      0003E1 02r04rA2         [24] 1024 	ljmp	00141$
+                                   1025 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:287: default:
+      0003E4                       1026 00106$:
+                                   1027 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:289: return 0;
+      0003E4 90 00 00         [24] 1028 	mov	dptr,#0x0000
+      0003E7 22               [24] 1029 	ret
+                                   1030 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:292: case GET_CONFIGURATION:
+      0003E8                       1031 00108$:
+                                   1032 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:293: get_configuration();
+      0003E8 12r02r8B         [24] 1033 	lcall	_get_configuration
+                                   1034 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:294: break;
+      0003EB 02r04rA2         [24] 1035 	ljmp	00141$
+                                   1036 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:295: case GET_STATUS:
+      0003EE                       1037 00109$:
+                                   1038 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:296: get_device_status();
+      0003EE 12r02rCF         [24] 1039 	lcall	_get_device_status
+                                   1040 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:297: break;
+      0003F1 02r04rA2         [24] 1041 	ljmp	00141$
+                                   1042 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:298: case GET_INTERFACE:
+      0003F4                       1043 00110$:
+                                   1044 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:299: get_interface();
+      0003F4 12r03r5C         [24] 1045 	lcall	_get_interface
+                                   1046 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:300: break;
+      0003F7 02r04rA2         [24] 1047 	ljmp	00141$
+                                   1048 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:301: default:
+      0003FA                       1049 00111$:
+                                   1050 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:302: return 0;
+      0003FA 90 00 00         [24] 1051 	mov	dptr,#0x0000
+      0003FD 22               [24] 1052 	ret
+                                   1053 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:305: case 0x81:                   /* standard interface IN requests */
+      0003FE                       1054 00113$:
+                                   1055 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:306: switch (usb_setup_buffer.bRequest) {
+      0003FE 90r00r01         [24] 1056 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      000401 E0               [24] 1057 	movx	a,@dptr
+      000402 FF               [12] 1058 	mov	r7,a
+      000403 60 02            [24] 1059 	jz	00218$
+      000405 80 06            [24] 1060 	sjmp	00115$
+      000407                       1061 00218$:
+                                   1062 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:308: get_interface_status();
+      000407 12r03r41         [24] 1063 	lcall	_get_interface_status
+                                   1064 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:309: break;
+      00040A 02r04rA2         [24] 1065 	ljmp	00141$
+                                   1066 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:319: default:
+      00040D                       1067 00115$:
+                                   1068 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:320: return 0;
+      00040D 90 00 00         [24] 1069 	mov	dptr,#0x0000
+      000410 22               [24] 1070 	ret
+                                   1071 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:323: case 0x82:                   /* standard endpoint IN requests */
+      000411                       1072 00117$:
+                                   1073 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:324: switch (usb_setup_buffer.bRequest) {
+      000411 90r00r01         [24] 1074 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      000414 E0               [24] 1075 	movx	a,@dptr
+      000415 FF               [12] 1076 	mov	r7,a
+      000416 60 02            [24] 1077 	jz	00220$
+      000418 80 06            [24] 1078 	sjmp	00119$
+      00041A                       1079 00220$:
+                                   1080 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:326: get_endpoint_status();
+      00041A 12r02rEA         [24] 1081 	lcall	_get_endpoint_status
+                                   1082 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:327: break;
+      00041D 02r04rA2         [24] 1083 	ljmp	00141$
+                                   1084 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:328: default:
+      000420                       1085 00119$:
+                                   1086 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:329: return 0;
+      000420 90 00 00         [24] 1087 	mov	dptr,#0x0000
+      000423 22               [24] 1088 	ret
+                                   1089 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:332: case 0x00:                   /* standard device OUT requests */
+      000424                       1090 00121$:
+                                   1091 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:333: switch (usb_setup_buffer.bRequest) {
+      000424 90r00r01         [24] 1092 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      000427 E0               [24] 1093 	movx	a,@dptr
+      000428 FF               [12] 1094 	mov	r7,a
+      000429 BF 05 02         [24] 1095 	cjne	r7,#0x05,00221$
+      00042C 80 05            [24] 1096 	sjmp	00122$
+      00042E                       1097 00221$:
+                                   1098 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:334: case SET_ADDRESS:
+      00042E BF 09 15         [24] 1099 	cjne	r7,#0x09,00126$
+      000431 80 0D            [24] 1100 	sjmp	00123$
+      000433                       1101 00122$:
+                                   1102 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:336: usb_flags |= USB_FLAG_ADDRESS_PENDING;
+      000433 90r00r03         [24] 1103 	mov	dptr,#_usb_flags
+      000436 E0               [24] 1104 	movx	a,@dptr
+      000437 44 01            [12] 1105 	orl	a,#0x01
+      000439 F0               [24] 1106 	movx	@dptr,a
+                                   1107 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:339: usb_send_ctrl_status();
+      00043A 12r01r0F         [24] 1108 	lcall	_usb_send_ctrl_status
+                                   1109 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:340: break;
+      00043D 02r04rA2         [24] 1110 	ljmp	00141$
+                                   1111 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:350: case SET_CONFIGURATION:
+      000440                       1112 00123$:
+                                   1113 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:351: if(set_configuration()) {
+      000440 12r02rA0         [24] 1114 	lcall	_set_configuration
+                                   1115 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:357: break;
+      000443 02r04rA2         [24] 1116 	ljmp	00141$
+                                   1117 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:358: default:
+      000446                       1118 00126$:
+                                   1119 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:359: return 0;
+      000446 90 00 00         [24] 1120 	mov	dptr,#0x0000
+      000449 22               [24] 1121 	ret
+                                   1122 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:362: case 0x01:                   /* standard interface OUT requests */
+      00044A                       1123 00128$:
+                                   1124 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:363: switch (usb_setup_buffer.bRequest) {
+      00044A 90r00r01         [24] 1125 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      00044D E0               [24] 1126 	movx	a,@dptr
+      00044E FF               [12] 1127 	mov	r7,a
+      00044F BF 0B 05         [24] 1128 	cjne	r7,#0x0B,00130$
+                                   1129 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:366: usb_send_ctrl_status();
+      000452 12r01r0F         [24] 1130 	lcall	_usb_send_ctrl_status
+                                   1131 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:367: break;
+                                   1132 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:368: default:
+      000455 80 4B            [24] 1133 	sjmp	00141$
+      000457                       1134 00130$:
+                                   1135 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:369: return 0;
+      000457 90 00 00         [24] 1136 	mov	dptr,#0x0000
+                                   1137 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:372: case 0x02:                   /* standard endpoint OUT requests */
+      00045A 22               [24] 1138 	ret
+      00045B                       1139 00132$:
+                                   1140 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:373: switch (usb_setup_buffer.bRequest) {
+      00045B 90r00r01         [24] 1141 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      00045E E0               [24] 1142 	movx	a,@dptr
+      00045F FF               [12] 1143 	mov	r7,a
+      000460 BF 01 02         [24] 1144 	cjne	r7,#0x01,00225$
+      000463 80 03            [24] 1145 	sjmp	00134$
+      000465                       1146 00225$:
+      000465 BF 03 32         [24] 1147 	cjne	r7,#0x03,00138$
+                                   1148 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:375: case CLEAR_FEATURE:
+      000468                       1149 00134$:
+                                   1150 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:376: if(usb_setup_buffer.wValue == ENDPOINT_HALT_FEATURE) {
+      000468 90r00r02         [24] 1151 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      00046B E0               [24] 1152 	movx	a,@dptr
+      00046C FD               [12] 1153 	mov	r5,a
+      00046D A3               [24] 1154 	inc	dptr
+      00046E E0               [24] 1155 	movx	a,@dptr
+      00046F FE               [12] 1156 	mov	r6,a
+      000470 4D               [12] 1157 	orl	a,r5
+                                   1158 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:378: usb_setup_buffer.bRequest == SET_FEATURE);
+      000471 70 22            [24] 1159 	jnz	00136$
+      000473 BF 03 01         [24] 1160 	cjne	r7,#0x03,00229$
+      000476 04               [12] 1161 	inc	a
+      000477                       1162 00229$:
+      000477 FF               [12] 1163 	mov	r7,a
+      000478 33               [12] 1164 	rlc	a
+      000479 95 E0            [12] 1165 	subb	a,acc
+      00047B FE               [12] 1166 	mov	r6,a
+                                   1167 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:377: usb_arch_halt_endpoint(usb_setup_buffer.wIndex,
+      00047C 90r00r04         [24] 1168 	mov	dptr,#(_usb_setup_buffer + 0x0004)
+      00047F E0               [24] 1169 	movx	a,@dptr
+      000480 FC               [12] 1170 	mov	r4,a
+      000481 A3               [24] 1171 	inc	dptr
+      000482 E0               [24] 1172 	movx	a,@dptr
+      000483 C0 07            [24] 1173 	push	ar7
+      000485 C0 06            [24] 1174 	push	ar6
+      000487 8C 82            [24] 1175 	mov	dpl,r4
+      000489 12r00r00         [24] 1176 	lcall	_usb_arch_halt_endpoint
+      00048C 15 81            [12] 1177 	dec	sp
+      00048E 15 81            [12] 1178 	dec	sp
+                                   1179 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:379: usb_send_ctrl_status();
+      000490 12r01r0F         [24] 1180 	lcall	_usb_send_ctrl_status
+      000493 80 0D            [24] 1181 	sjmp	00141$
+      000495                       1182 00136$:
+                                   1183 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:381: usb_error_stall();
+      000495 12r01r03         [24] 1184 	lcall	_usb_error_stall
+                                   1185 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:383: break;
+                                   1186 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:384: default:
+      000498 80 08            [24] 1187 	sjmp	00141$
+      00049A                       1188 00138$:
+                                   1189 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:385: return 0;
+      00049A 90 00 00         [24] 1190 	mov	dptr,#0x0000
+                                   1191 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:414: default:
+      00049D 22               [24] 1192 	ret
+      00049E                       1193 00140$:
+                                   1194 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:415: return 0;
+      00049E 90 00 00         [24] 1195 	mov	dptr,#0x0000
+                                   1196 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:416: }
+      0004A1 22               [24] 1197 	ret
+      0004A2                       1198 00141$:
+                                   1199 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:417: return 1;
+      0004A2 90 00 01         [24] 1200 	mov	dptr,#0x0001
+      0004A5 22               [24] 1201 	ret
+                                   1202 ;------------------------------------------------------------
+                                   1203 ;Allocation info for local variables in function 'submit_setup'
+                                   1204 ;------------------------------------------------------------
+                                   1205 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:434: submit_setup(void)
+                                   1206 ;	-----------------------------------------
+                                   1207 ;	 function submit_setup
+                                   1208 ;	-----------------------------------------
+      0004A6                       1209 _submit_setup:
+                                   1210 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:436: ctrl_buffer.next = NULL;
+      0004A6 90r00r08         [24] 1211 	mov	dptr,#_ctrl_buffer
+      0004A9 E4               [12] 1212 	clr	a
+      0004AA F0               [24] 1213 	movx	@dptr,a
+      0004AB E4               [12] 1214 	clr	a
+      0004AC A3               [24] 1215 	inc	dptr
+      0004AD F0               [24] 1216 	movx	@dptr,a
+      0004AE E4               [12] 1217 	clr	a
+      0004AF A3               [24] 1218 	inc	dptr
+      0004B0 F0               [24] 1219 	movx	@dptr,a
+                                   1220 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:437: ctrl_buffer.data = (uint8_t *) & usb_setup_buffer;
+      0004B1 90r00r0B         [24] 1221 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      0004B4 74r00            [12] 1222 	mov	a,#_usb_setup_buffer
+      0004B6 F0               [24] 1223 	movx	@dptr,a
+      0004B7 74s00            [12] 1224 	mov	a,#(_usb_setup_buffer >> 8)
+      0004B9 A3               [24] 1225 	inc	dptr
+      0004BA F0               [24] 1226 	movx	@dptr,a
+      0004BB E4               [12] 1227 	clr	a
+      0004BC A3               [24] 1228 	inc	dptr
+      0004BD F0               [24] 1229 	movx	@dptr,a
+                                   1230 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:438: ctrl_buffer.left = sizeof(usb_setup_buffer);
+      0004BE 90r00r0E         [24] 1231 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0004C1 74 08            [12] 1232 	mov	a,#0x08
+      0004C3 F0               [24] 1233 	movx	@dptr,a
+      0004C4 E4               [12] 1234 	clr	a
+      0004C5 A3               [24] 1235 	inc	dptr
+      0004C6 F0               [24] 1236 	movx	@dptr,a
+                                   1237 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:439: ctrl_buffer.flags = (USB_BUFFER_PACKET_END | USB_BUFFER_SETUP
+      0004C7 90r00r10         [24] 1238 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0004CA 74 2C            [12] 1239 	mov	a,#0x2C
+      0004CC F0               [24] 1240 	movx	@dptr,a
+      0004CD E4               [12] 1241 	clr	a
+      0004CE A3               [24] 1242 	inc	dptr
+      0004CF F0               [24] 1243 	movx	@dptr,a
+                                   1244 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:441: ctrl_buffer.id = SETUP_ID;
+      0004D0 90r00r12         [24] 1245 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      0004D3 74 01            [12] 1246 	mov	a,#0x01
+      0004D5 F0               [24] 1247 	movx	@dptr,a
+      0004D6 E4               [12] 1248 	clr	a
+      0004D7 A3               [24] 1249 	inc	dptr
+      0004D8 F0               [24] 1250 	movx	@dptr,a
+      0004D9 E4               [12] 1251 	clr	a
+      0004DA A3               [24] 1252 	inc	dptr
+      0004DB F0               [24] 1253 	movx	@dptr,a
+      0004DC E4               [12] 1254 	clr	a
+      0004DD A3               [24] 1255 	inc	dptr
+      0004DE F0               [24] 1256 	movx	@dptr,a
+                                   1257 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:442: usb_submit_recv_buffer(0, &ctrl_buffer);
+      0004DF 74r08            [12] 1258 	mov	a,#_ctrl_buffer
+      0004E1 C0 E0            [24] 1259 	push	acc
+      0004E3 74s00            [12] 1260 	mov	a,#(_ctrl_buffer >> 8)
+      0004E5 C0 E0            [24] 1261 	push	acc
+      0004E7 E4               [12] 1262 	clr	a
+      0004E8 C0 E0            [24] 1263 	push	acc
+      0004EA 75 82 00         [24] 1264 	mov	dpl,#0x00
+      0004ED 12r00r00         [24] 1265 	lcall	_usb_submit_recv_buffer
+      0004F0 15 81            [12] 1266 	dec	sp
+      0004F2 15 81            [12] 1267 	dec	sp
+      0004F4 15 81            [12] 1268 	dec	sp
+      0004F6 22               [24] 1269 	ret
+                                   1270 ;------------------------------------------------------------
+                                   1271 ;Allocation info for local variables in function 'process_thread_usb_process'
+                                   1272 ;------------------------------------------------------------
+                                   1273 ;ev                        Allocated to stack - sp -8
+                                   1274 ;data                      Allocated to stack - sp -11
+                                   1275 ;process_pt                Allocated to stack - sp -5
+                                   1276 ;PT_YIELD_FLAG             Allocated to registers r4 
+                                   1277 ;events                    Allocated to registers r3 r4 
+                                   1278 ;hook                      Allocated to registers r2 r3 r4 
+                                   1279 ;i                         Allocated to registers r6 r7 
+                                   1280 ;handler                   Allocated to stack - sp -2
+                                   1281 ;------------------------------------------------------------
+                                   1282 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:447: PROCESS_THREAD(usb_process, ev, data)
+                                   1283 ;	-----------------------------------------
+                                   1284 ;	 function process_thread_usb_process
+                                   1285 ;	-----------------------------------------
+      0004F7                       1286 _process_thread_usb_process:
+      0004F7 C0 82            [24] 1287 	push	dpl
+      0004F9 C0 83            [24] 1288 	push	dph
+      0004FB C0 F0            [24] 1289 	push	b
+      0004FD 05 81            [12] 1290 	inc	sp
+      0004FF 05 81            [12] 1291 	inc	sp
+      000501 05 81            [12] 1292 	inc	sp
+                                   1293 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:449: PROCESS_BEGIN();
+      000503 7C 01            [12] 1294 	mov	r4,#0x01
+      000505 E5 81            [12] 1295 	mov	a,sp
+      000507 24 FB            [12] 1296 	add	a,#0xfb
+      000509 F8               [12] 1297 	mov	r0,a
+      00050A 86 82            [24] 1298 	mov	dpl,@r0
+      00050C 08               [12] 1299 	inc	r0
+      00050D 86 83            [24] 1300 	mov	dph,@r0
+      00050F 08               [12] 1301 	inc	r0
+      000510 86 F0            [24] 1302 	mov	b,@r0
+      000512 12r00r00         [24] 1303 	lcall	__gptrget
+      000515 FA               [12] 1304 	mov	r2,a
+      000516 A3               [24] 1305 	inc	dptr
+      000517 12r00r00         [24] 1306 	lcall	__gptrget
+      00051A FB               [12] 1307 	mov	r3,a
+      00051B BA 00 05         [24] 1308 	cjne	r2,#0x00,00263$
+      00051E BB 00 02         [24] 1309 	cjne	r3,#0x00,00263$
+      000521 80 0B            [24] 1310 	sjmp	00164$
+      000523                       1311 00263$:
+      000523 BA C4 05         [24] 1312 	cjne	r2,#0xC4,00264$
+      000526 BB 01 02         [24] 1313 	cjne	r3,#0x01,00264$
+      000529 80 1D            [24] 1314 	sjmp	00102$
+      00052B                       1315 00264$:
+      00052B 02r08r45         [24] 1316 	ljmp	00166$
+                                   1317 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:451: while(1) {
+      00052E                       1318 00164$:
+                                   1319 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:452: PROCESS_WAIT_EVENT();
+      00052E 7C 00            [12] 1320 	mov	r4,#0x00
+      000530 E5 81            [12] 1321 	mov	a,sp
+      000532 24 FB            [12] 1322 	add	a,#0xfb
+      000534 F8               [12] 1323 	mov	r0,a
+      000535 86 82            [24] 1324 	mov	dpl,@r0
+      000537 08               [12] 1325 	inc	r0
+      000538 86 83            [24] 1326 	mov	dph,@r0
+      00053A 08               [12] 1327 	inc	r0
+      00053B 86 F0            [24] 1328 	mov	b,@r0
+      00053D 74 C4            [12] 1329 	mov	a,#0xC4
+      00053F 12r00r00         [24] 1330 	lcall	__gptrput
+      000542 A3               [24] 1331 	inc	dptr
+      000543 74 01            [12] 1332 	mov	a,#0x01
+      000545 12r00r00         [24] 1333 	lcall	__gptrput
+      000548                       1334 00102$:
+      000548 EC               [12] 1335 	mov	a,r4
+      000549 70 06            [24] 1336 	jnz	00106$
+      00054B 75 82 01         [24] 1337 	mov	dpl,#0x01
+      00054E 02r08r5E         [24] 1338 	ljmp	00170$
+      000551                       1339 00106$:
+                                   1340 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:453: if(ev == PROCESS_EVENT_EXIT)
+      000551 E5 81            [12] 1341 	mov	a,sp
+      000553 24 F8            [12] 1342 	add	a,#0xf8
+      000555 F8               [12] 1343 	mov	r0,a
+      000556 B6 83 03         [24] 1344 	cjne	@r0,#0x83,00266$
+      000559 02r08r45         [24] 1345 	ljmp	00166$
+      00055C                       1346 00266$:
+                                   1347 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:455: if(ev == PROCESS_EVENT_INTR) {
+      00055C E5 81            [12] 1348 	mov	a,sp
+      00055E 24 F8            [12] 1349 	add	a,#0xf8
+      000560 F8               [12] 1350 	mov	r0,a
+      000561 B6 F5 CA         [24] 1351 	cjne	@r0,#0xF5,00164$
+                                   1352 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:456: unsigned int events = usb_arch_get_global_events();
+      000564 12r00r00         [24] 1353 	lcall	_usb_arch_get_global_events
+      000567 AB 82            [24] 1354 	mov	r3,dpl
+      000569 AC 83            [24] 1355 	mov	r4,dph
+                                   1356 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:458: if(events) {
+      00056B EB               [12] 1357 	mov	a,r3
+      00056C 4C               [12] 1358 	orl	a,r4
+      00056D 60 36            [24] 1359 	jz	00117$
+                                   1360 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:459: if(events & USB_EVENT_RESET) {
+      00056F EB               [12] 1361 	mov	a,r3
+      000570 30 E3 16         [24] 1362 	jnb	acc.3,00111$
+                                   1363 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:460: submit_setup();
+      000573 C0 04            [24] 1364 	push	ar4
+      000575 C0 03            [24] 1365 	push	ar3
+      000577 12r04rA6         [24] 1366 	lcall	_submit_setup
+                                   1367 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:461: usb_configuration_value = 0;
+      00057A 90r00r18         [24] 1368 	mov	dptr,#_usb_configuration_value
+      00057D E4               [12] 1369 	clr	a
+      00057E F0               [24] 1370 	movx	@dptr,a
+                                   1371 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:462: notify_user(USB_EVENT_RESET);
+      00057F 90 00 08         [24] 1372 	mov	dptr,#0x0008
+      000582 12r00r26         [24] 1373 	lcall	_notify_user
+      000585 D0 03            [24] 1374 	pop	ar3
+      000587 D0 04            [24] 1375 	pop	ar4
+      000589                       1376 00111$:
+                                   1377 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:464: if(events & USB_EVENT_SUSPEND) {
+      000589 EB               [12] 1378 	mov	a,r3
+      00058A 30 E1 0E         [24] 1379 	jnb	acc.1,00113$
+                                   1380 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:465: notify_user(USB_EVENT_SUSPEND);
+      00058D 90 00 02         [24] 1381 	mov	dptr,#0x0002
+      000590 C0 04            [24] 1382 	push	ar4
+      000592 C0 03            [24] 1383 	push	ar3
+      000594 12r00r26         [24] 1384 	lcall	_notify_user
+      000597 D0 03            [24] 1385 	pop	ar3
+      000599 D0 04            [24] 1386 	pop	ar4
+      00059B                       1387 00113$:
+                                   1388 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:467: if(events & USB_EVENT_RESUME) {
+      00059B EB               [12] 1389 	mov	a,r3
+      00059C 30 E2 06         [24] 1390 	jnb	acc.2,00117$
+                                   1391 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:468: notify_user(USB_EVENT_RESUME);
+      00059F 90 00 04         [24] 1392 	mov	dptr,#0x0004
+      0005A2 12r00r26         [24] 1393 	lcall	_notify_user
+      0005A5                       1394 00117$:
+                                   1395 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:472: events = usb_get_ep_events(0);
+      0005A5 75 82 00         [24] 1396 	mov	dpl,#0x00
+      0005A8 12r00r00         [24] 1397 	lcall	_usb_get_ep_events
+      0005AB AA 82            [24] 1398 	mov	r2,dpl
+      0005AD AF 83            [24] 1399 	mov	r7,dph
+      0005AF 8A 03            [24] 1400 	mov	ar3,r2
+      0005B1 8F 04            [24] 1401 	mov	ar4,r7
+                                   1402 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:473: if(events) {
+      0005B3 EB               [12] 1403 	mov	a,r3
+      0005B4 4C               [12] 1404 	orl	a,r4
+      0005B5 70 03            [24] 1405 	jnz	00273$
+      0005B7 02r05r2E         [24] 1406 	ljmp	00164$
+      0005BA                       1407 00273$:
+                                   1408 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:474: if((events & USB_EP_EVENT_NOTIFICATION)
+      0005BA EB               [12] 1409 	mov	a,r3
+      0005BB 20 E0 03         [24] 1410 	jb	acc.0,00274$
+      0005BE 02r05r2E         [24] 1411 	ljmp	00164$
+      0005C1                       1412 00274$:
+                                   1413 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:475: && !(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)) {
+      0005C1 90r00r10         [24] 1414 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0005C4 E0               [24] 1415 	movx	a,@dptr
+      0005C5 FB               [12] 1416 	mov	r3,a
+      0005C6 A3               [24] 1417 	inc	dptr
+      0005C7 E0               [24] 1418 	movx	a,@dptr
+      0005C8 FC               [12] 1419 	mov	r4,a
+      0005C9 EB               [12] 1420 	mov	a,r3
+      0005CA 30 E0 03         [24] 1421 	jnb	acc.0,00275$
+      0005CD 02r05r2E         [24] 1422 	ljmp	00164$
+      0005D0                       1423 00275$:
+                                   1424 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:477: if(ctrl_buffer.flags & USB_BUFFER_FAILED) {
+      0005D0 EB               [12] 1425 	mov	a,r3
+      0005D1 30 E7 06         [24] 1426 	jnb	acc.7,00154$
+                                   1427 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:481: submit_setup();
+      0005D4 12r04rA6         [24] 1428 	lcall	_submit_setup
+      0005D7 02r05r2E         [24] 1429 	ljmp	00164$
+      0005DA                       1430 00154$:
+                                   1431 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:482: } else if(ctrl_buffer.flags & USB_BUFFER_SETUP) {
+      0005DA EB               [12] 1432 	mov	a,r3
+      0005DB 20 E5 03         [24] 1433 	jb	acc.5,00277$
+      0005DE 02r07r19         [24] 1434 	ljmp	00151$
+      0005E1                       1435 00277$:
+                                   1436 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:483: struct USBRequestHandlerHook *hook = usb_request_handler_hooks;
+      0005E1 90r00r00         [24] 1437 	mov	dptr,#_usb_request_handler_hooks
+      0005E4 E0               [24] 1438 	movx	a,@dptr
+      0005E5 FA               [12] 1439 	mov	r2,a
+      0005E6 A3               [24] 1440 	inc	dptr
+      0005E7 E0               [24] 1441 	movx	a,@dptr
+      0005E8 FB               [12] 1442 	mov	r3,a
+      0005E9 A3               [24] 1443 	inc	dptr
+      0005EA E0               [24] 1444 	movx	a,@dptr
+      0005EB FC               [12] 1445 	mov	r4,a
+                                   1446 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:489: for(i = 0; i < 8; i++)
+      0005EC 7E 08            [12] 1447 	mov	r6,#0x08
+      0005EE 7F 00            [12] 1448 	mov	r7,#0x00
+      0005F0                       1449 00169$:
+      0005F0 1E               [12] 1450 	dec	r6
+      0005F1 BE FF 01         [24] 1451 	cjne	r6,#0xFF,00278$
+      0005F4 1F               [12] 1452 	dec	r7
+      0005F5                       1453 00278$:
+      0005F5 EE               [12] 1454 	mov	a,r6
+      0005F6 4F               [12] 1455 	orl	a,r7
+      0005F7 70 F7            [24] 1456 	jnz	00169$
+                                   1457 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:494: while(hook) {
+      0005F9                       1458 00124$:
+      0005F9 EA               [12] 1459 	mov	a,r2
+      0005FA 4B               [12] 1460 	orl	a,r3
+      0005FB 70 03            [24] 1461 	jnz	00280$
+      0005FD 02r06rFD         [24] 1462 	ljmp	00126$
+      000600                       1463 00280$:
+                                   1464 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:495: const struct USBRequestHandler *handler = hook->handler;
+      000600 74 03            [12] 1465 	mov	a,#0x03
+      000602 2A               [12] 1466 	add	a,r2
+      000603 FD               [12] 1467 	mov	r5,a
+      000604 E4               [12] 1468 	clr	a
+      000605 3B               [12] 1469 	addc	a,r3
+      000606 FE               [12] 1470 	mov	r6,a
+      000607 8C 07            [24] 1471 	mov	ar7,r4
+      000609 8D 82            [24] 1472 	mov	dpl,r5
+      00060B 8E 83            [24] 1473 	mov	dph,r6
+      00060D 8F F0            [24] 1474 	mov	b,r7
+      00060F A8 81            [24] 1475 	mov	r0,sp
+      000611 18               [12] 1476 	dec	r0
+      000612 18               [12] 1477 	dec	r0
+      000613 12r00r00         [24] 1478 	lcall	__gptrget
+      000616 F6               [12] 1479 	mov	@r0,a
+      000617 A3               [24] 1480 	inc	dptr
+      000618 12r00r00         [24] 1481 	lcall	__gptrget
+      00061B 08               [12] 1482 	inc	r0
+      00061C F6               [12] 1483 	mov	@r0,a
+      00061D A3               [24] 1484 	inc	dptr
+      00061E 12r00r00         [24] 1485 	lcall	__gptrget
+      000621 08               [12] 1486 	inc	r0
+      000622 F6               [12] 1487 	mov	@r0,a
+                                   1488 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:498: if(((handler->request_type ^ usb_setup_buffer.bmRequestType)
+      000623 C0 02            [24] 1489 	push	ar2
+      000625 C0 03            [24] 1490 	push	ar3
+      000627 C0 04            [24] 1491 	push	ar4
+      000629 E5 81            [12] 1492 	mov	a,sp
+      00062B 24 FB            [12] 1493 	add	a,#0xfb
+      00062D F8               [12] 1494 	mov	r0,a
+      00062E 86 82            [24] 1495 	mov	dpl,@r0
+      000630 08               [12] 1496 	inc	r0
+      000631 86 83            [24] 1497 	mov	dph,@r0
+      000633 08               [12] 1498 	inc	r0
+      000634 86 F0            [24] 1499 	mov	b,@r0
+      000636 12r00r00         [24] 1500 	lcall	__gptrget
+      000639 FC               [12] 1501 	mov	r4,a
+      00063A 90r00r00         [24] 1502 	mov	dptr,#_usb_setup_buffer
+      00063D E0               [24] 1503 	movx	a,@dptr
+      00063E 62 04            [12] 1504 	xrl	ar4,a
+                                   1505 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:499: & handler->request_type_mask) == 0
+      000640 E5 81            [12] 1506 	mov	a,sp
+      000642 24 FB            [12] 1507 	add	a,#0xfb
+      000644 F8               [12] 1508 	mov	r0,a
+      000645 74 01            [12] 1509 	mov	a,#0x01
+      000647 26               [12] 1510 	add	a,@r0
+      000648 FA               [12] 1511 	mov	r2,a
+      000649 E4               [12] 1512 	clr	a
+      00064A 08               [12] 1513 	inc	r0
+      00064B 36               [12] 1514 	addc	a,@r0
+      00064C FB               [12] 1515 	mov	r3,a
+      00064D 08               [12] 1516 	inc	r0
+      00064E 86 07            [24] 1517 	mov	ar7,@r0
+      000650 8A 82            [24] 1518 	mov	dpl,r2
+      000652 8B 83            [24] 1519 	mov	dph,r3
+      000654 8F F0            [24] 1520 	mov	b,r7
+      000656 12r00r00         [24] 1521 	lcall	__gptrget
+      000659 5C               [12] 1522 	anl	a,r4
+      00065A D0 04            [24] 1523 	pop	ar4
+      00065C D0 03            [24] 1524 	pop	ar3
+      00065E D0 02            [24] 1525 	pop	ar2
+      000660 60 03            [24] 1526 	jz	00281$
+      000662 02r06rE6         [24] 1527 	ljmp	00122$
+      000665                       1528 00281$:
+                                   1529 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:500: && ((handler->request ^ usb_setup_buffer.bRequest)
+      000665 C0 02            [24] 1530 	push	ar2
+      000667 C0 03            [24] 1531 	push	ar3
+      000669 C0 04            [24] 1532 	push	ar4
+      00066B E5 81            [12] 1533 	mov	a,sp
+      00066D 24 FB            [12] 1534 	add	a,#0xfb
+      00066F F8               [12] 1535 	mov	r0,a
+      000670 74 02            [12] 1536 	mov	a,#0x02
+      000672 26               [12] 1537 	add	a,@r0
+      000673 FD               [12] 1538 	mov	r5,a
+      000674 E4               [12] 1539 	clr	a
+      000675 08               [12] 1540 	inc	r0
+      000676 36               [12] 1541 	addc	a,@r0
+      000677 FE               [12] 1542 	mov	r6,a
+      000678 08               [12] 1543 	inc	r0
+      000679 86 07            [24] 1544 	mov	ar7,@r0
+      00067B 8D 82            [24] 1545 	mov	dpl,r5
+      00067D 8E 83            [24] 1546 	mov	dph,r6
+      00067F 8F F0            [24] 1547 	mov	b,r7
+      000681 12r00r00         [24] 1548 	lcall	__gptrget
+      000684 FD               [12] 1549 	mov	r5,a
+      000685 90r00r01         [24] 1550 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      000688 E0               [24] 1551 	movx	a,@dptr
+      000689 62 05            [12] 1552 	xrl	ar5,a
+                                   1553 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:501: & handler->request_mask) == 0) {
+      00068B E5 81            [12] 1554 	mov	a,sp
+      00068D 24 FB            [12] 1555 	add	a,#0xfb
+      00068F F8               [12] 1556 	mov	r0,a
+      000690 74 03            [12] 1557 	mov	a,#0x03
+      000692 26               [12] 1558 	add	a,@r0
+      000693 FC               [12] 1559 	mov	r4,a
+      000694 E4               [12] 1560 	clr	a
+      000695 08               [12] 1561 	inc	r0
+      000696 36               [12] 1562 	addc	a,@r0
+      000697 FE               [12] 1563 	mov	r6,a
+      000698 08               [12] 1564 	inc	r0
+      000699 86 07            [24] 1565 	mov	ar7,@r0
+      00069B 8C 82            [24] 1566 	mov	dpl,r4
+      00069D 8E 83            [24] 1567 	mov	dph,r6
+      00069F 8F F0            [24] 1568 	mov	b,r7
+      0006A1 12r00r00         [24] 1569 	lcall	__gptrget
+      0006A4 5D               [12] 1570 	anl	a,r5
+      0006A5 D0 04            [24] 1571 	pop	ar4
+      0006A7 D0 03            [24] 1572 	pop	ar3
+      0006A9 D0 02            [24] 1573 	pop	ar2
+      0006AB 70 39            [24] 1574 	jnz	00122$
+                                   1575 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:502: if(handler->handler_func())
+      0006AD A8 81            [24] 1576 	mov	r0,sp
+      0006AF 18               [12] 1577 	dec	r0
+      0006B0 18               [12] 1578 	dec	r0
+      0006B1 74 04            [12] 1579 	mov	a,#0x04
+      0006B3 26               [12] 1580 	add	a,@r0
+      0006B4 FD               [12] 1581 	mov	r5,a
+      0006B5 E4               [12] 1582 	clr	a
+      0006B6 08               [12] 1583 	inc	r0
+      0006B7 36               [12] 1584 	addc	a,@r0
+      0006B8 FE               [12] 1585 	mov	r6,a
+      0006B9 08               [12] 1586 	inc	r0
+      0006BA 86 07            [24] 1587 	mov	ar7,@r0
+      0006BC 8D 82            [24] 1588 	mov	dpl,r5
+      0006BE 8E 83            [24] 1589 	mov	dph,r6
+      0006C0 8F F0            [24] 1590 	mov	b,r7
+      0006C2 12r00r00         [24] 1591 	lcall	__gptrget
+      0006C5 FD               [12] 1592 	mov	r5,a
+      0006C6 A3               [24] 1593 	inc	dptr
+      0006C7 12r00r00         [24] 1594 	lcall	__gptrget
+      0006CA FE               [12] 1595 	mov	r6,a
+      0006CB C0 04            [24] 1596 	push	ar4
+      0006CD C0 03            [24] 1597 	push	ar3
+      0006CF C0 02            [24] 1598 	push	ar2
+      0006D1 8D 82            [24] 1599 	mov	dpl,r5
+      0006D3 8E 83            [24] 1600 	mov	dph,r6
+      0006D5 12r00r00         [24] 1601 	lcall	__sdcc_call_dptr
+      0006D8 AD 82            [24] 1602 	mov	r5,dpl
+      0006DA AE 83            [24] 1603 	mov	r6,dph
+      0006DC D0 02            [24] 1604 	pop	ar2
+      0006DE D0 03            [24] 1605 	pop	ar3
+      0006E0 D0 04            [24] 1606 	pop	ar4
+      0006E2 ED               [12] 1607 	mov	a,r5
+      0006E3 4E               [12] 1608 	orl	a,r6
+      0006E4 70 17            [24] 1609 	jnz	00126$
+                                   1610 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:503: break;
+      0006E6                       1611 00122$:
+                                   1612 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:505: hook = hook->next;
+      0006E6 8A 82            [24] 1613 	mov	dpl,r2
+      0006E8 8B 83            [24] 1614 	mov	dph,r3
+      0006EA 8C F0            [24] 1615 	mov	b,r4
+      0006EC 12r00r00         [24] 1616 	lcall	__gptrget
+      0006EF FA               [12] 1617 	mov	r2,a
+      0006F0 A3               [24] 1618 	inc	dptr
+      0006F1 12r00r00         [24] 1619 	lcall	__gptrget
+      0006F4 FB               [12] 1620 	mov	r3,a
+      0006F5 A3               [24] 1621 	inc	dptr
+      0006F6 12r00r00         [24] 1622 	lcall	__gptrget
+      0006F9 FC               [12] 1623 	mov	r4,a
+      0006FA 02r05rF9         [24] 1624 	ljmp	00124$
+      0006FD                       1625 00126$:
+                                   1626 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:507: if(!hook) {
+      0006FD EA               [12] 1627 	mov	a,r2
+      0006FE 4B               [12] 1628 	orl	a,r3
+      0006FF 70 03            [24] 1629 	jnz	00128$
+                                   1630 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:509: usb_error_stall();
+      000701 12r01r03         [24] 1631 	lcall	_usb_error_stall
+      000704                       1632 00128$:
+                                   1633 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:517: if(error_stall) {
+      000704 90r00r09         [24] 1634 	mov	dptr,#_error_stall
+      000707 E0               [24] 1635 	movx	a,@dptr
+      000708 FF               [12] 1636 	mov	r7,a
+      000709 70 03            [24] 1637 	jnz	00285$
+      00070B 02r05r2E         [24] 1638 	ljmp	00164$
+      00070E                       1639 00285$:
+                                   1640 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:518: error_stall = 0;
+      00070E 90r00r09         [24] 1641 	mov	dptr,#_error_stall
+      000711 E4               [12] 1642 	clr	a
+      000712 F0               [24] 1643 	movx	@dptr,a
+                                   1644 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:519: submit_setup();
+      000713 12r04rA6         [24] 1645 	lcall	_submit_setup
+      000716 02r05r2E         [24] 1646 	ljmp	00164$
+      000719                       1647 00151$:
+                                   1648 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:522: if(ctrl_buffer.id == IN_ID) {
+      000719 90r00r12         [24] 1649 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      00071C E0               [24] 1650 	movx	a,@dptr
+      00071D FC               [12] 1651 	mov	r4,a
+      00071E A3               [24] 1652 	inc	dptr
+      00071F E0               [24] 1653 	movx	a,@dptr
+      000720 FD               [12] 1654 	mov	r5,a
+      000721 A3               [24] 1655 	inc	dptr
+      000722 E0               [24] 1656 	movx	a,@dptr
+      000723 FE               [12] 1657 	mov	r6,a
+      000724 A3               [24] 1658 	inc	dptr
+      000725 E0               [24] 1659 	movx	a,@dptr
+      000726 FF               [12] 1660 	mov	r7,a
+      000727 BC 03 59         [24] 1661 	cjne	r4,#0x03,00148$
+      00072A BD 00 56         [24] 1662 	cjne	r5,#0x00,00148$
+      00072D BE 00 53         [24] 1663 	cjne	r6,#0x00,00148$
+      000730 BF 00 50         [24] 1664 	cjne	r7,#0x00,00148$
+                                   1665 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:525: ctrl_buffer.flags = USB_BUFFER_NOTIFY;
+      000733 90r00r10         [24] 1666 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      000736 74 08            [12] 1667 	mov	a,#0x08
+      000738 F0               [24] 1668 	movx	@dptr,a
+      000739 E4               [12] 1669 	clr	a
+      00073A A3               [24] 1670 	inc	dptr
+      00073B F0               [24] 1671 	movx	@dptr,a
+                                   1672 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:526: ctrl_buffer.next = NULL;
+      00073C 90r00r08         [24] 1673 	mov	dptr,#_ctrl_buffer
+      00073F E4               [12] 1674 	clr	a
+      000740 F0               [24] 1675 	movx	@dptr,a
+      000741 E4               [12] 1676 	clr	a
+      000742 A3               [24] 1677 	inc	dptr
+      000743 F0               [24] 1678 	movx	@dptr,a
+      000744 E4               [12] 1679 	clr	a
+      000745 A3               [24] 1680 	inc	dptr
+      000746 F0               [24] 1681 	movx	@dptr,a
+                                   1682 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:527: ctrl_buffer.data = NULL;
+      000747 90r00r0B         [24] 1683 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      00074A E4               [12] 1684 	clr	a
+      00074B F0               [24] 1685 	movx	@dptr,a
+      00074C E4               [12] 1686 	clr	a
+      00074D A3               [24] 1687 	inc	dptr
+      00074E F0               [24] 1688 	movx	@dptr,a
+      00074F E4               [12] 1689 	clr	a
+      000750 A3               [24] 1690 	inc	dptr
+      000751 F0               [24] 1691 	movx	@dptr,a
+                                   1692 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:528: ctrl_buffer.left = 0;
+      000752 90r00r0E         [24] 1693 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      000755 E4               [12] 1694 	clr	a
+      000756 F0               [24] 1695 	movx	@dptr,a
+      000757 E4               [12] 1696 	clr	a
+      000758 A3               [24] 1697 	inc	dptr
+      000759 F0               [24] 1698 	movx	@dptr,a
+                                   1699 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:529: ctrl_buffer.id = STATUS_OUT_ID;
+      00075A 90r00r12         [24] 1700 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      00075D 74 04            [12] 1701 	mov	a,#0x04
+      00075F F0               [24] 1702 	movx	@dptr,a
+      000760 E4               [12] 1703 	clr	a
+      000761 A3               [24] 1704 	inc	dptr
+      000762 F0               [24] 1705 	movx	@dptr,a
+      000763 E4               [12] 1706 	clr	a
+      000764 A3               [24] 1707 	inc	dptr
+      000765 F0               [24] 1708 	movx	@dptr,a
+      000766 E4               [12] 1709 	clr	a
+      000767 A3               [24] 1710 	inc	dptr
+      000768 F0               [24] 1711 	movx	@dptr,a
+                                   1712 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:530: usb_submit_recv_buffer(0, &ctrl_buffer);
+      000769 74r08            [12] 1713 	mov	a,#_ctrl_buffer
+      00076B C0 E0            [24] 1714 	push	acc
+      00076D 74s00            [12] 1715 	mov	a,#(_ctrl_buffer >> 8)
+      00076F C0 E0            [24] 1716 	push	acc
+      000771 E4               [12] 1717 	clr	a
+      000772 C0 E0            [24] 1718 	push	acc
+      000774 75 82 00         [24] 1719 	mov	dpl,#0x00
+      000777 12r00r00         [24] 1720 	lcall	_usb_submit_recv_buffer
+      00077A 15 81            [12] 1721 	dec	sp
+      00077C 15 81            [12] 1722 	dec	sp
+      00077E 15 81            [12] 1723 	dec	sp
+      000780 02r05r2E         [24] 1724 	ljmp	00164$
+      000783                       1725 00148$:
+                                   1726 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:531: } else if(ctrl_buffer.id == STATUS_OUT_ID) {
+      000783 90r00r12         [24] 1727 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      000786 E0               [24] 1728 	movx	a,@dptr
+      000787 FC               [12] 1729 	mov	r4,a
+      000788 A3               [24] 1730 	inc	dptr
+      000789 E0               [24] 1731 	movx	a,@dptr
+      00078A FD               [12] 1732 	mov	r5,a
+      00078B A3               [24] 1733 	inc	dptr
+      00078C E0               [24] 1734 	movx	a,@dptr
+      00078D FE               [12] 1735 	mov	r6,a
+      00078E A3               [24] 1736 	inc	dptr
+      00078F E0               [24] 1737 	movx	a,@dptr
+      000790 FF               [12] 1738 	mov	r7,a
+      000791 BC 04 0F         [24] 1739 	cjne	r4,#0x04,00145$
+      000794 BD 00 0C         [24] 1740 	cjne	r5,#0x00,00145$
+      000797 BE 00 09         [24] 1741 	cjne	r6,#0x00,00145$
+      00079A BF 00 06         [24] 1742 	cjne	r7,#0x00,00145$
+                                   1743 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:533: submit_setup();
+      00079D 12r04rA6         [24] 1744 	lcall	_submit_setup
+      0007A0 02r05r2E         [24] 1745 	ljmp	00164$
+      0007A3                       1746 00145$:
+                                   1747 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:534: } else if(ctrl_buffer.id == STATUS_IN_ID) {
+      0007A3 BC 05 3A         [24] 1748 	cjne	r4,#0x05,00142$
+      0007A6 BD 00 37         [24] 1749 	cjne	r5,#0x00,00142$
+      0007A9 BE 00 34         [24] 1750 	cjne	r6,#0x00,00142$
+      0007AC BF 00 31         [24] 1751 	cjne	r7,#0x00,00142$
+                                   1752 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:536: if(usb_flags & USB_FLAG_ADDRESS_PENDING) {
+      0007AF 90r00r03         [24] 1753 	mov	dptr,#_usb_flags
+      0007B2 E0               [24] 1754 	movx	a,@dptr
+      0007B3 FB               [12] 1755 	mov	r3,a
+      0007B4 30 E0 23         [24] 1756 	jnb	acc.0,00135$
+                                   1757 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:537: while(usb_send_pending(0));
+      0007B7                       1758 00131$:
+      0007B7 75 82 00         [24] 1759 	mov	dpl,#0x00
+      0007BA 12r09r7A         [24] 1760 	lcall	_usb_send_pending
+      0007BD E5 82            [12] 1761 	mov	a,dpl
+      0007BF 85 83 F0         [24] 1762 	mov	b,dph
+      0007C2 45 F0            [12] 1763 	orl	a,b
+      0007C4 70 F1            [24] 1764 	jnz	00131$
+                                   1765 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:538: usb_arch_set_address(LOW_BYTE(usb_setup_buffer.wValue));
+      0007C6 90r00r02         [24] 1766 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      0007C9 E0               [24] 1767 	movx	a,@dptr
+      0007CA FA               [12] 1768 	mov	r2,a
+      0007CB A3               [24] 1769 	inc	dptr
+      0007CC E0               [24] 1770 	movx	a,@dptr
+      0007CD 8A 82            [24] 1771 	mov	dpl,r2
+      0007CF 12r00r00         [24] 1772 	lcall	_usb_arch_set_address
+                                   1773 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:539: usb_flags &= ~USB_FLAG_ADDRESS_PENDING;
+      0007D2 90r00r03         [24] 1774 	mov	dptr,#_usb_flags
+      0007D5 E0               [24] 1775 	movx	a,@dptr
+      0007D6 FB               [12] 1776 	mov	r3,a
+      0007D7 54 FE            [12] 1777 	anl	a,#0xFE
+      0007D9 F0               [24] 1778 	movx	@dptr,a
+      0007DA                       1779 00135$:
+                                   1780 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:541: submit_setup();
+      0007DA 12r04rA6         [24] 1781 	lcall	_submit_setup
+      0007DD 02r05r2E         [24] 1782 	ljmp	00164$
+      0007E0                       1783 00142$:
+                                   1784 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:542: } else if(ctrl_buffer.id == OUT_ID) {
+      0007E0 BC 02 0B         [24] 1785 	cjne	r4,#0x02,00294$
+      0007E3 BD 00 08         [24] 1786 	cjne	r5,#0x00,00294$
+      0007E6 BE 00 05         [24] 1787 	cjne	r6,#0x00,00294$
+      0007E9 BF 00 02         [24] 1788 	cjne	r7,#0x00,00294$
+      0007EC 80 03            [24] 1789 	sjmp	00295$
+      0007EE                       1790 00294$:
+      0007EE 02r05r2E         [24] 1791 	ljmp	00164$
+      0007F1                       1792 00295$:
+                                   1793 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:544: if(data_callback) {
+      0007F1 90r00r0A         [24] 1794 	mov	dptr,#_data_callback
+      0007F4 E0               [24] 1795 	movx	a,@dptr
+      0007F5 FE               [12] 1796 	mov	r6,a
+      0007F6 A3               [24] 1797 	inc	dptr
+      0007F7 E0               [24] 1798 	movx	a,@dptr
+      0007F8 FF               [12] 1799 	mov	r7,a
+      0007F9 4E               [12] 1800 	orl	a,r6
+      0007FA 60 43            [24] 1801 	jz	00137$
+                                   1802 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:545: data_callback(ctrl_data, ctrl_data_len - ctrl_buffer.left);
+      0007FC 90r00r0E         [24] 1803 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0007FF E0               [24] 1804 	movx	a,@dptr
+      000800 FE               [12] 1805 	mov	r6,a
+      000801 A3               [24] 1806 	inc	dptr
+      000802 E0               [24] 1807 	movx	a,@dptr
+      000803 FF               [12] 1808 	mov	r7,a
+      000804 90r00r0F         [24] 1809 	mov	dptr,#_ctrl_data_len
+      000807 E0               [24] 1810 	movx	a,@dptr
+      000808 FC               [12] 1811 	mov	r4,a
+      000809 A3               [24] 1812 	inc	dptr
+      00080A E0               [24] 1813 	movx	a,@dptr
+      00080B FD               [12] 1814 	mov	r5,a
+      00080C EC               [12] 1815 	mov	a,r4
+      00080D C3               [12] 1816 	clr	c
+      00080E 9E               [12] 1817 	subb	a,r6
+      00080F FE               [12] 1818 	mov	r6,a
+      000810 ED               [12] 1819 	mov	a,r5
+      000811 9F               [12] 1820 	subb	a,r7
+      000812 FF               [12] 1821 	mov	r7,a
+      000813 90r00r0C         [24] 1822 	mov	dptr,#_ctrl_data
+      000816 E0               [24] 1823 	movx	a,@dptr
+      000817 FB               [12] 1824 	mov	r3,a
+      000818 A3               [24] 1825 	inc	dptr
+      000819 E0               [24] 1826 	movx	a,@dptr
+      00081A FC               [12] 1827 	mov	r4,a
+      00081B A3               [24] 1828 	inc	dptr
+      00081C E0               [24] 1829 	movx	a,@dptr
+      00081D FD               [12] 1830 	mov	r5,a
+      00081E C0 06            [24] 1831 	push	ar6
+      000820 C0 07            [24] 1832 	push	ar7
+      000822 12r08r27         [24] 1833 	lcall	00297$
+      000825 80 11            [24] 1834 	sjmp	00298$
+      000827                       1835 00297$:
+      000827 90r00r0A         [24] 1836 	mov	dptr,#_data_callback
+      00082A E0               [24] 1837 	movx	a,@dptr
+      00082B C0 E0            [24] 1838 	push	acc
+      00082D A3               [24] 1839 	inc	dptr
+      00082E E0               [24] 1840 	movx	a,@dptr
+      00082F C0 E0            [24] 1841 	push	acc
+      000831 8B 82            [24] 1842 	mov	dpl,r3
+      000833 8C 83            [24] 1843 	mov	dph,r4
+      000835 8D F0            [24] 1844 	mov	b,r5
+      000837 22               [24] 1845 	ret
+      000838                       1846 00298$:
+      000838 15 81            [12] 1847 	dec	sp
+      00083A 15 81            [12] 1848 	dec	sp
+      00083C 02r05r2E         [24] 1849 	ljmp	00164$
+      00083F                       1850 00137$:
+                                   1851 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:547: usb_send_ctrl_status();
+      00083F 12r01r0F         [24] 1852 	lcall	_usb_send_ctrl_status
+      000842 02r05r2E         [24] 1853 	ljmp	00164$
+                                   1854 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:555: PROCESS_END();
+      000845                       1855 00166$:
+      000845 E5 81            [12] 1856 	mov	a,sp
+      000847 24 FB            [12] 1857 	add	a,#0xfb
+      000849 F8               [12] 1858 	mov	r0,a
+      00084A 86 82            [24] 1859 	mov	dpl,@r0
+      00084C 08               [12] 1860 	inc	r0
+      00084D 86 83            [24] 1861 	mov	dph,@r0
+      00084F 08               [12] 1862 	inc	r0
+      000850 86 F0            [24] 1863 	mov	b,@r0
+      000852 E4               [12] 1864 	clr	a
+      000853 12r00r00         [24] 1865 	lcall	__gptrput
+      000856 A3               [24] 1866 	inc	dptr
+      000857 E4               [12] 1867 	clr	a
+      000858 12r00r00         [24] 1868 	lcall	__gptrput
+      00085B 75 82 03         [24] 1869 	mov	dpl,#0x03
+      00085E                       1870 00170$:
+      00085E E5 81            [12] 1871 	mov	a,sp
+      000860 24 FA            [12] 1872 	add	a,#0xFA
+      000862 F5 81            [12] 1873 	mov	sp,a
+      000864 22               [24] 1874 	ret
+                                   1875 ;------------------------------------------------------------
+                                   1876 ;Allocation info for local variables in function 'usb_setup'
+                                   1877 ;------------------------------------------------------------
+                                   1878 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:560: usb_setup(void)
+                                   1879 ;	-----------------------------------------
+                                   1880 ;	 function usb_setup
+                                   1881 ;	-----------------------------------------
+      000865                       1882 _usb_setup:
+                                   1883 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:562: usb_arch_setup();
+      000865 12r00r00         [24] 1884 	lcall	_usb_arch_setup
+                                   1885 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:563: process_start(&usb_process, NULL);
+      000868 E4               [12] 1886 	clr	a
+      000869 C0 E0            [24] 1887 	push	acc
+      00086B C0 E0            [24] 1888 	push	acc
+      00086D C0 E0            [24] 1889 	push	acc
+      00086F 90r00r17         [24] 1890 	mov	dptr,#_usb_process
+      000872 75 F0 00         [24] 1891 	mov	b,#0x00
+      000875 12r00r00         [24] 1892 	lcall	_process_start
+      000878 15 81            [12] 1893 	dec	sp
+      00087A 15 81            [12] 1894 	dec	sp
+      00087C 15 81            [12] 1895 	dec	sp
+                                   1896 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:564: usb_arch_set_global_event_process(&usb_process);
+      00087E 90r00r17         [24] 1897 	mov	dptr,#_usb_process
+      000881 75 F0 00         [24] 1898 	mov	b,#0x00
+      000884 12r00r00         [24] 1899 	lcall	_usb_arch_set_global_event_process
+                                   1900 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:565: usb_set_ep_event_process(0, &usb_process);
+      000887 74r17            [12] 1901 	mov	a,#_usb_process
+      000889 C0 E0            [24] 1902 	push	acc
+      00088B 74s00            [12] 1903 	mov	a,#(_usb_process >> 8)
+      00088D C0 E0            [24] 1904 	push	acc
+      00088F E4               [12] 1905 	clr	a
+      000890 C0 E0            [24] 1906 	push	acc
+      000892 75 82 00         [24] 1907 	mov	dpl,#0x00
+      000895 12r00r00         [24] 1908 	lcall	_usb_set_ep_event_process
+      000898 15 81            [12] 1909 	dec	sp
+      00089A 15 81            [12] 1910 	dec	sp
+      00089C 15 81            [12] 1911 	dec	sp
+                                   1912 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:567: usb_register_request_handler(&standard_request_hook);
+      00089E 90r00r11         [24] 1913 	mov	dptr,#_standard_request_hook
+      0008A1 75 F0 00         [24] 1914 	mov	b,#0x00
+      0008A4 02r08rA7         [24] 1915 	ljmp	_usb_register_request_handler
+                                   1916 ;------------------------------------------------------------
+                                   1917 ;Allocation info for local variables in function 'usb_register_request_handler'
+                                   1918 ;------------------------------------------------------------
+                                   1919 ;hook                      Allocated to stack - sp -2
+                                   1920 ;prevp                     Allocated to registers r2 r3 r4 
+                                   1921 ;------------------------------------------------------------
+                                   1922 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:571: usb_register_request_handler(struct USBRequestHandlerHook *hook)
+                                   1923 ;	-----------------------------------------
+                                   1924 ;	 function usb_register_request_handler
+                                   1925 ;	-----------------------------------------
+      0008A7                       1926 _usb_register_request_handler:
+      0008A7 C0 82            [24] 1927 	push	dpl
+      0008A9 C0 83            [24] 1928 	push	dph
+      0008AB C0 F0            [24] 1929 	push	b
+                                   1930 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:573: struct USBRequestHandlerHook **prevp = &usb_request_handler_hooks;
+      0008AD 7Ar00            [12] 1931 	mov	r2,#_usb_request_handler_hooks
+      0008AF 7Bs00            [12] 1932 	mov	r3,#(_usb_request_handler_hooks >> 8)
+      0008B1 7C 00            [12] 1933 	mov	r4,#0x00
+                                   1934 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:575: while(*prevp) {
+      0008B3                       1935 00101$:
+      0008B3 8A 82            [24] 1936 	mov	dpl,r2
+      0008B5 8B 83            [24] 1937 	mov	dph,r3
+      0008B7 8C F0            [24] 1938 	mov	b,r4
+      0008B9 12r00r00         [24] 1939 	lcall	__gptrget
+      0008BC FD               [12] 1940 	mov	r5,a
+      0008BD A3               [24] 1941 	inc	dptr
+      0008BE 12r00r00         [24] 1942 	lcall	__gptrget
+      0008C1 FE               [12] 1943 	mov	r6,a
+      0008C2 A3               [24] 1944 	inc	dptr
+      0008C3 12r00r00         [24] 1945 	lcall	__gptrget
+      0008C6 FF               [12] 1946 	mov	r7,a
+      0008C7 ED               [12] 1947 	mov	a,r5
+      0008C8 4E               [12] 1948 	orl	a,r6
+      0008C9 60 08            [24] 1949 	jz	00103$
+                                   1950 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:576: prevp = &(*prevp)->next;
+      0008CB 8D 02            [24] 1951 	mov	ar2,r5
+      0008CD 8E 03            [24] 1952 	mov	ar3,r6
+      0008CF 8F 04            [24] 1953 	mov	ar4,r7
+      0008D1 80 E0            [24] 1954 	sjmp	00101$
+      0008D3                       1955 00103$:
+                                   1956 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:579: *prevp = hook;
+      0008D3 8A 82            [24] 1957 	mov	dpl,r2
+      0008D5 8B 83            [24] 1958 	mov	dph,r3
+      0008D7 8C F0            [24] 1959 	mov	b,r4
+      0008D9 A8 81            [24] 1960 	mov	r0,sp
+      0008DB 18               [12] 1961 	dec	r0
+      0008DC 18               [12] 1962 	dec	r0
+      0008DD E6               [12] 1963 	mov	a,@r0
+      0008DE 12r00r00         [24] 1964 	lcall	__gptrput
+      0008E1 A3               [24] 1965 	inc	dptr
+      0008E2 08               [12] 1966 	inc	r0
+      0008E3 E6               [12] 1967 	mov	a,@r0
+      0008E4 12r00r00         [24] 1968 	lcall	__gptrput
+      0008E7 A3               [24] 1969 	inc	dptr
+      0008E8 08               [12] 1970 	inc	r0
+      0008E9 E6               [12] 1971 	mov	a,@r0
+      0008EA 12r00r00         [24] 1972 	lcall	__gptrput
+                                   1973 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:580: hook->next = NULL;
+      0008ED A8 81            [24] 1974 	mov	r0,sp
+      0008EF 18               [12] 1975 	dec	r0
+      0008F0 18               [12] 1976 	dec	r0
+      0008F1 86 82            [24] 1977 	mov	dpl,@r0
+      0008F3 08               [12] 1978 	inc	r0
+      0008F4 86 83            [24] 1979 	mov	dph,@r0
+      0008F6 08               [12] 1980 	inc	r0
+      0008F7 86 F0            [24] 1981 	mov	b,@r0
+      0008F9 E4               [12] 1982 	clr	a
+      0008FA 12r00r00         [24] 1983 	lcall	__gptrput
+      0008FD A3               [24] 1984 	inc	dptr
+      0008FE E4               [12] 1985 	clr	a
+      0008FF 12r00r00         [24] 1986 	lcall	__gptrput
+      000902 A3               [24] 1987 	inc	dptr
+      000903 E4               [12] 1988 	clr	a
+      000904 12r00r00         [24] 1989 	lcall	__gptrput
+      000907 15 81            [12] 1990 	dec	sp
+      000909 15 81            [12] 1991 	dec	sp
+      00090B 15 81            [12] 1992 	dec	sp
+      00090D 22               [24] 1993 	ret
+                                   1994 ;------------------------------------------------------------
+                                   1995 ;Allocation info for local variables in function 'usb_prepend_request_handler'
+                                   1996 ;------------------------------------------------------------
+                                   1997 ;hook                      Allocated to registers r5 r6 r7 
+                                   1998 ;------------------------------------------------------------
+                                   1999 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:584: usb_prepend_request_handler(struct USBRequestHandlerHook *hook)
+                                   2000 ;	-----------------------------------------
+                                   2001 ;	 function usb_prepend_request_handler
+                                   2002 ;	-----------------------------------------
+      00090E                       2003 _usb_prepend_request_handler:
+      00090E AD 82            [24] 2004 	mov	r5,dpl
+      000910 AE 83            [24] 2005 	mov	r6,dph
+      000912 AF F0            [24] 2006 	mov	r7,b
+                                   2007 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:586: hook->next = usb_request_handler_hooks;
+      000914 90r00r00         [24] 2008 	mov	dptr,#_usb_request_handler_hooks
+      000917 E0               [24] 2009 	movx	a,@dptr
+      000918 FA               [12] 2010 	mov	r2,a
+      000919 A3               [24] 2011 	inc	dptr
+      00091A E0               [24] 2012 	movx	a,@dptr
+      00091B FB               [12] 2013 	mov	r3,a
+      00091C A3               [24] 2014 	inc	dptr
+      00091D E0               [24] 2015 	movx	a,@dptr
+      00091E FC               [12] 2016 	mov	r4,a
+      00091F 8D 82            [24] 2017 	mov	dpl,r5
+      000921 8E 83            [24] 2018 	mov	dph,r6
+      000923 8F F0            [24] 2019 	mov	b,r7
+      000925 EA               [12] 2020 	mov	a,r2
+      000926 12r00r00         [24] 2021 	lcall	__gptrput
+      000929 A3               [24] 2022 	inc	dptr
+      00092A EB               [12] 2023 	mov	a,r3
+      00092B 12r00r00         [24] 2024 	lcall	__gptrput
+      00092E A3               [24] 2025 	inc	dptr
+      00092F EC               [12] 2026 	mov	a,r4
+      000930 12r00r00         [24] 2027 	lcall	__gptrput
+                                   2028 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:587: usb_request_handler_hooks = hook;
+      000933 90r00r00         [24] 2029 	mov	dptr,#_usb_request_handler_hooks
+      000936 ED               [12] 2030 	mov	a,r5
+      000937 F0               [24] 2031 	movx	@dptr,a
+      000938 EE               [12] 2032 	mov	a,r6
+      000939 A3               [24] 2033 	inc	dptr
+      00093A F0               [24] 2034 	movx	@dptr,a
+      00093B EF               [12] 2035 	mov	a,r7
+      00093C A3               [24] 2036 	inc	dptr
+      00093D F0               [24] 2037 	movx	@dptr,a
+      00093E 22               [24] 2038 	ret
+                                   2039 ;------------------------------------------------------------
+                                   2040 ;Allocation info for local variables in function 'usb_get_current_configuration'
+                                   2041 ;------------------------------------------------------------
+                                   2042 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:592: usb_get_current_configuration(void)
+                                   2043 ;	-----------------------------------------
+                                   2044 ;	 function usb_get_current_configuration
+                                   2045 ;	-----------------------------------------
+      00093F                       2046 _usb_get_current_configuration:
+                                   2047 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:594: return usb_configuration_value;
+      00093F 90r00r18         [24] 2048 	mov	dptr,#_usb_configuration_value
+      000942 E0               [24] 2049 	movx	a,@dptr
+      000943 FF               [12] 2050 	mov	r7,a
+      000944 7E 00            [12] 2051 	mov	r6,#0x00
+      000946 8F 82            [24] 2052 	mov	dpl,r7
+      000948 8E 83            [24] 2053 	mov	dph,r6
+      00094A 22               [24] 2054 	ret
+                                   2055 ;------------------------------------------------------------
+                                   2056 ;Allocation info for local variables in function 'usb_setup_bulk_endpoint'
+                                   2057 ;------------------------------------------------------------
+                                   2058 ;addr                      Allocated to registers r7 
+                                   2059 ;------------------------------------------------------------
+                                   2060 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:598: usb_setup_bulk_endpoint(unsigned char addr)
+                                   2061 ;	-----------------------------------------
+                                   2062 ;	 function usb_setup_bulk_endpoint
+                                   2063 ;	-----------------------------------------
+      00094B                       2064 _usb_setup_bulk_endpoint:
+                                   2065 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:600: usb_arch_setup_bulk_endpoint(addr);
+      00094B 02r00r00         [24] 2066 	ljmp	_usb_arch_setup_bulk_endpoint
+                                   2067 ;------------------------------------------------------------
+                                   2068 ;Allocation info for local variables in function 'usb_setup_interrupt_endpoint'
+                                   2069 ;------------------------------------------------------------
+                                   2070 ;addr                      Allocated to registers r7 
+                                   2071 ;------------------------------------------------------------
+                                   2072 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:604: usb_setup_interrupt_endpoint(unsigned char addr)
+                                   2073 ;	-----------------------------------------
+                                   2074 ;	 function usb_setup_interrupt_endpoint
+                                   2075 ;	-----------------------------------------
+      00094E                       2076 _usb_setup_interrupt_endpoint:
+                                   2077 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:606: usb_arch_setup_interrupt_endpoint(addr);
+      00094E 02r00r00         [24] 2078 	ljmp	_usb_arch_setup_interrupt_endpoint
+                                   2079 ;------------------------------------------------------------
+                                   2080 ;Allocation info for local variables in function 'usb_disable_endpoint'
+                                   2081 ;------------------------------------------------------------
+                                   2082 ;addr                      Allocated to registers r7 
+                                   2083 ;------------------------------------------------------------
+                                   2084 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:610: usb_disable_endpoint(uint8_t addr)
+                                   2085 ;	-----------------------------------------
+                                   2086 ;	 function usb_disable_endpoint
+                                   2087 ;	-----------------------------------------
+      000951                       2088 _usb_disable_endpoint:
+                                   2089 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:612: usb_arch_discard_all_buffers(addr);
+      000951 AF 82            [24] 2090 	mov  r7,dpl
+      000953 C0 07            [24] 2091 	push	ar7
+      000955 12r00r00         [24] 2092 	lcall	_usb_arch_discard_all_buffers
+      000958 D0 07            [24] 2093 	pop	ar7
+                                   2094 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:613: usb_arch_disable_endpoint(addr);
+      00095A 8F 82            [24] 2095 	mov	dpl,r7
+      00095C 02r00r00         [24] 2096 	ljmp	_usb_arch_disable_endpoint
+                                   2097 ;------------------------------------------------------------
+                                   2098 ;Allocation info for local variables in function 'usb_discard_all_buffers'
+                                   2099 ;------------------------------------------------------------
+                                   2100 ;addr                      Allocated to registers r7 
+                                   2101 ;------------------------------------------------------------
+                                   2102 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:617: usb_discard_all_buffers(uint8_t addr)
+                                   2103 ;	-----------------------------------------
+                                   2104 ;	 function usb_discard_all_buffers
+                                   2105 ;	-----------------------------------------
+      00095F                       2106 _usb_discard_all_buffers:
+                                   2107 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:619: usb_arch_discard_all_buffers(addr);
+      00095F 02r00r00         [24] 2108 	ljmp	_usb_arch_discard_all_buffers
+                                   2109 ;------------------------------------------------------------
+                                   2110 ;Allocation info for local variables in function 'usb_halt_endpoint'
+                                   2111 ;------------------------------------------------------------
+                                   2112 ;halt                      Allocated to stack - sp -3
+                                   2113 ;addr                      Allocated to registers r7 
+                                   2114 ;------------------------------------------------------------
+                                   2115 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:623: usb_halt_endpoint(uint8_t addr, int halt)
+                                   2116 ;	-----------------------------------------
+                                   2117 ;	 function usb_halt_endpoint
+                                   2118 ;	-----------------------------------------
+      000962                       2119 _usb_halt_endpoint:
+      000962 AF 82            [24] 2120 	mov	r7,dpl
+                                   2121 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:625: usb_arch_halt_endpoint(addr, halt);
+      000964 E5 81            [12] 2122 	mov	a,sp
+      000966 24 FD            [12] 2123 	add	a,#0xfd
+      000968 F8               [12] 2124 	mov	r0,a
+      000969 E6               [12] 2125 	mov	a,@r0
+      00096A C0 E0            [24] 2126 	push	acc
+      00096C 08               [12] 2127 	inc	r0
+      00096D E6               [12] 2128 	mov	a,@r0
+      00096E C0 E0            [24] 2129 	push	acc
+      000970 8F 82            [24] 2130 	mov	dpl,r7
+      000972 12r00r00         [24] 2131 	lcall	_usb_arch_halt_endpoint
+      000975 15 81            [12] 2132 	dec	sp
+      000977 15 81            [12] 2133 	dec	sp
+      000979 22               [24] 2134 	ret
+                                   2135 ;------------------------------------------------------------
+                                   2136 ;Allocation info for local variables in function 'usb_send_pending'
+                                   2137 ;------------------------------------------------------------
+                                   2138 ;addr                      Allocated to registers r7 
+                                   2139 ;------------------------------------------------------------
+                                   2140 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:629: usb_send_pending(uint8_t addr)
+                                   2141 ;	-----------------------------------------
+                                   2142 ;	 function usb_send_pending
+                                   2143 ;	-----------------------------------------
+      00097A                       2144 _usb_send_pending:
+                                   2145 ;	/home/user/contiki/cpu/cc2530edm_aman/usb/common/usb-core.c:631: return usb_arch_send_pending(addr);
+      00097A 02r00r00         [24] 2146 	ljmp	_usb_arch_send_pending
+                                   2147 	.area CSEG    (CODE)
+                                   2148 	.area CONST   (CODE)
+      000000                       2149 _zero_byte:
+      000000 00                    2150 	.db #0x00	; 0
+      000001                       2151 _zero_word:
+      000001 00 00                 2152 	.byte #0x00,#0x00	; 0
+      000003                       2153 _standard_request_handler:
+      000003 00                    2154 	.db #0x00	; 0
+      000004 60                    2155 	.db #0x60	; 96
+      000005 00                    2156 	.db #0x00	; 0
+      000006 00                    2157 	.db #0x00	; 0
+      000007r7Bs03                 2158 	.byte _handle_standard_requests,(_handle_standard_requests >> 8)
+                                   2159 	.area XINIT   (CODE)
+      000000                       2160 __xinit__usb_request_handler_hooks:
+                                   2161 ; generic printIvalPtr
+      000000 00 00 00              2162 	.byte #0x00,#0x00,#0x00
+      000003                       2163 __xinit__usb_flags:
+      000003 00                    2164 	.db #0x00	; 0
+      000004                       2165 __xinit__global_user_event_pocess:
+                                   2166 ; generic printIvalPtr
+      000004 00 00 00              2167 	.byte #0x00,#0x00,#0x00
+      000007                       2168 __xinit__global_user_events:
+      000007 00 00                 2169 	.byte #0x00,#0x00	; 0
+      000009                       2170 __xinit__error_stall:
+      000009 00                    2171 	.db #0x00	; 0
+      00000A                       2172 __xinit__data_callback:
+      00000A 00 00                 2173 	.byte #0x00,#0x00
+      00000C                       2174 __xinit__ctrl_data:
+      00000C 00 00 00              2175 	.byte #0x00,#0x00,#0x00
+      00000F                       2176 __xinit__ctrl_data_len:
+      00000F 00 00                 2177 	.byte #0x00,#0x00	; 0
+      000011                       2178 __xinit__standard_request_hook:
+                                   2179 ; generic printIvalPtr
+      000011 00 00 00              2180 	.byte #0x00,#0x00,#0x00
+      000014r03s00 80              2181 	.byte _standard_request_handler,(_standard_request_handler >> 8),#0x80
+      000017                       2182 __xinit__usb_process:
+                                   2183 ; generic printIvalPtr
+      000017 00 00 00              2184 	.byte #0x00,#0x00,#0x00
+      00001ArF7s04                 2185 	.byte _process_thread_usb_process,(_process_thread_usb_process >> 8)
+      00001C 00 00                 2186 	.byte #0x00,#0x00	; 0
+      00001E 00                    2187 	.db #0x00	; 0
+      00001F 00                    2188 	.db #0x00	; 0
+                                   2189 	.area CABS    (ABS,CODE)

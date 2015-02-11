@@ -1,0 +1,1244 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:41 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module list
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _list_init
+                                     13 	.globl _list_head
+                                     14 	.globl _list_copy
+                                     15 	.globl _list_tail
+                                     16 	.globl _list_add
+                                     17 	.globl _list_push
+                                     18 	.globl _list_chop
+                                     19 	.globl _list_pop
+                                     20 	.globl _list_remove
+                                     21 	.globl _list_length
+                                     22 	.globl _list_insert
+                                     23 	.globl _list_item_next
+                                     24 ;--------------------------------------------------------
+                                     25 ; special function registers
+                                     26 ;--------------------------------------------------------
+                                     27 	.area RSEG    (ABS,DATA)
+      000000                         28 	.org 0x0000
+                                     29 ;--------------------------------------------------------
+                                     30 ; special function bits
+                                     31 ;--------------------------------------------------------
+                                     32 	.area RSEG    (ABS,DATA)
+      000000                         33 	.org 0x0000
+                                     34 ;--------------------------------------------------------
+                                     35 ; overlayable register banks
+                                     36 ;--------------------------------------------------------
+                                     37 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         38 	.ds 8
+                                     39 ;--------------------------------------------------------
+                                     40 ; internal ram data
+                                     41 ;--------------------------------------------------------
+                                     42 	.area DSEG    (DATA)
+                                     43 ;--------------------------------------------------------
+                                     44 ; overlayable items in internal ram 
+                                     45 ;--------------------------------------------------------
+                                     46 ;--------------------------------------------------------
+                                     47 ; indirectly addressable internal ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area ISEG    (DATA)
+                                     50 ;--------------------------------------------------------
+                                     51 ; absolute internal ram data
+                                     52 ;--------------------------------------------------------
+                                     53 	.area IABS    (ABS,DATA)
+                                     54 	.area IABS    (ABS,DATA)
+                                     55 ;--------------------------------------------------------
+                                     56 ; bit data
+                                     57 ;--------------------------------------------------------
+                                     58 	.area BSEG    (BIT)
+                                     59 ;--------------------------------------------------------
+                                     60 ; paged external ram data
+                                     61 ;--------------------------------------------------------
+                                     62 	.area PSEG    (PAG,XDATA)
+                                     63 ;--------------------------------------------------------
+                                     64 ; external ram data
+                                     65 ;--------------------------------------------------------
+                                     66 	.area XSEG    (XDATA)
+                                     67 ;--------------------------------------------------------
+                                     68 ; absolute external ram data
+                                     69 ;--------------------------------------------------------
+                                     70 	.area XABS    (ABS,XDATA)
+                                     71 ;--------------------------------------------------------
+                                     72 ; external initialized ram data
+                                     73 ;--------------------------------------------------------
+                                     74 	.area XISEG   (XDATA)
+                                     75 	.area HOME    (CODE)
+                                     76 	.area GSINIT0 (CODE)
+                                     77 	.area GSINIT1 (CODE)
+                                     78 	.area GSINIT2 (CODE)
+                                     79 	.area GSINIT3 (CODE)
+                                     80 	.area GSINIT4 (CODE)
+                                     81 	.area GSINIT5 (CODE)
+                                     82 	.area GSINIT  (CODE)
+                                     83 	.area GSFINAL (CODE)
+                                     84 	.area CSEG    (CODE)
+                                     85 ;--------------------------------------------------------
+                                     86 ; global & static initialisations
+                                     87 ;--------------------------------------------------------
+                                     88 	.area HOME    (CODE)
+                                     89 	.area GSINIT  (CODE)
+                                     90 	.area GSFINAL (CODE)
+                                     91 	.area GSINIT  (CODE)
+                                     92 ;--------------------------------------------------------
+                                     93 ; Home
+                                     94 ;--------------------------------------------------------
+                                     95 	.area HOME    (CODE)
+                                     96 	.area HOME    (CODE)
+                                     97 ;--------------------------------------------------------
+                                     98 ; code
+                                     99 ;--------------------------------------------------------
+                                    100 	.area CSEG    (CODE)
+                                    101 ;------------------------------------------------------------
+                                    102 ;Allocation info for local variables in function 'list_init'
+                                    103 ;------------------------------------------------------------
+                                    104 ;list                      Allocated to registers r5 r6 r7 
+                                    105 ;------------------------------------------------------------
+                                    106 ;	/home/user/contiki/core/lib/list.c:65: list_init(list_t list)
+                                    107 ;	-----------------------------------------
+                                    108 ;	 function list_init
+                                    109 ;	-----------------------------------------
+      000000                        110 _list_init:
+                           000007   111 	ar7 = 0x07
+                           000006   112 	ar6 = 0x06
+                           000005   113 	ar5 = 0x05
+                           000004   114 	ar4 = 0x04
+                           000003   115 	ar3 = 0x03
+                           000002   116 	ar2 = 0x02
+                           000001   117 	ar1 = 0x01
+                           000000   118 	ar0 = 0x00
+                                    119 ;	/home/user/contiki/core/lib/list.c:67: *list = NULL;
+      000000 E4               [12]  120 	clr	a
+      000001 12r00r00         [24]  121 	lcall	__gptrput
+      000004 A3               [24]  122 	inc	dptr
+      000005 E4               [12]  123 	clr	a
+      000006 12r00r00         [24]  124 	lcall	__gptrput
+      000009 A3               [24]  125 	inc	dptr
+      00000A E4               [12]  126 	clr	a
+      00000B 02r00r00         [24]  127 	ljmp	__gptrput
+                                    128 ;------------------------------------------------------------
+                                    129 ;Allocation info for local variables in function 'list_head'
+                                    130 ;------------------------------------------------------------
+                                    131 ;list                      Allocated to registers r5 r6 r7 
+                                    132 ;------------------------------------------------------------
+                                    133 ;	/home/user/contiki/core/lib/list.c:82: list_head(list_t list)
+                                    134 ;	-----------------------------------------
+                                    135 ;	 function list_head
+                                    136 ;	-----------------------------------------
+      00000E                        137 _list_head:
+                                    138 ;	/home/user/contiki/core/lib/list.c:84: return *list;
+      00000E 12r00r00         [24]  139 	lcall	__gptrget
+      000011 FD               [12]  140 	mov	r5,a
+      000012 A3               [24]  141 	inc	dptr
+      000013 12r00r00         [24]  142 	lcall	__gptrget
+      000016 FE               [12]  143 	mov	r6,a
+      000017 A3               [24]  144 	inc	dptr
+      000018 12r00r00         [24]  145 	lcall	__gptrget
+      00001B FF               [12]  146 	mov	r7,a
+      00001C 8D 82            [24]  147 	mov	dpl,r5
+      00001E 8E 83            [24]  148 	mov	dph,r6
+      000020 8F F0            [24]  149 	mov	b,r7
+      000022 22               [24]  150 	ret
+                                    151 ;------------------------------------------------------------
+                                    152 ;Allocation info for local variables in function 'list_copy'
+                                    153 ;------------------------------------------------------------
+                                    154 ;src                       Allocated to stack - sp -4
+                                    155 ;dest                      Allocated to registers r5 r6 r7 
+                                    156 ;------------------------------------------------------------
+                                    157 ;	/home/user/contiki/core/lib/list.c:100: list_copy(list_t dest, list_t src)
+                                    158 ;	-----------------------------------------
+                                    159 ;	 function list_copy
+                                    160 ;	-----------------------------------------
+      000023                        161 _list_copy:
+      000023 AD 82            [24]  162 	mov	r5,dpl
+      000025 AE 83            [24]  163 	mov	r6,dph
+      000027 AF F0            [24]  164 	mov	r7,b
+                                    165 ;	/home/user/contiki/core/lib/list.c:102: *dest = *src;
+      000029 E5 81            [12]  166 	mov	a,sp
+      00002B 24 FC            [12]  167 	add	a,#0xfc
+      00002D F8               [12]  168 	mov	r0,a
+      00002E 86 02            [24]  169 	mov	ar2,@r0
+      000030 08               [12]  170 	inc	r0
+      000031 86 03            [24]  171 	mov	ar3,@r0
+      000033 08               [12]  172 	inc	r0
+      000034 86 04            [24]  173 	mov	ar4,@r0
+      000036 8A 82            [24]  174 	mov	dpl,r2
+      000038 8B 83            [24]  175 	mov	dph,r3
+      00003A 8C F0            [24]  176 	mov	b,r4
+      00003C 12r00r00         [24]  177 	lcall	__gptrget
+      00003F FA               [12]  178 	mov	r2,a
+      000040 A3               [24]  179 	inc	dptr
+      000041 12r00r00         [24]  180 	lcall	__gptrget
+      000044 FB               [12]  181 	mov	r3,a
+      000045 A3               [24]  182 	inc	dptr
+      000046 12r00r00         [24]  183 	lcall	__gptrget
+      000049 FC               [12]  184 	mov	r4,a
+      00004A 8D 82            [24]  185 	mov	dpl,r5
+      00004C 8E 83            [24]  186 	mov	dph,r6
+      00004E 8F F0            [24]  187 	mov	b,r7
+      000050 EA               [12]  188 	mov	a,r2
+      000051 12r00r00         [24]  189 	lcall	__gptrput
+      000054 A3               [24]  190 	inc	dptr
+      000055 EB               [12]  191 	mov	a,r3
+      000056 12r00r00         [24]  192 	lcall	__gptrput
+      000059 A3               [24]  193 	inc	dptr
+      00005A EC               [12]  194 	mov	a,r4
+      00005B 02r00r00         [24]  195 	ljmp	__gptrput
+                                    196 ;------------------------------------------------------------
+                                    197 ;Allocation info for local variables in function 'list_tail'
+                                    198 ;------------------------------------------------------------
+                                    199 ;list                      Allocated to registers r5 r6 r7 
+                                    200 ;l                         Allocated to registers r5 r6 r7 
+                                    201 ;------------------------------------------------------------
+                                    202 ;	/home/user/contiki/core/lib/list.c:117: list_tail(list_t list)
+                                    203 ;	-----------------------------------------
+                                    204 ;	 function list_tail
+                                    205 ;	-----------------------------------------
+      00005E                        206 _list_tail:
+                                    207 ;	/home/user/contiki/core/lib/list.c:121: if(*list == NULL) {
+      00005E 12r00r00         [24]  208 	lcall	__gptrget
+      000061 FD               [12]  209 	mov	r5,a
+      000062 A3               [24]  210 	inc	dptr
+      000063 12r00r00         [24]  211 	lcall	__gptrget
+      000066 FE               [12]  212 	mov	r6,a
+      000067 A3               [24]  213 	inc	dptr
+      000068 12r00r00         [24]  214 	lcall	__gptrget
+      00006B FF               [12]  215 	mov	r7,a
+      00006C ED               [12]  216 	mov	a,r5
+      00006D 4E               [12]  217 	orl	a,r6
+                                    218 ;	/home/user/contiki/core/lib/list.c:122: return NULL;
+      00006E 70 06            [24]  219 	jnz	00102$
+      000070 90 00 00         [24]  220 	mov	dptr,#0x0000
+      000073 F5 F0            [12]  221 	mov	b,a
+      000075 22               [24]  222 	ret
+      000076                        223 00102$:
+                                    224 ;	/home/user/contiki/core/lib/list.c:125: for(l = *list; l->next != NULL; l = l->next);
+      000076                        225 00105$:
+      000076 8D 82            [24]  226 	mov	dpl,r5
+      000078 8E 83            [24]  227 	mov	dph,r6
+      00007A 8F F0            [24]  228 	mov	b,r7
+      00007C 12r00r00         [24]  229 	lcall	__gptrget
+      00007F FA               [12]  230 	mov	r2,a
+      000080 A3               [24]  231 	inc	dptr
+      000081 12r00r00         [24]  232 	lcall	__gptrget
+      000084 FB               [12]  233 	mov	r3,a
+      000085 A3               [24]  234 	inc	dptr
+      000086 12r00r00         [24]  235 	lcall	__gptrget
+      000089 FC               [12]  236 	mov	r4,a
+      00008A E4               [12]  237 	clr	a
+      00008B C0 E0            [24]  238 	push	acc
+      00008D E4               [12]  239 	clr	a
+      00008E C0 E0            [24]  240 	push	acc
+      000090 E4               [12]  241 	clr	a
+      000091 C0 E0            [24]  242 	push	acc
+      000093 8A 82            [24]  243 	mov	dpl,r2
+      000095 8B 83            [24]  244 	mov	dph,r3
+      000097 8C F0            [24]  245 	mov	b,r4
+      000099 12r00r00         [24]  246 	lcall	___gptr_cmp
+      00009C 15 81            [12]  247 	dec	sp
+      00009E 15 81            [12]  248 	dec	sp
+      0000A0 15 81            [12]  249 	dec	sp
+      0000A2 60 08            [24]  250 	jz	00103$
+      0000A4 8A 05            [24]  251 	mov	ar5,r2
+      0000A6 8B 06            [24]  252 	mov	ar6,r3
+      0000A8 8C 07            [24]  253 	mov	ar7,r4
+      0000AA 80 CA            [24]  254 	sjmp	00105$
+      0000AC                        255 00103$:
+                                    256 ;	/home/user/contiki/core/lib/list.c:127: return l;
+      0000AC 8D 82            [24]  257 	mov	dpl,r5
+      0000AE 8E 83            [24]  258 	mov	dph,r6
+      0000B0 8F F0            [24]  259 	mov	b,r7
+      0000B2 22               [24]  260 	ret
+                                    261 ;------------------------------------------------------------
+                                    262 ;Allocation info for local variables in function 'list_add'
+                                    263 ;------------------------------------------------------------
+                                    264 ;item                      Allocated to stack - sp -4
+                                    265 ;list                      Allocated to registers r5 r6 r7 
+                                    266 ;l                         Allocated to registers r2 r3 r4 
+                                    267 ;------------------------------------------------------------
+                                    268 ;	/home/user/contiki/core/lib/list.c:142: list_add(list_t list, void *item)
+                                    269 ;	-----------------------------------------
+                                    270 ;	 function list_add
+                                    271 ;	-----------------------------------------
+      0000B3                        272 _list_add:
+      0000B3 AD 82            [24]  273 	mov	r5,dpl
+      0000B5 AE 83            [24]  274 	mov	r6,dph
+      0000B7 AF F0            [24]  275 	mov	r7,b
+                                    276 ;	/home/user/contiki/core/lib/list.c:147: list_remove(list, item);
+      0000B9 C0 07            [24]  277 	push	ar7
+      0000BB C0 06            [24]  278 	push	ar6
+      0000BD C0 05            [24]  279 	push	ar5
+      0000BF E5 81            [12]  280 	mov	a,sp
+      0000C1 24 F9            [12]  281 	add	a,#0xf9
+      0000C3 F8               [12]  282 	mov	r0,a
+      0000C4 E6               [12]  283 	mov	a,@r0
+      0000C5 C0 E0            [24]  284 	push	acc
+      0000C7 08               [12]  285 	inc	r0
+      0000C8 E6               [12]  286 	mov	a,@r0
+      0000C9 C0 E0            [24]  287 	push	acc
+      0000CB 08               [12]  288 	inc	r0
+      0000CC E6               [12]  289 	mov	a,@r0
+      0000CD C0 E0            [24]  290 	push	acc
+      0000CF 8D 82            [24]  291 	mov	dpl,r5
+      0000D1 8E 83            [24]  292 	mov	dph,r6
+      0000D3 8F F0            [24]  293 	mov	b,r7
+      0000D5 12r03rA2         [24]  294 	lcall	_list_remove
+      0000D8 15 81            [12]  295 	dec	sp
+      0000DA 15 81            [12]  296 	dec	sp
+      0000DC 15 81            [12]  297 	dec	sp
+      0000DE D0 05            [24]  298 	pop	ar5
+      0000E0 D0 06            [24]  299 	pop	ar6
+      0000E2 D0 07            [24]  300 	pop	ar7
+                                    301 ;	/home/user/contiki/core/lib/list.c:149: ((struct list *)item)->next = NULL;
+      0000E4 E5 81            [12]  302 	mov	a,sp
+      0000E6 24 FC            [12]  303 	add	a,#0xfc
+      0000E8 F8               [12]  304 	mov	r0,a
+      0000E9 86 02            [24]  305 	mov	ar2,@r0
+      0000EB 08               [12]  306 	inc	r0
+      0000EC 86 03            [24]  307 	mov	ar3,@r0
+      0000EE 08               [12]  308 	inc	r0
+      0000EF 86 04            [24]  309 	mov	ar4,@r0
+      0000F1 8A 82            [24]  310 	mov	dpl,r2
+      0000F3 8B 83            [24]  311 	mov	dph,r3
+      0000F5 8C F0            [24]  312 	mov	b,r4
+      0000F7 E4               [12]  313 	clr	a
+      0000F8 12r00r00         [24]  314 	lcall	__gptrput
+      0000FB A3               [24]  315 	inc	dptr
+      0000FC E4               [12]  316 	clr	a
+      0000FD 12r00r00         [24]  317 	lcall	__gptrput
+      000100 A3               [24]  318 	inc	dptr
+      000101 E4               [12]  319 	clr	a
+      000102 12r00r00         [24]  320 	lcall	__gptrput
+                                    321 ;	/home/user/contiki/core/lib/list.c:151: l = list_tail(list);
+      000105 8D 82            [24]  322 	mov	dpl,r5
+      000107 8E 83            [24]  323 	mov	dph,r6
+      000109 8F F0            [24]  324 	mov	b,r7
+      00010B C0 07            [24]  325 	push	ar7
+      00010D C0 06            [24]  326 	push	ar6
+      00010F C0 05            [24]  327 	push	ar5
+      000111 12r00r5E         [24]  328 	lcall	_list_tail
+      000114 AA 82            [24]  329 	mov	r2,dpl
+      000116 AB 83            [24]  330 	mov	r3,dph
+      000118 AC F0            [24]  331 	mov	r4,b
+      00011A D0 05            [24]  332 	pop	ar5
+      00011C D0 06            [24]  333 	pop	ar6
+      00011E D0 07            [24]  334 	pop	ar7
+                                    335 ;	/home/user/contiki/core/lib/list.c:153: if(l == NULL) {
+      000120 EA               [12]  336 	mov	a,r2
+      000121 4B               [12]  337 	orl	a,r3
+      000122 70 1B            [24]  338 	jnz	00102$
+                                    339 ;	/home/user/contiki/core/lib/list.c:154: *list = item;
+      000124 8D 82            [24]  340 	mov	dpl,r5
+      000126 8E 83            [24]  341 	mov	dph,r6
+      000128 8F F0            [24]  342 	mov	b,r7
+      00012A E5 81            [12]  343 	mov	a,sp
+      00012C 24 FC            [12]  344 	add	a,#0xfc
+      00012E F8               [12]  345 	mov	r0,a
+      00012F E6               [12]  346 	mov	a,@r0
+      000130 12r00r00         [24]  347 	lcall	__gptrput
+      000133 A3               [24]  348 	inc	dptr
+      000134 08               [12]  349 	inc	r0
+      000135 E6               [12]  350 	mov	a,@r0
+      000136 12r00r00         [24]  351 	lcall	__gptrput
+      000139 A3               [24]  352 	inc	dptr
+      00013A 08               [12]  353 	inc	r0
+      00013B E6               [12]  354 	mov	a,@r0
+      00013C 02r00r00         [24]  355 	ljmp	__gptrput
+      00013F                        356 00102$:
+                                    357 ;	/home/user/contiki/core/lib/list.c:156: l->next = item;
+      00013F E5 81            [12]  358 	mov	a,sp
+      000141 24 FC            [12]  359 	add	a,#0xfc
+      000143 F8               [12]  360 	mov	r0,a
+      000144 86 05            [24]  361 	mov	ar5,@r0
+      000146 08               [12]  362 	inc	r0
+      000147 86 06            [24]  363 	mov	ar6,@r0
+      000149 08               [12]  364 	inc	r0
+      00014A 86 07            [24]  365 	mov	ar7,@r0
+      00014C 8A 82            [24]  366 	mov	dpl,r2
+      00014E 8B 83            [24]  367 	mov	dph,r3
+      000150 8C F0            [24]  368 	mov	b,r4
+      000152 ED               [12]  369 	mov	a,r5
+      000153 12r00r00         [24]  370 	lcall	__gptrput
+      000156 A3               [24]  371 	inc	dptr
+      000157 EE               [12]  372 	mov	a,r6
+      000158 12r00r00         [24]  373 	lcall	__gptrput
+      00015B A3               [24]  374 	inc	dptr
+      00015C EF               [12]  375 	mov	a,r7
+      00015D 02r00r00         [24]  376 	ljmp	__gptrput
+                                    377 ;------------------------------------------------------------
+                                    378 ;Allocation info for local variables in function 'list_push'
+                                    379 ;------------------------------------------------------------
+                                    380 ;item                      Allocated to stack - sp -7
+                                    381 ;list                      Allocated to stack - sp -2
+                                    382 ;------------------------------------------------------------
+                                    383 ;	/home/user/contiki/core/lib/list.c:164: list_push(list_t list, void *item)
+                                    384 ;	-----------------------------------------
+                                    385 ;	 function list_push
+                                    386 ;	-----------------------------------------
+      000160                        387 _list_push:
+      000160 C0 82            [24]  388 	push	dpl
+      000162 C0 83            [24]  389 	push	dph
+      000164 C0 F0            [24]  390 	push	b
+                                    391 ;	/home/user/contiki/core/lib/list.c:169: list_remove(list, item);
+      000166 E5 81            [12]  392 	mov	a,sp
+      000168 24 F9            [12]  393 	add	a,#0xf9
+      00016A F8               [12]  394 	mov	r0,a
+      00016B E6               [12]  395 	mov	a,@r0
+      00016C C0 E0            [24]  396 	push	acc
+      00016E 08               [12]  397 	inc	r0
+      00016F E6               [12]  398 	mov	a,@r0
+      000170 C0 E0            [24]  399 	push	acc
+      000172 08               [12]  400 	inc	r0
+      000173 E6               [12]  401 	mov	a,@r0
+      000174 C0 E0            [24]  402 	push	acc
+      000176 E5 81            [12]  403 	mov	a,sp
+      000178 24 FB            [12]  404 	add	a,#0xfb
+      00017A F8               [12]  405 	mov	r0,a
+      00017B 86 82            [24]  406 	mov	dpl,@r0
+      00017D 08               [12]  407 	inc	r0
+      00017E 86 83            [24]  408 	mov	dph,@r0
+      000180 08               [12]  409 	inc	r0
+      000181 86 F0            [24]  410 	mov	b,@r0
+      000183 12r03rA2         [24]  411 	lcall	_list_remove
+      000186 15 81            [12]  412 	dec	sp
+      000188 15 81            [12]  413 	dec	sp
+      00018A 15 81            [12]  414 	dec	sp
+                                    415 ;	/home/user/contiki/core/lib/list.c:171: ((struct list *)item)->next = *list;
+      00018C E5 81            [12]  416 	mov	a,sp
+      00018E 24 F9            [12]  417 	add	a,#0xf9
+      000190 F8               [12]  418 	mov	r0,a
+      000191 86 02            [24]  419 	mov	ar2,@r0
+      000193 08               [12]  420 	inc	r0
+      000194 86 03            [24]  421 	mov	ar3,@r0
+      000196 08               [12]  422 	inc	r0
+      000197 86 04            [24]  423 	mov	ar4,@r0
+      000199 A8 81            [24]  424 	mov	r0,sp
+      00019B 18               [12]  425 	dec	r0
+      00019C 18               [12]  426 	dec	r0
+      00019D 86 82            [24]  427 	mov	dpl,@r0
+      00019F 08               [12]  428 	inc	r0
+      0001A0 86 83            [24]  429 	mov	dph,@r0
+      0001A2 08               [12]  430 	inc	r0
+      0001A3 86 F0            [24]  431 	mov	b,@r0
+      0001A5 12r00r00         [24]  432 	lcall	__gptrget
+      0001A8 FD               [12]  433 	mov	r5,a
+      0001A9 A3               [24]  434 	inc	dptr
+      0001AA 12r00r00         [24]  435 	lcall	__gptrget
+      0001AD FE               [12]  436 	mov	r6,a
+      0001AE A3               [24]  437 	inc	dptr
+      0001AF 12r00r00         [24]  438 	lcall	__gptrget
+      0001B2 FF               [12]  439 	mov	r7,a
+      0001B3 8A 82            [24]  440 	mov	dpl,r2
+      0001B5 8B 83            [24]  441 	mov	dph,r3
+      0001B7 8C F0            [24]  442 	mov	b,r4
+      0001B9 ED               [12]  443 	mov	a,r5
+      0001BA 12r00r00         [24]  444 	lcall	__gptrput
+      0001BD A3               [24]  445 	inc	dptr
+      0001BE EE               [12]  446 	mov	a,r6
+      0001BF 12r00r00         [24]  447 	lcall	__gptrput
+      0001C2 A3               [24]  448 	inc	dptr
+      0001C3 EF               [12]  449 	mov	a,r7
+      0001C4 12r00r00         [24]  450 	lcall	__gptrput
+                                    451 ;	/home/user/contiki/core/lib/list.c:172: *list = item;
+      0001C7 A8 81            [24]  452 	mov	r0,sp
+      0001C9 18               [12]  453 	dec	r0
+      0001CA 18               [12]  454 	dec	r0
+      0001CB 86 82            [24]  455 	mov	dpl,@r0
+      0001CD 08               [12]  456 	inc	r0
+      0001CE 86 83            [24]  457 	mov	dph,@r0
+      0001D0 08               [12]  458 	inc	r0
+      0001D1 86 F0            [24]  459 	mov	b,@r0
+      0001D3 E5 81            [12]  460 	mov	a,sp
+      0001D5 24 F9            [12]  461 	add	a,#0xf9
+      0001D7 F9               [12]  462 	mov	r1,a
+      0001D8 E7               [12]  463 	mov	a,@r1
+      0001D9 12r00r00         [24]  464 	lcall	__gptrput
+      0001DC A3               [24]  465 	inc	dptr
+      0001DD 09               [12]  466 	inc	r1
+      0001DE E7               [12]  467 	mov	a,@r1
+      0001DF 12r00r00         [24]  468 	lcall	__gptrput
+      0001E2 A3               [24]  469 	inc	dptr
+      0001E3 09               [12]  470 	inc	r1
+      0001E4 E7               [12]  471 	mov	a,@r1
+      0001E5 12r00r00         [24]  472 	lcall	__gptrput
+      0001E8 15 81            [12]  473 	dec	sp
+      0001EA 15 81            [12]  474 	dec	sp
+      0001EC 15 81            [12]  475 	dec	sp
+      0001EE 22               [24]  476 	ret
+                                    477 ;------------------------------------------------------------
+                                    478 ;Allocation info for local variables in function 'list_chop'
+                                    479 ;------------------------------------------------------------
+                                    480 ;list                      Allocated to stack - sp -5
+                                    481 ;l                         Allocated to stack - sp -2
+                                    482 ;r                         Allocated to registers r5 r6 r7 
+                                    483 ;------------------------------------------------------------
+                                    484 ;	/home/user/contiki/core/lib/list.c:185: list_chop(list_t list)
+                                    485 ;	-----------------------------------------
+                                    486 ;	 function list_chop
+                                    487 ;	-----------------------------------------
+      0001EF                        488 _list_chop:
+      0001EF C0 82            [24]  489 	push	dpl
+      0001F1 C0 83            [24]  490 	push	dph
+      0001F3 C0 F0            [24]  491 	push	b
+      0001F5 05 81            [12]  492 	inc	sp
+      0001F7 05 81            [12]  493 	inc	sp
+      0001F9 05 81            [12]  494 	inc	sp
+                                    495 ;	/home/user/contiki/core/lib/list.c:189: if(*list == NULL) {
+      0001FB E5 81            [12]  496 	mov	a,sp
+      0001FD 24 FB            [12]  497 	add	a,#0xfb
+      0001FF F8               [12]  498 	mov	r0,a
+      000200 86 82            [24]  499 	mov	dpl,@r0
+      000202 08               [12]  500 	inc	r0
+      000203 86 83            [24]  501 	mov	dph,@r0
+      000205 08               [12]  502 	inc	r0
+      000206 86 F0            [24]  503 	mov	b,@r0
+      000208 12r00r00         [24]  504 	lcall	__gptrget
+      00020B FA               [12]  505 	mov	r2,a
+      00020C A3               [24]  506 	inc	dptr
+      00020D 12r00r00         [24]  507 	lcall	__gptrget
+      000210 FB               [12]  508 	mov	r3,a
+      000211 A3               [24]  509 	inc	dptr
+      000212 12r00r00         [24]  510 	lcall	__gptrget
+      000215 FC               [12]  511 	mov	r4,a
+      000216 EA               [12]  512 	mov	a,r2
+      000217 4B               [12]  513 	orl	a,r3
+                                    514 ;	/home/user/contiki/core/lib/list.c:190: return NULL;
+      000218 70 08            [24]  515 	jnz	00102$
+      00021A 90 00 00         [24]  516 	mov	dptr,#0x0000
+      00021D F5 F0            [12]  517 	mov	b,a
+      00021F 02r03r30         [24]  518 	ljmp	00109$
+      000222                        519 00102$:
+                                    520 ;	/home/user/contiki/core/lib/list.c:192: if(((struct list *)*list)->next == NULL) {
+      000222 8A 05            [24]  521 	mov	ar5,r2
+      000224 8B 06            [24]  522 	mov	ar6,r3
+      000226 8C 07            [24]  523 	mov	ar7,r4
+      000228 8D 82            [24]  524 	mov	dpl,r5
+      00022A 8E 83            [24]  525 	mov	dph,r6
+      00022C 8F F0            [24]  526 	mov	b,r7
+      00022E 12r00r00         [24]  527 	lcall	__gptrget
+      000231 FD               [12]  528 	mov	r5,a
+      000232 A3               [24]  529 	inc	dptr
+      000233 12r00r00         [24]  530 	lcall	__gptrget
+      000236 FE               [12]  531 	mov	r6,a
+      000237 A3               [24]  532 	inc	dptr
+      000238 12r00r00         [24]  533 	lcall	__gptrget
+      00023B FF               [12]  534 	mov	r7,a
+      00023C ED               [12]  535 	mov	a,r5
+      00023D 4E               [12]  536 	orl	a,r6
+      00023E 70 42            [24]  537 	jnz	00104$
+                                    538 ;	/home/user/contiki/core/lib/list.c:193: l = *list;
+      000240 8A 05            [24]  539 	mov	ar5,r2
+      000242 8B 06            [24]  540 	mov	ar6,r3
+      000244 8C 07            [24]  541 	mov	ar7,r4
+      000246 A8 81            [24]  542 	mov	r0,sp
+      000248 18               [12]  543 	dec	r0
+      000249 18               [12]  544 	dec	r0
+      00024A A6 05            [24]  545 	mov	@r0,ar5
+      00024C 08               [12]  546 	inc	r0
+      00024D A6 06            [24]  547 	mov	@r0,ar6
+      00024F 08               [12]  548 	inc	r0
+      000250 A6 07            [24]  549 	mov	@r0,ar7
+                                    550 ;	/home/user/contiki/core/lib/list.c:194: *list = NULL;
+      000252 E5 81            [12]  551 	mov	a,sp
+      000254 24 FB            [12]  552 	add	a,#0xfb
+      000256 F8               [12]  553 	mov	r0,a
+      000257 86 82            [24]  554 	mov	dpl,@r0
+      000259 08               [12]  555 	inc	r0
+      00025A 86 83            [24]  556 	mov	dph,@r0
+      00025C 08               [12]  557 	inc	r0
+      00025D 86 F0            [24]  558 	mov	b,@r0
+      00025F E4               [12]  559 	clr	a
+      000260 12r00r00         [24]  560 	lcall	__gptrput
+      000263 A3               [24]  561 	inc	dptr
+      000264 E4               [12]  562 	clr	a
+      000265 12r00r00         [24]  563 	lcall	__gptrput
+      000268 A3               [24]  564 	inc	dptr
+      000269 E4               [12]  565 	clr	a
+      00026A 12r00r00         [24]  566 	lcall	__gptrput
+                                    567 ;	/home/user/contiki/core/lib/list.c:195: return l;
+      00026D A8 81            [24]  568 	mov	r0,sp
+      00026F 18               [12]  569 	dec	r0
+      000270 18               [12]  570 	dec	r0
+      000271 86 05            [24]  571 	mov	ar5,@r0
+      000273 08               [12]  572 	inc	r0
+      000274 86 06            [24]  573 	mov	ar6,@r0
+      000276 08               [12]  574 	inc	r0
+      000277 86 07            [24]  575 	mov	ar7,@r0
+      000279 8D 82            [24]  576 	mov	dpl,r5
+      00027B 8E 83            [24]  577 	mov	dph,r6
+      00027D 8F F0            [24]  578 	mov	b,r7
+      00027F 02r03r30         [24]  579 	ljmp	00109$
+      000282                        580 00104$:
+                                    581 ;	/home/user/contiki/core/lib/list.c:198: for(l = *list; l->next->next != NULL; l = l->next);
+      000282 A8 81            [24]  582 	mov	r0,sp
+      000284 18               [12]  583 	dec	r0
+      000285 18               [12]  584 	dec	r0
+      000286 A6 02            [24]  585 	mov	@r0,ar2
+      000288 08               [12]  586 	inc	r0
+      000289 A6 03            [24]  587 	mov	@r0,ar3
+      00028B 08               [12]  588 	inc	r0
+      00028C A6 04            [24]  589 	mov	@r0,ar4
+      00028E                        590 00107$:
+      00028E A8 81            [24]  591 	mov	r0,sp
+      000290 18               [12]  592 	dec	r0
+      000291 18               [12]  593 	dec	r0
+      000292 86 82            [24]  594 	mov	dpl,@r0
+      000294 08               [12]  595 	inc	r0
+      000295 86 83            [24]  596 	mov	dph,@r0
+      000297 08               [12]  597 	inc	r0
+      000298 86 F0            [24]  598 	mov	b,@r0
+      00029A 12r00r00         [24]  599 	lcall	__gptrget
+      00029D FD               [12]  600 	mov	r5,a
+      00029E A3               [24]  601 	inc	dptr
+      00029F 12r00r00         [24]  602 	lcall	__gptrget
+      0002A2 FE               [12]  603 	mov	r6,a
+      0002A3 A3               [24]  604 	inc	dptr
+      0002A4 12r00r00         [24]  605 	lcall	__gptrget
+      0002A7 FF               [12]  606 	mov	r7,a
+      0002A8 8D 82            [24]  607 	mov	dpl,r5
+      0002AA 8E 83            [24]  608 	mov	dph,r6
+      0002AC 8F F0            [24]  609 	mov	b,r7
+      0002AE 12r00r00         [24]  610 	lcall	__gptrget
+      0002B1 FD               [12]  611 	mov	r5,a
+      0002B2 A3               [24]  612 	inc	dptr
+      0002B3 12r00r00         [24]  613 	lcall	__gptrget
+      0002B6 FE               [12]  614 	mov	r6,a
+      0002B7 A3               [24]  615 	inc	dptr
+      0002B8 12r00r00         [24]  616 	lcall	__gptrget
+      0002BB FF               [12]  617 	mov	r7,a
+      0002BC E4               [12]  618 	clr	a
+      0002BD C0 E0            [24]  619 	push	acc
+      0002BF E4               [12]  620 	clr	a
+      0002C0 C0 E0            [24]  621 	push	acc
+      0002C2 E4               [12]  622 	clr	a
+      0002C3 C0 E0            [24]  623 	push	acc
+      0002C5 8D 82            [24]  624 	mov	dpl,r5
+      0002C7 8E 83            [24]  625 	mov	dph,r6
+      0002C9 8F F0            [24]  626 	mov	b,r7
+      0002CB 12r00r00         [24]  627 	lcall	___gptr_cmp
+      0002CE 15 81            [12]  628 	dec	sp
+      0002D0 15 81            [12]  629 	dec	sp
+      0002D2 15 81            [12]  630 	dec	sp
+      0002D4 60 20            [24]  631 	jz	00105$
+      0002D6 A8 81            [24]  632 	mov	r0,sp
+      0002D8 18               [12]  633 	dec	r0
+      0002D9 18               [12]  634 	dec	r0
+      0002DA 86 82            [24]  635 	mov	dpl,@r0
+      0002DC 08               [12]  636 	inc	r0
+      0002DD 86 83            [24]  637 	mov	dph,@r0
+      0002DF 08               [12]  638 	inc	r0
+      0002E0 86 F0            [24]  639 	mov	b,@r0
+      0002E2 12r00r00         [24]  640 	lcall	__gptrget
+      0002E5 18               [12]  641 	dec	r0
+      0002E6 18               [12]  642 	dec	r0
+      0002E7 F6               [12]  643 	mov	@r0,a
+      0002E8 A3               [24]  644 	inc	dptr
+      0002E9 12r00r00         [24]  645 	lcall	__gptrget
+      0002EC 08               [12]  646 	inc	r0
+      0002ED F6               [12]  647 	mov	@r0,a
+      0002EE A3               [24]  648 	inc	dptr
+      0002EF 12r00r00         [24]  649 	lcall	__gptrget
+      0002F2 08               [12]  650 	inc	r0
+      0002F3 F6               [12]  651 	mov	@r0,a
+      0002F4 80 98            [24]  652 	sjmp	00107$
+      0002F6                        653 00105$:
+                                    654 ;	/home/user/contiki/core/lib/list.c:200: r = l->next;
+      0002F6 A8 81            [24]  655 	mov	r0,sp
+      0002F8 18               [12]  656 	dec	r0
+      0002F9 18               [12]  657 	dec	r0
+      0002FA 86 82            [24]  658 	mov	dpl,@r0
+      0002FC 08               [12]  659 	inc	r0
+      0002FD 86 83            [24]  660 	mov	dph,@r0
+      0002FF 08               [12]  661 	inc	r0
+      000300 86 F0            [24]  662 	mov	b,@r0
+      000302 12r00r00         [24]  663 	lcall	__gptrget
+      000305 FD               [12]  664 	mov	r5,a
+      000306 A3               [24]  665 	inc	dptr
+      000307 12r00r00         [24]  666 	lcall	__gptrget
+      00030A FE               [12]  667 	mov	r6,a
+      00030B A3               [24]  668 	inc	dptr
+      00030C 12r00r00         [24]  669 	lcall	__gptrget
+      00030F FF               [12]  670 	mov	r7,a
+                                    671 ;	/home/user/contiki/core/lib/list.c:201: l->next = NULL;
+      000310 A8 81            [24]  672 	mov	r0,sp
+      000312 18               [12]  673 	dec	r0
+      000313 18               [12]  674 	dec	r0
+      000314 86 82            [24]  675 	mov	dpl,@r0
+      000316 08               [12]  676 	inc	r0
+      000317 86 83            [24]  677 	mov	dph,@r0
+      000319 08               [12]  678 	inc	r0
+      00031A 86 F0            [24]  679 	mov	b,@r0
+      00031C E4               [12]  680 	clr	a
+      00031D 12r00r00         [24]  681 	lcall	__gptrput
+      000320 A3               [24]  682 	inc	dptr
+      000321 E4               [12]  683 	clr	a
+      000322 12r00r00         [24]  684 	lcall	__gptrput
+      000325 A3               [24]  685 	inc	dptr
+      000326 E4               [12]  686 	clr	a
+      000327 12r00r00         [24]  687 	lcall	__gptrput
+                                    688 ;	/home/user/contiki/core/lib/list.c:203: return r;
+      00032A 8D 82            [24]  689 	mov	dpl,r5
+      00032C 8E 83            [24]  690 	mov	dph,r6
+      00032E 8F F0            [24]  691 	mov	b,r7
+      000330                        692 00109$:
+      000330 E5 81            [12]  693 	mov	a,sp
+      000332 24 FA            [12]  694 	add	a,#0xFA
+      000334 F5 81            [12]  695 	mov	sp,a
+      000336 22               [24]  696 	ret
+                                    697 ;------------------------------------------------------------
+                                    698 ;Allocation info for local variables in function 'list_pop'
+                                    699 ;------------------------------------------------------------
+                                    700 ;list                      Allocated to registers r5 r6 r7 
+                                    701 ;l                         Allocated to stack - sp -2
+                                    702 ;------------------------------------------------------------
+                                    703 ;	/home/user/contiki/core/lib/list.c:217: list_pop(list_t list)
+                                    704 ;	-----------------------------------------
+                                    705 ;	 function list_pop
+                                    706 ;	-----------------------------------------
+      000337                        707 _list_pop:
+      000337 05 81            [12]  708 	inc	sp
+      000339 05 81            [12]  709 	inc	sp
+      00033B 05 81            [12]  710 	inc	sp
+                                    711 ;	/home/user/contiki/core/lib/list.c:220: l = *list;
+      00033D AD 82            [24]  712 	mov	r5,dpl
+      00033F AE 83            [24]  713 	mov	r6,dph
+      000341 AF F0            [24]  714 	mov	r7,b
+      000343 12r00r00         [24]  715 	lcall	__gptrget
+      000346 FA               [12]  716 	mov	r2,a
+      000347 A3               [24]  717 	inc	dptr
+      000348 12r00r00         [24]  718 	lcall	__gptrget
+      00034B FB               [12]  719 	mov	r3,a
+      00034C A3               [24]  720 	inc	dptr
+      00034D 12r00r00         [24]  721 	lcall	__gptrget
+      000350 FC               [12]  722 	mov	r4,a
+      000351 A8 81            [24]  723 	mov	r0,sp
+      000353 18               [12]  724 	dec	r0
+      000354 18               [12]  725 	dec	r0
+      000355 A6 02            [24]  726 	mov	@r0,ar2
+      000357 08               [12]  727 	inc	r0
+      000358 A6 03            [24]  728 	mov	@r0,ar3
+      00035A 08               [12]  729 	inc	r0
+      00035B A6 04            [24]  730 	mov	@r0,ar4
+                                    731 ;	/home/user/contiki/core/lib/list.c:221: if(*list != NULL) {
+      00035D EA               [12]  732 	mov	a,r2
+      00035E 4B               [12]  733 	orl	a,r3
+      00035F 60 28            [24]  734 	jz	00102$
+                                    735 ;	/home/user/contiki/core/lib/list.c:222: *list = ((struct list *)*list)->next;
+      000361 8A 82            [24]  736 	mov	dpl,r2
+      000363 8B 83            [24]  737 	mov	dph,r3
+      000365 8C F0            [24]  738 	mov	b,r4
+      000367 12r00r00         [24]  739 	lcall	__gptrget
+      00036A FA               [12]  740 	mov	r2,a
+      00036B A3               [24]  741 	inc	dptr
+      00036C 12r00r00         [24]  742 	lcall	__gptrget
+      00036F FB               [12]  743 	mov	r3,a
+      000370 A3               [24]  744 	inc	dptr
+      000371 12r00r00         [24]  745 	lcall	__gptrget
+      000374 FC               [12]  746 	mov	r4,a
+      000375 8D 82            [24]  747 	mov	dpl,r5
+      000377 8E 83            [24]  748 	mov	dph,r6
+      000379 8F F0            [24]  749 	mov	b,r7
+      00037B EA               [12]  750 	mov	a,r2
+      00037C 12r00r00         [24]  751 	lcall	__gptrput
+      00037F A3               [24]  752 	inc	dptr
+      000380 EB               [12]  753 	mov	a,r3
+      000381 12r00r00         [24]  754 	lcall	__gptrput
+      000384 A3               [24]  755 	inc	dptr
+      000385 EC               [12]  756 	mov	a,r4
+      000386 12r00r00         [24]  757 	lcall	__gptrput
+      000389                        758 00102$:
+                                    759 ;	/home/user/contiki/core/lib/list.c:225: return l;
+      000389 A8 81            [24]  760 	mov	r0,sp
+      00038B 18               [12]  761 	dec	r0
+      00038C 18               [12]  762 	dec	r0
+      00038D 86 05            [24]  763 	mov	ar5,@r0
+      00038F 08               [12]  764 	inc	r0
+      000390 86 06            [24]  765 	mov	ar6,@r0
+      000392 08               [12]  766 	inc	r0
+      000393 86 07            [24]  767 	mov	ar7,@r0
+      000395 8D 82            [24]  768 	mov	dpl,r5
+      000397 8E 83            [24]  769 	mov	dph,r6
+      000399 8F F0            [24]  770 	mov	b,r7
+      00039B 15 81            [12]  771 	dec	sp
+      00039D 15 81            [12]  772 	dec	sp
+      00039F 15 81            [12]  773 	dec	sp
+      0003A1 22               [24]  774 	ret
+                                    775 ;------------------------------------------------------------
+                                    776 ;Allocation info for local variables in function 'list_remove'
+                                    777 ;------------------------------------------------------------
+                                    778 ;item                      Allocated to stack - sp -10
+                                    779 ;list                      Allocated to stack - sp -5
+                                    780 ;l                         Allocated to stack - sp -2
+                                    781 ;r                         Allocated to registers r5 r6 r7 
+                                    782 ;------------------------------------------------------------
+                                    783 ;	/home/user/contiki/core/lib/list.c:239: list_remove(list_t list, void *item)
+                                    784 ;	-----------------------------------------
+                                    785 ;	 function list_remove
+                                    786 ;	-----------------------------------------
+      0003A2                        787 _list_remove:
+      0003A2 C0 82            [24]  788 	push	dpl
+      0003A4 C0 83            [24]  789 	push	dph
+      0003A6 C0 F0            [24]  790 	push	b
+      0003A8 05 81            [12]  791 	inc	sp
+      0003AA 05 81            [12]  792 	inc	sp
+      0003AC 05 81            [12]  793 	inc	sp
+                                    794 ;	/home/user/contiki/core/lib/list.c:243: if(*list == NULL) {
+      0003AE E5 81            [12]  795 	mov	a,sp
+      0003B0 24 FB            [12]  796 	add	a,#0xfb
+      0003B2 F8               [12]  797 	mov	r0,a
+      0003B3 86 82            [24]  798 	mov	dpl,@r0
+      0003B5 08               [12]  799 	inc	r0
+      0003B6 86 83            [24]  800 	mov	dph,@r0
+      0003B8 08               [12]  801 	inc	r0
+      0003B9 86 F0            [24]  802 	mov	b,@r0
+      0003BB 12r00r00         [24]  803 	lcall	__gptrget
+      0003BE FA               [12]  804 	mov	r2,a
+      0003BF A3               [24]  805 	inc	dptr
+      0003C0 12r00r00         [24]  806 	lcall	__gptrget
+      0003C3 FB               [12]  807 	mov	r3,a
+      0003C4 A3               [24]  808 	inc	dptr
+      0003C5 12r00r00         [24]  809 	lcall	__gptrget
+      0003C8 FC               [12]  810 	mov	r4,a
+      0003C9 EA               [12]  811 	mov	a,r2
+      0003CA 4B               [12]  812 	orl	a,r3
+      0003CB 70 03            [24]  813 	jnz	00102$
+                                    814 ;	/home/user/contiki/core/lib/list.c:244: return;
+      0003CD 02r04rF7         [24]  815 	ljmp	00112$
+      0003D0                        816 00102$:
+                                    817 ;	/home/user/contiki/core/lib/list.c:247: r = NULL;
+      0003D0 7D 00            [12]  818 	mov	r5,#0x00
+      0003D2 7E 00            [12]  819 	mov	r6,#0x00
+      0003D4 7F 00            [12]  820 	mov	r7,#0x00
+                                    821 ;	/home/user/contiki/core/lib/list.c:248: for(l = *list; l != NULL; l = l->next) {
+      0003D6 A8 81            [24]  822 	mov	r0,sp
+      0003D8 18               [12]  823 	dec	r0
+      0003D9 18               [12]  824 	dec	r0
+      0003DA A6 02            [24]  825 	mov	@r0,ar2
+      0003DC 08               [12]  826 	inc	r0
+      0003DD A6 03            [24]  827 	mov	@r0,ar3
+      0003DF 08               [12]  828 	inc	r0
+      0003E0 A6 04            [24]  829 	mov	@r0,ar4
+      0003E2                        830 00110$:
+      0003E2 A8 81            [24]  831 	mov	r0,sp
+      0003E4 18               [12]  832 	dec	r0
+      0003E5 18               [12]  833 	dec	r0
+      0003E6 E4               [12]  834 	clr	a
+      0003E7 C0 E0            [24]  835 	push	acc
+      0003E9 E4               [12]  836 	clr	a
+      0003EA C0 E0            [24]  837 	push	acc
+      0003EC E4               [12]  838 	clr	a
+      0003ED C0 E0            [24]  839 	push	acc
+      0003EF 86 82            [24]  840 	mov	dpl,@r0
+      0003F1 08               [12]  841 	inc	r0
+      0003F2 86 83            [24]  842 	mov	dph,@r0
+      0003F4 08               [12]  843 	inc	r0
+      0003F5 86 F0            [24]  844 	mov	b,@r0
+      0003F7 12r00r00         [24]  845 	lcall	___gptr_cmp
+      0003FA 15 81            [12]  846 	dec	sp
+      0003FC 15 81            [12]  847 	dec	sp
+      0003FE 15 81            [12]  848 	dec	sp
+      000400 70 03            [24]  849 	jnz	00130$
+      000402 02r04rF7         [24]  850 	ljmp	00112$
+      000405                        851 00130$:
+                                    852 ;	/home/user/contiki/core/lib/list.c:249: if(l == item) {
+      000405 C0 05            [24]  853 	push	ar5
+      000407 C0 06            [24]  854 	push	ar6
+      000409 C0 07            [24]  855 	push	ar7
+      00040B E5 81            [12]  856 	mov	a,sp
+      00040D 24 F3            [12]  857 	add	a,#0xf3
+      00040F F8               [12]  858 	mov	r0,a
+      000410 86 05            [24]  859 	mov	ar5,@r0
+      000412 08               [12]  860 	inc	r0
+      000413 86 06            [24]  861 	mov	ar6,@r0
+      000415 08               [12]  862 	inc	r0
+      000416 86 07            [24]  863 	mov	ar7,@r0
+      000418 E5 81            [12]  864 	mov	a,sp
+      00041A 24 FB            [12]  865 	add	a,#0xfb
+      00041C F8               [12]  866 	mov	r0,a
+      00041D C0 05            [24]  867 	push	ar5
+      00041F C0 06            [24]  868 	push	ar6
+      000421 C0 07            [24]  869 	push	ar7
+      000423 86 82            [24]  870 	mov	dpl,@r0
+      000425 08               [12]  871 	inc	r0
+      000426 86 83            [24]  872 	mov	dph,@r0
+      000428 08               [12]  873 	inc	r0
+      000429 86 F0            [24]  874 	mov	b,@r0
+      00042B 12r00r00         [24]  875 	lcall	___gptr_cmp
+      00042E 15 81            [12]  876 	dec	sp
+      000430 15 81            [12]  877 	dec	sp
+      000432 15 81            [12]  878 	dec	sp
+      000434 60 09            [24]  879 	jz	00132$
+      000436 D0 07            [24]  880 	pop	ar7
+      000438 D0 06            [24]  881 	pop	ar6
+      00043A D0 05            [24]  882 	pop	ar5
+      00043C 02r04rCA         [24]  883 	ljmp	00107$
+      00043F                        884 00132$:
+      00043F D0 07            [24]  885 	pop	ar7
+      000441 D0 06            [24]  886 	pop	ar6
+      000443 D0 05            [24]  887 	pop	ar5
+                                    888 ;	/home/user/contiki/core/lib/list.c:250: if(r == NULL) {
+      000445 ED               [12]  889 	mov	a,r5
+      000446 4E               [12]  890 	orl	a,r6
+      000447 70 37            [24]  891 	jnz	00104$
+                                    892 ;	/home/user/contiki/core/lib/list.c:252: *list = l->next;
+      000449 A8 81            [24]  893 	mov	r0,sp
+      00044B 18               [12]  894 	dec	r0
+      00044C 18               [12]  895 	dec	r0
+      00044D 86 82            [24]  896 	mov	dpl,@r0
+      00044F 08               [12]  897 	inc	r0
+      000450 86 83            [24]  898 	mov	dph,@r0
+      000452 08               [12]  899 	inc	r0
+      000453 86 F0            [24]  900 	mov	b,@r0
+      000455 12r00r00         [24]  901 	lcall	__gptrget
+      000458 FA               [12]  902 	mov	r2,a
+      000459 A3               [24]  903 	inc	dptr
+      00045A 12r00r00         [24]  904 	lcall	__gptrget
+      00045D FB               [12]  905 	mov	r3,a
+      00045E A3               [24]  906 	inc	dptr
+      00045F 12r00r00         [24]  907 	lcall	__gptrget
+      000462 FC               [12]  908 	mov	r4,a
+      000463 E5 81            [12]  909 	mov	a,sp
+      000465 24 FB            [12]  910 	add	a,#0xfb
+      000467 F8               [12]  911 	mov	r0,a
+      000468 86 82            [24]  912 	mov	dpl,@r0
+      00046A 08               [12]  913 	inc	r0
+      00046B 86 83            [24]  914 	mov	dph,@r0
+      00046D 08               [12]  915 	inc	r0
+      00046E 86 F0            [24]  916 	mov	b,@r0
+      000470 EA               [12]  917 	mov	a,r2
+      000471 12r00r00         [24]  918 	lcall	__gptrput
+      000474 A3               [24]  919 	inc	dptr
+      000475 EB               [12]  920 	mov	a,r3
+      000476 12r00r00         [24]  921 	lcall	__gptrput
+      000479 A3               [24]  922 	inc	dptr
+      00047A EC               [12]  923 	mov	a,r4
+      00047B 12r00r00         [24]  924 	lcall	__gptrput
+      00047E 80 2E            [24]  925 	sjmp	00105$
+      000480                        926 00104$:
+                                    927 ;	/home/user/contiki/core/lib/list.c:255: r->next = l->next;
+      000480 A8 81            [24]  928 	mov	r0,sp
+      000482 18               [12]  929 	dec	r0
+      000483 18               [12]  930 	dec	r0
+      000484 86 82            [24]  931 	mov	dpl,@r0
+      000486 08               [12]  932 	inc	r0
+      000487 86 83            [24]  933 	mov	dph,@r0
+      000489 08               [12]  934 	inc	r0
+      00048A 86 F0            [24]  935 	mov	b,@r0
+      00048C 12r00r00         [24]  936 	lcall	__gptrget
+      00048F FA               [12]  937 	mov	r2,a
+      000490 A3               [24]  938 	inc	dptr
+      000491 12r00r00         [24]  939 	lcall	__gptrget
+      000494 FB               [12]  940 	mov	r3,a
+      000495 A3               [24]  941 	inc	dptr
+      000496 12r00r00         [24]  942 	lcall	__gptrget
+      000499 FC               [12]  943 	mov	r4,a
+      00049A 8D 82            [24]  944 	mov	dpl,r5
+      00049C 8E 83            [24]  945 	mov	dph,r6
+      00049E 8F F0            [24]  946 	mov	b,r7
+      0004A0 EA               [12]  947 	mov	a,r2
+      0004A1 12r00r00         [24]  948 	lcall	__gptrput
+      0004A4 A3               [24]  949 	inc	dptr
+      0004A5 EB               [12]  950 	mov	a,r3
+      0004A6 12r00r00         [24]  951 	lcall	__gptrput
+      0004A9 A3               [24]  952 	inc	dptr
+      0004AA EC               [12]  953 	mov	a,r4
+      0004AB 12r00r00         [24]  954 	lcall	__gptrput
+      0004AE                        955 00105$:
+                                    956 ;	/home/user/contiki/core/lib/list.c:257: l->next = NULL;
+      0004AE A8 81            [24]  957 	mov	r0,sp
+      0004B0 18               [12]  958 	dec	r0
+      0004B1 18               [12]  959 	dec	r0
+      0004B2 86 82            [24]  960 	mov	dpl,@r0
+      0004B4 08               [12]  961 	inc	r0
+      0004B5 86 83            [24]  962 	mov	dph,@r0
+      0004B7 08               [12]  963 	inc	r0
+      0004B8 86 F0            [24]  964 	mov	b,@r0
+      0004BA E4               [12]  965 	clr	a
+      0004BB 12r00r00         [24]  966 	lcall	__gptrput
+      0004BE A3               [24]  967 	inc	dptr
+      0004BF E4               [12]  968 	clr	a
+      0004C0 12r00r00         [24]  969 	lcall	__gptrput
+      0004C3 A3               [24]  970 	inc	dptr
+      0004C4 E4               [12]  971 	clr	a
+      0004C5 12r00r00         [24]  972 	lcall	__gptrput
+                                    973 ;	/home/user/contiki/core/lib/list.c:258: return;
+      0004C8 80 2D            [24]  974 	sjmp	00112$
+      0004CA                        975 00107$:
+                                    976 ;	/home/user/contiki/core/lib/list.c:260: r = l;
+      0004CA A8 81            [24]  977 	mov	r0,sp
+      0004CC 18               [12]  978 	dec	r0
+      0004CD 18               [12]  979 	dec	r0
+      0004CE 86 05            [24]  980 	mov	ar5,@r0
+      0004D0 08               [12]  981 	inc	r0
+      0004D1 86 06            [24]  982 	mov	ar6,@r0
+      0004D3 08               [12]  983 	inc	r0
+      0004D4 86 07            [24]  984 	mov	ar7,@r0
+                                    985 ;	/home/user/contiki/core/lib/list.c:248: for(l = *list; l != NULL; l = l->next) {
+      0004D6 A8 81            [24]  986 	mov	r0,sp
+      0004D8 18               [12]  987 	dec	r0
+      0004D9 18               [12]  988 	dec	r0
+      0004DA 86 82            [24]  989 	mov	dpl,@r0
+      0004DC 08               [12]  990 	inc	r0
+      0004DD 86 83            [24]  991 	mov	dph,@r0
+      0004DF 08               [12]  992 	inc	r0
+      0004E0 86 F0            [24]  993 	mov	b,@r0
+      0004E2 12r00r00         [24]  994 	lcall	__gptrget
+      0004E5 18               [12]  995 	dec	r0
+      0004E6 18               [12]  996 	dec	r0
+      0004E7 F6               [12]  997 	mov	@r0,a
+      0004E8 A3               [24]  998 	inc	dptr
+      0004E9 12r00r00         [24]  999 	lcall	__gptrget
+      0004EC 08               [12] 1000 	inc	r0
+      0004ED F6               [12] 1001 	mov	@r0,a
+      0004EE A3               [24] 1002 	inc	dptr
+      0004EF 12r00r00         [24] 1003 	lcall	__gptrget
+      0004F2 08               [12] 1004 	inc	r0
+      0004F3 F6               [12] 1005 	mov	@r0,a
+      0004F4 02r03rE2         [24] 1006 	ljmp	00110$
+      0004F7                       1007 00112$:
+      0004F7 E5 81            [12] 1008 	mov	a,sp
+      0004F9 24 FA            [12] 1009 	add	a,#0xFA
+      0004FB F5 81            [12] 1010 	mov	sp,a
+      0004FD 22               [24] 1011 	ret
+                                   1012 ;------------------------------------------------------------
+                                   1013 ;Allocation info for local variables in function 'list_length'
+                                   1014 ;------------------------------------------------------------
+                                   1015 ;list                      Allocated to registers r5 r6 r7 
+                                   1016 ;l                         Allocated to registers r5 r6 r7 
+                                   1017 ;n                         Allocated to registers r3 r4 
+                                   1018 ;------------------------------------------------------------
+                                   1019 ;	/home/user/contiki/core/lib/list.c:274: list_length(list_t list)
+                                   1020 ;	-----------------------------------------
+                                   1021 ;	 function list_length
+                                   1022 ;	-----------------------------------------
+      0004FE                       1023 _list_length:
+                                   1024 ;	/home/user/contiki/core/lib/list.c:279: for(l = *list; l != NULL; l = l->next) {
+      0004FE 12r00r00         [24] 1025 	lcall	__gptrget
+      000501 FD               [12] 1026 	mov	r5,a
+      000502 A3               [24] 1027 	inc	dptr
+      000503 12r00r00         [24] 1028 	lcall	__gptrget
+      000506 FE               [12] 1029 	mov	r6,a
+      000507 A3               [24] 1030 	inc	dptr
+      000508 12r00r00         [24] 1031 	lcall	__gptrget
+      00050B FF               [12] 1032 	mov	r7,a
+      00050C 7B 00            [12] 1033 	mov	r3,#0x00
+      00050E 7C 00            [12] 1034 	mov	r4,#0x00
+      000510                       1035 00103$:
+      000510 E4               [12] 1036 	clr	a
+      000511 C0 E0            [24] 1037 	push	acc
+      000513 E4               [12] 1038 	clr	a
+      000514 C0 E0            [24] 1039 	push	acc
+      000516 E4               [12] 1040 	clr	a
+      000517 C0 E0            [24] 1041 	push	acc
+      000519 8D 82            [24] 1042 	mov	dpl,r5
+      00051B 8E 83            [24] 1043 	mov	dph,r6
+      00051D 8F F0            [24] 1044 	mov	b,r7
+      00051F 12r00r00         [24] 1045 	lcall	___gptr_cmp
+      000522 15 81            [12] 1046 	dec	sp
+      000524 15 81            [12] 1047 	dec	sp
+      000526 15 81            [12] 1048 	dec	sp
+      000528 60 1B            [24] 1049 	jz	00101$
+                                   1050 ;	/home/user/contiki/core/lib/list.c:280: ++n;
+      00052A 0B               [12] 1051 	inc	r3
+      00052B BB 00 01         [24] 1052 	cjne	r3,#0x00,00115$
+      00052E 0C               [12] 1053 	inc	r4
+      00052F                       1054 00115$:
+                                   1055 ;	/home/user/contiki/core/lib/list.c:279: for(l = *list; l != NULL; l = l->next) {
+      00052F 8D 82            [24] 1056 	mov	dpl,r5
+      000531 8E 83            [24] 1057 	mov	dph,r6
+      000533 8F F0            [24] 1058 	mov	b,r7
+      000535 12r00r00         [24] 1059 	lcall	__gptrget
+      000538 FD               [12] 1060 	mov	r5,a
+      000539 A3               [24] 1061 	inc	dptr
+      00053A 12r00r00         [24] 1062 	lcall	__gptrget
+      00053D FE               [12] 1063 	mov	r6,a
+      00053E A3               [24] 1064 	inc	dptr
+      00053F 12r00r00         [24] 1065 	lcall	__gptrget
+      000542 FF               [12] 1066 	mov	r7,a
+      000543 80 CB            [24] 1067 	sjmp	00103$
+      000545                       1068 00101$:
+                                   1069 ;	/home/user/contiki/core/lib/list.c:283: return n;
+      000545 8B 82            [24] 1070 	mov	dpl,r3
+      000547 8C 83            [24] 1071 	mov	dph,r4
+      000549 22               [24] 1072 	ret
+                                   1073 ;------------------------------------------------------------
+                                   1074 ;Allocation info for local variables in function 'list_insert'
+                                   1075 ;------------------------------------------------------------
+                                   1076 ;previtem                  Allocated to stack - sp -7
+                                   1077 ;newitem                   Allocated to stack - sp -10
+                                   1078 ;list                      Allocated to registers r5 r6 r7 
+                                   1079 ;sloc0                     Allocated to stack - sp -2
+                                   1080 ;------------------------------------------------------------
+                                   1081 ;	/home/user/contiki/core/lib/list.c:302: list_insert(list_t list, void *previtem, void *newitem)
+                                   1082 ;	-----------------------------------------
+                                   1083 ;	 function list_insert
+                                   1084 ;	-----------------------------------------
+      00054A                       1085 _list_insert:
+      00054A 05 81            [12] 1086 	inc	sp
+      00054C 05 81            [12] 1087 	inc	sp
+      00054E 05 81            [12] 1088 	inc	sp
+      000550 AD 82            [24] 1089 	mov	r5,dpl
+      000552 AE 83            [24] 1090 	mov	r6,dph
+      000554 AF F0            [24] 1091 	mov	r7,b
+                                   1092 ;	/home/user/contiki/core/lib/list.c:304: if(previtem == NULL) {
+      000556 E5 81            [12] 1093 	mov	a,sp
+      000558 24 F9            [12] 1094 	add	a,#0xf9
+      00055A F8               [12] 1095 	mov	r0,a
+      00055B E6               [12] 1096 	mov	a,@r0
+      00055C 08               [12] 1097 	inc	r0
+      00055D 46               [12] 1098 	orl	a,@r0
+      00055E 70 21            [24] 1099 	jnz	00102$
+                                   1100 ;	/home/user/contiki/core/lib/list.c:305: list_push(list, newitem);
+      000560 E5 81            [12] 1101 	mov	a,sp
+      000562 24 F6            [12] 1102 	add	a,#0xf6
+      000564 F8               [12] 1103 	mov	r0,a
+      000565 E6               [12] 1104 	mov	a,@r0
+      000566 C0 E0            [24] 1105 	push	acc
+      000568 08               [12] 1106 	inc	r0
+      000569 E6               [12] 1107 	mov	a,@r0
+      00056A C0 E0            [24] 1108 	push	acc
+      00056C 08               [12] 1109 	inc	r0
+      00056D E6               [12] 1110 	mov	a,@r0
+      00056E C0 E0            [24] 1111 	push	acc
+      000570 8D 82            [24] 1112 	mov	dpl,r5
+      000572 8E 83            [24] 1113 	mov	dph,r6
+      000574 8F F0            [24] 1114 	mov	b,r7
+      000576 12r01r60         [24] 1115 	lcall	_list_push
+      000579 15 81            [12] 1116 	dec	sp
+      00057B 15 81            [12] 1117 	dec	sp
+      00057D 15 81            [12] 1118 	dec	sp
+      00057F 80 6F            [24] 1119 	sjmp	00104$
+      000581                       1120 00102$:
+                                   1121 ;	/home/user/contiki/core/lib/list.c:308: ((struct list *)newitem)->next = ((struct list *)previtem)->next;
+      000581 E5 81            [12] 1122 	mov	a,sp
+      000583 24 F6            [12] 1123 	add	a,#0xf6
+      000585 F8               [12] 1124 	mov	r0,a
+      000586 A9 81            [24] 1125 	mov	r1,sp
+      000588 19               [12] 1126 	dec	r1
+      000589 19               [12] 1127 	dec	r1
+      00058A E6               [12] 1128 	mov	a,@r0
+      00058B F7               [12] 1129 	mov	@r1,a
+      00058C 08               [12] 1130 	inc	r0
+      00058D 09               [12] 1131 	inc	r1
+      00058E E6               [12] 1132 	mov	a,@r0
+      00058F F7               [12] 1133 	mov	@r1,a
+      000590 08               [12] 1134 	inc	r0
+      000591 09               [12] 1135 	inc	r1
+      000592 E6               [12] 1136 	mov	a,@r0
+      000593 F7               [12] 1137 	mov	@r1,a
+      000594 E5 81            [12] 1138 	mov	a,sp
+      000596 24 F9            [12] 1139 	add	a,#0xf9
+      000598 F8               [12] 1140 	mov	r0,a
+      000599 86 02            [24] 1141 	mov	ar2,@r0
+      00059B 08               [12] 1142 	inc	r0
+      00059C 86 03            [24] 1143 	mov	ar3,@r0
+      00059E 08               [12] 1144 	inc	r0
+      00059F 86 04            [24] 1145 	mov	ar4,@r0
+      0005A1 8A 82            [24] 1146 	mov	dpl,r2
+      0005A3 8B 83            [24] 1147 	mov	dph,r3
+      0005A5 8C F0            [24] 1148 	mov	b,r4
+      0005A7 12r00r00         [24] 1149 	lcall	__gptrget
+      0005AA FD               [12] 1150 	mov	r5,a
+      0005AB A3               [24] 1151 	inc	dptr
+      0005AC 12r00r00         [24] 1152 	lcall	__gptrget
+      0005AF FE               [12] 1153 	mov	r6,a
+      0005B0 A3               [24] 1154 	inc	dptr
+      0005B1 12r00r00         [24] 1155 	lcall	__gptrget
+      0005B4 FF               [12] 1156 	mov	r7,a
+      0005B5 A8 81            [24] 1157 	mov	r0,sp
+      0005B7 18               [12] 1158 	dec	r0
+      0005B8 18               [12] 1159 	dec	r0
+      0005B9 86 82            [24] 1160 	mov	dpl,@r0
+      0005BB 08               [12] 1161 	inc	r0
+      0005BC 86 83            [24] 1162 	mov	dph,@r0
+      0005BE 08               [12] 1163 	inc	r0
+      0005BF 86 F0            [24] 1164 	mov	b,@r0
+      0005C1 ED               [12] 1165 	mov	a,r5
+      0005C2 12r00r00         [24] 1166 	lcall	__gptrput
+      0005C5 A3               [24] 1167 	inc	dptr
+      0005C6 EE               [12] 1168 	mov	a,r6
+      0005C7 12r00r00         [24] 1169 	lcall	__gptrput
+      0005CA A3               [24] 1170 	inc	dptr
+      0005CB EF               [12] 1171 	mov	a,r7
+      0005CC 12r00r00         [24] 1172 	lcall	__gptrput
+                                   1173 ;	/home/user/contiki/core/lib/list.c:309: ((struct list *)previtem)->next = newitem;
+      0005CF E5 81            [12] 1174 	mov	a,sp
+      0005D1 24 F6            [12] 1175 	add	a,#0xf6
+      0005D3 F8               [12] 1176 	mov	r0,a
+      0005D4 86 05            [24] 1177 	mov	ar5,@r0
+      0005D6 08               [12] 1178 	inc	r0
+      0005D7 86 06            [24] 1179 	mov	ar6,@r0
+      0005D9 08               [12] 1180 	inc	r0
+      0005DA 86 07            [24] 1181 	mov	ar7,@r0
+      0005DC 8A 82            [24] 1182 	mov	dpl,r2
+      0005DE 8B 83            [24] 1183 	mov	dph,r3
+      0005E0 8C F0            [24] 1184 	mov	b,r4
+      0005E2 ED               [12] 1185 	mov	a,r5
+      0005E3 12r00r00         [24] 1186 	lcall	__gptrput
+      0005E6 A3               [24] 1187 	inc	dptr
+      0005E7 EE               [12] 1188 	mov	a,r6
+      0005E8 12r00r00         [24] 1189 	lcall	__gptrput
+      0005EB A3               [24] 1190 	inc	dptr
+      0005EC EF               [12] 1191 	mov	a,r7
+      0005ED 12r00r00         [24] 1192 	lcall	__gptrput
+      0005F0                       1193 00104$:
+      0005F0 15 81            [12] 1194 	dec	sp
+      0005F2 15 81            [12] 1195 	dec	sp
+      0005F4 15 81            [12] 1196 	dec	sp
+      0005F6 22               [24] 1197 	ret
+                                   1198 ;------------------------------------------------------------
+                                   1199 ;Allocation info for local variables in function 'list_item_next'
+                                   1200 ;------------------------------------------------------------
+                                   1201 ;item                      Allocated to registers r5 r6 r7 
+                                   1202 ;------------------------------------------------------------
+                                   1203 ;	/home/user/contiki/core/lib/list.c:324: list_item_next(void *item)
+                                   1204 ;	-----------------------------------------
+                                   1205 ;	 function list_item_next
+                                   1206 ;	-----------------------------------------
+      0005F7                       1207 _list_item_next:
+      0005F7 AD 82            [24] 1208 	mov	r5,dpl
+      0005F9 AE 83            [24] 1209 	mov	r6,dph
+      0005FB AF F0            [24] 1210 	mov	r7,b
+                                   1211 ;	/home/user/contiki/core/lib/list.c:326: return item == NULL? NULL: ((struct list *)item)->next;
+      0005FD ED               [12] 1212 	mov	a,r5
+      0005FE 4E               [12] 1213 	orl	a,r6
+      0005FF B4 01 00         [24] 1214 	cjne	a,#0x01,00108$
+      000602                       1215 00108$:
+      000602 E4               [12] 1216 	clr	a
+      000603 33               [12] 1217 	rlc	a
+      000604 FC               [12] 1218 	mov	r4,a
+      000605 60 08            [24] 1219 	jz	00103$
+      000607 7A 00            [12] 1220 	mov	r2,#0x00
+      000609 7B 00            [12] 1221 	mov	r3,#0x00
+      00060B 7C 00            [12] 1222 	mov	r4,#0x00
+      00060D 80 14            [24] 1223 	sjmp	00104$
+      00060F                       1224 00103$:
+      00060F 8D 82            [24] 1225 	mov	dpl,r5
+      000611 8E 83            [24] 1226 	mov	dph,r6
+      000613 8F F0            [24] 1227 	mov	b,r7
+      000615 12r00r00         [24] 1228 	lcall	__gptrget
+      000618 FA               [12] 1229 	mov	r2,a
+      000619 A3               [24] 1230 	inc	dptr
+      00061A 12r00r00         [24] 1231 	lcall	__gptrget
+      00061D FB               [12] 1232 	mov	r3,a
+      00061E A3               [24] 1233 	inc	dptr
+      00061F 12r00r00         [24] 1234 	lcall	__gptrget
+      000622 FC               [12] 1235 	mov	r4,a
+      000623                       1236 00104$:
+      000623 8A 82            [24] 1237 	mov	dpl,r2
+      000625 8B 83            [24] 1238 	mov	dph,r3
+      000627 8C F0            [24] 1239 	mov	b,r4
+      000629 22               [24] 1240 	ret
+                                   1241 	.area CSEG    (CODE)
+                                   1242 	.area CONST   (CODE)
+                                   1243 	.area XINIT   (CODE)
+                                   1244 	.area CABS    (ABS,CODE)

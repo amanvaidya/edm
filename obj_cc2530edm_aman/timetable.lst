@@ -1,0 +1,2444 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:39 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module timetable
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _printf
+                                     13 	.globl _ACTIVE
+                                     14 	.globl _TX_BYTE
+                                     15 	.globl _RX_BYTE
+                                     16 	.globl _ERR
+                                     17 	.globl _FE
+                                     18 	.globl _SLAVE
+                                     19 	.globl _RE
+                                     20 	.globl _MODE
+                                     21 	.globl _T3OVFIF
+                                     22 	.globl _T3CH0IF
+                                     23 	.globl _T3CH1IF
+                                     24 	.globl _T4OVFIF
+                                     25 	.globl _T4CH0IF
+                                     26 	.globl _T4CH1IF
+                                     27 	.globl _OVFIM
+                                     28 	.globl _B_0
+                                     29 	.globl _B_1
+                                     30 	.globl _B_2
+                                     31 	.globl _B_3
+                                     32 	.globl _B_4
+                                     33 	.globl _B_5
+                                     34 	.globl _B_6
+                                     35 	.globl _B_7
+                                     36 	.globl _P2IF
+                                     37 	.globl _UTX0IF
+                                     38 	.globl _UTX1IF
+                                     39 	.globl _P1IF
+                                     40 	.globl _WDTIF
+                                     41 	.globl _ACC_0
+                                     42 	.globl _ACC_1
+                                     43 	.globl _ACC_2
+                                     44 	.globl _ACC_3
+                                     45 	.globl _ACC_4
+                                     46 	.globl _ACC_5
+                                     47 	.globl _ACC_6
+                                     48 	.globl _ACC_7
+                                     49 	.globl _P
+                                     50 	.globl _F1
+                                     51 	.globl _OV
+                                     52 	.globl _RS0
+                                     53 	.globl _RS1
+                                     54 	.globl _F0
+                                     55 	.globl _AC
+                                     56 	.globl _CY
+                                     57 	.globl _DMAIF
+                                     58 	.globl _T1IF
+                                     59 	.globl _T2IF
+                                     60 	.globl _T3IF
+                                     61 	.globl _T4IF
+                                     62 	.globl _P0IF
+                                     63 	.globl _STIF
+                                     64 	.globl _DMAIE
+                                     65 	.globl _T1IE
+                                     66 	.globl _T2IE
+                                     67 	.globl _T3IE
+                                     68 	.globl _T4IE
+                                     69 	.globl _P0IE
+                                     70 	.globl _RFERRIE
+                                     71 	.globl _ADCIE
+                                     72 	.globl _URX0IE
+                                     73 	.globl _URX1IE
+                                     74 	.globl _ENCIE
+                                     75 	.globl _STIE
+                                     76 	.globl _EA
+                                     77 	.globl _P2_0
+                                     78 	.globl _P2_1
+                                     79 	.globl _P2_2
+                                     80 	.globl _P2_3
+                                     81 	.globl _P2_4
+                                     82 	.globl _P2_5
+                                     83 	.globl _P2_6
+                                     84 	.globl _P2_7
+                                     85 	.globl _ENCIF_0
+                                     86 	.globl _ENCIF_1
+                                     87 	.globl _P1_0
+                                     88 	.globl _P1_1
+                                     89 	.globl _P1_2
+                                     90 	.globl _P1_3
+                                     91 	.globl _P1_4
+                                     92 	.globl _P1_5
+                                     93 	.globl _P1_6
+                                     94 	.globl _P1_7
+                                     95 	.globl _IT0
+                                     96 	.globl _RFERRIF
+                                     97 	.globl _IT1
+                                     98 	.globl _URX0IF
+                                     99 	.globl _ADCIF
+                                    100 	.globl _URX1IF
+                                    101 	.globl _P0_0
+                                    102 	.globl _P0_1
+                                    103 	.globl _P0_2
+                                    104 	.globl _P0_3
+                                    105 	.globl _P0_4
+                                    106 	.globl _P0_5
+                                    107 	.globl _P0_6
+                                    108 	.globl _P0_7
+                                    109 	.globl _WDCTL
+                                    110 	.globl _U1GCR
+                                    111 	.globl _U1UCR
+                                    112 	.globl _U1BAUD
+                                    113 	.globl _U1DBUF
+                                    114 	.globl _U1CSR
+                                    115 	.globl _U0GCR
+                                    116 	.globl _U0UCR
+                                    117 	.globl _U0BAUD
+                                    118 	.globl _U0DBUF
+                                    119 	.globl _U0CSR
+                                    120 	.globl _TIMIF
+                                    121 	.globl _T4CC1
+                                    122 	.globl _T4CCTL1
+                                    123 	.globl _T4CC0
+                                    124 	.globl _T4CCTL0
+                                    125 	.globl _T4CTL
+                                    126 	.globl _T4CNT
+                                    127 	.globl _T3CC1
+                                    128 	.globl _T3CCTL1
+                                    129 	.globl _T3CC0
+                                    130 	.globl _T3CCTL0
+                                    131 	.globl _T3CTL
+                                    132 	.globl _T3CNT
+                                    133 	.globl _T2MSEL
+                                    134 	.globl _T2IRQM
+                                    135 	.globl _T2MOVF2
+                                    136 	.globl _T2MOVF1
+                                    137 	.globl _T2MOVF0
+                                    138 	.globl _T2M1
+                                    139 	.globl _T2M0
+                                    140 	.globl _T2IRQF
+                                    141 	.globl _T2EVTCFG
+                                    142 	.globl _T2CTRL
+                                    143 	.globl _T1STAT
+                                    144 	.globl _T1CCTL2
+                                    145 	.globl _T1CCTL1
+                                    146 	.globl _T1CCTL0
+                                    147 	.globl _T1CTL
+                                    148 	.globl _T1CNTH
+                                    149 	.globl _T1CNTL
+                                    150 	.globl _T1CC2H
+                                    151 	.globl _T1CC2L
+                                    152 	.globl _T1CC1H
+                                    153 	.globl _T1CC1L
+                                    154 	.globl _T1CC0H
+                                    155 	.globl _T1CC0L
+                                    156 	.globl _CLKCONSTA
+                                    157 	.globl _CLKCONCMD
+                                    158 	.globl _SLEEPSTA
+                                    159 	.globl _SLEEPCMD
+                                    160 	.globl _STLOAD
+                                    161 	.globl _ST2
+                                    162 	.globl _ST1
+                                    163 	.globl _ST0
+                                    164 	.globl _RFERRF
+                                    165 	.globl _RFIRQF0
+                                    166 	.globl _RFST
+                                    167 	.globl _RFD
+                                    168 	.globl _RFIRQF1
+                                    169 	.globl _PSBANK
+                                    170 	.globl _FMAP
+                                    171 	.globl _MEMCTR
+                                    172 	.globl __XPAGE
+                                    173 	.globl _MPAGE
+                                    174 	.globl _PMUX
+                                    175 	.globl _P2DIR
+                                    176 	.globl _P1DIR
+                                    177 	.globl _P0DIR
+                                    178 	.globl _P2INP
+                                    179 	.globl _P1INP
+                                    180 	.globl _P2SEL
+                                    181 	.globl _P1SEL
+                                    182 	.globl _P0SEL
+                                    183 	.globl _APCFG
+                                    184 	.globl _PERCFG
+                                    185 	.globl _P0INP
+                                    186 	.globl _P2IEN
+                                    187 	.globl _P1IEN
+                                    188 	.globl _P0IEN
+                                    189 	.globl _PICTL
+                                    190 	.globl _P2IFG
+                                    191 	.globl _P1IFG
+                                    192 	.globl _P0IFG
+                                    193 	.globl _DMAREQ
+                                    194 	.globl _DMAARM
+                                    195 	.globl _DMA0CFGH
+                                    196 	.globl _DMA0CFGL
+                                    197 	.globl _DMA1CFGH
+                                    198 	.globl _DMA1CFGL
+                                    199 	.globl _DMAIRQ
+                                    200 	.globl _ENCCS
+                                    201 	.globl _ENCDO
+                                    202 	.globl _ENCDI
+                                    203 	.globl _RNDH
+                                    204 	.globl _RNDL
+                                    205 	.globl _ADCH
+                                    206 	.globl _ADCL
+                                    207 	.globl _ADCCON3
+                                    208 	.globl _ADCCON2
+                                    209 	.globl _ADCCON1
+                                    210 	.globl _B
+                                    211 	.globl _IRCON2
+                                    212 	.globl _ACC
+                                    213 	.globl _PSW
+                                    214 	.globl _IRCON
+                                    215 	.globl _IP1
+                                    216 	.globl _IEN1
+                                    217 	.globl _IP0
+                                    218 	.globl _IEN0
+                                    219 	.globl _P2
+                                    220 	.globl _S1CON
+                                    221 	.globl _IEN2
+                                    222 	.globl _S0CON
+                                    223 	.globl _DPS
+                                    224 	.globl _P1
+                                    225 	.globl _TCON
+                                    226 	.globl _PCON
+                                    227 	.globl _DPH1
+                                    228 	.globl _DPL1
+                                    229 	.globl _DPH0
+                                    230 	.globl _DPL0
+                                    231 	.globl _SP
+                                    232 	.globl _P0
+                                    233 	.globl _timetable_timestamp_time
+                                    234 	.globl _X_IEEE_ADDR
+                                    235 	.globl _X_INFOPAGE
+                                    236 	.globl _X_P2DIR
+                                    237 	.globl _X_P1DIR
+                                    238 	.globl _X_P0DIR
+                                    239 	.globl _X_U1GCR
+                                    240 	.globl _X_U1UCR
+                                    241 	.globl _X_U1BAUD
+                                    242 	.globl _X_U1DBUF
+                                    243 	.globl _X_U1CSR
+                                    244 	.globl _X_P2INP
+                                    245 	.globl _X_P1INP
+                                    246 	.globl _X_P2SEL
+                                    247 	.globl _X_P1SEL
+                                    248 	.globl _X_P0SEL
+                                    249 	.globl _X_APCFG
+                                    250 	.globl _X_PERCFG
+                                    251 	.globl _X_T4CC1
+                                    252 	.globl _X_T4CCTL1
+                                    253 	.globl _X_T4CC0
+                                    254 	.globl _X_T4CCTL0
+                                    255 	.globl _X_T4CTL
+                                    256 	.globl _X_T4CNT
+                                    257 	.globl _X_RFIRQF0
+                                    258 	.globl _X_T1CCTL2
+                                    259 	.globl _X_T1CCTL1
+                                    260 	.globl _X_T1CCTL0
+                                    261 	.globl _X_T1CTL
+                                    262 	.globl _X_T1CNTH
+                                    263 	.globl _X_T1CNTL
+                                    264 	.globl _X_RFST
+                                    265 	.globl _X_T1CC2H
+                                    266 	.globl _X_T1CC2L
+                                    267 	.globl _X_T1CC1H
+                                    268 	.globl _X_T1CC1L
+                                    269 	.globl _X_T1CC0H
+                                    270 	.globl _X_T1CC0L
+                                    271 	.globl _X_RFD
+                                    272 	.globl _X_TIMIF
+                                    273 	.globl _X_DMAREQ
+                                    274 	.globl _X_DMAARM
+                                    275 	.globl _X_DMA0CFGH
+                                    276 	.globl _X_DMA0CFGL
+                                    277 	.globl _X_DMA1CFGH
+                                    278 	.globl _X_DMA1CFGL
+                                    279 	.globl _X_DMAIRQ
+                                    280 	.globl _X_T3CC1
+                                    281 	.globl _X_T3CCTL1
+                                    282 	.globl _X_T3CC0
+                                    283 	.globl _X_T3CCTL0
+                                    284 	.globl _X_T3CTL
+                                    285 	.globl _X_T3CNT
+                                    286 	.globl _X_WDCTL
+                                    287 	.globl _X_MEMCTR
+                                    288 	.globl _X_CLKCONCMD
+                                    289 	.globl _X_U0GCR
+                                    290 	.globl _X_U0UCR
+                                    291 	.globl _X_T2MSEL
+                                    292 	.globl _X_U0BAUD
+                                    293 	.globl _X_U0DBUF
+                                    294 	.globl _X_RFERRF
+                                    295 	.globl _X_SLEEPCMD
+                                    296 	.globl _X_RNDH
+                                    297 	.globl _X_RNDL
+                                    298 	.globl _X_ADCH
+                                    299 	.globl _X_ADCL
+                                    300 	.globl _X_ADCCON3
+                                    301 	.globl _X_ADCCON2
+                                    302 	.globl _X_ADCCON1
+                                    303 	.globl _X_ENCCS
+                                    304 	.globl _X_ENCDO
+                                    305 	.globl _X_ENCDI
+                                    306 	.globl _X_T1STAT
+                                    307 	.globl _X_PMUX
+                                    308 	.globl _X_STLOAD
+                                    309 	.globl _X_P2IEN
+                                    310 	.globl _X_P0IEN
+                                    311 	.globl _X_T2IRQM
+                                    312 	.globl _X_T2MOVF2
+                                    313 	.globl _X_T2MOVF1
+                                    314 	.globl _X_T2MOVF0
+                                    315 	.globl _X_T2M1
+                                    316 	.globl _X_T2M0
+                                    317 	.globl _X_T2IRQF
+                                    318 	.globl _X_P2
+                                    319 	.globl _X_PSBANK
+                                    320 	.globl _X_FMAP
+                                    321 	.globl _X_CLKCONSTA
+                                    322 	.globl _X_SLEEPSTA
+                                    323 	.globl _X_T2EVTCFG
+                                    324 	.globl _X_ST2
+                                    325 	.globl _X_ST1
+                                    326 	.globl _X_ST0
+                                    327 	.globl _X_T2CTRL
+                                    328 	.globl _X__XPAGE
+                                    329 	.globl _X_MPAGE
+                                    330 	.globl _X_RFIRQF1
+                                    331 	.globl _X_P1
+                                    332 	.globl _X_P0INP
+                                    333 	.globl _X_P1IEN
+                                    334 	.globl _X_PICTL
+                                    335 	.globl _X_P2IFG
+                                    336 	.globl _X_P1IFG
+                                    337 	.globl _X_P0IFG
+                                    338 	.globl _X_U0CSR
+                                    339 	.globl _X_P0
+                                    340 	.globl _USBF5
+                                    341 	.globl _USBF4
+                                    342 	.globl _USBF3
+                                    343 	.globl _USBF2
+                                    344 	.globl _USBF1
+                                    345 	.globl _USBF0
+                                    346 	.globl _USBCNTH
+                                    347 	.globl _USBCNTL
+                                    348 	.globl _USBCNT0
+                                    349 	.globl _USBCSOH
+                                    350 	.globl _USBCSOL
+                                    351 	.globl _USBMAXO
+                                    352 	.globl _USBCSIH
+                                    353 	.globl _USBCSIL
+                                    354 	.globl _USBCS0
+                                    355 	.globl _USBMAXI
+                                    356 	.globl _USBCTRL
+                                    357 	.globl _USBINDEX
+                                    358 	.globl _USBFRMH
+                                    359 	.globl _USBFRML
+                                    360 	.globl _USBCIE
+                                    361 	.globl _USBOIE
+                                    362 	.globl _USBIIE
+                                    363 	.globl _USBCIF
+                                    364 	.globl _USBOIF
+                                    365 	.globl _USBIIF
+                                    366 	.globl _USBPOW
+                                    367 	.globl _USBADDR
+                                    368 	.globl _CSPT
+                                    369 	.globl _CSPZ
+                                    370 	.globl _CSPY
+                                    371 	.globl _CSPX
+                                    372 	.globl _CSPSTAT
+                                    373 	.globl _CSPCTRL
+                                    374 	.globl _CSPPROG23
+                                    375 	.globl _CSPPROG22
+                                    376 	.globl _CSPPROG21
+                                    377 	.globl _CSPPROG20
+                                    378 	.globl _CSPPROG19
+                                    379 	.globl _CSPPROG18
+                                    380 	.globl _CSPPROG17
+                                    381 	.globl _CSPPROG16
+                                    382 	.globl _CSPPROG15
+                                    383 	.globl _CSPPROG14
+                                    384 	.globl _CSPPROG13
+                                    385 	.globl _CSPPROG12
+                                    386 	.globl _CSPPROG11
+                                    387 	.globl _CSPPROG10
+                                    388 	.globl _CSPPROG9
+                                    389 	.globl _CSPPROG8
+                                    390 	.globl _CSPPROG7
+                                    391 	.globl _CSPPROG6
+                                    392 	.globl _CSPPROG5
+                                    393 	.globl _CSPPROG4
+                                    394 	.globl _CSPPROG3
+                                    395 	.globl _CSPPROG2
+                                    396 	.globl _CSPPROG1
+                                    397 	.globl _CSPPROG0
+                                    398 	.globl _RFC_OBS_CTRL2
+                                    399 	.globl _RFC_OBS_CTRL1
+                                    400 	.globl _RFC_OBS_CTRL0
+                                    401 	.globl _TXFILTCFG
+                                    402 	.globl _PTEST1
+                                    403 	.globl _PTEST0
+                                    404 	.globl _ATEST
+                                    405 	.globl _DACTEST2
+                                    406 	.globl _DACTEST1
+                                    407 	.globl _DACTEST0
+                                    408 	.globl _MDMTEST1
+                                    409 	.globl _MDMTEST0
+                                    410 	.globl _ADCTEST2
+                                    411 	.globl _ADCTEST1
+                                    412 	.globl _ADCTEST0
+                                    413 	.globl _AGCCTRL3
+                                    414 	.globl _AGCCTRL2
+                                    415 	.globl _AGCCTRL1
+                                    416 	.globl _AGCCTRL0
+                                    417 	.globl _FSCAL3
+                                    418 	.globl _FSCAL2
+                                    419 	.globl _FSCAL1
+                                    420 	.globl _FSCAL0
+                                    421 	.globl _FSCTRL
+                                    422 	.globl _RXCTRL
+                                    423 	.globl _FREQEST
+                                    424 	.globl _MDMCTRL1
+                                    425 	.globl _MDMCTRL0
+                                    426 	.globl _RFRND
+                                    427 	.globl _RFERRM
+                                    428 	.globl _RFIRQM1
+                                    429 	.globl _RFIRQM0
+                                    430 	.globl _TXLAST_PTR
+                                    431 	.globl _TXFIRST_PTR
+                                    432 	.globl _RXP1_PTR
+                                    433 	.globl _RXLAST_PTR
+                                    434 	.globl _RXFIRST_PTR
+                                    435 	.globl _TXFIFOCNT
+                                    436 	.globl _RXFIFOCNT
+                                    437 	.globl _RXFIRST
+                                    438 	.globl _RSSISTAT
+                                    439 	.globl _RSSI
+                                    440 	.globl _CCACTRL1
+                                    441 	.globl _CCACTRL0
+                                    442 	.globl _FSMCTRL
+                                    443 	.globl _FIFOPCTRL
+                                    444 	.globl _FSMSTAT1
+                                    445 	.globl _FSMSTAT0
+                                    446 	.globl _TXCTRL
+                                    447 	.globl _TXPOWER
+                                    448 	.globl _FREQCTRL
+                                    449 	.globl _FREQTUNE
+                                    450 	.globl _RXMASKCLR
+                                    451 	.globl _RXMASKSET
+                                    452 	.globl _RXENABLE
+                                    453 	.globl _FRMCTRL1
+                                    454 	.globl _FRMCTRL0
+                                    455 	.globl _SRCEXTEN2
+                                    456 	.globl _SRCEXTEN1
+                                    457 	.globl _SRCEXTEN0
+                                    458 	.globl _SRCSHORTEN2
+                                    459 	.globl _SRCSHORTEN1
+                                    460 	.globl _SRCSHORTEN0
+                                    461 	.globl _SRCMATCH
+                                    462 	.globl _FRMFILT1
+                                    463 	.globl _FRMFILT0
+                                    464 	.globl _SHORT_ADDR1
+                                    465 	.globl _SHORT_ADDR0
+                                    466 	.globl _PAN_ID1
+                                    467 	.globl _PAN_ID0
+                                    468 	.globl _EXT_ADDR7
+                                    469 	.globl _EXT_ADDR6
+                                    470 	.globl _EXT_ADDR5
+                                    471 	.globl _EXT_ADDR4
+                                    472 	.globl _EXT_ADDR3
+                                    473 	.globl _EXT_ADDR2
+                                    474 	.globl _EXT_ADDR1
+                                    475 	.globl _EXT_ADDR0
+                                    476 	.globl _SRCSHORTPENDEN2
+                                    477 	.globl _SRCSHORTPENDEN1
+                                    478 	.globl _SRCSHORTPENDEN0
+                                    479 	.globl _SRCEXTPENDEN2
+                                    480 	.globl _SRCEXTPENDEN1
+                                    481 	.globl _SRCEXTPENDEN0
+                                    482 	.globl _SRCRESINDEX
+                                    483 	.globl _SRCRESMASK2
+                                    484 	.globl _SRCRESMASK1
+                                    485 	.globl _SRCRESMASK0
+                                    486 	.globl _SRC_ADDR_TABLE
+                                    487 	.globl _TXFIFO
+                                    488 	.globl _RXFIFO
+                                    489 	.globl _RFCORE_RAM
+                                    490 	.globl _CMPCTL
+                                    491 	.globl _OPAMPS
+                                    492 	.globl _OPAMPC
+                                    493 	.globl _STCV2
+                                    494 	.globl _STCV1
+                                    495 	.globl _STCV0
+                                    496 	.globl _STCS
+                                    497 	.globl _STCC
+                                    498 	.globl _T1CC4H
+                                    499 	.globl _T1CC4L
+                                    500 	.globl _T1CC3H
+                                    501 	.globl _T1CC3L
+                                    502 	.globl _XX_T1CC2H
+                                    503 	.globl _XX_T1CC2L
+                                    504 	.globl _XX_T1CC1H
+                                    505 	.globl _XX_T1CC1L
+                                    506 	.globl _XX_T1CC0H
+                                    507 	.globl _XX_T1CC0L
+                                    508 	.globl _T1CCTL4
+                                    509 	.globl _T1CCTL3
+                                    510 	.globl _XX_T1CCTL2
+                                    511 	.globl _XX_T1CCTL1
+                                    512 	.globl _XX_T1CCTL0
+                                    513 	.globl _CLD
+                                    514 	.globl _IRCTL
+                                    515 	.globl _CHIPINFO1
+                                    516 	.globl _CHIPINFO0
+                                    517 	.globl _FWDATA
+                                    518 	.globl _FADDRH
+                                    519 	.globl _FADDRL
+                                    520 	.globl _FCTL
+                                    521 	.globl _IVCTRL
+                                    522 	.globl _BATTMON
+                                    523 	.globl _SRCRC
+                                    524 	.globl _DBGDATA
+                                    525 	.globl _TESTREG0
+                                    526 	.globl _CHIPID
+                                    527 	.globl _CHVER
+                                    528 	.globl _OBSSEL5
+                                    529 	.globl _OBSSEL4
+                                    530 	.globl _OBSSEL3
+                                    531 	.globl _OBSSEL2
+                                    532 	.globl _OBSSEL1
+                                    533 	.globl _OBSSEL0
+                                    534 	.globl _I2CIO
+                                    535 	.globl _I2CWC
+                                    536 	.globl _I2CADDR
+                                    537 	.globl _I2CDATA
+                                    538 	.globl _I2CSTAT
+                                    539 	.globl _I2CCFG
+                                    540 	.globl _OPAMPMC
+                                    541 	.globl _MONMUX
+                                    542 	.globl _timetable_entry
+                                    543 	.globl _timetable_ptr
+                                    544 	.globl _timetable_clear
+                                    545 	.globl _timetable_timediff
+                                    546 	.globl _timetable_init
+                                    547 	.globl _timetable_print
+                                    548 ;--------------------------------------------------------
+                                    549 ; special function registers
+                                    550 ;--------------------------------------------------------
+                                    551 	.area RSEG    (ABS,DATA)
+      000000                        552 	.org 0x0000
+                           000080   553 _P0	=	0x0080
+                           000081   554 _SP	=	0x0081
+                           000082   555 _DPL0	=	0x0082
+                           000083   556 _DPH0	=	0x0083
+                           000084   557 _DPL1	=	0x0084
+                           000085   558 _DPH1	=	0x0085
+                           000087   559 _PCON	=	0x0087
+                           000088   560 _TCON	=	0x0088
+                           000090   561 _P1	=	0x0090
+                           000092   562 _DPS	=	0x0092
+                           000098   563 _S0CON	=	0x0098
+                           00009A   564 _IEN2	=	0x009a
+                           00009B   565 _S1CON	=	0x009b
+                           0000A0   566 _P2	=	0x00a0
+                           0000A8   567 _IEN0	=	0x00a8
+                           0000A9   568 _IP0	=	0x00a9
+                           0000B8   569 _IEN1	=	0x00b8
+                           0000B9   570 _IP1	=	0x00b9
+                           0000C0   571 _IRCON	=	0x00c0
+                           0000D0   572 _PSW	=	0x00d0
+                           0000E0   573 _ACC	=	0x00e0
+                           0000E8   574 _IRCON2	=	0x00e8
+                           0000F0   575 _B	=	0x00f0
+                           0000B4   576 _ADCCON1	=	0x00b4
+                           0000B5   577 _ADCCON2	=	0x00b5
+                           0000B6   578 _ADCCON3	=	0x00b6
+                           0000BA   579 _ADCL	=	0x00ba
+                           0000BB   580 _ADCH	=	0x00bb
+                           0000BC   581 _RNDL	=	0x00bc
+                           0000BD   582 _RNDH	=	0x00bd
+                           0000B1   583 _ENCDI	=	0x00b1
+                           0000B2   584 _ENCDO	=	0x00b2
+                           0000B3   585 _ENCCS	=	0x00b3
+                           0000D1   586 _DMAIRQ	=	0x00d1
+                           0000D2   587 _DMA1CFGL	=	0x00d2
+                           0000D3   588 _DMA1CFGH	=	0x00d3
+                           0000D4   589 _DMA0CFGL	=	0x00d4
+                           0000D5   590 _DMA0CFGH	=	0x00d5
+                           0000D6   591 _DMAARM	=	0x00d6
+                           0000D7   592 _DMAREQ	=	0x00d7
+                           000089   593 _P0IFG	=	0x0089
+                           00008A   594 _P1IFG	=	0x008a
+                           00008B   595 _P2IFG	=	0x008b
+                           00008C   596 _PICTL	=	0x008c
+                           0000AB   597 _P0IEN	=	0x00ab
+                           00008D   598 _P1IEN	=	0x008d
+                           0000AC   599 _P2IEN	=	0x00ac
+                           00008F   600 _P0INP	=	0x008f
+                           0000F1   601 _PERCFG	=	0x00f1
+                           0000F2   602 _APCFG	=	0x00f2
+                           0000F3   603 _P0SEL	=	0x00f3
+                           0000F4   604 _P1SEL	=	0x00f4
+                           0000F5   605 _P2SEL	=	0x00f5
+                           0000F6   606 _P1INP	=	0x00f6
+                           0000F7   607 _P2INP	=	0x00f7
+                           0000FD   608 _P0DIR	=	0x00fd
+                           0000FE   609 _P1DIR	=	0x00fe
+                           0000FF   610 _P2DIR	=	0x00ff
+                           0000AE   611 _PMUX	=	0x00ae
+                           000093   612 _MPAGE	=	0x0093
+                           000093   613 __XPAGE	=	0x0093
+                           0000C7   614 _MEMCTR	=	0x00c7
+                           00009F   615 _FMAP	=	0x009f
+                           00009F   616 _PSBANK	=	0x009f
+                           000091   617 _RFIRQF1	=	0x0091
+                           0000D9   618 _RFD	=	0x00d9
+                           0000E1   619 _RFST	=	0x00e1
+                           0000E9   620 _RFIRQF0	=	0x00e9
+                           0000BF   621 _RFERRF	=	0x00bf
+                           000095   622 _ST0	=	0x0095
+                           000096   623 _ST1	=	0x0096
+                           000097   624 _ST2	=	0x0097
+                           0000AD   625 _STLOAD	=	0x00ad
+                           0000BE   626 _SLEEPCMD	=	0x00be
+                           00009D   627 _SLEEPSTA	=	0x009d
+                           0000C6   628 _CLKCONCMD	=	0x00c6
+                           00009E   629 _CLKCONSTA	=	0x009e
+                           0000DA   630 _T1CC0L	=	0x00da
+                           0000DB   631 _T1CC0H	=	0x00db
+                           0000DC   632 _T1CC1L	=	0x00dc
+                           0000DD   633 _T1CC1H	=	0x00dd
+                           0000DE   634 _T1CC2L	=	0x00de
+                           0000DF   635 _T1CC2H	=	0x00df
+                           0000E2   636 _T1CNTL	=	0x00e2
+                           0000E3   637 _T1CNTH	=	0x00e3
+                           0000E4   638 _T1CTL	=	0x00e4
+                           0000E5   639 _T1CCTL0	=	0x00e5
+                           0000E6   640 _T1CCTL1	=	0x00e6
+                           0000E7   641 _T1CCTL2	=	0x00e7
+                           0000AF   642 _T1STAT	=	0x00af
+                           000094   643 _T2CTRL	=	0x0094
+                           00009C   644 _T2EVTCFG	=	0x009c
+                           0000A1   645 _T2IRQF	=	0x00a1
+                           0000A2   646 _T2M0	=	0x00a2
+                           0000A3   647 _T2M1	=	0x00a3
+                           0000A4   648 _T2MOVF0	=	0x00a4
+                           0000A5   649 _T2MOVF1	=	0x00a5
+                           0000A6   650 _T2MOVF2	=	0x00a6
+                           0000A7   651 _T2IRQM	=	0x00a7
+                           0000C3   652 _T2MSEL	=	0x00c3
+                           0000CA   653 _T3CNT	=	0x00ca
+                           0000CB   654 _T3CTL	=	0x00cb
+                           0000CC   655 _T3CCTL0	=	0x00cc
+                           0000CD   656 _T3CC0	=	0x00cd
+                           0000CE   657 _T3CCTL1	=	0x00ce
+                           0000CF   658 _T3CC1	=	0x00cf
+                           0000EA   659 _T4CNT	=	0x00ea
+                           0000EB   660 _T4CTL	=	0x00eb
+                           0000EC   661 _T4CCTL0	=	0x00ec
+                           0000ED   662 _T4CC0	=	0x00ed
+                           0000EE   663 _T4CCTL1	=	0x00ee
+                           0000EF   664 _T4CC1	=	0x00ef
+                           0000D8   665 _TIMIF	=	0x00d8
+                           000086   666 _U0CSR	=	0x0086
+                           0000C1   667 _U0DBUF	=	0x00c1
+                           0000C2   668 _U0BAUD	=	0x00c2
+                           0000C4   669 _U0UCR	=	0x00c4
+                           0000C5   670 _U0GCR	=	0x00c5
+                           0000F8   671 _U1CSR	=	0x00f8
+                           0000F9   672 _U1DBUF	=	0x00f9
+                           0000FA   673 _U1BAUD	=	0x00fa
+                           0000FB   674 _U1UCR	=	0x00fb
+                           0000FC   675 _U1GCR	=	0x00fc
+                           0000C9   676 _WDCTL	=	0x00c9
+                                    677 ;--------------------------------------------------------
+                                    678 ; special function bits
+                                    679 ;--------------------------------------------------------
+                                    680 	.area RSEG    (ABS,DATA)
+      000000                        681 	.org 0x0000
+                           000087   682 _P0_7	=	0x0087
+                           000086   683 _P0_6	=	0x0086
+                           000085   684 _P0_5	=	0x0085
+                           000084   685 _P0_4	=	0x0084
+                           000083   686 _P0_3	=	0x0083
+                           000082   687 _P0_2	=	0x0082
+                           000081   688 _P0_1	=	0x0081
+                           000080   689 _P0_0	=	0x0080
+                           00008F   690 _URX1IF	=	0x008f
+                           00008D   691 _ADCIF	=	0x008d
+                           00008B   692 _URX0IF	=	0x008b
+                           00008A   693 _IT1	=	0x008a
+                           000089   694 _RFERRIF	=	0x0089
+                           000088   695 _IT0	=	0x0088
+                           000097   696 _P1_7	=	0x0097
+                           000096   697 _P1_6	=	0x0096
+                           000095   698 _P1_5	=	0x0095
+                           000094   699 _P1_4	=	0x0094
+                           000093   700 _P1_3	=	0x0093
+                           000092   701 _P1_2	=	0x0092
+                           000091   702 _P1_1	=	0x0091
+                           000090   703 _P1_0	=	0x0090
+                           000099   704 _ENCIF_1	=	0x0099
+                           000098   705 _ENCIF_0	=	0x0098
+                           0000A7   706 _P2_7	=	0x00a7
+                           0000A6   707 _P2_6	=	0x00a6
+                           0000A5   708 _P2_5	=	0x00a5
+                           0000A4   709 _P2_4	=	0x00a4
+                           0000A3   710 _P2_3	=	0x00a3
+                           0000A2   711 _P2_2	=	0x00a2
+                           0000A1   712 _P2_1	=	0x00a1
+                           0000A0   713 _P2_0	=	0x00a0
+                           0000AF   714 _EA	=	0x00af
+                           0000AD   715 _STIE	=	0x00ad
+                           0000AC   716 _ENCIE	=	0x00ac
+                           0000AB   717 _URX1IE	=	0x00ab
+                           0000AA   718 _URX0IE	=	0x00aa
+                           0000A9   719 _ADCIE	=	0x00a9
+                           0000A8   720 _RFERRIE	=	0x00a8
+                           0000BD   721 _P0IE	=	0x00bd
+                           0000BC   722 _T4IE	=	0x00bc
+                           0000BB   723 _T3IE	=	0x00bb
+                           0000BA   724 _T2IE	=	0x00ba
+                           0000B9   725 _T1IE	=	0x00b9
+                           0000B8   726 _DMAIE	=	0x00b8
+                           0000C7   727 _STIF	=	0x00c7
+                           0000C5   728 _P0IF	=	0x00c5
+                           0000C4   729 _T4IF	=	0x00c4
+                           0000C3   730 _T3IF	=	0x00c3
+                           0000C2   731 _T2IF	=	0x00c2
+                           0000C1   732 _T1IF	=	0x00c1
+                           0000C0   733 _DMAIF	=	0x00c0
+                           0000D7   734 _CY	=	0x00d7
+                           0000D6   735 _AC	=	0x00d6
+                           0000D5   736 _F0	=	0x00d5
+                           0000D4   737 _RS1	=	0x00d4
+                           0000D3   738 _RS0	=	0x00d3
+                           0000D2   739 _OV	=	0x00d2
+                           0000D1   740 _F1	=	0x00d1
+                           0000D0   741 _P	=	0x00d0
+                           0000E7   742 _ACC_7	=	0x00e7
+                           0000E6   743 _ACC_6	=	0x00e6
+                           0000E5   744 _ACC_5	=	0x00e5
+                           0000E4   745 _ACC_4	=	0x00e4
+                           0000E3   746 _ACC_3	=	0x00e3
+                           0000E2   747 _ACC_2	=	0x00e2
+                           0000E1   748 _ACC_1	=	0x00e1
+                           0000E0   749 _ACC_0	=	0x00e0
+                           0000EC   750 _WDTIF	=	0x00ec
+                           0000EB   751 _P1IF	=	0x00eb
+                           0000EA   752 _UTX1IF	=	0x00ea
+                           0000E9   753 _UTX0IF	=	0x00e9
+                           0000E8   754 _P2IF	=	0x00e8
+                           0000F7   755 _B_7	=	0x00f7
+                           0000F6   756 _B_6	=	0x00f6
+                           0000F5   757 _B_5	=	0x00f5
+                           0000F4   758 _B_4	=	0x00f4
+                           0000F3   759 _B_3	=	0x00f3
+                           0000F2   760 _B_2	=	0x00f2
+                           0000F1   761 _B_1	=	0x00f1
+                           0000F0   762 _B_0	=	0x00f0
+                           0000DE   763 _OVFIM	=	0x00de
+                           0000DD   764 _T4CH1IF	=	0x00dd
+                           0000DC   765 _T4CH0IF	=	0x00dc
+                           0000DB   766 _T4OVFIF	=	0x00db
+                           0000DA   767 _T3CH1IF	=	0x00da
+                           0000D9   768 _T3CH0IF	=	0x00d9
+                           0000D8   769 _T3OVFIF	=	0x00d8
+                           0000FF   770 _MODE	=	0x00ff
+                           0000FE   771 _RE	=	0x00fe
+                           0000FD   772 _SLAVE	=	0x00fd
+                           0000FC   773 _FE	=	0x00fc
+                           0000FB   774 _ERR	=	0x00fb
+                           0000FA   775 _RX_BYTE	=	0x00fa
+                           0000F9   776 _TX_BYTE	=	0x00f9
+                           0000F8   777 _ACTIVE	=	0x00f8
+                                    778 ;--------------------------------------------------------
+                                    779 ; overlayable register banks
+                                    780 ;--------------------------------------------------------
+                                    781 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        782 	.ds 8
+                                    783 ;--------------------------------------------------------
+                                    784 ; internal ram data
+                                    785 ;--------------------------------------------------------
+                                    786 	.area DSEG    (DATA)
+                                    787 ;--------------------------------------------------------
+                                    788 ; overlayable items in internal ram 
+                                    789 ;--------------------------------------------------------
+                                    790 ;--------------------------------------------------------
+                                    791 ; indirectly addressable internal ram data
+                                    792 ;--------------------------------------------------------
+                                    793 	.area ISEG    (DATA)
+                                    794 ;--------------------------------------------------------
+                                    795 ; absolute internal ram data
+                                    796 ;--------------------------------------------------------
+                                    797 	.area IABS    (ABS,DATA)
+                                    798 	.area IABS    (ABS,DATA)
+                                    799 ;--------------------------------------------------------
+                                    800 ; bit data
+                                    801 ;--------------------------------------------------------
+                                    802 	.area BSEG    (BIT)
+                                    803 ;--------------------------------------------------------
+                                    804 ; paged external ram data
+                                    805 ;--------------------------------------------------------
+                                    806 	.area PSEG    (PAG,XDATA)
+                                    807 ;--------------------------------------------------------
+                                    808 ; external ram data
+                                    809 ;--------------------------------------------------------
+                                    810 	.area XSEG    (XDATA)
+                           0061A6   811 _MONMUX	=	0x61a6
+                           0061A6   812 _OPAMPMC	=	0x61a6
+                           006230   813 _I2CCFG	=	0x6230
+                           006231   814 _I2CSTAT	=	0x6231
+                           006232   815 _I2CDATA	=	0x6232
+                           006233   816 _I2CADDR	=	0x6233
+                           006234   817 _I2CWC	=	0x6234
+                           006235   818 _I2CIO	=	0x6235
+                           006243   819 _OBSSEL0	=	0x6243
+                           006244   820 _OBSSEL1	=	0x6244
+                           006245   821 _OBSSEL2	=	0x6245
+                           006246   822 _OBSSEL3	=	0x6246
+                           006247   823 _OBSSEL4	=	0x6247
+                           006248   824 _OBSSEL5	=	0x6248
+                           006249   825 _CHVER	=	0x6249
+                           00624A   826 _CHIPID	=	0x624a
+                           00624B   827 _TESTREG0	=	0x624b
+                           006260   828 _DBGDATA	=	0x6260
+                           006262   829 _SRCRC	=	0x6262
+                           006264   830 _BATTMON	=	0x6264
+                           006265   831 _IVCTRL	=	0x6265
+                           006270   832 _FCTL	=	0x6270
+                           006271   833 _FADDRL	=	0x6271
+                           006272   834 _FADDRH	=	0x6272
+                           006273   835 _FWDATA	=	0x6273
+                           006276   836 _CHIPINFO0	=	0x6276
+                           006277   837 _CHIPINFO1	=	0x6277
+                           006281   838 _IRCTL	=	0x6281
+                           006290   839 _CLD	=	0x6290
+                           0062A0   840 _XX_T1CCTL0	=	0x62a0
+                           0062A1   841 _XX_T1CCTL1	=	0x62a1
+                           0062A2   842 _XX_T1CCTL2	=	0x62a2
+                           0062A3   843 _T1CCTL3	=	0x62a3
+                           0062A4   844 _T1CCTL4	=	0x62a4
+                           0062A6   845 _XX_T1CC0L	=	0x62a6
+                           0062A7   846 _XX_T1CC0H	=	0x62a7
+                           0062A8   847 _XX_T1CC1L	=	0x62a8
+                           0062A9   848 _XX_T1CC1H	=	0x62a9
+                           0062AA   849 _XX_T1CC2L	=	0x62aa
+                           0062AB   850 _XX_T1CC2H	=	0x62ab
+                           0062AC   851 _T1CC3L	=	0x62ac
+                           0062AD   852 _T1CC3H	=	0x62ad
+                           0062AE   853 _T1CC4L	=	0x62ae
+                           0062AF   854 _T1CC4H	=	0x62af
+                           0062B0   855 _STCC	=	0x62b0
+                           0062B1   856 _STCS	=	0x62b1
+                           0062B2   857 _STCV0	=	0x62b2
+                           0062B3   858 _STCV1	=	0x62b3
+                           0062B4   859 _STCV2	=	0x62b4
+                           0062C0   860 _OPAMPC	=	0x62c0
+                           0062C1   861 _OPAMPS	=	0x62c1
+                           0062D0   862 _CMPCTL	=	0x62d0
+                           006000   863 _RFCORE_RAM	=	0x6000
+                           006000   864 _RXFIFO	=	0x6000
+                           006080   865 _TXFIFO	=	0x6080
+                           006100   866 _SRC_ADDR_TABLE	=	0x6100
+                           006160   867 _SRCRESMASK0	=	0x6160
+                           006161   868 _SRCRESMASK1	=	0x6161
+                           006162   869 _SRCRESMASK2	=	0x6162
+                           006163   870 _SRCRESINDEX	=	0x6163
+                           006164   871 _SRCEXTPENDEN0	=	0x6164
+                           006165   872 _SRCEXTPENDEN1	=	0x6165
+                           006166   873 _SRCEXTPENDEN2	=	0x6166
+                           006167   874 _SRCSHORTPENDEN0	=	0x6167
+                           006168   875 _SRCSHORTPENDEN1	=	0x6168
+                           006169   876 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   877 _EXT_ADDR0	=	0x616a
+                           00616B   878 _EXT_ADDR1	=	0x616b
+                           00616C   879 _EXT_ADDR2	=	0x616c
+                           00616D   880 _EXT_ADDR3	=	0x616d
+                           00616E   881 _EXT_ADDR4	=	0x616e
+                           00616F   882 _EXT_ADDR5	=	0x616f
+                           006170   883 _EXT_ADDR6	=	0x6170
+                           006171   884 _EXT_ADDR7	=	0x6171
+                           006172   885 _PAN_ID0	=	0x6172
+                           006173   886 _PAN_ID1	=	0x6173
+                           006174   887 _SHORT_ADDR0	=	0x6174
+                           006175   888 _SHORT_ADDR1	=	0x6175
+                           006180   889 _FRMFILT0	=	0x6180
+                           006181   890 _FRMFILT1	=	0x6181
+                           006182   891 _SRCMATCH	=	0x6182
+                           006183   892 _SRCSHORTEN0	=	0x6183
+                           006184   893 _SRCSHORTEN1	=	0x6184
+                           006185   894 _SRCSHORTEN2	=	0x6185
+                           006186   895 _SRCEXTEN0	=	0x6186
+                           006187   896 _SRCEXTEN1	=	0x6187
+                           006188   897 _SRCEXTEN2	=	0x6188
+                           006189   898 _FRMCTRL0	=	0x6189
+                           00618A   899 _FRMCTRL1	=	0x618a
+                           00618B   900 _RXENABLE	=	0x618b
+                           00618C   901 _RXMASKSET	=	0x618c
+                           00618D   902 _RXMASKCLR	=	0x618d
+                           00618E   903 _FREQTUNE	=	0x618e
+                           00618F   904 _FREQCTRL	=	0x618f
+                           006190   905 _TXPOWER	=	0x6190
+                           006191   906 _TXCTRL	=	0x6191
+                           006192   907 _FSMSTAT0	=	0x6192
+                           006193   908 _FSMSTAT1	=	0x6193
+                           006194   909 _FIFOPCTRL	=	0x6194
+                           006195   910 _FSMCTRL	=	0x6195
+                           006196   911 _CCACTRL0	=	0x6196
+                           006197   912 _CCACTRL1	=	0x6197
+                           006198   913 _RSSI	=	0x6198
+                           006199   914 _RSSISTAT	=	0x6199
+                           00619A   915 _RXFIRST	=	0x619a
+                           00619B   916 _RXFIFOCNT	=	0x619b
+                           00619C   917 _TXFIFOCNT	=	0x619c
+                           00619D   918 _RXFIRST_PTR	=	0x619d
+                           00619E   919 _RXLAST_PTR	=	0x619e
+                           00619F   920 _RXP1_PTR	=	0x619f
+                           0061A1   921 _TXFIRST_PTR	=	0x61a1
+                           0061A2   922 _TXLAST_PTR	=	0x61a2
+                           0061A3   923 _RFIRQM0	=	0x61a3
+                           0061A4   924 _RFIRQM1	=	0x61a4
+                           0061A5   925 _RFERRM	=	0x61a5
+                           0061A7   926 _RFRND	=	0x61a7
+                           0061A8   927 _MDMCTRL0	=	0x61a8
+                           0061A9   928 _MDMCTRL1	=	0x61a9
+                           0061AA   929 _FREQEST	=	0x61aa
+                           0061AB   930 _RXCTRL	=	0x61ab
+                           0061AC   931 _FSCTRL	=	0x61ac
+                           0061AD   932 _FSCAL0	=	0x61ad
+                           0061AE   933 _FSCAL1	=	0x61ae
+                           0061AF   934 _FSCAL2	=	0x61af
+                           0061B0   935 _FSCAL3	=	0x61b0
+                           0061B1   936 _AGCCTRL0	=	0x61b1
+                           0061B2   937 _AGCCTRL1	=	0x61b2
+                           0061B3   938 _AGCCTRL2	=	0x61b3
+                           0061B4   939 _AGCCTRL3	=	0x61b4
+                           0061B5   940 _ADCTEST0	=	0x61b5
+                           0061B6   941 _ADCTEST1	=	0x61b6
+                           0061B7   942 _ADCTEST2	=	0x61b7
+                           0061B8   943 _MDMTEST0	=	0x61b8
+                           0061B9   944 _MDMTEST1	=	0x61b9
+                           0061BA   945 _DACTEST0	=	0x61ba
+                           0061BB   946 _DACTEST1	=	0x61bb
+                           0061BC   947 _DACTEST2	=	0x61bc
+                           0061BD   948 _ATEST	=	0x61bd
+                           0061BE   949 _PTEST0	=	0x61be
+                           0061BF   950 _PTEST1	=	0x61bf
+                           0061FA   951 _TXFILTCFG	=	0x61fa
+                           0061EB   952 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   953 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   954 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   955 _CSPPROG0	=	0x61c0
+                           0061C1   956 _CSPPROG1	=	0x61c1
+                           0061C2   957 _CSPPROG2	=	0x61c2
+                           0061C3   958 _CSPPROG3	=	0x61c3
+                           0061C4   959 _CSPPROG4	=	0x61c4
+                           0061C5   960 _CSPPROG5	=	0x61c5
+                           0061C6   961 _CSPPROG6	=	0x61c6
+                           0061C7   962 _CSPPROG7	=	0x61c7
+                           0061C8   963 _CSPPROG8	=	0x61c8
+                           0061C9   964 _CSPPROG9	=	0x61c9
+                           0061CA   965 _CSPPROG10	=	0x61ca
+                           0061CB   966 _CSPPROG11	=	0x61cb
+                           0061CC   967 _CSPPROG12	=	0x61cc
+                           0061CD   968 _CSPPROG13	=	0x61cd
+                           0061CE   969 _CSPPROG14	=	0x61ce
+                           0061CF   970 _CSPPROG15	=	0x61cf
+                           0061D0   971 _CSPPROG16	=	0x61d0
+                           0061D1   972 _CSPPROG17	=	0x61d1
+                           0061D2   973 _CSPPROG18	=	0x61d2
+                           0061D3   974 _CSPPROG19	=	0x61d3
+                           0061D4   975 _CSPPROG20	=	0x61d4
+                           0061D5   976 _CSPPROG21	=	0x61d5
+                           0061D6   977 _CSPPROG22	=	0x61d6
+                           0061D7   978 _CSPPROG23	=	0x61d7
+                           0061E0   979 _CSPCTRL	=	0x61e0
+                           0061E1   980 _CSPSTAT	=	0x61e1
+                           0061E2   981 _CSPX	=	0x61e2
+                           0061E3   982 _CSPY	=	0x61e3
+                           0061E4   983 _CSPZ	=	0x61e4
+                           0061E5   984 _CSPT	=	0x61e5
+                           006200   985 _USBADDR	=	0x6200
+                           006201   986 _USBPOW	=	0x6201
+                           006202   987 _USBIIF	=	0x6202
+                           006204   988 _USBOIF	=	0x6204
+                           006206   989 _USBCIF	=	0x6206
+                           006207   990 _USBIIE	=	0x6207
+                           006209   991 _USBOIE	=	0x6209
+                           00620B   992 _USBCIE	=	0x620b
+                           00620C   993 _USBFRML	=	0x620c
+                           00620D   994 _USBFRMH	=	0x620d
+                           00620E   995 _USBINDEX	=	0x620e
+                           00620F   996 _USBCTRL	=	0x620f
+                           006210   997 _USBMAXI	=	0x6210
+                           006211   998 _USBCS0	=	0x6211
+                           006211   999 _USBCSIL	=	0x6211
+                           006212  1000 _USBCSIH	=	0x6212
+                           006213  1001 _USBMAXO	=	0x6213
+                           006214  1002 _USBCSOL	=	0x6214
+                           006215  1003 _USBCSOH	=	0x6215
+                           006216  1004 _USBCNT0	=	0x6216
+                           006216  1005 _USBCNTL	=	0x6216
+                           006217  1006 _USBCNTH	=	0x6217
+                           006220  1007 _USBF0	=	0x6220
+                           006222  1008 _USBF1	=	0x6222
+                           006224  1009 _USBF2	=	0x6224
+                           006226  1010 _USBF3	=	0x6226
+                           006228  1011 _USBF4	=	0x6228
+                           00622A  1012 _USBF5	=	0x622a
+                           007080  1013 _X_P0	=	0x7080
+                           007086  1014 _X_U0CSR	=	0x7086
+                           007089  1015 _X_P0IFG	=	0x7089
+                           00708A  1016 _X_P1IFG	=	0x708a
+                           00708B  1017 _X_P2IFG	=	0x708b
+                           00708C  1018 _X_PICTL	=	0x708c
+                           00708D  1019 _X_P1IEN	=	0x708d
+                           00708F  1020 _X_P0INP	=	0x708f
+                           007090  1021 _X_P1	=	0x7090
+                           007091  1022 _X_RFIRQF1	=	0x7091
+                           007093  1023 _X_MPAGE	=	0x7093
+                           007093  1024 _X__XPAGE	=	0x7093
+                           007094  1025 _X_T2CTRL	=	0x7094
+                           007095  1026 _X_ST0	=	0x7095
+                           007096  1027 _X_ST1	=	0x7096
+                           007097  1028 _X_ST2	=	0x7097
+                           00709C  1029 _X_T2EVTCFG	=	0x709c
+                           00709D  1030 _X_SLEEPSTA	=	0x709d
+                           00709E  1031 _X_CLKCONSTA	=	0x709e
+                           00709F  1032 _X_FMAP	=	0x709f
+                           00709F  1033 _X_PSBANK	=	0x709f
+                           0070A0  1034 _X_P2	=	0x70a0
+                           0070A1  1035 _X_T2IRQF	=	0x70a1
+                           0070A2  1036 _X_T2M0	=	0x70a2
+                           0070A3  1037 _X_T2M1	=	0x70a3
+                           0070A4  1038 _X_T2MOVF0	=	0x70a4
+                           0070A5  1039 _X_T2MOVF1	=	0x70a5
+                           0070A6  1040 _X_T2MOVF2	=	0x70a6
+                           0070A7  1041 _X_T2IRQM	=	0x70a7
+                           0070AB  1042 _X_P0IEN	=	0x70ab
+                           0070AC  1043 _X_P2IEN	=	0x70ac
+                           0070AD  1044 _X_STLOAD	=	0x70ad
+                           0070AE  1045 _X_PMUX	=	0x70ae
+                           0070AF  1046 _X_T1STAT	=	0x70af
+                           0070B1  1047 _X_ENCDI	=	0x70b1
+                           0070B2  1048 _X_ENCDO	=	0x70b2
+                           0070B3  1049 _X_ENCCS	=	0x70b3
+                           0070B4  1050 _X_ADCCON1	=	0x70b4
+                           0070B5  1051 _X_ADCCON2	=	0x70b5
+                           0070B6  1052 _X_ADCCON3	=	0x70b6
+                           0070BA  1053 _X_ADCL	=	0x70ba
+                           0070BB  1054 _X_ADCH	=	0x70bb
+                           0070BC  1055 _X_RNDL	=	0x70bc
+                           0070BD  1056 _X_RNDH	=	0x70bd
+                           0070BE  1057 _X_SLEEPCMD	=	0x70be
+                           0070BF  1058 _X_RFERRF	=	0x70bf
+                           0070C1  1059 _X_U0DBUF	=	0x70c1
+                           0070C2  1060 _X_U0BAUD	=	0x70c2
+                           0070C3  1061 _X_T2MSEL	=	0x70c3
+                           0070C4  1062 _X_U0UCR	=	0x70c4
+                           0070C5  1063 _X_U0GCR	=	0x70c5
+                           0070C6  1064 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1065 _X_MEMCTR	=	0x70c7
+                           0070C9  1066 _X_WDCTL	=	0x70c9
+                           0070CA  1067 _X_T3CNT	=	0x70ca
+                           0070CB  1068 _X_T3CTL	=	0x70cb
+                           0070CC  1069 _X_T3CCTL0	=	0x70cc
+                           0070CD  1070 _X_T3CC0	=	0x70cd
+                           0070CE  1071 _X_T3CCTL1	=	0x70ce
+                           0070CF  1072 _X_T3CC1	=	0x70cf
+                           0070D1  1073 _X_DMAIRQ	=	0x70d1
+                           0070D2  1074 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1075 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1076 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1077 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1078 _X_DMAARM	=	0x70d6
+                           0070D7  1079 _X_DMAREQ	=	0x70d7
+                           0070D8  1080 _X_TIMIF	=	0x70d8
+                           0070D9  1081 _X_RFD	=	0x70d9
+                           0070DA  1082 _X_T1CC0L	=	0x70da
+                           0070DB  1083 _X_T1CC0H	=	0x70db
+                           0070DC  1084 _X_T1CC1L	=	0x70dc
+                           0070DD  1085 _X_T1CC1H	=	0x70dd
+                           0070DE  1086 _X_T1CC2L	=	0x70de
+                           0070DF  1087 _X_T1CC2H	=	0x70df
+                           0070E1  1088 _X_RFST	=	0x70e1
+                           0070E2  1089 _X_T1CNTL	=	0x70e2
+                           0070E3  1090 _X_T1CNTH	=	0x70e3
+                           0070E4  1091 _X_T1CTL	=	0x70e4
+                           0070E5  1092 _X_T1CCTL0	=	0x70e5
+                           0070E6  1093 _X_T1CCTL1	=	0x70e6
+                           0070E7  1094 _X_T1CCTL2	=	0x70e7
+                           0070E9  1095 _X_RFIRQF0	=	0x70e9
+                           0070EA  1096 _X_T4CNT	=	0x70ea
+                           0070EB  1097 _X_T4CTL	=	0x70eb
+                           0070EC  1098 _X_T4CCTL0	=	0x70ec
+                           0070ED  1099 _X_T4CC0	=	0x70ed
+                           0070EE  1100 _X_T4CCTL1	=	0x70ee
+                           0070EF  1101 _X_T4CC1	=	0x70ef
+                           0070F1  1102 _X_PERCFG	=	0x70f1
+                           0070F2  1103 _X_APCFG	=	0x70f2
+                           0070F3  1104 _X_P0SEL	=	0x70f3
+                           0070F4  1105 _X_P1SEL	=	0x70f4
+                           0070F5  1106 _X_P2SEL	=	0x70f5
+                           0070F6  1107 _X_P1INP	=	0x70f6
+                           0070F7  1108 _X_P2INP	=	0x70f7
+                           0070F8  1109 _X_U1CSR	=	0x70f8
+                           0070F9  1110 _X_U1DBUF	=	0x70f9
+                           0070FA  1111 _X_U1BAUD	=	0x70fa
+                           0070FB  1112 _X_U1UCR	=	0x70fb
+                           0070FC  1113 _X_U1GCR	=	0x70fc
+                           0070FD  1114 _X_P0DIR	=	0x70fd
+                           0070FE  1115 _X_P1DIR	=	0x70fe
+                           0070FF  1116 _X_P2DIR	=	0x70ff
+                           007800  1117 _X_INFOPAGE	=	0x7800
+                           00780C  1118 _X_IEEE_ADDR	=	0x780c
+      000000                       1119 _timetable_timestamp_time::
+      000000                       1120 	.ds 2
+      000002                       1121 _timetable_init_temp_timestamps_1_79:
+      000002                       1122 	.ds 20
+      000016                       1123 _timetable_init_temp_ptr_1_79:
+      000016                       1124 	.ds 2
+      000018                       1125 _timetable_init_temp_1_79:
+      000018                       1126 	.ds 8
+                                   1127 ;--------------------------------------------------------
+                                   1128 ; absolute external ram data
+                                   1129 ;--------------------------------------------------------
+                                   1130 	.area XABS    (ABS,XDATA)
+                                   1131 ;--------------------------------------------------------
+                                   1132 ; external initialized ram data
+                                   1133 ;--------------------------------------------------------
+                                   1134 	.area XISEG   (XDATA)
+                                   1135 	.area HOME    (CODE)
+                                   1136 	.area GSINIT0 (CODE)
+                                   1137 	.area GSINIT1 (CODE)
+                                   1138 	.area GSINIT2 (CODE)
+                                   1139 	.area GSINIT3 (CODE)
+                                   1140 	.area GSINIT4 (CODE)
+                                   1141 	.area GSINIT5 (CODE)
+                                   1142 	.area GSINIT  (CODE)
+                                   1143 	.area GSFINAL (CODE)
+                                   1144 	.area CSEG    (CODE)
+                                   1145 ;--------------------------------------------------------
+                                   1146 ; global & static initialisations
+                                   1147 ;--------------------------------------------------------
+                                   1148 	.area HOME    (CODE)
+                                   1149 	.area GSINIT  (CODE)
+                                   1150 	.area GSFINAL (CODE)
+                                   1151 	.area GSINIT  (CODE)
+                                   1152 ;------------------------------------------------------------
+                                   1153 ;Allocation info for local variables in function 'timetable_init'
+                                   1154 ;------------------------------------------------------------
+                                   1155 ;dummy1                    Allocated to stack - sp -1
+                                   1156 ;dummy2                    Allocated to stack - sp +0
+                                   1157 ;sloc0                     Allocated to stack - sp -3
+                                   1158 ;temp_timestamps           Allocated with name '_timetable_init_temp_timestamps_1_79'
+                                   1159 ;temp_ptr                  Allocated with name '_timetable_init_temp_ptr_1_79'
+                                   1160 ;temp                      Allocated with name '_timetable_init_temp_1_79'
+                                   1161 ;------------------------------------------------------------
+                                   1162 ;	/home/user/contiki/core/sys/timetable.c:107: TIMETABLE_STATIC(temp);
+      000000 90r00r18         [24] 1163 	mov	dptr,#_timetable_init_temp_1_79
+      000003 74r02            [12] 1164 	mov	a,#_timetable_init_temp_timestamps_1_79
+      000005 F0               [24] 1165 	movx	@dptr,a
+      000006 74s00            [12] 1166 	mov	a,#(_timetable_init_temp_timestamps_1_79 >> 8)
+      000008 A3               [24] 1167 	inc	dptr
+      000009 F0               [24] 1168 	movx	@dptr,a
+      00000A E4               [12] 1169 	clr	a
+      00000B A3               [24] 1170 	inc	dptr
+      00000C F0               [24] 1171 	movx	@dptr,a
+      00000D 90r00r1B         [24] 1172 	mov	dptr,#(_timetable_init_temp_1_79 + 0x0003)
+      000010 74 04            [12] 1173 	mov	a,#0x04
+      000012 F0               [24] 1174 	movx	@dptr,a
+      000013 E4               [12] 1175 	clr	a
+      000014 A3               [24] 1176 	inc	dptr
+      000015 F0               [24] 1177 	movx	@dptr,a
+      000016 90r00r1D         [24] 1178 	mov	dptr,#(_timetable_init_temp_1_79 + 0x0005)
+      000019 74r16            [12] 1179 	mov	a,#_timetable_init_temp_ptr_1_79
+      00001B F0               [24] 1180 	movx	@dptr,a
+      00001C 74s00            [12] 1181 	mov	a,#(_timetable_init_temp_ptr_1_79 >> 8)
+      00001E A3               [24] 1182 	inc	dptr
+      00001F F0               [24] 1183 	movx	@dptr,a
+      000020 E4               [12] 1184 	clr	a
+      000021 A3               [24] 1185 	inc	dptr
+      000022 F0               [24] 1186 	movx	@dptr,a
+                                   1187 ;--------------------------------------------------------
+                                   1188 ; Home
+                                   1189 ;--------------------------------------------------------
+                                   1190 	.area HOME    (CODE)
+                                   1191 	.area HOME    (CODE)
+                                   1192 ;--------------------------------------------------------
+                                   1193 ; code
+                                   1194 ;--------------------------------------------------------
+                                   1195 	.area CSEG    (CODE)
+                                   1196 ;------------------------------------------------------------
+                                   1197 ;Allocation info for local variables in function 'timetable_entry'
+                                   1198 ;------------------------------------------------------------
+                                   1199 ;num                       Allocated to stack - sp -3
+                                   1200 ;t                         Allocated to registers r5 r6 r7 
+                                   1201 ;------------------------------------------------------------
+                                   1202 ;	/home/user/contiki/core/sys/timetable.c:49: timetable_entry(struct timetable *t, int num)
+                                   1203 ;	-----------------------------------------
+                                   1204 ;	 function timetable_entry
+                                   1205 ;	-----------------------------------------
+      000000                       1206 _timetable_entry:
+                           000007  1207 	ar7 = 0x07
+                           000006  1208 	ar6 = 0x06
+                           000005  1209 	ar5 = 0x05
+                           000004  1210 	ar4 = 0x04
+                           000003  1211 	ar3 = 0x03
+                           000002  1212 	ar2 = 0x02
+                           000001  1213 	ar1 = 0x01
+                           000000  1214 	ar0 = 0x00
+      000000 AD 82            [24] 1215 	mov	r5,dpl
+      000002 AE 83            [24] 1216 	mov	r6,dph
+      000004 AF F0            [24] 1217 	mov	r7,b
+                                   1218 ;	/home/user/contiki/core/sys/timetable.c:51: if(t == NULL) {
+      000006 ED               [12] 1219 	mov	a,r5
+      000007 4E               [12] 1220 	orl	a,r6
+                                   1221 ;	/home/user/contiki/core/sys/timetable.c:52: return NULL;
+      000008 70 06            [24] 1222 	jnz	00102$
+      00000A 90 00 00         [24] 1223 	mov	dptr,#0x0000
+      00000D F5 F0            [12] 1224 	mov	b,a
+      00000F 22               [24] 1225 	ret
+      000010                       1226 00102$:
+                                   1227 ;	/home/user/contiki/core/sys/timetable.c:54: return &(t->timestamps[num]);
+      000010 8D 82            [24] 1228 	mov	dpl,r5
+      000012 8E 83            [24] 1229 	mov	dph,r6
+      000014 8F F0            [24] 1230 	mov	b,r7
+      000016 12r00r00         [24] 1231 	lcall	__gptrget
+      000019 FD               [12] 1232 	mov	r5,a
+      00001A A3               [24] 1233 	inc	dptr
+      00001B 12r00r00         [24] 1234 	lcall	__gptrget
+      00001E FE               [12] 1235 	mov	r6,a
+      00001F A3               [24] 1236 	inc	dptr
+      000020 12r00r00         [24] 1237 	lcall	__gptrget
+      000023 FF               [12] 1238 	mov	r7,a
+      000024 C0 07            [24] 1239 	push	ar7
+      000026 C0 06            [24] 1240 	push	ar6
+      000028 C0 05            [24] 1241 	push	ar5
+      00002A E5 81            [12] 1242 	mov	a,sp
+      00002C 24 FA            [12] 1243 	add	a,#0xfa
+      00002E F8               [12] 1244 	mov	r0,a
+      00002F E6               [12] 1245 	mov	a,@r0
+      000030 C0 E0            [24] 1246 	push	acc
+      000032 08               [12] 1247 	inc	r0
+      000033 E6               [12] 1248 	mov	a,@r0
+      000034 C0 E0            [24] 1249 	push	acc
+      000036 90 00 05         [24] 1250 	mov	dptr,#0x0005
+      000039 12r00r00         [24] 1251 	lcall	__mulint
+      00003C AB 82            [24] 1252 	mov	r3,dpl
+      00003E AC 83            [24] 1253 	mov	r4,dph
+      000040 15 81            [12] 1254 	dec	sp
+      000042 15 81            [12] 1255 	dec	sp
+      000044 D0 05            [24] 1256 	pop	ar5
+      000046 D0 06            [24] 1257 	pop	ar6
+      000048 D0 07            [24] 1258 	pop	ar7
+      00004A EB               [12] 1259 	mov	a,r3
+      00004B 2D               [12] 1260 	add	a,r5
+      00004C FD               [12] 1261 	mov	r5,a
+      00004D EC               [12] 1262 	mov	a,r4
+      00004E 3E               [12] 1263 	addc	a,r6
+      00004F FE               [12] 1264 	mov	r6,a
+      000050 8D 82            [24] 1265 	mov	dpl,r5
+      000052 8E 83            [24] 1266 	mov	dph,r6
+      000054 8F F0            [24] 1267 	mov	b,r7
+      000056 22               [24] 1268 	ret
+                                   1269 ;------------------------------------------------------------
+                                   1270 ;Allocation info for local variables in function 'timetable_ptr'
+                                   1271 ;------------------------------------------------------------
+                                   1272 ;t                         Allocated to registers r5 r6 r7 
+                                   1273 ;------------------------------------------------------------
+                                   1274 ;	/home/user/contiki/core/sys/timetable.c:58: timetable_ptr(struct timetable *t)
+                                   1275 ;	-----------------------------------------
+                                   1276 ;	 function timetable_ptr
+                                   1277 ;	-----------------------------------------
+      000057                       1278 _timetable_ptr:
+      000057 AD 82            [24] 1279 	mov	r5,dpl
+      000059 AE 83            [24] 1280 	mov	r6,dph
+      00005B AF F0            [24] 1281 	mov	r7,b
+                                   1282 ;	/home/user/contiki/core/sys/timetable.c:60: return *t->ptr;
+      00005D 74 05            [12] 1283 	mov	a,#0x05
+      00005F 2D               [12] 1284 	add	a,r5
+      000060 FD               [12] 1285 	mov	r5,a
+      000061 E4               [12] 1286 	clr	a
+      000062 3E               [12] 1287 	addc	a,r6
+      000063 FE               [12] 1288 	mov	r6,a
+      000064 8D 82            [24] 1289 	mov	dpl,r5
+      000066 8E 83            [24] 1290 	mov	dph,r6
+      000068 8F F0            [24] 1291 	mov	b,r7
+      00006A 12r00r00         [24] 1292 	lcall	__gptrget
+      00006D FD               [12] 1293 	mov	r5,a
+      00006E A3               [24] 1294 	inc	dptr
+      00006F 12r00r00         [24] 1295 	lcall	__gptrget
+      000072 FE               [12] 1296 	mov	r6,a
+      000073 A3               [24] 1297 	inc	dptr
+      000074 12r00r00         [24] 1298 	lcall	__gptrget
+      000077 FF               [12] 1299 	mov	r7,a
+      000078 8D 82            [24] 1300 	mov	dpl,r5
+      00007A 8E 83            [24] 1301 	mov	dph,r6
+      00007C 8F F0            [24] 1302 	mov	b,r7
+      00007E 12r00r00         [24] 1303 	lcall	__gptrget
+      000081 FD               [12] 1304 	mov	r5,a
+      000082 A3               [24] 1305 	inc	dptr
+      000083 12r00r00         [24] 1306 	lcall	__gptrget
+      000086 8D 82            [24] 1307 	mov	dpl,r5
+      000088 F5 83            [12] 1308 	mov	dph,a
+      00008A 22               [24] 1309 	ret
+                                   1310 ;------------------------------------------------------------
+                                   1311 ;Allocation info for local variables in function 'timetable_clear'
+                                   1312 ;------------------------------------------------------------
+                                   1313 ;t                         Allocated to registers r5 r6 r7 
+                                   1314 ;------------------------------------------------------------
+                                   1315 ;	/home/user/contiki/core/sys/timetable.c:64: timetable_clear(struct timetable *t)
+                                   1316 ;	-----------------------------------------
+                                   1317 ;	 function timetable_clear
+                                   1318 ;	-----------------------------------------
+      00008B                       1319 _timetable_clear:
+      00008B AD 82            [24] 1320 	mov	r5,dpl
+      00008D AE 83            [24] 1321 	mov	r6,dph
+      00008F AF F0            [24] 1322 	mov	r7,b
+                                   1323 ;	/home/user/contiki/core/sys/timetable.c:66: *t->ptr = 0;
+      000091 74 05            [12] 1324 	mov	a,#0x05
+      000093 2D               [12] 1325 	add	a,r5
+      000094 FD               [12] 1326 	mov	r5,a
+      000095 E4               [12] 1327 	clr	a
+      000096 3E               [12] 1328 	addc	a,r6
+      000097 FE               [12] 1329 	mov	r6,a
+      000098 8D 82            [24] 1330 	mov	dpl,r5
+      00009A 8E 83            [24] 1331 	mov	dph,r6
+      00009C 8F F0            [24] 1332 	mov	b,r7
+      00009E 12r00r00         [24] 1333 	lcall	__gptrget
+      0000A1 FD               [12] 1334 	mov	r5,a
+      0000A2 A3               [24] 1335 	inc	dptr
+      0000A3 12r00r00         [24] 1336 	lcall	__gptrget
+      0000A6 FE               [12] 1337 	mov	r6,a
+      0000A7 A3               [24] 1338 	inc	dptr
+      0000A8 12r00r00         [24] 1339 	lcall	__gptrget
+      0000AB FF               [12] 1340 	mov	r7,a
+      0000AC 8D 82            [24] 1341 	mov	dpl,r5
+      0000AE 8E 83            [24] 1342 	mov	dph,r6
+      0000B0 8F F0            [24] 1343 	mov	b,r7
+      0000B2 E4               [12] 1344 	clr	a
+      0000B3 12r00r00         [24] 1345 	lcall	__gptrput
+      0000B6 A3               [24] 1346 	inc	dptr
+      0000B7 E4               [12] 1347 	clr	a
+      0000B8 02r00r00         [24] 1348 	ljmp	__gptrput
+                                   1349 ;------------------------------------------------------------
+                                   1350 ;Allocation info for local variables in function 'timetable_timediff'
+                                   1351 ;------------------------------------------------------------
+                                   1352 ;id1                       Allocated to stack - sp -18
+                                   1353 ;id2                       Allocated to stack - sp -21
+                                   1354 ;t                         Allocated to stack - sp -13
+                                   1355 ;i                         Allocated to stack - sp -5
+                                   1356 ;t1                        Allocated to stack - sp -3
+                                   1357 ;t2                        Allocated to stack - sp -1
+                                   1358 ;sloc0                     Allocated to stack - sp -10
+                                   1359 ;sloc1                     Allocated to stack - sp -7
+                                   1360 ;------------------------------------------------------------
+                                   1361 ;	/home/user/contiki/core/sys/timetable.c:70: timetable_timediff(struct timetable *t,
+                                   1362 ;	-----------------------------------------
+                                   1363 ;	 function timetable_timediff
+                                   1364 ;	-----------------------------------------
+      0000BB                       1365 _timetable_timediff:
+      0000BB C0 82            [24] 1366 	push	dpl
+      0000BD C0 83            [24] 1367 	push	dph
+      0000BF C0 F0            [24] 1368 	push	b
+      0000C1 E5 81            [12] 1369 	mov	a,sp
+      0000C3 24 0B            [12] 1370 	add	a,#0x0B
+                                   1371 ;	/home/user/contiki/core/sys/timetable.c:80: t1 = t2 = t->size;
+      0000C5 F5 81            [12] 1372 	mov	sp,a
+      0000C7 24 F3            [12] 1373 	add	a,#0xf3
+      0000C9 F8               [12] 1374 	mov	r0,a
+      0000CA 74 03            [12] 1375 	mov	a,#0x03
+      0000CC 26               [12] 1376 	add	a,@r0
+      0000CD FA               [12] 1377 	mov	r2,a
+      0000CE E4               [12] 1378 	clr	a
+      0000CF 08               [12] 1379 	inc	r0
+      0000D0 36               [12] 1380 	addc	a,@r0
+      0000D1 FB               [12] 1381 	mov	r3,a
+      0000D2 08               [12] 1382 	inc	r0
+      0000D3 86 04            [24] 1383 	mov	ar4,@r0
+      0000D5 8A 82            [24] 1384 	mov	dpl,r2
+      0000D7 8B 83            [24] 1385 	mov	dph,r3
+      0000D9 8C F0            [24] 1386 	mov	b,r4
+      0000DB A8 81            [24] 1387 	mov	r0,sp
+      0000DD 18               [12] 1388 	dec	r0
+      0000DE 12r00r00         [24] 1389 	lcall	__gptrget
+      0000E1 F6               [12] 1390 	mov	@r0,a
+      0000E2 A3               [24] 1391 	inc	dptr
+      0000E3 12r00r00         [24] 1392 	lcall	__gptrget
+      0000E6 08               [12] 1393 	inc	r0
+      0000E7 F6               [12] 1394 	mov	@r0,a
+      0000E8 A8 81            [24] 1395 	mov	r0,sp
+      0000EA 18               [12] 1396 	dec	r0
+      0000EB 86 02            [24] 1397 	mov	ar2,@r0
+      0000ED 08               [12] 1398 	inc	r0
+      0000EE 86 04            [24] 1399 	mov	ar4,@r0
+      0000F0 A8 81            [24] 1400 	mov	r0,sp
+      0000F2 18               [12] 1401 	dec	r0
+      0000F3 E5 81            [12] 1402 	mov	a,sp
+      0000F5 24 FD            [12] 1403 	add	a,#0xfd
+      0000F7 F9               [12] 1404 	mov	r1,a
+      0000F8 E6               [12] 1405 	mov	a,@r0
+      0000F9 F7               [12] 1406 	mov	@r1,a
+      0000FA 08               [12] 1407 	inc	r0
+      0000FB 09               [12] 1408 	inc	r1
+      0000FC E6               [12] 1409 	mov	a,@r0
+      0000FD F7               [12] 1410 	mov	@r1,a
+                                   1411 ;	/home/user/contiki/core/sys/timetable.c:82: for(i = *t->ptr - 1; i >= 0; --i) {
+      0000FE E5 81            [12] 1412 	mov	a,sp
+      000100 24 F3            [12] 1413 	add	a,#0xf3
+      000102 F8               [12] 1414 	mov	r0,a
+      000103 74 05            [12] 1415 	mov	a,#0x05
+      000105 26               [12] 1416 	add	a,@r0
+      000106 FD               [12] 1417 	mov	r5,a
+      000107 E4               [12] 1418 	clr	a
+      000108 08               [12] 1419 	inc	r0
+      000109 36               [12] 1420 	addc	a,@r0
+      00010A FE               [12] 1421 	mov	r6,a
+      00010B 08               [12] 1422 	inc	r0
+      00010C 86 07            [24] 1423 	mov	ar7,@r0
+      00010E 8D 82            [24] 1424 	mov	dpl,r5
+      000110 8E 83            [24] 1425 	mov	dph,r6
+      000112 8F F0            [24] 1426 	mov	b,r7
+      000114 12r00r00         [24] 1427 	lcall	__gptrget
+      000117 FD               [12] 1428 	mov	r5,a
+      000118 A3               [24] 1429 	inc	dptr
+      000119 12r00r00         [24] 1430 	lcall	__gptrget
+      00011C FE               [12] 1431 	mov	r6,a
+      00011D A3               [24] 1432 	inc	dptr
+      00011E 12r00r00         [24] 1433 	lcall	__gptrget
+      000121 FF               [12] 1434 	mov	r7,a
+      000122 8D 82            [24] 1435 	mov	dpl,r5
+      000124 8E 83            [24] 1436 	mov	dph,r6
+      000126 8F F0            [24] 1437 	mov	b,r7
+      000128 12r00r00         [24] 1438 	lcall	__gptrget
+      00012B FD               [12] 1439 	mov	r5,a
+      00012C A3               [24] 1440 	inc	dptr
+      00012D 12r00r00         [24] 1441 	lcall	__gptrget
+      000130 FE               [12] 1442 	mov	r6,a
+      000131 E5 81            [12] 1443 	mov	a,sp
+      000133 24 FB            [12] 1444 	add	a,#0xfb
+      000135 F8               [12] 1445 	mov	r0,a
+      000136 ED               [12] 1446 	mov	a,r5
+      000137 24 FF            [12] 1447 	add	a,#0xFF
+      000139 F6               [12] 1448 	mov	@r0,a
+      00013A EE               [12] 1449 	mov	a,r6
+      00013B 34 FF            [12] 1450 	addc	a,#0xFF
+      00013D 08               [12] 1451 	inc	r0
+      00013E F6               [12] 1452 	mov	@r0,a
+      00013F E5 81            [12] 1453 	mov	a,sp
+      000141 24 F3            [12] 1454 	add	a,#0xf3
+      000143 F8               [12] 1455 	mov	r0,a
+      000144 86 82            [24] 1456 	mov	dpl,@r0
+      000146 08               [12] 1457 	inc	r0
+      000147 86 83            [24] 1458 	mov	dph,@r0
+      000149 08               [12] 1459 	inc	r0
+      00014A 86 F0            [24] 1460 	mov	b,@r0
+      00014C E5 81            [12] 1461 	mov	a,sp
+      00014E 24 F6            [12] 1462 	add	a,#0xf6
+      000150 F9               [12] 1463 	mov	r1,a
+      000151 12r00r00         [24] 1464 	lcall	__gptrget
+      000154 F7               [12] 1465 	mov	@r1,a
+      000155 A3               [24] 1466 	inc	dptr
+      000156 12r00r00         [24] 1467 	lcall	__gptrget
+      000159 09               [12] 1468 	inc	r1
+      00015A F7               [12] 1469 	mov	@r1,a
+      00015B A3               [24] 1470 	inc	dptr
+      00015C 12r00r00         [24] 1471 	lcall	__gptrget
+      00015F 09               [12] 1472 	inc	r1
+      000160 F7               [12] 1473 	mov	@r1,a
+      000161 E5 81            [12] 1474 	mov	a,sp
+      000163 24 FB            [12] 1475 	add	a,#0xfb
+      000165 F8               [12] 1476 	mov	r0,a
+      000166 86 03            [24] 1477 	mov	ar3,@r0
+      000168 08               [12] 1478 	inc	r0
+      000169 86 05            [24] 1479 	mov	ar5,@r0
+      00016B C0 05            [24] 1480 	push	ar5
+      00016D C0 04            [24] 1481 	push	ar4
+      00016F C0 03            [24] 1482 	push	ar3
+      000171 C0 02            [24] 1483 	push	ar2
+      000173 74 05            [12] 1484 	mov	a,#0x05
+      000175 C0 E0            [24] 1485 	push	acc
+      000177 E4               [12] 1486 	clr	a
+      000178 C0 E0            [24] 1487 	push	acc
+      00017A E5 81            [12] 1488 	mov	a,sp
+      00017C 24 F5            [12] 1489 	add	a,#0xf5
+      00017E F8               [12] 1490 	mov	r0,a
+      00017F 86 82            [24] 1491 	mov	dpl,@r0
+      000181 08               [12] 1492 	inc	r0
+      000182 86 83            [24] 1493 	mov	dph,@r0
+      000184 12r00r00         [24] 1494 	lcall	__mulint
+      000187 C8               [12] 1495 	xch	a,r0
+      000188 E5 81            [12] 1496 	mov	a,sp
+      00018A 24 F3            [12] 1497 	add	a,#0xf3
+      00018C C8               [12] 1498 	xch	a,r0
+      00018D A6 82            [24] 1499 	mov	@r0,dpl
+      00018F 08               [12] 1500 	inc	r0
+      000190 A6 83            [24] 1501 	mov	@r0,dph
+      000192 15 81            [12] 1502 	dec	sp
+      000194 15 81            [12] 1503 	dec	sp
+      000196 D0 02            [24] 1504 	pop	ar2
+      000198 D0 03            [24] 1505 	pop	ar3
+      00019A D0 04            [24] 1506 	pop	ar4
+      00019C D0 05            [24] 1507 	pop	ar5
+      00019E                       1508 00111$:
+      00019E ED               [12] 1509 	mov	a,r5
+      00019F 30 E7 03         [24] 1510 	jnb	acc.7,00142$
+      0001A2 02r02r2C         [24] 1511 	ljmp	00103$
+      0001A5                       1512 00142$:
+                                   1513 ;	/home/user/contiki/core/sys/timetable.c:83: if(t->timestamps[i].id == id1) {
+      0001A5 C0 02            [24] 1514 	push	ar2
+      0001A7 C0 04            [24] 1515 	push	ar4
+      0001A9 E5 81            [12] 1516 	mov	a,sp
+      0001AB 24 F4            [12] 1517 	add	a,#0xf4
+      0001AD F8               [12] 1518 	mov	r0,a
+      0001AE E5 81            [12] 1519 	mov	a,sp
+      0001B0 24 F7            [12] 1520 	add	a,#0xf7
+      0001B2 F9               [12] 1521 	mov	r1,a
+      0001B3 E7               [12] 1522 	mov	a,@r1
+      0001B4 26               [12] 1523 	add	a,@r0
+      0001B5 FA               [12] 1524 	mov	r2,a
+      0001B6 09               [12] 1525 	inc	r1
+      0001B7 E7               [12] 1526 	mov	a,@r1
+      0001B8 08               [12] 1527 	inc	r0
+      0001B9 36               [12] 1528 	addc	a,@r0
+      0001BA FC               [12] 1529 	mov	r4,a
+      0001BB 08               [12] 1530 	inc	r0
+      0001BC 86 07            [24] 1531 	mov	ar7,@r0
+      0001BE 8A 82            [24] 1532 	mov	dpl,r2
+      0001C0 8C 83            [24] 1533 	mov	dph,r4
+      0001C2 8F F0            [24] 1534 	mov	b,r7
+      0001C4 12r00r00         [24] 1535 	lcall	__gptrget
+      0001C7 FA               [12] 1536 	mov	r2,a
+      0001C8 A3               [24] 1537 	inc	dptr
+      0001C9 12r00r00         [24] 1538 	lcall	__gptrget
+      0001CC FC               [12] 1539 	mov	r4,a
+      0001CD A3               [24] 1540 	inc	dptr
+      0001CE 12r00r00         [24] 1541 	lcall	__gptrget
+      0001D1 FF               [12] 1542 	mov	r7,a
+      0001D2 E5 81            [12] 1543 	mov	a,sp
+      0001D4 24 EC            [12] 1544 	add	a,#0xec
+      0001D6 F8               [12] 1545 	mov	r0,a
+      0001D7 C0 02            [24] 1546 	push	ar2
+      0001D9 C0 04            [24] 1547 	push	ar4
+      0001DB C0 07            [24] 1548 	push	ar7
+      0001DD 86 82            [24] 1549 	mov	dpl,@r0
+      0001DF 08               [12] 1550 	inc	r0
+      0001E0 86 83            [24] 1551 	mov	dph,@r0
+      0001E2 08               [12] 1552 	inc	r0
+      0001E3 86 F0            [24] 1553 	mov	b,@r0
+      0001E5 12r00r00         [24] 1554 	lcall	___gptr_cmp
+      0001E8 15 81            [12] 1555 	dec	sp
+      0001EA 15 81            [12] 1556 	dec	sp
+      0001EC 15 81            [12] 1557 	dec	sp
+      0001EE 60 06            [24] 1558 	jz	00144$
+      0001F0 D0 04            [24] 1559 	pop	ar4
+      0001F2 D0 02            [24] 1560 	pop	ar2
+      0001F4 80 16            [24] 1561 	sjmp	00112$
+      0001F6                       1562 00144$:
+      0001F6 D0 04            [24] 1563 	pop	ar4
+      0001F8 D0 02            [24] 1564 	pop	ar2
+                                   1565 ;	/home/user/contiki/core/sys/timetable.c:84: t1 = i;
+      0001FA E5 81            [12] 1566 	mov	a,sp
+      0001FC 24 FB            [12] 1567 	add	a,#0xfb
+      0001FE F8               [12] 1568 	mov	r0,a
+      0001FF E5 81            [12] 1569 	mov	a,sp
+      000201 24 FD            [12] 1570 	add	a,#0xfd
+      000203 F9               [12] 1571 	mov	r1,a
+      000204 E6               [12] 1572 	mov	a,@r0
+      000205 F7               [12] 1573 	mov	@r1,a
+      000206 08               [12] 1574 	inc	r0
+      000207 09               [12] 1575 	inc	r1
+      000208 E6               [12] 1576 	mov	a,@r0
+      000209 F7               [12] 1577 	mov	@r1,a
+                                   1578 ;	/home/user/contiki/core/sys/timetable.c:85: break;
+      00020A 80 20            [24] 1579 	sjmp	00103$
+      00020C                       1580 00112$:
+                                   1581 ;	/home/user/contiki/core/sys/timetable.c:82: for(i = *t->ptr - 1; i >= 0; --i) {
+      00020C E5 81            [12] 1582 	mov	a,sp
+      00020E 24 F9            [12] 1583 	add	a,#0xf9
+      000210 F8               [12] 1584 	mov	r0,a
+      000211 E6               [12] 1585 	mov	a,@r0
+      000212 24 FB            [12] 1586 	add	a,#0xFB
+      000214 F6               [12] 1587 	mov	@r0,a
+      000215 08               [12] 1588 	inc	r0
+      000216 E6               [12] 1589 	mov	a,@r0
+      000217 34 FF            [12] 1590 	addc	a,#0xFF
+      000219 F6               [12] 1591 	mov	@r0,a
+      00021A 1B               [12] 1592 	dec	r3
+      00021B BB FF 01         [24] 1593 	cjne	r3,#0xFF,00145$
+      00021E 1D               [12] 1594 	dec	r5
+      00021F                       1595 00145$:
+      00021F E5 81            [12] 1596 	mov	a,sp
+      000221 24 FB            [12] 1597 	add	a,#0xfb
+      000223 F8               [12] 1598 	mov	r0,a
+      000224 A6 03            [24] 1599 	mov	@r0,ar3
+      000226 08               [12] 1600 	inc	r0
+      000227 A6 05            [24] 1601 	mov	@r0,ar5
+      000229 02r01r9E         [24] 1602 	ljmp	00111$
+      00022C                       1603 00103$:
+                                   1604 ;	/home/user/contiki/core/sys/timetable.c:89: for(i = i - 1; i >= 0; --i) {
+      00022C E5 81            [12] 1605 	mov	a,sp
+      00022E 24 FB            [12] 1606 	add	a,#0xfb
+      000230 F8               [12] 1607 	mov	r0,a
+      000231 16               [12] 1608 	dec	@r0
+      000232 B6 FF 02         [24] 1609 	cjne	@r0,#0xFF,00146$
+      000235 08               [12] 1610 	inc	r0
+      000236 16               [12] 1611 	dec	@r0
+      000237                       1612 00146$:
+      000237 E5 81            [12] 1613 	mov	a,sp
+      000239 24 FB            [12] 1614 	add	a,#0xfb
+      00023B F8               [12] 1615 	mov	r0,a
+      00023C 86 06            [24] 1616 	mov	ar6,@r0
+      00023E 08               [12] 1617 	inc	r0
+      00023F 86 07            [24] 1618 	mov	ar7,@r0
+      000241 C0 07            [24] 1619 	push	ar7
+      000243 C0 06            [24] 1620 	push	ar6
+      000245 C0 04            [24] 1621 	push	ar4
+      000247 C0 02            [24] 1622 	push	ar2
+      000249 74 05            [12] 1623 	mov	a,#0x05
+      00024B C0 E0            [24] 1624 	push	acc
+      00024D E4               [12] 1625 	clr	a
+      00024E C0 E0            [24] 1626 	push	acc
+      000250 E5 81            [12] 1627 	mov	a,sp
+      000252 24 F5            [12] 1628 	add	a,#0xf5
+      000254 F8               [12] 1629 	mov	r0,a
+      000255 86 82            [24] 1630 	mov	dpl,@r0
+      000257 08               [12] 1631 	inc	r0
+      000258 86 83            [24] 1632 	mov	dph,@r0
+      00025A 12r00r00         [24] 1633 	lcall	__mulint
+      00025D C8               [12] 1634 	xch	a,r0
+      00025E E5 81            [12] 1635 	mov	a,sp
+      000260 24 F3            [12] 1636 	add	a,#0xf3
+      000262 C8               [12] 1637 	xch	a,r0
+      000263 A6 82            [24] 1638 	mov	@r0,dpl
+      000265 08               [12] 1639 	inc	r0
+      000266 A6 83            [24] 1640 	mov	@r0,dph
+      000268 15 81            [12] 1641 	dec	sp
+      00026A 15 81            [12] 1642 	dec	sp
+      00026C D0 02            [24] 1643 	pop	ar2
+      00026E D0 04            [24] 1644 	pop	ar4
+      000270 D0 06            [24] 1645 	pop	ar6
+      000272 D0 07            [24] 1646 	pop	ar7
+      000274                       1647 00114$:
+      000274 EF               [12] 1648 	mov	a,r7
+      000275 30 E7 03         [24] 1649 	jnb	acc.7,00147$
+      000278 02r02rFC         [24] 1650 	ljmp	00106$
+      00027B                       1651 00147$:
+                                   1652 ;	/home/user/contiki/core/sys/timetable.c:90: if(t->timestamps[i].id == id2) {
+      00027B C0 02            [24] 1653 	push	ar2
+      00027D C0 04            [24] 1654 	push	ar4
+      00027F E5 81            [12] 1655 	mov	a,sp
+      000281 24 F4            [12] 1656 	add	a,#0xf4
+      000283 F8               [12] 1657 	mov	r0,a
+      000284 E5 81            [12] 1658 	mov	a,sp
+      000286 24 F7            [12] 1659 	add	a,#0xf7
+      000288 F9               [12] 1660 	mov	r1,a
+      000289 E7               [12] 1661 	mov	a,@r1
+      00028A 26               [12] 1662 	add	a,@r0
+      00028B FA               [12] 1663 	mov	r2,a
+      00028C 09               [12] 1664 	inc	r1
+      00028D E7               [12] 1665 	mov	a,@r1
+      00028E 08               [12] 1666 	inc	r0
+      00028F 36               [12] 1667 	addc	a,@r0
+      000290 FC               [12] 1668 	mov	r4,a
+      000291 08               [12] 1669 	inc	r0
+      000292 86 05            [24] 1670 	mov	ar5,@r0
+      000294 8A 82            [24] 1671 	mov	dpl,r2
+      000296 8C 83            [24] 1672 	mov	dph,r4
+      000298 8D F0            [24] 1673 	mov	b,r5
+      00029A 12r00r00         [24] 1674 	lcall	__gptrget
+      00029D FA               [12] 1675 	mov	r2,a
+      00029E A3               [24] 1676 	inc	dptr
+      00029F 12r00r00         [24] 1677 	lcall	__gptrget
+      0002A2 FC               [12] 1678 	mov	r4,a
+      0002A3 A3               [24] 1679 	inc	dptr
+      0002A4 12r00r00         [24] 1680 	lcall	__gptrget
+      0002A7 FD               [12] 1681 	mov	r5,a
+      0002A8 E5 81            [12] 1682 	mov	a,sp
+      0002AA 24 E9            [12] 1683 	add	a,#0xe9
+      0002AC F8               [12] 1684 	mov	r0,a
+      0002AD C0 02            [24] 1685 	push	ar2
+      0002AF C0 04            [24] 1686 	push	ar4
+      0002B1 C0 05            [24] 1687 	push	ar5
+      0002B3 86 82            [24] 1688 	mov	dpl,@r0
+      0002B5 08               [12] 1689 	inc	r0
+      0002B6 86 83            [24] 1690 	mov	dph,@r0
+      0002B8 08               [12] 1691 	inc	r0
+      0002B9 86 F0            [24] 1692 	mov	b,@r0
+      0002BB 12r00r00         [24] 1693 	lcall	___gptr_cmp
+      0002BE 15 81            [12] 1694 	dec	sp
+      0002C0 15 81            [12] 1695 	dec	sp
+      0002C2 15 81            [12] 1696 	dec	sp
+      0002C4 60 06            [24] 1697 	jz	00149$
+      0002C6 D0 04            [24] 1698 	pop	ar4
+      0002C8 D0 02            [24] 1699 	pop	ar2
+      0002CA 80 10            [24] 1700 	sjmp	00115$
+      0002CC                       1701 00149$:
+      0002CC D0 04            [24] 1702 	pop	ar4
+      0002CE D0 02            [24] 1703 	pop	ar2
+                                   1704 ;	/home/user/contiki/core/sys/timetable.c:91: t2 = i;
+      0002D0 E5 81            [12] 1705 	mov	a,sp
+      0002D2 24 FB            [12] 1706 	add	a,#0xfb
+      0002D4 F8               [12] 1707 	mov	r0,a
+      0002D5 86 02            [24] 1708 	mov	ar2,@r0
+      0002D7 08               [12] 1709 	inc	r0
+      0002D8 86 04            [24] 1710 	mov	ar4,@r0
+                                   1711 ;	/home/user/contiki/core/sys/timetable.c:92: break;
+      0002DA 80 20            [24] 1712 	sjmp	00106$
+      0002DC                       1713 00115$:
+                                   1714 ;	/home/user/contiki/core/sys/timetable.c:89: for(i = i - 1; i >= 0; --i) {
+      0002DC E5 81            [12] 1715 	mov	a,sp
+      0002DE 24 F9            [12] 1716 	add	a,#0xf9
+      0002E0 F8               [12] 1717 	mov	r0,a
+      0002E1 E6               [12] 1718 	mov	a,@r0
+      0002E2 24 FB            [12] 1719 	add	a,#0xFB
+      0002E4 F6               [12] 1720 	mov	@r0,a
+      0002E5 08               [12] 1721 	inc	r0
+      0002E6 E6               [12] 1722 	mov	a,@r0
+      0002E7 34 FF            [12] 1723 	addc	a,#0xFF
+      0002E9 F6               [12] 1724 	mov	@r0,a
+      0002EA 1E               [12] 1725 	dec	r6
+      0002EB BE FF 01         [24] 1726 	cjne	r6,#0xFF,00150$
+      0002EE 1F               [12] 1727 	dec	r7
+      0002EF                       1728 00150$:
+      0002EF E5 81            [12] 1729 	mov	a,sp
+      0002F1 24 FB            [12] 1730 	add	a,#0xfb
+      0002F3 F8               [12] 1731 	mov	r0,a
+      0002F4 A6 06            [24] 1732 	mov	@r0,ar6
+      0002F6 08               [12] 1733 	inc	r0
+      0002F7 A6 07            [24] 1734 	mov	@r0,ar7
+      0002F9 02r02r74         [24] 1735 	ljmp	00114$
+      0002FC                       1736 00106$:
+                                   1737 ;	/home/user/contiki/core/sys/timetable.c:95: if(t1 != t->size && t2 != t->size) {
+      0002FC E5 81            [12] 1738 	mov	a,sp
+      0002FE 24 FD            [12] 1739 	add	a,#0xfd
+      000300 F8               [12] 1740 	mov	r0,a
+      000301 A9 81            [24] 1741 	mov	r1,sp
+      000303 19               [12] 1742 	dec	r1
+      000304 86 F0            [24] 1743 	mov	b,@r0
+      000306 E7               [12] 1744 	mov	a,@r1
+      000307 B5 F0 0B         [24] 1745 	cjne	a,b,00151$
+      00030A 08               [12] 1746 	inc	r0
+      00030B 86 F0            [24] 1747 	mov	b,@r0
+      00030D 09               [12] 1748 	inc	r1
+      00030E E7               [12] 1749 	mov	a,@r1
+      00030F B5 F0 03         [24] 1750 	cjne	a,b,00151$
+      000312 02r03rB7         [24] 1751 	ljmp	00108$
+      000315                       1752 00151$:
+      000315 A8 81            [24] 1753 	mov	r0,sp
+      000317 18               [12] 1754 	dec	r0
+      000318 E6               [12] 1755 	mov	a,@r0
+      000319 B5 02 08         [24] 1756 	cjne	a,ar2,00152$
+      00031C 08               [12] 1757 	inc	r0
+      00031D E6               [12] 1758 	mov	a,@r0
+      00031E B5 04 03         [24] 1759 	cjne	a,ar4,00152$
+      000321 02r03rB7         [24] 1760 	ljmp	00108$
+      000324                       1761 00152$:
+                                   1762 ;	/home/user/contiki/core/sys/timetable.c:96: return t->timestamps[t1].time - t->timestamps[t2].time;
+      000324 C0 04            [24] 1763 	push	ar4
+      000326 C0 02            [24] 1764 	push	ar2
+      000328 E5 81            [12] 1765 	mov	a,sp
+      00032A 24 FB            [12] 1766 	add	a,#0xfb
+      00032C F8               [12] 1767 	mov	r0,a
+      00032D E6               [12] 1768 	mov	a,@r0
+      00032E C0 E0            [24] 1769 	push	acc
+      000330 08               [12] 1770 	inc	r0
+      000331 E6               [12] 1771 	mov	a,@r0
+      000332 C0 E0            [24] 1772 	push	acc
+      000334 90 00 05         [24] 1773 	mov	dptr,#0x0005
+      000337 12r00r00         [24] 1774 	lcall	__mulint
+      00033A AE 82            [24] 1775 	mov	r6,dpl
+      00033C AF 83            [24] 1776 	mov	r7,dph
+      00033E 15 81            [12] 1777 	dec	sp
+      000340 15 81            [12] 1778 	dec	sp
+      000342 D0 02            [24] 1779 	pop	ar2
+      000344 D0 04            [24] 1780 	pop	ar4
+      000346 E5 81            [12] 1781 	mov	a,sp
+      000348 24 F6            [12] 1782 	add	a,#0xf6
+      00034A F8               [12] 1783 	mov	r0,a
+      00034B EE               [12] 1784 	mov	a,r6
+      00034C 26               [12] 1785 	add	a,@r0
+      00034D FE               [12] 1786 	mov	r6,a
+      00034E EF               [12] 1787 	mov	a,r7
+      00034F 08               [12] 1788 	inc	r0
+      000350 36               [12] 1789 	addc	a,@r0
+      000351 FF               [12] 1790 	mov	r7,a
+      000352 08               [12] 1791 	inc	r0
+      000353 86 05            [24] 1792 	mov	ar5,@r0
+      000355 74 03            [12] 1793 	mov	a,#0x03
+      000357 2E               [12] 1794 	add	a,r6
+      000358 FE               [12] 1795 	mov	r6,a
+      000359 E4               [12] 1796 	clr	a
+      00035A 3F               [12] 1797 	addc	a,r7
+      00035B FF               [12] 1798 	mov	r7,a
+      00035C 8E 82            [24] 1799 	mov	dpl,r6
+      00035E 8F 83            [24] 1800 	mov	dph,r7
+      000360 8D F0            [24] 1801 	mov	b,r5
+      000362 12r00r00         [24] 1802 	lcall	__gptrget
+      000365 FE               [12] 1803 	mov	r6,a
+      000366 A3               [24] 1804 	inc	dptr
+      000367 12r00r00         [24] 1805 	lcall	__gptrget
+      00036A FF               [12] 1806 	mov	r7,a
+      00036B C0 07            [24] 1807 	push	ar7
+      00036D C0 06            [24] 1808 	push	ar6
+      00036F C0 02            [24] 1809 	push	ar2
+      000371 C0 04            [24] 1810 	push	ar4
+      000373 90 00 05         [24] 1811 	mov	dptr,#0x0005
+      000376 12r00r00         [24] 1812 	lcall	__mulint
+      000379 AC 82            [24] 1813 	mov	r4,dpl
+      00037B AD 83            [24] 1814 	mov	r5,dph
+      00037D 15 81            [12] 1815 	dec	sp
+      00037F 15 81            [12] 1816 	dec	sp
+      000381 D0 06            [24] 1817 	pop	ar6
+      000383 D0 07            [24] 1818 	pop	ar7
+      000385 E5 81            [12] 1819 	mov	a,sp
+      000387 24 F6            [12] 1820 	add	a,#0xf6
+      000389 F8               [12] 1821 	mov	r0,a
+      00038A EC               [12] 1822 	mov	a,r4
+      00038B 26               [12] 1823 	add	a,@r0
+      00038C FC               [12] 1824 	mov	r4,a
+      00038D ED               [12] 1825 	mov	a,r5
+      00038E 08               [12] 1826 	inc	r0
+      00038F 36               [12] 1827 	addc	a,@r0
+      000390 FD               [12] 1828 	mov	r5,a
+      000391 08               [12] 1829 	inc	r0
+      000392 86 03            [24] 1830 	mov	ar3,@r0
+      000394 74 03            [12] 1831 	mov	a,#0x03
+      000396 2C               [12] 1832 	add	a,r4
+      000397 FC               [12] 1833 	mov	r4,a
+      000398 E4               [12] 1834 	clr	a
+      000399 3D               [12] 1835 	addc	a,r5
+      00039A FD               [12] 1836 	mov	r5,a
+      00039B 8C 82            [24] 1837 	mov	dpl,r4
+      00039D 8D 83            [24] 1838 	mov	dph,r5
+      00039F 8B F0            [24] 1839 	mov	b,r3
+      0003A1 12r00r00         [24] 1840 	lcall	__gptrget
+      0003A4 FC               [12] 1841 	mov	r4,a
+      0003A5 A3               [24] 1842 	inc	dptr
+      0003A6 12r00r00         [24] 1843 	lcall	__gptrget
+      0003A9 FD               [12] 1844 	mov	r5,a
+      0003AA EE               [12] 1845 	mov	a,r6
+      0003AB C3               [12] 1846 	clr	c
+      0003AC 9C               [12] 1847 	subb	a,r4
+      0003AD FE               [12] 1848 	mov	r6,a
+      0003AE EF               [12] 1849 	mov	a,r7
+      0003AF 9D               [12] 1850 	subb	a,r5
+      0003B0 FF               [12] 1851 	mov	r7,a
+      0003B1 8E 82            [24] 1852 	mov	dpl,r6
+      0003B3 8F 83            [24] 1853 	mov	dph,r7
+      0003B5 80 03            [24] 1854 	sjmp	00116$
+      0003B7                       1855 00108$:
+                                   1856 ;	/home/user/contiki/core/sys/timetable.c:99: return 0;
+      0003B7 90 00 00         [24] 1857 	mov	dptr,#0x0000
+      0003BA                       1858 00116$:
+      0003BA E5 81            [12] 1859 	mov	a,sp
+      0003BC 24 F2            [12] 1860 	add	a,#0xF2
+      0003BE F5 81            [12] 1861 	mov	sp,a
+      0003C0 22               [24] 1862 	ret
+                                   1863 ;------------------------------------------------------------
+                                   1864 ;Allocation info for local variables in function 'timetable_init'
+                                   1865 ;------------------------------------------------------------
+                                   1866 ;dummy1                    Allocated to stack - sp -1
+                                   1867 ;dummy2                    Allocated to stack - sp +0
+                                   1868 ;sloc0                     Allocated to stack - sp -3
+                                   1869 ;temp_timestamps           Allocated with name '_timetable_init_temp_timestamps_1_79'
+                                   1870 ;temp_ptr                  Allocated with name '_timetable_init_temp_ptr_1_79'
+                                   1871 ;temp                      Allocated with name '_timetable_init_temp_1_79'
+                                   1872 ;------------------------------------------------------------
+                                   1873 ;	/home/user/contiki/core/sys/timetable.c:103: timetable_init(void)
+                                   1874 ;	-----------------------------------------
+                                   1875 ;	 function timetable_init
+                                   1876 ;	-----------------------------------------
+      0003C1                       1877 _timetable_init:
+      0003C1 E5 81            [12] 1878 	mov	a,sp
+      0003C3 24 04            [12] 1879 	add	a,#0x04
+      0003C5 F5 81            [12] 1880 	mov	sp,a
+                                   1881 ;	/home/user/contiki/core/sys/timetable.c:109: timetable_clear(&temp);
+      0003C7 90r00r18         [24] 1882 	mov	dptr,#_timetable_init_temp_1_79
+      0003CA 75 F0 00         [24] 1883 	mov	b,#0x00
+      0003CD 12r00r8B         [24] 1884 	lcall	_timetable_clear
+                                   1885 ;	/home/user/contiki/core/sys/timetable.c:112: TIMETABLE_TIMESTAMP(temp, &dummy1);
+      0003D0 90r00r16         [24] 1886 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      0003D3 E0               [24] 1887 	movx	a,@dptr
+      0003D4 C0 E0            [24] 1888 	push	acc
+      0003D6 A3               [24] 1889 	inc	dptr
+      0003D7 E0               [24] 1890 	movx	a,@dptr
+      0003D8 C0 E0            [24] 1891 	push	acc
+      0003DA 90 00 05         [24] 1892 	mov	dptr,#0x0005
+      0003DD 12r00r00         [24] 1893 	lcall	__mulint
+      0003E0 AE 82            [24] 1894 	mov	r6,dpl
+      0003E2 AF 83            [24] 1895 	mov	r7,dph
+      0003E4 15 81            [12] 1896 	dec	sp
+      0003E6 15 81            [12] 1897 	dec	sp
+      0003E8 EE               [12] 1898 	mov	a,r6
+      0003E9 24r02            [12] 1899 	add	a,#_timetable_init_temp_timestamps_1_79
+      0003EB FE               [12] 1900 	mov	r6,a
+      0003EC EF               [12] 1901 	mov	a,r7
+      0003ED 34s00            [12] 1902 	addc	a,#(_timetable_init_temp_timestamps_1_79 >> 8)
+      0003EF FF               [12] 1903 	mov	r7,a
+      0003F0 AD 81            [24] 1904 	mov	r5,sp
+      0003F2 1D               [12] 1905 	dec	r5
+      0003F3 8D 02            [24] 1906 	mov	ar2,r5
+      0003F5 7B 00            [12] 1907 	mov	r3,#0x00
+      0003F7 7C 40            [12] 1908 	mov	r4,#0x40
+      0003F9 8E 82            [24] 1909 	mov	dpl,r6
+      0003FB 8F 83            [24] 1910 	mov	dph,r7
+      0003FD EA               [12] 1911 	mov	a,r2
+      0003FE F0               [24] 1912 	movx	@dptr,a
+      0003FF EB               [12] 1913 	mov	a,r3
+      000400 A3               [24] 1914 	inc	dptr
+      000401 F0               [24] 1915 	movx	@dptr,a
+      000402 EC               [12] 1916 	mov	a,r4
+      000403 A3               [24] 1917 	inc	dptr
+      000404 F0               [24] 1918 	movx	@dptr,a
+      000405 C0 05            [24] 1919 	push	ar5
+      000407 90r00r16         [24] 1920 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      00040A E0               [24] 1921 	movx	a,@dptr
+      00040B C0 E0            [24] 1922 	push	acc
+      00040D A3               [24] 1923 	inc	dptr
+      00040E E0               [24] 1924 	movx	a,@dptr
+      00040F C0 E0            [24] 1925 	push	acc
+      000411 90 00 05         [24] 1926 	mov	dptr,#0x0005
+      000414 12r00r00         [24] 1927 	lcall	__mulint
+      000417 AE 82            [24] 1928 	mov	r6,dpl
+      000419 AF 83            [24] 1929 	mov	r7,dph
+      00041B 15 81            [12] 1930 	dec	sp
+      00041D 15 81            [12] 1931 	dec	sp
+      00041F D0 05            [24] 1932 	pop	ar5
+      000421 EE               [12] 1933 	mov	a,r6
+      000422 24r02            [12] 1934 	add	a,#_timetable_init_temp_timestamps_1_79
+      000424 FE               [12] 1935 	mov	r6,a
+      000425 EF               [12] 1936 	mov	a,r7
+      000426 34s00            [12] 1937 	addc	a,#(_timetable_init_temp_timestamps_1_79 >> 8)
+      000428 FF               [12] 1938 	mov	r7,a
+      000429 8E 82            [24] 1939 	mov	dpl,r6
+      00042B 8F 83            [24] 1940 	mov	dph,r7
+      00042D A3               [24] 1941 	inc	dptr
+      00042E A3               [24] 1942 	inc	dptr
+      00042F A3               [24] 1943 	inc	dptr
+      000430 AE E2            [24] 1944 	mov	r6,_T1CNTL
+      000432 7F 00            [12] 1945 	mov	r7,#0x00
+      000434 AB E3            [24] 1946 	mov	r3,_T1CNTH
+      000436 8B 04            [24] 1947 	mov	ar4,r3
+      000438 E4               [12] 1948 	clr	a
+      000439 FB               [12] 1949 	mov	r3,a
+      00043A 2E               [12] 1950 	add	a,r6
+      00043B FE               [12] 1951 	mov	r6,a
+      00043C EC               [12] 1952 	mov	a,r4
+      00043D 3F               [12] 1953 	addc	a,r7
+      00043E FF               [12] 1954 	mov	r7,a
+      00043F EE               [12] 1955 	mov	a,r6
+      000440 F0               [24] 1956 	movx	@dptr,a
+      000441 EF               [12] 1957 	mov	a,r7
+      000442 A3               [24] 1958 	inc	dptr
+      000443 F0               [24] 1959 	movx	@dptr,a
+      000444 90r00r16         [24] 1960 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      000447 E0               [24] 1961 	movx	a,@dptr
+      000448 FE               [12] 1962 	mov	r6,a
+      000449 A3               [24] 1963 	inc	dptr
+      00044A E0               [24] 1964 	movx	a,@dptr
+      00044B FF               [12] 1965 	mov	r7,a
+      00044C 0E               [12] 1966 	inc	r6
+      00044D BE 00 01         [24] 1967 	cjne	r6,#0x00,00109$
+      000450 0F               [12] 1968 	inc	r7
+      000451                       1969 00109$:
+      000451 90r00r16         [24] 1970 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      000454 74 03            [12] 1971 	mov	a,#0x03
+      000456 5E               [12] 1972 	anl	a,r6
+      000457 F0               [24] 1973 	movx	@dptr,a
+      000458 E4               [12] 1974 	clr	a
+      000459 A3               [24] 1975 	inc	dptr
+      00045A F0               [24] 1976 	movx	@dptr,a
+                                   1977 ;	/home/user/contiki/core/sys/timetable.c:113: TIMETABLE_TIMESTAMP(temp, &dummy2);
+      00045B C0 05            [24] 1978 	push	ar5
+      00045D 90r00r16         [24] 1979 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      000460 E0               [24] 1980 	movx	a,@dptr
+      000461 C0 E0            [24] 1981 	push	acc
+      000463 A3               [24] 1982 	inc	dptr
+      000464 E0               [24] 1983 	movx	a,@dptr
+      000465 C0 E0            [24] 1984 	push	acc
+      000467 90 00 05         [24] 1985 	mov	dptr,#0x0005
+      00046A 12r00r00         [24] 1986 	lcall	__mulint
+      00046D AE 82            [24] 1987 	mov	r6,dpl
+      00046F AF 83            [24] 1988 	mov	r7,dph
+      000471 15 81            [12] 1989 	dec	sp
+      000473 15 81            [12] 1990 	dec	sp
+      000475 D0 05            [24] 1991 	pop	ar5
+      000477 E5 81            [12] 1992 	mov	a,sp
+      000479 24 FD            [12] 1993 	add	a,#0xfd
+      00047B F8               [12] 1994 	mov	r0,a
+      00047C EE               [12] 1995 	mov	a,r6
+      00047D 24r02            [12] 1996 	add	a,#_timetable_init_temp_timestamps_1_79
+      00047F F6               [12] 1997 	mov	@r0,a
+      000480 EF               [12] 1998 	mov	a,r7
+      000481 34s00            [12] 1999 	addc	a,#(_timetable_init_temp_timestamps_1_79 >> 8)
+      000483 08               [12] 2000 	inc	r0
+      000484 F6               [12] 2001 	mov	@r0,a
+      000485 AC 81            [24] 2002 	mov	r4,sp
+      000487 8C 02            [24] 2003 	mov	ar2,r4
+      000489 7B 00            [12] 2004 	mov	r3,#0x00
+      00048B 7F 40            [12] 2005 	mov	r7,#0x40
+      00048D E5 81            [12] 2006 	mov	a,sp
+      00048F 24 FD            [12] 2007 	add	a,#0xfd
+      000491 F8               [12] 2008 	mov	r0,a
+      000492 86 82            [24] 2009 	mov	dpl,@r0
+      000494 08               [12] 2010 	inc	r0
+      000495 86 83            [24] 2011 	mov	dph,@r0
+      000497 EA               [12] 2012 	mov	a,r2
+      000498 F0               [24] 2013 	movx	@dptr,a
+      000499 EB               [12] 2014 	mov	a,r3
+      00049A A3               [24] 2015 	inc	dptr
+      00049B F0               [24] 2016 	movx	@dptr,a
+      00049C EF               [12] 2017 	mov	a,r7
+      00049D A3               [24] 2018 	inc	dptr
+      00049E F0               [24] 2019 	movx	@dptr,a
+      00049F C0 05            [24] 2020 	push	ar5
+      0004A1 C0 04            [24] 2021 	push	ar4
+      0004A3 90r00r16         [24] 2022 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      0004A6 E0               [24] 2023 	movx	a,@dptr
+      0004A7 C0 E0            [24] 2024 	push	acc
+      0004A9 A3               [24] 2025 	inc	dptr
+      0004AA E0               [24] 2026 	movx	a,@dptr
+      0004AB C0 E0            [24] 2027 	push	acc
+      0004AD 90 00 05         [24] 2028 	mov	dptr,#0x0005
+      0004B0 12r00r00         [24] 2029 	lcall	__mulint
+      0004B3 AE 82            [24] 2030 	mov	r6,dpl
+      0004B5 AF 83            [24] 2031 	mov	r7,dph
+      0004B7 15 81            [12] 2032 	dec	sp
+      0004B9 15 81            [12] 2033 	dec	sp
+      0004BB D0 04            [24] 2034 	pop	ar4
+      0004BD D0 05            [24] 2035 	pop	ar5
+      0004BF EE               [12] 2036 	mov	a,r6
+      0004C0 24r02            [12] 2037 	add	a,#_timetable_init_temp_timestamps_1_79
+      0004C2 FE               [12] 2038 	mov	r6,a
+      0004C3 EF               [12] 2039 	mov	a,r7
+      0004C4 34s00            [12] 2040 	addc	a,#(_timetable_init_temp_timestamps_1_79 >> 8)
+      0004C6 FF               [12] 2041 	mov	r7,a
+      0004C7 8E 82            [24] 2042 	mov	dpl,r6
+      0004C9 8F 83            [24] 2043 	mov	dph,r7
+      0004CB A3               [24] 2044 	inc	dptr
+      0004CC A3               [24] 2045 	inc	dptr
+      0004CD A3               [24] 2046 	inc	dptr
+      0004CE AE E2            [24] 2047 	mov	r6,_T1CNTL
+      0004D0 7F 00            [12] 2048 	mov	r7,#0x00
+      0004D2 AA E3            [24] 2049 	mov	r2,_T1CNTH
+      0004D4 8A 03            [24] 2050 	mov	ar3,r2
+      0004D6 E4               [12] 2051 	clr	a
+      0004D7 FA               [12] 2052 	mov	r2,a
+      0004D8 2E               [12] 2053 	add	a,r6
+      0004D9 FE               [12] 2054 	mov	r6,a
+      0004DA EB               [12] 2055 	mov	a,r3
+      0004DB 3F               [12] 2056 	addc	a,r7
+      0004DC FF               [12] 2057 	mov	r7,a
+      0004DD EE               [12] 2058 	mov	a,r6
+      0004DE F0               [24] 2059 	movx	@dptr,a
+      0004DF EF               [12] 2060 	mov	a,r7
+      0004E0 A3               [24] 2061 	inc	dptr
+      0004E1 F0               [24] 2062 	movx	@dptr,a
+      0004E2 90r00r16         [24] 2063 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      0004E5 E0               [24] 2064 	movx	a,@dptr
+      0004E6 FE               [12] 2065 	mov	r6,a
+      0004E7 A3               [24] 2066 	inc	dptr
+      0004E8 E0               [24] 2067 	movx	a,@dptr
+      0004E9 FF               [12] 2068 	mov	r7,a
+      0004EA 0E               [12] 2069 	inc	r6
+      0004EB BE 00 01         [24] 2070 	cjne	r6,#0x00,00110$
+      0004EE 0F               [12] 2071 	inc	r7
+      0004EF                       2072 00110$:
+      0004EF 90r00r16         [24] 2073 	mov	dptr,#_timetable_init_temp_ptr_1_79
+      0004F2 74 03            [12] 2074 	mov	a,#0x03
+      0004F4 5E               [12] 2075 	anl	a,r6
+      0004F5 F0               [24] 2076 	movx	@dptr,a
+      0004F6 E4               [12] 2077 	clr	a
+      0004F7 A3               [24] 2078 	inc	dptr
+      0004F8 F0               [24] 2079 	movx	@dptr,a
+                                   2080 ;	/home/user/contiki/core/sys/timetable.c:114: timetable_timestamp_time = timetable_timediff(&temp, &dummy1, &dummy2);
+      0004F9 7F 00            [12] 2081 	mov	r7,#0x00
+      0004FB 7E 40            [12] 2082 	mov	r6,#0x40
+      0004FD 7B 00            [12] 2083 	mov	r3,#0x00
+      0004FF 7A 40            [12] 2084 	mov	r2,#0x40
+      000501 C0 04            [24] 2085 	push	ar4
+      000503 C0 07            [24] 2086 	push	ar7
+      000505 C0 06            [24] 2087 	push	ar6
+      000507 C0 05            [24] 2088 	push	ar5
+      000509 C0 03            [24] 2089 	push	ar3
+      00050B C0 02            [24] 2090 	push	ar2
+      00050D 90r00r18         [24] 2091 	mov	dptr,#_timetable_init_temp_1_79
+      000510 75 F0 00         [24] 2092 	mov	b,#0x00
+      000513 12r00rBB         [24] 2093 	lcall	_timetable_timediff
+      000516 AE 82            [24] 2094 	mov	r6,dpl
+      000518 AF 83            [24] 2095 	mov	r7,dph
+      00051A E5 81            [12] 2096 	mov	a,sp
+      00051C 24 FA            [12] 2097 	add	a,#0xfa
+      00051E F5 81            [12] 2098 	mov	sp,a
+      000520 90r00r00         [24] 2099 	mov	dptr,#_timetable_timestamp_time
+      000523 EE               [12] 2100 	mov	a,r6
+      000524 F0               [24] 2101 	movx	@dptr,a
+      000525 EF               [12] 2102 	mov	a,r7
+      000526 A3               [24] 2103 	inc	dptr
+      000527 F0               [24] 2104 	movx	@dptr,a
+      000528 E5 81            [12] 2105 	mov	a,sp
+      00052A 24 FC            [12] 2106 	add	a,#0xFC
+      00052C F5 81            [12] 2107 	mov	sp,a
+      00052E 22               [24] 2108 	ret
+                                   2109 ;------------------------------------------------------------
+                                   2110 ;Allocation info for local variables in function 'timetable_print'
+                                   2111 ;------------------------------------------------------------
+                                   2112 ;t                         Allocated to stack - sp -14
+                                   2113 ;i                         Allocated to stack - sp -1
+                                   2114 ;time                      Allocated to stack - sp -8
+                                   2115 ;sloc0                     Allocated to stack - sp -11
+                                   2116 ;sloc1                     Allocated to stack - sp -8
+                                   2117 ;sloc2                     Allocated to stack - sp -6
+                                   2118 ;sloc3                     Allocated to stack - sp -3
+                                   2119 ;------------------------------------------------------------
+                                   2120 ;	/home/user/contiki/core/sys/timetable.c:118: timetable_print(struct timetable *t)
+                                   2121 ;	-----------------------------------------
+                                   2122 ;	 function timetable_print
+                                   2123 ;	-----------------------------------------
+      00052F                       2124 _timetable_print:
+      00052F C0 82            [24] 2125 	push	dpl
+      000531 C0 83            [24] 2126 	push	dph
+      000533 C0 F0            [24] 2127 	push	b
+      000535 E5 81            [12] 2128 	mov	a,sp
+      000537 24 0C            [12] 2129 	add	a,#0x0C
+                                   2130 ;	/home/user/contiki/core/sys/timetable.c:123: time = t->timestamps[0].time;
+      000539 F5 81            [12] 2131 	mov	sp,a
+      00053B 24 F2            [12] 2132 	add	a,#0xf2
+      00053D F8               [12] 2133 	mov	r0,a
+      00053E 86 82            [24] 2134 	mov	dpl,@r0
+      000540 08               [12] 2135 	inc	r0
+      000541 86 83            [24] 2136 	mov	dph,@r0
+      000543 08               [12] 2137 	inc	r0
+      000544 86 F0            [24] 2138 	mov	b,@r0
+      000546 12r00r00         [24] 2139 	lcall	__gptrget
+      000549 FA               [12] 2140 	mov	r2,a
+      00054A A3               [24] 2141 	inc	dptr
+      00054B 12r00r00         [24] 2142 	lcall	__gptrget
+      00054E FB               [12] 2143 	mov	r3,a
+      00054F A3               [24] 2144 	inc	dptr
+      000550 12r00r00         [24] 2145 	lcall	__gptrget
+      000553 FC               [12] 2146 	mov	r4,a
+      000554 74 03            [12] 2147 	mov	a,#0x03
+      000556 2A               [12] 2148 	add	a,r2
+      000557 FA               [12] 2149 	mov	r2,a
+      000558 E4               [12] 2150 	clr	a
+      000559 3B               [12] 2151 	addc	a,r3
+      00055A FB               [12] 2152 	mov	r3,a
+      00055B 8A 82            [24] 2153 	mov	dpl,r2
+      00055D 8B 83            [24] 2154 	mov	dph,r3
+      00055F 8C F0            [24] 2155 	mov	b,r4
+      000561 E5 81            [12] 2156 	mov	a,sp
+      000563 24 F8            [12] 2157 	add	a,#0xf8
+      000565 F8               [12] 2158 	mov	r0,a
+      000566 12r00r00         [24] 2159 	lcall	__gptrget
+      000569 F6               [12] 2160 	mov	@r0,a
+      00056A A3               [24] 2161 	inc	dptr
+      00056B 12r00r00         [24] 2162 	lcall	__gptrget
+      00056E 08               [12] 2163 	inc	r0
+      00056F F6               [12] 2164 	mov	@r0,a
+                                   2165 ;	/home/user/contiki/core/sys/timetable.c:125: printf("---\n");
+      000570 74r00            [12] 2166 	mov	a,#__str_0
+      000572 C0 E0            [24] 2167 	push	acc
+      000574 74s00            [12] 2168 	mov	a,#(__str_0 >> 8)
+      000576 C0 E0            [24] 2169 	push	acc
+      000578 74 80            [12] 2170 	mov	a,#0x80
+      00057A C0 E0            [24] 2171 	push	acc
+      00057C 12r00r00         [24] 2172 	lcall	_printf
+      00057F 15 81            [12] 2173 	dec	sp
+      000581 15 81            [12] 2174 	dec	sp
+      000583 15 81            [12] 2175 	dec	sp
+                                   2176 ;	/home/user/contiki/core/sys/timetable.c:126: for(i = 1; i < *t->ptr; ++i) {
+      000585 E5 81            [12] 2177 	mov	a,sp
+      000587 24 F2            [12] 2178 	add	a,#0xf2
+      000589 F8               [12] 2179 	mov	r0,a
+      00058A E5 81            [12] 2180 	mov	a,sp
+      00058C 24 F5            [12] 2181 	add	a,#0xf5
+      00058E F9               [12] 2182 	mov	r1,a
+      00058F 74 05            [12] 2183 	mov	a,#0x05
+      000591 26               [12] 2184 	add	a,@r0
+      000592 F7               [12] 2185 	mov	@r1,a
+      000593 E4               [12] 2186 	clr	a
+      000594 08               [12] 2187 	inc	r0
+      000595 36               [12] 2188 	addc	a,@r0
+      000596 09               [12] 2189 	inc	r1
+      000597 F7               [12] 2190 	mov	@r1,a
+      000598 08               [12] 2191 	inc	r0
+      000599 09               [12] 2192 	inc	r1
+      00059A E6               [12] 2193 	mov	a,@r0
+      00059B F7               [12] 2194 	mov	@r1,a
+      00059C A8 81            [24] 2195 	mov	r0,sp
+      00059E 18               [12] 2196 	dec	r0
+      00059F 76 01            [12] 2197 	mov	@r0,#0x01
+      0005A1 08               [12] 2198 	inc	r0
+      0005A2 76 00            [12] 2199 	mov	@r0,#0x00
+      0005A4 7D 05            [12] 2200 	mov	r5,#0x05
+      0005A6 7E 00            [12] 2201 	mov	r6,#0x00
+      0005A8                       2202 00103$:
+      0005A8 E5 81            [12] 2203 	mov	a,sp
+      0005AA 24 F5            [12] 2204 	add	a,#0xf5
+      0005AC F8               [12] 2205 	mov	r0,a
+      0005AD 86 82            [24] 2206 	mov	dpl,@r0
+      0005AF 08               [12] 2207 	inc	r0
+      0005B0 86 83            [24] 2208 	mov	dph,@r0
+      0005B2 08               [12] 2209 	inc	r0
+      0005B3 86 F0            [24] 2210 	mov	b,@r0
+      0005B5 12r00r00         [24] 2211 	lcall	__gptrget
+      0005B8 FB               [12] 2212 	mov	r3,a
+      0005B9 A3               [24] 2213 	inc	dptr
+      0005BA 12r00r00         [24] 2214 	lcall	__gptrget
+      0005BD FC               [12] 2215 	mov	r4,a
+      0005BE A3               [24] 2216 	inc	dptr
+      0005BF 12r00r00         [24] 2217 	lcall	__gptrget
+      0005C2 FF               [12] 2218 	mov	r7,a
+      0005C3 8B 82            [24] 2219 	mov	dpl,r3
+      0005C5 8C 83            [24] 2220 	mov	dph,r4
+      0005C7 8F F0            [24] 2221 	mov	b,r7
+      0005C9 12r00r00         [24] 2222 	lcall	__gptrget
+      0005CC FB               [12] 2223 	mov	r3,a
+      0005CD A3               [24] 2224 	inc	dptr
+      0005CE 12r00r00         [24] 2225 	lcall	__gptrget
+      0005D1 FC               [12] 2226 	mov	r4,a
+      0005D2 A8 81            [24] 2227 	mov	r0,sp
+      0005D4 18               [12] 2228 	dec	r0
+      0005D5 C3               [12] 2229 	clr	c
+      0005D6 E6               [12] 2230 	mov	a,@r0
+      0005D7 9B               [12] 2231 	subb	a,r3
+      0005D8 08               [12] 2232 	inc	r0
+      0005D9 E6               [12] 2233 	mov	a,@r0
+      0005DA 9C               [12] 2234 	subb	a,r4
+      0005DB 40 03            [24] 2235 	jc	00114$
+      0005DD 02r07r06         [24] 2236 	ljmp	00105$
+      0005E0                       2237 00114$:
+                                   2238 ;	/home/user/contiki/core/sys/timetable.c:127: printf("%s: %u\n", t->timestamps[i - 1].id, t->timestamps[i].time - time);
+      0005E0 E5 81            [12] 2239 	mov	a,sp
+      0005E2 24 F2            [12] 2240 	add	a,#0xf2
+      0005E4 F8               [12] 2241 	mov	r0,a
+      0005E5 86 82            [24] 2242 	mov	dpl,@r0
+      0005E7 08               [12] 2243 	inc	r0
+      0005E8 86 83            [24] 2244 	mov	dph,@r0
+      0005EA 08               [12] 2245 	inc	r0
+      0005EB 86 F0            [24] 2246 	mov	b,@r0
+      0005ED E5 81            [12] 2247 	mov	a,sp
+      0005EF 24 FA            [12] 2248 	add	a,#0xfa
+      0005F1 F9               [12] 2249 	mov	r1,a
+      0005F2 12r00r00         [24] 2250 	lcall	__gptrget
+      0005F5 F7               [12] 2251 	mov	@r1,a
+      0005F6 A3               [24] 2252 	inc	dptr
+      0005F7 12r00r00         [24] 2253 	lcall	__gptrget
+      0005FA 09               [12] 2254 	inc	r1
+      0005FB F7               [12] 2255 	mov	@r1,a
+      0005FC A3               [24] 2256 	inc	dptr
+      0005FD 12r00r00         [24] 2257 	lcall	__gptrget
+      000600 09               [12] 2258 	inc	r1
+      000601 F7               [12] 2259 	mov	@r1,a
+      000602 E5 81            [12] 2260 	mov	a,sp
+      000604 24 FA            [12] 2261 	add	a,#0xfa
+      000606 F8               [12] 2262 	mov	r0,a
+      000607 ED               [12] 2263 	mov	a,r5
+      000608 26               [12] 2264 	add	a,@r0
+      000609 FB               [12] 2265 	mov	r3,a
+      00060A EE               [12] 2266 	mov	a,r6
+      00060B 08               [12] 2267 	inc	r0
+      00060C 36               [12] 2268 	addc	a,@r0
+      00060D FC               [12] 2269 	mov	r4,a
+      00060E 08               [12] 2270 	inc	r0
+      00060F 86 07            [24] 2271 	mov	ar7,@r0
+      000611 74 03            [12] 2272 	mov	a,#0x03
+      000613 2B               [12] 2273 	add	a,r3
+      000614 FB               [12] 2274 	mov	r3,a
+      000615 E4               [12] 2275 	clr	a
+      000616 3C               [12] 2276 	addc	a,r4
+      000617 FC               [12] 2277 	mov	r4,a
+      000618 8B 82            [24] 2278 	mov	dpl,r3
+      00061A 8C 83            [24] 2279 	mov	dph,r4
+      00061C 8F F0            [24] 2280 	mov	b,r7
+      00061E 12r00r00         [24] 2281 	lcall	__gptrget
+      000621 FB               [12] 2282 	mov	r3,a
+      000622 A3               [24] 2283 	inc	dptr
+      000623 12r00r00         [24] 2284 	lcall	__gptrget
+      000626 FC               [12] 2285 	mov	r4,a
+      000627 E5 81            [12] 2286 	mov	a,sp
+      000629 24 F8            [12] 2287 	add	a,#0xf8
+      00062B F8               [12] 2288 	mov	r0,a
+      00062C 86 02            [24] 2289 	mov	ar2,@r0
+      00062E 08               [12] 2290 	inc	r0
+      00062F 86 07            [24] 2291 	mov	ar7,@r0
+      000631 E5 81            [12] 2292 	mov	a,sp
+      000633 24 FD            [12] 2293 	add	a,#0xfd
+      000635 F8               [12] 2294 	mov	r0,a
+      000636 EB               [12] 2295 	mov	a,r3
+      000637 C3               [12] 2296 	clr	c
+      000638 9A               [12] 2297 	subb	a,r2
+      000639 F6               [12] 2298 	mov	@r0,a
+      00063A EC               [12] 2299 	mov	a,r4
+      00063B 9F               [12] 2300 	subb	a,r7
+      00063C 08               [12] 2301 	inc	r0
+      00063D F6               [12] 2302 	mov	@r0,a
+      00063E A8 81            [24] 2303 	mov	r0,sp
+      000640 18               [12] 2304 	dec	r0
+      000641 E6               [12] 2305 	mov	a,@r0
+      000642 24 FF            [12] 2306 	add	a,#0xFF
+      000644 FA               [12] 2307 	mov	r2,a
+      000645 08               [12] 2308 	inc	r0
+      000646 E6               [12] 2309 	mov	a,@r0
+      000647 34 FF            [12] 2310 	addc	a,#0xFF
+      000649 FF               [12] 2311 	mov	r7,a
+      00064A C0 06            [24] 2312 	push	ar6
+      00064C C0 05            [24] 2313 	push	ar5
+      00064E C0 02            [24] 2314 	push	ar2
+      000650 C0 07            [24] 2315 	push	ar7
+      000652 90 00 05         [24] 2316 	mov	dptr,#0x0005
+      000655 12r00r00         [24] 2317 	lcall	__mulint
+      000658 AA 82            [24] 2318 	mov	r2,dpl
+      00065A AF 83            [24] 2319 	mov	r7,dph
+      00065C 15 81            [12] 2320 	dec	sp
+      00065E 15 81            [12] 2321 	dec	sp
+      000660 D0 05            [24] 2322 	pop	ar5
+      000662 D0 06            [24] 2323 	pop	ar6
+      000664 E5 81            [12] 2324 	mov	a,sp
+      000666 24 FA            [12] 2325 	add	a,#0xfa
+      000668 F8               [12] 2326 	mov	r0,a
+      000669 EA               [12] 2327 	mov	a,r2
+      00066A 26               [12] 2328 	add	a,@r0
+      00066B FA               [12] 2329 	mov	r2,a
+      00066C EF               [12] 2330 	mov	a,r7
+      00066D 08               [12] 2331 	inc	r0
+      00066E 36               [12] 2332 	addc	a,@r0
+      00066F FC               [12] 2333 	mov	r4,a
+      000670 08               [12] 2334 	inc	r0
+      000671 86 07            [24] 2335 	mov	ar7,@r0
+      000673 8A 82            [24] 2336 	mov	dpl,r2
+      000675 8C 83            [24] 2337 	mov	dph,r4
+      000677 8F F0            [24] 2338 	mov	b,r7
+      000679 12r00r00         [24] 2339 	lcall	__gptrget
+      00067C FA               [12] 2340 	mov	r2,a
+      00067D A3               [24] 2341 	inc	dptr
+      00067E 12r00r00         [24] 2342 	lcall	__gptrget
+      000681 FC               [12] 2343 	mov	r4,a
+      000682 A3               [24] 2344 	inc	dptr
+      000683 12r00r00         [24] 2345 	lcall	__gptrget
+      000686 FF               [12] 2346 	mov	r7,a
+      000687 C0 06            [24] 2347 	push	ar6
+      000689 C0 05            [24] 2348 	push	ar5
+      00068B E5 81            [12] 2349 	mov	a,sp
+      00068D 24 FB            [12] 2350 	add	a,#0xfb
+      00068F F8               [12] 2351 	mov	r0,a
+      000690 E6               [12] 2352 	mov	a,@r0
+      000691 C0 E0            [24] 2353 	push	acc
+      000693 08               [12] 2354 	inc	r0
+      000694 E6               [12] 2355 	mov	a,@r0
+      000695 C0 E0            [24] 2356 	push	acc
+      000697 C0 02            [24] 2357 	push	ar2
+      000699 C0 04            [24] 2358 	push	ar4
+      00069B C0 07            [24] 2359 	push	ar7
+      00069D 74r05            [12] 2360 	mov	a,#__str_1
+      00069F C0 E0            [24] 2361 	push	acc
+      0006A1 74s00            [12] 2362 	mov	a,#(__str_1 >> 8)
+      0006A3 C0 E0            [24] 2363 	push	acc
+      0006A5 74 80            [12] 2364 	mov	a,#0x80
+      0006A7 C0 E0            [24] 2365 	push	acc
+      0006A9 12r00r00         [24] 2366 	lcall	_printf
+      0006AC E5 81            [12] 2367 	mov	a,sp
+      0006AE 24 F8            [12] 2368 	add	a,#0xf8
+      0006B0 F5 81            [12] 2369 	mov	sp,a
+      0006B2 D0 05            [24] 2370 	pop	ar5
+      0006B4 D0 06            [24] 2371 	pop	ar6
+                                   2372 ;	/home/user/contiki/core/sys/timetable.c:128: time = t->timestamps[i].time;
+      0006B6 E5 81            [12] 2373 	mov	a,sp
+      0006B8 24 F2            [12] 2374 	add	a,#0xf2
+      0006BA F8               [12] 2375 	mov	r0,a
+      0006BB 86 82            [24] 2376 	mov	dpl,@r0
+      0006BD 08               [12] 2377 	inc	r0
+      0006BE 86 83            [24] 2378 	mov	dph,@r0
+      0006C0 08               [12] 2379 	inc	r0
+      0006C1 86 F0            [24] 2380 	mov	b,@r0
+      0006C3 12r00r00         [24] 2381 	lcall	__gptrget
+      0006C6 FB               [12] 2382 	mov	r3,a
+      0006C7 A3               [24] 2383 	inc	dptr
+      0006C8 12r00r00         [24] 2384 	lcall	__gptrget
+      0006CB FC               [12] 2385 	mov	r4,a
+      0006CC A3               [24] 2386 	inc	dptr
+      0006CD 12r00r00         [24] 2387 	lcall	__gptrget
+      0006D0 FF               [12] 2388 	mov	r7,a
+      0006D1 ED               [12] 2389 	mov	a,r5
+      0006D2 2B               [12] 2390 	add	a,r3
+      0006D3 FB               [12] 2391 	mov	r3,a
+      0006D4 EE               [12] 2392 	mov	a,r6
+      0006D5 3C               [12] 2393 	addc	a,r4
+      0006D6 FC               [12] 2394 	mov	r4,a
+      0006D7 74 03            [12] 2395 	mov	a,#0x03
+      0006D9 2B               [12] 2396 	add	a,r3
+      0006DA FB               [12] 2397 	mov	r3,a
+      0006DB E4               [12] 2398 	clr	a
+      0006DC 3C               [12] 2399 	addc	a,r4
+      0006DD FC               [12] 2400 	mov	r4,a
+      0006DE 8B 82            [24] 2401 	mov	dpl,r3
+      0006E0 8C 83            [24] 2402 	mov	dph,r4
+      0006E2 8F F0            [24] 2403 	mov	b,r7
+      0006E4 E5 81            [12] 2404 	mov	a,sp
+      0006E6 24 F8            [12] 2405 	add	a,#0xf8
+      0006E8 F8               [12] 2406 	mov	r0,a
+      0006E9 12r00r00         [24] 2407 	lcall	__gptrget
+      0006EC F6               [12] 2408 	mov	@r0,a
+      0006ED A3               [24] 2409 	inc	dptr
+      0006EE 12r00r00         [24] 2410 	lcall	__gptrget
+      0006F1 08               [12] 2411 	inc	r0
+      0006F2 F6               [12] 2412 	mov	@r0,a
+                                   2413 ;	/home/user/contiki/core/sys/timetable.c:126: for(i = 1; i < *t->ptr; ++i) {
+      0006F3 74 05            [12] 2414 	mov	a,#0x05
+      0006F5 2D               [12] 2415 	add	a,r5
+      0006F6 FD               [12] 2416 	mov	r5,a
+      0006F7 E4               [12] 2417 	clr	a
+      0006F8 3E               [12] 2418 	addc	a,r6
+      0006F9 FE               [12] 2419 	mov	r6,a
+      0006FA A8 81            [24] 2420 	mov	r0,sp
+      0006FC 18               [12] 2421 	dec	r0
+      0006FD 06               [12] 2422 	inc	@r0
+      0006FE B6 00 02         [24] 2423 	cjne	@r0,#0x00,00115$
+      000701 08               [12] 2424 	inc	r0
+      000702 06               [12] 2425 	inc	@r0
+      000703                       2426 00115$:
+      000703 02r05rA8         [24] 2427 	ljmp	00103$
+      000706                       2428 00105$:
+      000706 E5 81            [12] 2429 	mov	a,sp
+      000708 24 F1            [12] 2430 	add	a,#0xF1
+      00070A F5 81            [12] 2431 	mov	sp,a
+      00070C 22               [24] 2432 	ret
+                                   2433 	.area CSEG    (CODE)
+                                   2434 	.area CONST   (CODE)
+      000000                       2435 __str_0:
+      000000 2D 2D 2D              2436 	.ascii "---"
+      000003 0A                    2437 	.db 0x0A
+      000004 00                    2438 	.db 0x00
+      000005                       2439 __str_1:
+      000005 25 73 3A 20 25 75     2440 	.ascii "%s: %u"
+      00000B 0A                    2441 	.db 0x0A
+      00000C 00                    2442 	.db 0x00
+                                   2443 	.area XINIT   (CODE)
+                                   2444 	.area CABS    (ABS,CODE)

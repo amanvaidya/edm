@@ -1,0 +1,858 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:36 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module framer_802154
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _framer_802154
+                                     13 	.globl _random_rand
+                                     14 	.globl _packetbuf_addr
+                                     15 	.globl _packetbuf_set_addr
+                                     16 	.globl _packetbuf_attr
+                                     17 	.globl _packetbuf_set_attr
+                                     18 	.globl _packetbuf_hdrreduce
+                                     19 	.globl _packetbuf_hdralloc
+                                     20 	.globl _packetbuf_datalen
+                                     21 	.globl _packetbuf_hdrptr
+                                     22 	.globl _packetbuf_dataptr
+                                     23 	.globl _frame802154_parse
+                                     24 	.globl _frame802154_create
+                                     25 	.globl _frame802154_hdrlen
+                                     26 	.globl _rimeaddr_cmp
+                                     27 	.globl _rimeaddr_copy
+                                     28 	.globl _memset
+                                     29 ;--------------------------------------------------------
+                                     30 ; special function registers
+                                     31 ;--------------------------------------------------------
+                                     32 	.area RSEG    (ABS,DATA)
+      000000                         33 	.org 0x0000
+                                     34 ;--------------------------------------------------------
+                                     35 ; special function bits
+                                     36 ;--------------------------------------------------------
+                                     37 	.area RSEG    (ABS,DATA)
+      000000                         38 	.org 0x0000
+                                     39 ;--------------------------------------------------------
+                                     40 ; overlayable register banks
+                                     41 ;--------------------------------------------------------
+                                     42 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         43 	.ds 8
+                                     44 ;--------------------------------------------------------
+                                     45 ; internal ram data
+                                     46 ;--------------------------------------------------------
+                                     47 	.area DSEG    (DATA)
+                                     48 ;--------------------------------------------------------
+                                     49 ; overlayable items in internal ram 
+                                     50 ;--------------------------------------------------------
+                                     51 ;--------------------------------------------------------
+                                     52 ; indirectly addressable internal ram data
+                                     53 ;--------------------------------------------------------
+                                     54 	.area ISEG    (DATA)
+                                     55 ;--------------------------------------------------------
+                                     56 ; absolute internal ram data
+                                     57 ;--------------------------------------------------------
+                                     58 	.area IABS    (ABS,DATA)
+                                     59 	.area IABS    (ABS,DATA)
+                                     60 ;--------------------------------------------------------
+                                     61 ; bit data
+                                     62 ;--------------------------------------------------------
+                                     63 	.area BSEG    (BIT)
+                                     64 ;--------------------------------------------------------
+                                     65 ; paged external ram data
+                                     66 ;--------------------------------------------------------
+                                     67 	.area PSEG    (PAG,XDATA)
+                                     68 ;--------------------------------------------------------
+                                     69 ; external ram data
+                                     70 ;--------------------------------------------------------
+                                     71 	.area XSEG    (XDATA)
+      000000                         72 _mac_dsn:
+      000000                         73 	.ds 1
+                                     74 ;--------------------------------------------------------
+                                     75 ; absolute external ram data
+                                     76 ;--------------------------------------------------------
+                                     77 	.area XABS    (ABS,XDATA)
+                                     78 ;--------------------------------------------------------
+                                     79 ; external initialized ram data
+                                     80 ;--------------------------------------------------------
+                                     81 	.area XISEG   (XDATA)
+      000000                         82 _initialized:
+      000000                         83 	.ds 1
+                                     84 	.area HOME    (CODE)
+                                     85 	.area GSINIT0 (CODE)
+                                     86 	.area GSINIT1 (CODE)
+                                     87 	.area GSINIT2 (CODE)
+                                     88 	.area GSINIT3 (CODE)
+                                     89 	.area GSINIT4 (CODE)
+                                     90 	.area GSINIT5 (CODE)
+                                     91 	.area GSINIT  (CODE)
+                                     92 	.area GSFINAL (CODE)
+                                     93 	.area CSEG    (CODE)
+                                     94 ;--------------------------------------------------------
+                                     95 ; global & static initialisations
+                                     96 ;--------------------------------------------------------
+                                     97 	.area HOME    (CODE)
+                                     98 	.area GSINIT  (CODE)
+                                     99 	.area GSFINAL (CODE)
+                                    100 	.area GSINIT  (CODE)
+                                    101 ;--------------------------------------------------------
+                                    102 ; Home
+                                    103 ;--------------------------------------------------------
+                                    104 	.area HOME    (CODE)
+                                    105 	.area HOME    (CODE)
+                                    106 ;--------------------------------------------------------
+                                    107 ; code
+                                    108 ;--------------------------------------------------------
+                                    109 	.area CSEG    (CODE)
+                                    110 ;------------------------------------------------------------
+                                    111 ;Allocation info for local variables in function 'is_broadcast_addr'
+                                    112 ;------------------------------------------------------------
+                                    113 ;addr                      Allocated to stack - sp -4
+                                    114 ;mode                      Allocated to registers r7 
+                                    115 ;i                         Allocated to registers 
+                                    116 ;------------------------------------------------------------
+                                    117 ;	/home/user/contiki/core/net/mac/framer-802154.c:78: is_broadcast_addr(uint8_t mode, uint8_t *addr)
+                                    118 ;	-----------------------------------------
+                                    119 ;	 function is_broadcast_addr
+                                    120 ;	-----------------------------------------
+      000000                        121 _is_broadcast_addr:
+                           000007   122 	ar7 = 0x07
+                           000006   123 	ar6 = 0x06
+                           000005   124 	ar5 = 0x05
+                           000004   125 	ar4 = 0x04
+                           000003   126 	ar3 = 0x03
+                           000002   127 	ar2 = 0x02
+                           000001   128 	ar1 = 0x01
+                           000000   129 	ar0 = 0x00
+      000000 AF 82            [24]  130 	mov	r7,dpl
+                                    131 ;	/home/user/contiki/core/net/mac/framer-802154.c:80: int i = mode == FRAME802154_SHORTADDRMODE ? 2 : 8;
+      000002 BF 02 04         [24]  132 	cjne	r7,#0x02,00108$
+      000005 7F 02            [12]  133 	mov	r7,#0x02
+      000007 80 02            [24]  134 	sjmp	00109$
+      000009                        135 00108$:
+      000009 7F 08            [12]  136 	mov	r7,#0x08
+      00000B                        137 00109$:
+      00000B 8F 06            [24]  138 	mov	ar6,r7
+      00000D 7F 00            [12]  139 	mov	r7,#0x00
+                                    140 ;	/home/user/contiki/core/net/mac/framer-802154.c:81: while(i-- > 0) {
+      00000F                        141 00103$:
+      00000F 8E 04            [24]  142 	mov	ar4,r6
+      000011 8F 05            [24]  143 	mov	ar5,r7
+      000013 1E               [12]  144 	dec	r6
+      000014 BE FF 01         [24]  145 	cjne	r6,#0xFF,00124$
+      000017 1F               [12]  146 	dec	r7
+      000018                        147 00124$:
+      000018 C3               [12]  148 	clr	c
+      000019 E4               [12]  149 	clr	a
+      00001A 9C               [12]  150 	subb	a,r4
+      00001B E4               [12]  151 	clr	a
+      00001C 64 80            [12]  152 	xrl	a,#0x80
+      00001E 8D F0            [24]  153 	mov	b,r5
+      000020 63 F0 80         [24]  154 	xrl	b,#0x80
+      000023 95 F0            [12]  155 	subb	a,b
+      000025 50 22            [24]  156 	jnc	00105$
+                                    157 ;	/home/user/contiki/core/net/mac/framer-802154.c:82: if(addr[i] != 0xff) {
+      000027 E5 81            [12]  158 	mov	a,sp
+      000029 24 FC            [12]  159 	add	a,#0xfc
+      00002B F8               [12]  160 	mov	r0,a
+      00002C EE               [12]  161 	mov	a,r6
+      00002D 26               [12]  162 	add	a,@r0
+      00002E FB               [12]  163 	mov	r3,a
+      00002F EF               [12]  164 	mov	a,r7
+      000030 08               [12]  165 	inc	r0
+      000031 36               [12]  166 	addc	a,@r0
+      000032 FC               [12]  167 	mov	r4,a
+      000033 08               [12]  168 	inc	r0
+      000034 86 05            [24]  169 	mov	ar5,@r0
+      000036 8B 82            [24]  170 	mov	dpl,r3
+      000038 8C 83            [24]  171 	mov	dph,r4
+      00003A 8D F0            [24]  172 	mov	b,r5
+      00003C 12r00r00         [24]  173 	lcall	__gptrget
+      00003F FB               [12]  174 	mov	r3,a
+      000040 BB FF 02         [24]  175 	cjne	r3,#0xFF,00126$
+      000043 80 CA            [24]  176 	sjmp	00103$
+      000045                        177 00126$:
+                                    178 ;	/home/user/contiki/core/net/mac/framer-802154.c:83: return 0;
+      000045 90 00 00         [24]  179 	mov	dptr,#0x0000
+      000048 22               [24]  180 	ret
+      000049                        181 00105$:
+                                    182 ;	/home/user/contiki/core/net/mac/framer-802154.c:86: return 1;
+      000049 90 00 01         [24]  183 	mov	dptr,#0x0001
+      00004C 22               [24]  184 	ret
+                                    185 ;------------------------------------------------------------
+                                    186 ;Allocation info for local variables in function 'create'
+                                    187 ;------------------------------------------------------------
+                                    188 ;params                    Allocated to stack - sp -50
+                                    189 ;len                       Allocated to stack - sp -1
+                                    190 ;------------------------------------------------------------
+                                    191 ;	/home/user/contiki/core/net/mac/framer-802154.c:90: create(void)
+                                    192 ;	-----------------------------------------
+                                    193 ;	 function create
+                                    194 ;	-----------------------------------------
+      00004D                        195 _create:
+      00004D E5 81            [12]  196 	mov	a,sp
+      00004F 24 33            [12]  197 	add	a,#0x33
+                                    198 ;	/home/user/contiki/core/net/mac/framer-802154.c:96: memset(&params, 0, sizeof(params));
+      000051 F5 81            [12]  199 	mov	sp,a
+      000053 24 CE            [12]  200 	add	a,#0xCE
+      000055 F9               [12]  201 	mov	r1,a
+      000056 FD               [12]  202 	mov	r5,a
+      000057 7E 00            [12]  203 	mov	r6,#0x00
+      000059 7F 40            [12]  204 	mov	r7,#0x40
+      00005B C0 01            [24]  205 	push	ar1
+      00005D 74 31            [12]  206 	mov	a,#0x31
+      00005F C0 E0            [24]  207 	push	acc
+      000061 E4               [12]  208 	clr	a
+      000062 C0 E0            [24]  209 	push	acc
+      000064 E4               [12]  210 	clr	a
+      000065 C0 E0            [24]  211 	push	acc
+      000067 8D 82            [24]  212 	mov	dpl,r5
+      000069 8E 83            [24]  213 	mov	dph,r6
+      00006B 8F F0            [24]  214 	mov	b,r7
+      00006D 12r00r00         [24]  215 	lcall	_memset
+      000070 15 81            [12]  216 	dec	sp
+      000072 15 81            [12]  217 	dec	sp
+      000074 15 81            [12]  218 	dec	sp
+      000076 D0 01            [24]  219 	pop	ar1
+                                    220 ;	/home/user/contiki/core/net/mac/framer-802154.c:98: if(!initialized) {
+      000078 90r00r00         [24]  221 	mov	dptr,#_initialized
+      00007B E0               [24]  222 	movx	a,@dptr
+      00007C FF               [12]  223 	mov	r7,a
+      00007D 70 1A            [24]  224 	jnz	00102$
+                                    225 ;	/home/user/contiki/core/net/mac/framer-802154.c:99: initialized = 1;
+      00007F 90r00r00         [24]  226 	mov	dptr,#_initialized
+      000082 74 01            [12]  227 	mov	a,#0x01
+      000084 F0               [24]  228 	movx	@dptr,a
+                                    229 ;	/home/user/contiki/core/net/mac/framer-802154.c:100: mac_dsn = random_rand() & 0xff;
+      000085 C0 01            [24]  230 	push	ar1
+      000087 12r00r00         [24]  231 	lcall	_random_rand
+      00008A E5 82            [12]  232 	mov	a,dpl
+      00008C 85 83 F0         [24]  233 	mov	b,dph
+      00008F D0 01            [24]  234 	pop	ar1
+      000091 FE               [12]  235 	mov	r6,a
+      000092 7F 00            [12]  236 	mov	r7,#0x00
+      000094 90r00r00         [24]  237 	mov	dptr,#_mac_dsn
+      000097 EE               [12]  238 	mov	a,r6
+      000098 F0               [24]  239 	movx	@dptr,a
+      000099                        240 00102$:
+                                    241 ;	/home/user/contiki/core/net/mac/framer-802154.c:104: params.fcf.frame_type = FRAME802154_DATAFRAME;
+      000099 77 01            [12]  242 	mov	@r1,#0x01
+                                    243 ;	/home/user/contiki/core/net/mac/framer-802154.c:105: params.fcf.security_enabled = 0;
+      00009B E9               [12]  244 	mov	a,r1
+      00009C 04               [12]  245 	inc	a
+      00009D F8               [12]  246 	mov	r0,a
+      00009E 76 00            [12]  247 	mov	@r0,#0x00
+                                    248 ;	/home/user/contiki/core/net/mac/framer-802154.c:106: params.fcf.frame_pending = packetbuf_attr(PACKETBUF_ATTR_PENDING);
+      0000A0 74 02            [12]  249 	mov	a,#0x02
+      0000A2 29               [12]  250 	add	a,r1
+      0000A3 F8               [12]  251 	mov	r0,a
+      0000A4 75 82 12         [24]  252 	mov	dpl,#0x12
+      0000A7 C0 01            [24]  253 	push	ar1
+      0000A9 C0 00            [24]  254 	push	ar0
+      0000AB 12r00r00         [24]  255 	lcall	_packetbuf_attr
+      0000AE AE 82            [24]  256 	mov	r6,dpl
+      0000B0 D0 00            [24]  257 	pop	ar0
+      0000B2 A6 06            [24]  258 	mov	@r0,ar6
+                                    259 ;	/home/user/contiki/core/net/mac/framer-802154.c:107: if(rimeaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER), &rimeaddr_null)) {
+      0000B4 75 82 19         [24]  260 	mov	dpl,#0x19
+      0000B7 12r00r00         [24]  261 	lcall	_packetbuf_addr
+      0000BA AD 82            [24]  262 	mov	r5,dpl
+      0000BC AE 83            [24]  263 	mov	r6,dph
+      0000BE AF F0            [24]  264 	mov	r7,b
+      0000C0 74r00            [12]  265 	mov	a,#_rimeaddr_null
+      0000C2 C0 E0            [24]  266 	push	acc
+      0000C4 74s00            [12]  267 	mov	a,#(_rimeaddr_null >> 8)
+      0000C6 C0 E0            [24]  268 	push	acc
+      0000C8 74 80            [12]  269 	mov	a,#0x80
+      0000CA C0 E0            [24]  270 	push	acc
+      0000CC 8D 82            [24]  271 	mov	dpl,r5
+      0000CE 8E 83            [24]  272 	mov	dph,r6
+      0000D0 8F F0            [24]  273 	mov	b,r7
+      0000D2 12r00r00         [24]  274 	lcall	_rimeaddr_cmp
+      0000D5 AE 82            [24]  275 	mov	r6,dpl
+      0000D7 AF 83            [24]  276 	mov	r7,dph
+      0000D9 15 81            [12]  277 	dec	sp
+      0000DB 15 81            [12]  278 	dec	sp
+      0000DD 15 81            [12]  279 	dec	sp
+      0000DF D0 01            [24]  280 	pop	ar1
+      0000E1 EE               [12]  281 	mov	a,r6
+      0000E2 4F               [12]  282 	orl	a,r7
+      0000E3 60 08            [24]  283 	jz	00104$
+                                    284 ;	/home/user/contiki/core/net/mac/framer-802154.c:108: params.fcf.ack_required = 0;
+      0000E5 74 03            [12]  285 	mov	a,#0x03
+      0000E7 29               [12]  286 	add	a,r1
+      0000E8 F8               [12]  287 	mov	r0,a
+      0000E9 76 00            [12]  288 	mov	@r0,#0x00
+      0000EB 80 18            [24]  289 	sjmp	00105$
+      0000ED                        290 00104$:
+                                    291 ;	/home/user/contiki/core/net/mac/framer-802154.c:110: params.fcf.ack_required = packetbuf_attr(PACKETBUF_ATTR_MAC_ACK);
+      0000ED 74 03            [12]  292 	mov	a,#0x03
+      0000EF 29               [12]  293 	add	a,r1
+      0000F0 F8               [12]  294 	mov	r0,a
+      0000F1 75 82 0B         [24]  295 	mov	dpl,#0x0B
+      0000F4 C0 01            [24]  296 	push	ar1
+      0000F6 C0 00            [24]  297 	push	ar0
+      0000F8 12r00r00         [24]  298 	lcall	_packetbuf_attr
+      0000FB AE 82            [24]  299 	mov	r6,dpl
+      0000FD AF 83            [24]  300 	mov	r7,dph
+      0000FF D0 00            [24]  301 	pop	ar0
+      000101 D0 01            [24]  302 	pop	ar1
+      000103 A6 06            [24]  303 	mov	@r0,ar6
+      000105                        304 00105$:
+                                    305 ;	/home/user/contiki/core/net/mac/framer-802154.c:112: params.fcf.panid_compression = 0;
+      000105 74 04            [12]  306 	mov	a,#0x04
+      000107 29               [12]  307 	add	a,r1
+      000108 F8               [12]  308 	mov	r0,a
+      000109 76 00            [12]  309 	mov	@r0,#0x00
+                                    310 ;	/home/user/contiki/core/net/mac/framer-802154.c:115: params.fcf.frame_version = FRAME802154_IEEE802154_2003;
+      00010B 74 06            [12]  311 	mov	a,#0x06
+      00010D 29               [12]  312 	add	a,r1
+      00010E F8               [12]  313 	mov	r0,a
+      00010F 76 00            [12]  314 	mov	@r0,#0x00
+                                    315 ;	/home/user/contiki/core/net/mac/framer-802154.c:118: if(packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO)) {
+      000111 75 82 0A         [24]  316 	mov	dpl,#0x0A
+      000114 C0 01            [24]  317 	push	ar1
+      000116 12r00r00         [24]  318 	lcall	_packetbuf_attr
+      000119 E5 82            [12]  319 	mov	a,dpl
+      00011B 85 83 F0         [24]  320 	mov	b,dph
+      00011E D0 01            [24]  321 	pop	ar1
+      000120 45 F0            [12]  322 	orl	a,b
+      000122 60 1A            [24]  323 	jz	00107$
+                                    324 ;	/home/user/contiki/core/net/mac/framer-802154.c:119: params.seq = packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO);
+      000124 74 08            [12]  325 	mov	a,#0x08
+      000126 29               [12]  326 	add	a,r1
+      000127 F8               [12]  327 	mov	r0,a
+      000128 75 82 0A         [24]  328 	mov	dpl,#0x0A
+      00012B C0 01            [24]  329 	push	ar1
+      00012D C0 00            [24]  330 	push	ar0
+      00012F 12r00r00         [24]  331 	lcall	_packetbuf_attr
+      000132 AE 82            [24]  332 	mov	r6,dpl
+      000134 AF 83            [24]  333 	mov	r7,dph
+      000136 D0 00            [24]  334 	pop	ar0
+      000138 D0 01            [24]  335 	pop	ar1
+      00013A A6 06            [24]  336 	mov	@r0,ar6
+      00013C 80 24            [24]  337 	sjmp	00109$
+      00013E                        338 00107$:
+                                    339 ;	/home/user/contiki/core/net/mac/framer-802154.c:121: params.seq = mac_dsn++;
+      00013E 74 08            [12]  340 	mov	a,#0x08
+      000140 29               [12]  341 	add	a,r1
+      000141 F8               [12]  342 	mov	r0,a
+      000142 90r00r00         [24]  343 	mov	dptr,#_mac_dsn
+      000145 E0               [24]  344 	movx	a,@dptr
+      000146 FF               [12]  345 	mov	r7,a
+      000147 90r00r00         [24]  346 	mov	dptr,#_mac_dsn
+      00014A 04               [12]  347 	inc	a
+      00014B F0               [24]  348 	movx	@dptr,a
+      00014C A6 07            [24]  349 	mov	@r0,ar7
+                                    350 ;	/home/user/contiki/core/net/mac/framer-802154.c:122: packetbuf_set_attr(PACKETBUF_ATTR_MAC_SEQNO, params.seq);
+      00014E 7E 00            [12]  351 	mov	r6,#0x00
+      000150 C0 01            [24]  352 	push	ar1
+      000152 C0 07            [24]  353 	push	ar7
+      000154 C0 06            [24]  354 	push	ar6
+      000156 75 82 0A         [24]  355 	mov	dpl,#0x0A
+      000159 12r00r00         [24]  356 	lcall	_packetbuf_set_attr
+      00015C 15 81            [12]  357 	dec	sp
+      00015E 15 81            [12]  358 	dec	sp
+      000160 D0 01            [24]  359 	pop	ar1
+                                    360 ;	/home/user/contiki/core/net/mac/framer-802154.c:131: if(sizeof(rimeaddr_t) == 2) {
+      000162                        361 00109$:
+                                    362 ;	/home/user/contiki/core/net/mac/framer-802154.c:133: params.fcf.src_addr_mode = FRAME802154_SHORTADDRMODE;
+      000162 74 07            [12]  363 	mov	a,#0x07
+      000164 29               [12]  364 	add	a,r1
+      000165 F8               [12]  365 	mov	r0,a
+      000166 76 02            [12]  366 	mov	@r0,#0x02
+                                    367 ;	/home/user/contiki/core/net/mac/framer-802154.c:137: params.dest_pid = mac_dst_pan_id;
+      000168 74 09            [12]  368 	mov	a,#0x09
+      00016A 29               [12]  369 	add	a,r1
+      00016B F8               [12]  370 	mov	r0,a
+      00016C 90r00r00         [24]  371 	mov	dptr,#_mac_dst_pan_id
+      00016F E4               [12]  372 	clr	a
+      000170 93               [24]  373 	movc	a,@a+dptr
+      000171 FE               [12]  374 	mov	r6,a
+      000172 74 01            [12]  375 	mov	a,#0x01
+      000174 93               [24]  376 	movc	a,@a+dptr
+      000175 FF               [12]  377 	mov	r7,a
+      000176 A6 06            [24]  378 	mov	@r0,ar6
+      000178 08               [12]  379 	inc	r0
+      000179 A6 07            [24]  380 	mov	@r0,ar7
+                                    381 ;	/home/user/contiki/core/net/mac/framer-802154.c:143: if(rimeaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER), &rimeaddr_null)) {
+      00017B 75 82 19         [24]  382 	mov	dpl,#0x19
+      00017E C0 01            [24]  383 	push	ar1
+      000180 12r00r00         [24]  384 	lcall	_packetbuf_addr
+      000183 AD 82            [24]  385 	mov	r5,dpl
+      000185 AE 83            [24]  386 	mov	r6,dph
+      000187 AF F0            [24]  387 	mov	r7,b
+      000189 74r00            [12]  388 	mov	a,#_rimeaddr_null
+      00018B C0 E0            [24]  389 	push	acc
+      00018D 74s00            [12]  390 	mov	a,#(_rimeaddr_null >> 8)
+      00018F C0 E0            [24]  391 	push	acc
+      000191 74 80            [12]  392 	mov	a,#0x80
+      000193 C0 E0            [24]  393 	push	acc
+      000195 8D 82            [24]  394 	mov	dpl,r5
+      000197 8E 83            [24]  395 	mov	dph,r6
+      000199 8F F0            [24]  396 	mov	b,r7
+      00019B 12r00r00         [24]  397 	lcall	_rimeaddr_cmp
+      00019E AE 82            [24]  398 	mov	r6,dpl
+      0001A0 AF 83            [24]  399 	mov	r7,dph
+      0001A2 15 81            [12]  400 	dec	sp
+      0001A4 15 81            [12]  401 	dec	sp
+      0001A6 15 81            [12]  402 	dec	sp
+      0001A8 D0 01            [24]  403 	pop	ar1
+      0001AA EE               [12]  404 	mov	a,r6
+      0001AB 4F               [12]  405 	orl	a,r7
+      0001AC 60 14            [24]  406 	jz	00116$
+                                    407 ;	/home/user/contiki/core/net/mac/framer-802154.c:145: params.fcf.dest_addr_mode = FRAME802154_SHORTADDRMODE;
+      0001AE 74 05            [12]  408 	mov	a,#0x05
+      0001B0 29               [12]  409 	add	a,r1
+      0001B1 F8               [12]  410 	mov	r0,a
+      0001B2 76 02            [12]  411 	mov	@r0,#0x02
+                                    412 ;	/home/user/contiki/core/net/mac/framer-802154.c:146: params.dest_addr[0] = 0xFF;
+      0001B4 74 0B            [12]  413 	mov	a,#0x0B
+      0001B6 29               [12]  414 	add	a,r1
+      0001B7 F8               [12]  415 	mov	r0,a
+      0001B8 76 FF            [12]  416 	mov	@r0,#0xFF
+                                    417 ;	/home/user/contiki/core/net/mac/framer-802154.c:147: params.dest_addr[1] = 0xFF;
+      0001BA 74 0C            [12]  418 	mov	a,#0x0C
+      0001BC 29               [12]  419 	add	a,r1
+      0001BD F8               [12]  420 	mov	r0,a
+      0001BE 76 FF            [12]  421 	mov	@r0,#0xFF
+      0001C0 80 37            [24]  422 	sjmp	00117$
+      0001C2                        423 00116$:
+                                    424 ;	/home/user/contiki/core/net/mac/framer-802154.c:151: packetbuf_addr(PACKETBUF_ADDR_RECEIVER));
+      0001C2 75 82 19         [24]  425 	mov	dpl,#0x19
+      0001C5 C0 01            [24]  426 	push	ar1
+      0001C7 12r00r00         [24]  427 	lcall	_packetbuf_addr
+      0001CA AD 82            [24]  428 	mov	r5,dpl
+      0001CC AE 83            [24]  429 	mov	r6,dph
+      0001CE AF F0            [24]  430 	mov	r7,b
+      0001D0 D0 01            [24]  431 	pop	ar1
+                                    432 ;	/home/user/contiki/core/net/mac/framer-802154.c:150: rimeaddr_copy((rimeaddr_t *)&params.dest_addr,
+      0001D2 74 0B            [12]  433 	mov	a,#0x0B
+      0001D4 29               [12]  434 	add	a,r1
+      0001D5 FC               [12]  435 	mov	r4,a
+      0001D6 7B 00            [12]  436 	mov	r3,#0x00
+      0001D8 7A 40            [12]  437 	mov	r2,#0x40
+      0001DA C0 01            [24]  438 	push	ar1
+      0001DC C0 05            [24]  439 	push	ar5
+      0001DE C0 06            [24]  440 	push	ar6
+      0001E0 C0 07            [24]  441 	push	ar7
+      0001E2 8C 82            [24]  442 	mov	dpl,r4
+      0001E4 8B 83            [24]  443 	mov	dph,r3
+      0001E6 8A F0            [24]  444 	mov	b,r2
+      0001E8 12r00r00         [24]  445 	lcall	_rimeaddr_copy
+      0001EB 15 81            [12]  446 	dec	sp
+      0001ED 15 81            [12]  447 	dec	sp
+      0001EF 15 81            [12]  448 	dec	sp
+      0001F1 D0 01            [24]  449 	pop	ar1
+                                    450 ;	/home/user/contiki/core/net/mac/framer-802154.c:154: params.fcf.dest_addr_mode = FRAME802154_SHORTADDRMODE;
+      0001F3 74 05            [12]  451 	mov	a,#0x05
+      0001F5 29               [12]  452 	add	a,r1
+      0001F6 F8               [12]  453 	mov	r0,a
+      0001F7 76 02            [12]  454 	mov	@r0,#0x02
+                                    455 ;	/home/user/contiki/core/net/mac/framer-802154.c:156: params.fcf.dest_addr_mode = FRAME802154_LONGADDRMODE;
+      0001F9                        456 00117$:
+                                    457 ;	/home/user/contiki/core/net/mac/framer-802154.c:161: params.src_pid = mac_src_pan_id;
+      0001F9 74 13            [12]  458 	mov	a,#0x13
+      0001FB 29               [12]  459 	add	a,r1
+      0001FC F8               [12]  460 	mov	r0,a
+      0001FD 90r00r02         [24]  461 	mov	dptr,#_mac_src_pan_id
+      000200 E4               [12]  462 	clr	a
+      000201 93               [24]  463 	movc	a,@a+dptr
+      000202 FE               [12]  464 	mov	r6,a
+      000203 74 01            [12]  465 	mov	a,#0x01
+      000205 93               [24]  466 	movc	a,@a+dptr
+      000206 FF               [12]  467 	mov	r7,a
+      000207 A6 06            [24]  468 	mov	@r0,ar6
+      000209 08               [12]  469 	inc	r0
+      00020A A6 07            [24]  470 	mov	@r0,ar7
+                                    471 ;	/home/user/contiki/core/net/mac/framer-802154.c:167: rimeaddr_copy((rimeaddr_t *)&params.src_addr, &rimeaddr_node_addr);
+      00020C 74 15            [12]  472 	mov	a,#0x15
+      00020E 29               [12]  473 	add	a,r1
+      00020F FF               [12]  474 	mov	r7,a
+      000210 7E 00            [12]  475 	mov	r6,#0x00
+      000212 7D 40            [12]  476 	mov	r5,#0x40
+      000214 C0 01            [24]  477 	push	ar1
+      000216 74r00            [12]  478 	mov	a,#_rimeaddr_node_addr
+      000218 C0 E0            [24]  479 	push	acc
+      00021A 74s00            [12]  480 	mov	a,#(_rimeaddr_node_addr >> 8)
+      00021C C0 E0            [24]  481 	push	acc
+      00021E E4               [12]  482 	clr	a
+      00021F C0 E0            [24]  483 	push	acc
+      000221 8F 82            [24]  484 	mov	dpl,r7
+      000223 8E 83            [24]  485 	mov	dph,r6
+      000225 8D F0            [24]  486 	mov	b,r5
+      000227 12r00r00         [24]  487 	lcall	_rimeaddr_copy
+      00022A 15 81            [12]  488 	dec	sp
+      00022C 15 81            [12]  489 	dec	sp
+      00022E 15 81            [12]  490 	dec	sp
+      000230 D0 01            [24]  491 	pop	ar1
+                                    492 ;	/home/user/contiki/core/net/mac/framer-802154.c:169: params.payload = packetbuf_dataptr();
+      000232 74 2D            [12]  493 	mov	a,#0x2D
+      000234 29               [12]  494 	add	a,r1
+      000235 F8               [12]  495 	mov	r0,a
+      000236 C0 01            [24]  496 	push	ar1
+      000238 C0 00            [24]  497 	push	ar0
+      00023A 12r00r00         [24]  498 	lcall	_packetbuf_dataptr
+      00023D AD 82            [24]  499 	mov	r5,dpl
+      00023F AE 83            [24]  500 	mov	r6,dph
+      000241 AF F0            [24]  501 	mov	r7,b
+      000243 D0 00            [24]  502 	pop	ar0
+      000245 D0 01            [24]  503 	pop	ar1
+      000247 A6 05            [24]  504 	mov	@r0,ar5
+      000249 08               [12]  505 	inc	r0
+      00024A A6 06            [24]  506 	mov	@r0,ar6
+      00024C 08               [12]  507 	inc	r0
+      00024D A6 07            [24]  508 	mov	@r0,ar7
+                                    509 ;	/home/user/contiki/core/net/mac/framer-802154.c:170: params.payload_len = packetbuf_datalen();
+      00024F 74 30            [12]  510 	mov	a,#0x30
+      000251 29               [12]  511 	add	a,r1
+      000252 F8               [12]  512 	mov	r0,a
+      000253 C0 01            [24]  513 	push	ar1
+      000255 C0 00            [24]  514 	push	ar0
+      000257 12r00r00         [24]  515 	lcall	_packetbuf_datalen
+      00025A AE 82            [24]  516 	mov	r6,dpl
+      00025C D0 00            [24]  517 	pop	ar0
+      00025E D0 01            [24]  518 	pop	ar1
+      000260 A6 06            [24]  519 	mov	@r0,ar6
+                                    520 ;	/home/user/contiki/core/net/mac/framer-802154.c:171: len = frame802154_hdrlen(&params);
+      000262 89 07            [24]  521 	mov	ar7,r1
+      000264 7E 00            [12]  522 	mov	r6,#0x00
+      000266 7D 40            [12]  523 	mov	r5,#0x40
+      000268 8F 82            [24]  524 	mov	dpl,r7
+      00026A 8E 83            [24]  525 	mov	dph,r6
+      00026C 8D F0            [24]  526 	mov	b,r5
+      00026E C0 01            [24]  527 	push	ar1
+      000270 12r00r00         [24]  528 	lcall	_frame802154_hdrlen
+      000273 AE 82            [24]  529 	mov	r6,dpl
+      000275 AF 83            [24]  530 	mov	r7,dph
+      000277 D0 01            [24]  531 	pop	ar1
+      000279 A8 81            [24]  532 	mov	r0,sp
+      00027B 18               [12]  533 	dec	r0
+      00027C A6 06            [24]  534 	mov	@r0,ar6
+      00027E 08               [12]  535 	inc	r0
+      00027F A6 07            [24]  536 	mov	@r0,ar7
+                                    537 ;	/home/user/contiki/core/net/mac/framer-802154.c:172: if(packetbuf_hdralloc(len)) {
+      000281 A8 81            [24]  538 	mov	r0,sp
+      000283 18               [12]  539 	dec	r0
+      000284 86 82            [24]  540 	mov	dpl,@r0
+      000286 08               [12]  541 	inc	r0
+      000287 86 83            [24]  542 	mov	dph,@r0
+      000289 C0 01            [24]  543 	push	ar1
+      00028B 12r00r00         [24]  544 	lcall	_packetbuf_hdralloc
+      00028E E5 82            [12]  545 	mov	a,dpl
+      000290 85 83 F0         [24]  546 	mov	b,dph
+      000293 D0 01            [24]  547 	pop	ar1
+      000295 45 F0            [12]  548 	orl	a,b
+      000297 60 3C            [24]  549 	jz	00119$
+                                    550 ;	/home/user/contiki/core/net/mac/framer-802154.c:173: frame802154_create(&params, packetbuf_hdrptr(), len);
+      000299 C0 01            [24]  551 	push	ar1
+      00029B 12r00r00         [24]  552 	lcall	_packetbuf_hdrptr
+      00029E AB 82            [24]  553 	mov	r3,dpl
+      0002A0 AC 83            [24]  554 	mov	r4,dph
+      0002A2 AD F0            [24]  555 	mov	r5,b
+      0002A4 D0 01            [24]  556 	pop	ar1
+      0002A6 89 02            [24]  557 	mov	ar2,r1
+      0002A8 7E 00            [12]  558 	mov	r6,#0x00
+      0002AA 7F 40            [12]  559 	mov	r7,#0x40
+      0002AC A8 81            [24]  560 	mov	r0,sp
+      0002AE 18               [12]  561 	dec	r0
+      0002AF E6               [12]  562 	mov	a,@r0
+      0002B0 C0 E0            [24]  563 	push	acc
+      0002B2 08               [12]  564 	inc	r0
+      0002B3 E6               [12]  565 	mov	a,@r0
+      0002B4 C0 E0            [24]  566 	push	acc
+      0002B6 C0 03            [24]  567 	push	ar3
+      0002B8 C0 04            [24]  568 	push	ar4
+      0002BA C0 05            [24]  569 	push	ar5
+      0002BC 8A 82            [24]  570 	mov	dpl,r2
+      0002BE 8E 83            [24]  571 	mov	dph,r6
+      0002C0 8F F0            [24]  572 	mov	b,r7
+      0002C2 12r00r00         [24]  573 	lcall	_frame802154_create
+      0002C5 E5 81            [12]  574 	mov	a,sp
+      0002C7 24 FB            [12]  575 	add	a,#0xfb
+      0002C9 F5 81            [12]  576 	mov	sp,a
+                                    577 ;	/home/user/contiki/core/net/mac/framer-802154.c:179: return len;
+      0002CB A8 81            [24]  578 	mov	r0,sp
+      0002CD 18               [12]  579 	dec	r0
+      0002CE 86 82            [24]  580 	mov	dpl,@r0
+      0002D0 08               [12]  581 	inc	r0
+      0002D1 86 83            [24]  582 	mov	dph,@r0
+      0002D3 80 03            [24]  583 	sjmp	00121$
+      0002D5                        584 00119$:
+                                    585 ;	/home/user/contiki/core/net/mac/framer-802154.c:182: return FRAMER_FAILED;
+      0002D5 90 FF FF         [24]  586 	mov	dptr,#0xFFFF
+      0002D8                        587 00121$:
+      0002D8 E5 81            [12]  588 	mov	a,sp
+      0002DA 24 CD            [12]  589 	add	a,#0xCD
+      0002DC F5 81            [12]  590 	mov	sp,a
+      0002DE 22               [24]  591 	ret
+                                    592 ;------------------------------------------------------------
+                                    593 ;Allocation info for local variables in function 'parse'
+                                    594 ;------------------------------------------------------------
+                                    595 ;frame                     Allocated to stack - sp -50
+                                    596 ;len                       Allocated to stack - sp -1
+                                    597 ;sloc0                     Allocated to stack - sp -53
+                                    598 ;------------------------------------------------------------
+                                    599 ;	/home/user/contiki/core/net/mac/framer-802154.c:187: parse(void)
+                                    600 ;	-----------------------------------------
+                                    601 ;	 function parse
+                                    602 ;	-----------------------------------------
+      0002DF                        603 _parse:
+      0002DF E5 81            [12]  604 	mov	a,sp
+      0002E1 24 36            [12]  605 	add	a,#0x36
+      0002E3 F5 81            [12]  606 	mov	sp,a
+                                    607 ;	/home/user/contiki/core/net/mac/framer-802154.c:191: len = packetbuf_datalen();
+      0002E5 12r00r00         [24]  608 	lcall	_packetbuf_datalen
+      0002E8 AE 82            [24]  609 	mov	r6,dpl
+      0002EA AF 83            [24]  610 	mov	r7,dph
+      0002EC A8 81            [24]  611 	mov	r0,sp
+      0002EE 18               [12]  612 	dec	r0
+      0002EF A6 06            [24]  613 	mov	@r0,ar6
+      0002F1 08               [12]  614 	inc	r0
+      0002F2 A6 07            [24]  615 	mov	@r0,ar7
+                                    616 ;	/home/user/contiki/core/net/mac/framer-802154.c:192: if(frame802154_parse(packetbuf_dataptr(), len, &frame) &&
+      0002F4 E5 81            [12]  617 	mov	a,sp
+      0002F6 24 CE            [12]  618 	add	a,#0xCE
+      0002F8 FD               [12]  619 	mov	r5,a
+      0002F9 E5 81            [12]  620 	mov	a,sp
+      0002FB 24 CB            [12]  621 	add	a,#0xcb
+      0002FD F8               [12]  622 	mov	r0,a
+      0002FE A6 05            [24]  623 	mov	@r0,ar5
+      000300 08               [12]  624 	inc	r0
+      000301 76 00            [12]  625 	mov	@r0,#0x00
+      000303 08               [12]  626 	inc	r0
+      000304 76 40            [12]  627 	mov	@r0,#0x40
+      000306 C0 05            [24]  628 	push	ar5
+      000308 12r00r00         [24]  629 	lcall	_packetbuf_dataptr
+      00030B AC 82            [24]  630 	mov	r4,dpl
+      00030D AE 83            [24]  631 	mov	r6,dph
+      00030F AF F0            [24]  632 	mov	r7,b
+      000311 E5 81            [12]  633 	mov	a,sp
+      000313 24 CA            [12]  634 	add	a,#0xca
+      000315 F8               [12]  635 	mov	r0,a
+      000316 E6               [12]  636 	mov	a,@r0
+      000317 C0 E0            [24]  637 	push	acc
+      000319 08               [12]  638 	inc	r0
+      00031A E6               [12]  639 	mov	a,@r0
+      00031B C0 E0            [24]  640 	push	acc
+      00031D 08               [12]  641 	inc	r0
+      00031E E6               [12]  642 	mov	a,@r0
+      00031F C0 E0            [24]  643 	push	acc
+      000321 E5 81            [12]  644 	mov	a,sp
+      000323 24 FB            [12]  645 	add	a,#0xfb
+      000325 F8               [12]  646 	mov	r0,a
+      000326 E6               [12]  647 	mov	a,@r0
+      000327 C0 E0            [24]  648 	push	acc
+      000329 08               [12]  649 	inc	r0
+      00032A E6               [12]  650 	mov	a,@r0
+      00032B C0 E0            [24]  651 	push	acc
+      00032D 8C 82            [24]  652 	mov	dpl,r4
+      00032F 8E 83            [24]  653 	mov	dph,r6
+      000331 8F F0            [24]  654 	mov	b,r7
+      000333 12r00r00         [24]  655 	lcall	_frame802154_parse
+      000336 AE 82            [24]  656 	mov	r6,dpl
+      000338 AF 83            [24]  657 	mov	r7,dph
+      00033A E5 81            [12]  658 	mov	a,sp
+      00033C 24 FB            [12]  659 	add	a,#0xfb
+      00033E F5 81            [12]  660 	mov	sp,a
+      000340 D0 05            [24]  661 	pop	ar5
+      000342 EE               [12]  662 	mov	a,r6
+      000343 4F               [12]  663 	orl	a,r7
+      000344 70 03            [24]  664 	jnz	00131$
+      000346 02r04r64         [24]  665 	ljmp	00109$
+      000349                        666 00131$:
+                                    667 ;	/home/user/contiki/core/net/mac/framer-802154.c:193: packetbuf_hdrreduce(len - frame.payload_len)) {
+      000349 74 30            [12]  668 	mov	a,#0x30
+      00034B 2D               [12]  669 	add	a,r5
+      00034C F9               [12]  670 	mov	r1,a
+      00034D 87 07            [24]  671 	mov	ar7,@r1
+      00034F 7E 00            [12]  672 	mov	r6,#0x00
+      000351 A8 81            [24]  673 	mov	r0,sp
+      000353 18               [12]  674 	dec	r0
+      000354 E6               [12]  675 	mov	a,@r0
+      000355 C3               [12]  676 	clr	c
+      000356 9F               [12]  677 	subb	a,r7
+      000357 FF               [12]  678 	mov	r7,a
+      000358 08               [12]  679 	inc	r0
+      000359 E6               [12]  680 	mov	a,@r0
+      00035A 9E               [12]  681 	subb	a,r6
+      00035B FE               [12]  682 	mov	r6,a
+      00035C 8F 82            [24]  683 	mov	dpl,r7
+      00035E 8E 83            [24]  684 	mov	dph,r6
+      000360 C0 05            [24]  685 	push	ar5
+      000362 C0 01            [24]  686 	push	ar1
+      000364 12r00r00         [24]  687 	lcall	_packetbuf_hdrreduce
+      000367 E5 82            [12]  688 	mov	a,dpl
+      000369 85 83 F0         [24]  689 	mov	b,dph
+      00036C D0 01            [24]  690 	pop	ar1
+      00036E D0 05            [24]  691 	pop	ar5
+      000370 45 F0            [12]  692 	orl	a,b
+      000372 70 03            [24]  693 	jnz	00132$
+      000374 02r04r64         [24]  694 	ljmp	00109$
+      000377                        695 00132$:
+                                    696 ;	/home/user/contiki/core/net/mac/framer-802154.c:194: if(frame.fcf.dest_addr_mode) {
+      000377 74 05            [12]  697 	mov	a,#0x05
+      000379 2D               [12]  698 	add	a,r5
+      00037A F8               [12]  699 	mov	r0,a
+      00037B E6               [12]  700 	mov	a,@r0
+      00037C FF               [12]  701 	mov	r7,a
+      00037D 60 76            [24]  702 	jz	00107$
+                                    703 ;	/home/user/contiki/core/net/mac/framer-802154.c:195: if(frame.dest_pid != mac_src_pan_id &&
+      00037F 74 09            [12]  704 	mov	a,#0x09
+      000381 2D               [12]  705 	add	a,r5
+      000382 F8               [12]  706 	mov	r0,a
+      000383 86 04            [24]  707 	mov	ar4,@r0
+      000385 08               [12]  708 	inc	r0
+      000386 86 06            [24]  709 	mov	ar6,@r0
+      000388 90r00r02         [24]  710 	mov	dptr,#_mac_src_pan_id
+      00038B E4               [12]  711 	clr	a
+      00038C 93               [24]  712 	movc	a,@a+dptr
+      00038D FA               [12]  713 	mov	r2,a
+      00038E 74 01            [12]  714 	mov	a,#0x01
+      000390 93               [24]  715 	movc	a,@a+dptr
+      000391 FB               [12]  716 	mov	r3,a
+      000392 EC               [12]  717 	mov	a,r4
+      000393 B5 02 06         [24]  718 	cjne	a,ar2,00134$
+      000396 EE               [12]  719 	mov	a,r6
+      000397 B5 03 02         [24]  720 	cjne	a,ar3,00134$
+      00039A 80 0E            [24]  721 	sjmp	00102$
+      00039C                        722 00134$:
+                                    723 ;	/home/user/contiki/core/net/mac/framer-802154.c:196: frame.dest_pid != FRAME802154_BROADCASTPANDID) {
+      00039C BC FF 05         [24]  724 	cjne	r4,#0xFF,00135$
+      00039F BE FF 02         [24]  725 	cjne	r6,#0xFF,00135$
+      0003A2 80 06            [24]  726 	sjmp	00102$
+      0003A4                        727 00135$:
+                                    728 ;	/home/user/contiki/core/net/mac/framer-802154.c:199: return FRAMER_FAILED;
+      0003A4 90 FF FF         [24]  729 	mov	dptr,#0xFFFF
+      0003A7 02r04r67         [24]  730 	ljmp	00111$
+      0003AA                        731 00102$:
+                                    732 ;	/home/user/contiki/core/net/mac/framer-802154.c:201: if(!is_broadcast_addr(frame.fcf.dest_addr_mode, frame.dest_addr)) {
+      0003AA 74 0B            [12]  733 	mov	a,#0x0B
+      0003AC 2D               [12]  734 	add	a,r5
+      0003AD FE               [12]  735 	mov	r6,a
+      0003AE 7C 00            [12]  736 	mov	r4,#0x00
+      0003B0 7B 40            [12]  737 	mov	r3,#0x40
+      0003B2 C0 05            [24]  738 	push	ar5
+      0003B4 C0 01            [24]  739 	push	ar1
+      0003B6 C0 06            [24]  740 	push	ar6
+      0003B8 C0 04            [24]  741 	push	ar4
+      0003BA C0 03            [24]  742 	push	ar3
+      0003BC 8F 82            [24]  743 	mov	dpl,r7
+      0003BE 12r00r00         [24]  744 	lcall	_is_broadcast_addr
+      0003C1 AE 82            [24]  745 	mov	r6,dpl
+      0003C3 AF 83            [24]  746 	mov	r7,dph
+      0003C5 15 81            [12]  747 	dec	sp
+      0003C7 15 81            [12]  748 	dec	sp
+      0003C9 15 81            [12]  749 	dec	sp
+      0003CB D0 01            [24]  750 	pop	ar1
+      0003CD D0 05            [24]  751 	pop	ar5
+      0003CF EE               [12]  752 	mov	a,r6
+      0003D0 4F               [12]  753 	orl	a,r7
+      0003D1 70 22            [24]  754 	jnz	00107$
+                                    755 ;	/home/user/contiki/core/net/mac/framer-802154.c:202: packetbuf_set_addr(PACKETBUF_ADDR_RECEIVER, (rimeaddr_t *)&frame.dest_addr);
+      0003D3 74 0B            [12]  756 	mov	a,#0x0B
+      0003D5 2D               [12]  757 	add	a,r5
+      0003D6 FF               [12]  758 	mov	r7,a
+      0003D7 7E 00            [12]  759 	mov	r6,#0x00
+      0003D9 7C 40            [12]  760 	mov	r4,#0x40
+      0003DB C0 05            [24]  761 	push	ar5
+      0003DD C0 01            [24]  762 	push	ar1
+      0003DF C0 07            [24]  763 	push	ar7
+      0003E1 C0 06            [24]  764 	push	ar6
+      0003E3 C0 04            [24]  765 	push	ar4
+      0003E5 75 82 19         [24]  766 	mov	dpl,#0x19
+      0003E8 12r00r00         [24]  767 	lcall	_packetbuf_set_addr
+      0003EB 15 81            [12]  768 	dec	sp
+      0003ED 15 81            [12]  769 	dec	sp
+      0003EF 15 81            [12]  770 	dec	sp
+      0003F1 D0 01            [24]  771 	pop	ar1
+      0003F3 D0 05            [24]  772 	pop	ar5
+      0003F5                        773 00107$:
+                                    774 ;	/home/user/contiki/core/net/mac/framer-802154.c:205: packetbuf_set_addr(PACKETBUF_ADDR_SENDER, (rimeaddr_t *)&frame.src_addr);
+      0003F5 74 15            [12]  775 	mov	a,#0x15
+      0003F7 2D               [12]  776 	add	a,r5
+      0003F8 FF               [12]  777 	mov	r7,a
+      0003F9 7E 00            [12]  778 	mov	r6,#0x00
+      0003FB 7C 40            [12]  779 	mov	r4,#0x40
+      0003FD C0 05            [24]  780 	push	ar5
+      0003FF C0 01            [24]  781 	push	ar1
+      000401 C0 07            [24]  782 	push	ar7
+      000403 C0 06            [24]  783 	push	ar6
+      000405 C0 04            [24]  784 	push	ar4
+      000407 75 82 18         [24]  785 	mov	dpl,#0x18
+      00040A 12r00r00         [24]  786 	lcall	_packetbuf_set_addr
+      00040D 15 81            [12]  787 	dec	sp
+      00040F 15 81            [12]  788 	dec	sp
+      000411 15 81            [12]  789 	dec	sp
+      000413 D0 01            [24]  790 	pop	ar1
+      000415 D0 05            [24]  791 	pop	ar5
+                                    792 ;	/home/user/contiki/core/net/mac/framer-802154.c:206: packetbuf_set_attr(PACKETBUF_ATTR_PENDING, frame.fcf.frame_pending);
+      000417 74 02            [12]  793 	mov	a,#0x02
+      000419 2D               [12]  794 	add	a,r5
+      00041A F8               [12]  795 	mov	r0,a
+      00041B 86 07            [24]  796 	mov	ar7,@r0
+      00041D 7E 00            [12]  797 	mov	r6,#0x00
+      00041F C0 05            [24]  798 	push	ar5
+      000421 C0 01            [24]  799 	push	ar1
+      000423 C0 07            [24]  800 	push	ar7
+      000425 C0 06            [24]  801 	push	ar6
+      000427 75 82 12         [24]  802 	mov	dpl,#0x12
+      00042A 12r00r00         [24]  803 	lcall	_packetbuf_set_attr
+      00042D 15 81            [12]  804 	dec	sp
+      00042F 15 81            [12]  805 	dec	sp
+      000431 D0 01            [24]  806 	pop	ar1
+      000433 D0 05            [24]  807 	pop	ar5
+                                    808 ;	/home/user/contiki/core/net/mac/framer-802154.c:208: packetbuf_set_attr(PACKETBUF_ATTR_PACKET_ID, frame.seq);
+      000435 74 08            [12]  809 	mov	a,#0x08
+      000437 2D               [12]  810 	add	a,r5
+      000438 F8               [12]  811 	mov	r0,a
+      000439 86 07            [24]  812 	mov	ar7,@r0
+      00043B 7E 00            [12]  813 	mov	r6,#0x00
+      00043D C0 01            [24]  814 	push	ar1
+      00043F C0 07            [24]  815 	push	ar7
+      000441 C0 06            [24]  816 	push	ar6
+      000443 75 82 0D         [24]  817 	mov	dpl,#0x0D
+      000446 12r00r00         [24]  818 	lcall	_packetbuf_set_attr
+      000449 15 81            [12]  819 	dec	sp
+      00044B 15 81            [12]  820 	dec	sp
+      00044D D0 01            [24]  821 	pop	ar1
+                                    822 ;	/home/user/contiki/core/net/mac/framer-802154.c:215: return len - frame.payload_len;
+      00044F 87 07            [24]  823 	mov	ar7,@r1
+      000451 7E 00            [12]  824 	mov	r6,#0x00
+      000453 A8 81            [24]  825 	mov	r0,sp
+      000455 18               [12]  826 	dec	r0
+      000456 E6               [12]  827 	mov	a,@r0
+      000457 C3               [12]  828 	clr	c
+      000458 9F               [12]  829 	subb	a,r7
+      000459 FF               [12]  830 	mov	r7,a
+      00045A 08               [12]  831 	inc	r0
+      00045B E6               [12]  832 	mov	a,@r0
+      00045C 9E               [12]  833 	subb	a,r6
+      00045D FE               [12]  834 	mov	r6,a
+      00045E 8F 82            [24]  835 	mov	dpl,r7
+      000460 8E 83            [24]  836 	mov	dph,r6
+      000462 80 03            [24]  837 	sjmp	00111$
+      000464                        838 00109$:
+                                    839 ;	/home/user/contiki/core/net/mac/framer-802154.c:217: return FRAMER_FAILED;
+      000464 90 FF FF         [24]  840 	mov	dptr,#0xFFFF
+      000467                        841 00111$:
+      000467 E5 81            [12]  842 	mov	a,sp
+      000469 24 CA            [12]  843 	add	a,#0xCA
+      00046B F5 81            [12]  844 	mov	sp,a
+      00046D 22               [24]  845 	ret
+                                    846 	.area CSEG    (CODE)
+                                    847 	.area CONST   (CODE)
+      000000                        848 _mac_dst_pan_id:
+      000000 49 54                  849 	.byte #0x49,#0x54	; 21577
+      000002                        850 _mac_src_pan_id:
+      000002 49 54                  851 	.byte #0x49,#0x54	; 21577
+      000004                        852 _framer_802154:
+      000004r4Ds00                  853 	.byte _create,(_create >> 8)
+      000006rDFs02                  854 	.byte _parse,(_parse >> 8)
+                                    855 	.area XINIT   (CODE)
+      000000                        856 __xinit__initialized:
+      000000 00                     857 	.db #0x00	; 0
+                                    858 	.area CABS    (ABS,CODE)

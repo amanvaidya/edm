@@ -1,0 +1,2654 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:36 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module csma
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _csma_driver
+                                     13 	.globl _memb_free
+                                     14 	.globl _memb_alloc
+                                     15 	.globl _memb_init
+                                     16 	.globl _list_item_next
+                                     17 	.globl _list_length
+                                     18 	.globl _list_remove
+                                     19 	.globl _list_add
+                                     20 	.globl _list_push
+                                     21 	.globl _list_head
+                                     22 	.globl _list_init
+                                     23 	.globl _random_rand
+                                     24 	.globl _ctimer_stop
+                                     25 	.globl _ctimer_set
+                                     26 	.globl _queuebuf_attr
+                                     27 	.globl _queuebuf_free
+                                     28 	.globl _queuebuf_update_attr_from_packetbuf
+                                     29 	.globl _queuebuf_new_from_packetbuf
+                                     30 	.globl _packetbuf_addr
+                                     31 	.globl _packetbuf_attr
+                                     32 	.globl _packetbuf_set_attr
+                                     33 	.globl _rimeaddr_cmp
+                                     34 	.globl _rimeaddr_copy
+                                     35 	.globl _mac_call_sent_callback
+                                     36 ;--------------------------------------------------------
+                                     37 ; special function registers
+                                     38 ;--------------------------------------------------------
+                                     39 	.area RSEG    (ABS,DATA)
+      000000                         40 	.org 0x0000
+                                     41 ;--------------------------------------------------------
+                                     42 ; special function bits
+                                     43 ;--------------------------------------------------------
+                                     44 	.area RSEG    (ABS,DATA)
+      000000                         45 	.org 0x0000
+                                     46 ;--------------------------------------------------------
+                                     47 ; overlayable register banks
+                                     48 ;--------------------------------------------------------
+                                     49 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         50 	.ds 8
+                                     51 ;--------------------------------------------------------
+                                     52 ; internal ram data
+                                     53 ;--------------------------------------------------------
+                                     54 	.area DSEG    (DATA)
+                                     55 ;--------------------------------------------------------
+                                     56 ; overlayable items in internal ram 
+                                     57 ;--------------------------------------------------------
+                                     58 ;--------------------------------------------------------
+                                     59 ; indirectly addressable internal ram data
+                                     60 ;--------------------------------------------------------
+                                     61 	.area ISEG    (DATA)
+                                     62 ;--------------------------------------------------------
+                                     63 ; absolute internal ram data
+                                     64 ;--------------------------------------------------------
+                                     65 	.area IABS    (ABS,DATA)
+                                     66 	.area IABS    (ABS,DATA)
+                                     67 ;--------------------------------------------------------
+                                     68 ; bit data
+                                     69 ;--------------------------------------------------------
+                                     70 	.area BSEG    (BIT)
+                                     71 ;--------------------------------------------------------
+                                     72 ; paged external ram data
+                                     73 ;--------------------------------------------------------
+                                     74 	.area PSEG    (PAG,XDATA)
+                                     75 ;--------------------------------------------------------
+                                     76 ; external ram data
+                                     77 ;--------------------------------------------------------
+                                     78 	.area XSEG    (XDATA)
+      000000                         79 _neighbor_memb_memb_count:
+      000000                         80 	.ds 2
+      000002                         81 _neighbor_memb_memb_mem:
+      000002                         82 	.ds 70
+      000048                         83 _packet_memb_memb_count:
+      000048                         84 	.ds 8
+      000050                         85 _packet_memb_memb_mem:
+      000050                         86 	.ds 72
+      000098                         87 _metadata_memb_memb_count:
+      000098                         88 	.ds 8
+      0000A0                         89 _metadata_memb_memb_mem:
+      0000A0                         90 	.ds 48
+      0000D0                         91 _send_packet_seqno_1_203:
+      0000D0                         92 	.ds 2
+                                     93 ;--------------------------------------------------------
+                                     94 ; absolute external ram data
+                                     95 ;--------------------------------------------------------
+                                     96 	.area XABS    (ABS,XDATA)
+                                     97 ;--------------------------------------------------------
+                                     98 ; external initialized ram data
+                                     99 ;--------------------------------------------------------
+                                    100 	.area XISEG   (XDATA)
+      000000                        101 _neighbor_memb:
+      000000                        102 	.ds 10
+      00000A                        103 _packet_memb:
+      00000A                        104 	.ds 10
+      000014                        105 _metadata_memb:
+      000014                        106 	.ds 10
+      00001E                        107 _neighbor_list_list:
+      00001E                        108 	.ds 3
+      000021                        109 _neighbor_list:
+      000021                        110 	.ds 3
+                                    111 	.area HOME    (CODE)
+                                    112 	.area GSINIT0 (CODE)
+                                    113 	.area GSINIT1 (CODE)
+                                    114 	.area GSINIT2 (CODE)
+                                    115 	.area GSINIT3 (CODE)
+                                    116 	.area GSINIT4 (CODE)
+                                    117 	.area GSINIT5 (CODE)
+                                    118 	.area GSINIT  (CODE)
+                                    119 	.area GSFINAL (CODE)
+                                    120 	.area CSEG    (CODE)
+                                    121 ;--------------------------------------------------------
+                                    122 ; global & static initialisations
+                                    123 ;--------------------------------------------------------
+                                    124 	.area HOME    (CODE)
+                                    125 	.area GSINIT  (CODE)
+                                    126 	.area GSFINAL (CODE)
+                                    127 	.area GSINIT  (CODE)
+                                    128 ;--------------------------------------------------------
+                                    129 ; Home
+                                    130 ;--------------------------------------------------------
+                                    131 	.area HOME    (CODE)
+                                    132 	.area HOME    (CODE)
+                                    133 ;--------------------------------------------------------
+                                    134 ; code
+                                    135 ;--------------------------------------------------------
+                                    136 	.area CSEG    (CODE)
+                                    137 ;------------------------------------------------------------
+                                    138 ;Allocation info for local variables in function 'neighbor_queue_from_addr'
+                                    139 ;------------------------------------------------------------
+                                    140 ;addr                      Allocated to stack - sp -2
+                                    141 ;n                         Allocated to registers r2 r3 r4 
+                                    142 ;------------------------------------------------------------
+                                    143 ;	/home/user/contiki/core/net/mac/csma.c:122: neighbor_queue_from_addr(const rimeaddr_t *addr)
+                                    144 ;	-----------------------------------------
+                                    145 ;	 function neighbor_queue_from_addr
+                                    146 ;	-----------------------------------------
+      000000                        147 _neighbor_queue_from_addr:
+                           000007   148 	ar7 = 0x07
+                           000006   149 	ar6 = 0x06
+                           000005   150 	ar5 = 0x05
+                           000004   151 	ar4 = 0x04
+                           000003   152 	ar3 = 0x03
+                           000002   153 	ar2 = 0x02
+                           000001   154 	ar1 = 0x01
+                           000000   155 	ar0 = 0x00
+      000000 C0 82            [24]  156 	push	dpl
+      000002 C0 83            [24]  157 	push	dph
+      000004 C0 F0            [24]  158 	push	b
+                                    159 ;	/home/user/contiki/core/net/mac/csma.c:124: struct neighbor_queue *n = list_head(neighbor_list);
+      000006 90r00r21         [24]  160 	mov	dptr,#_neighbor_list
+      000009 E0               [24]  161 	movx	a,@dptr
+      00000A FA               [12]  162 	mov	r2,a
+      00000B A3               [24]  163 	inc	dptr
+      00000C E0               [24]  164 	movx	a,@dptr
+      00000D FB               [12]  165 	mov	r3,a
+      00000E A3               [24]  166 	inc	dptr
+      00000F E0               [24]  167 	movx	a,@dptr
+      000010 FC               [12]  168 	mov	r4,a
+      000011 8A 82            [24]  169 	mov	dpl,r2
+      000013 8B 83            [24]  170 	mov	dph,r3
+      000015 8C F0            [24]  171 	mov	b,r4
+      000017 12r00r00         [24]  172 	lcall	_list_head
+      00001A AA 82            [24]  173 	mov	r2,dpl
+      00001C AB 83            [24]  174 	mov	r3,dph
+      00001E AC F0            [24]  175 	mov	r4,b
+                                    176 ;	/home/user/contiki/core/net/mac/csma.c:125: while(n != NULL) {
+      000020                        177 00103$:
+      000020 EA               [12]  178 	mov	a,r2
+      000021 4B               [12]  179 	orl	a,r3
+      000022 60 61            [24]  180 	jz	00105$
+                                    181 ;	/home/user/contiki/core/net/mac/csma.c:126: if(rimeaddr_cmp(&n->addr, addr)) {
+      000024 74 03            [12]  182 	mov	a,#0x03
+      000026 2A               [12]  183 	add	a,r2
+      000027 FD               [12]  184 	mov	r5,a
+      000028 E4               [12]  185 	clr	a
+      000029 3B               [12]  186 	addc	a,r3
+      00002A FE               [12]  187 	mov	r6,a
+      00002B 8C 07            [24]  188 	mov	ar7,r4
+      00002D C0 04            [24]  189 	push	ar4
+      00002F C0 03            [24]  190 	push	ar3
+      000031 C0 02            [24]  191 	push	ar2
+      000033 E5 81            [12]  192 	mov	a,sp
+      000035 24 FB            [12]  193 	add	a,#0xfb
+      000037 F8               [12]  194 	mov	r0,a
+      000038 E6               [12]  195 	mov	a,@r0
+      000039 C0 E0            [24]  196 	push	acc
+      00003B 08               [12]  197 	inc	r0
+      00003C E6               [12]  198 	mov	a,@r0
+      00003D C0 E0            [24]  199 	push	acc
+      00003F 08               [12]  200 	inc	r0
+      000040 E6               [12]  201 	mov	a,@r0
+      000041 C0 E0            [24]  202 	push	acc
+      000043 8D 82            [24]  203 	mov	dpl,r5
+      000045 8E 83            [24]  204 	mov	dph,r6
+      000047 8F F0            [24]  205 	mov	b,r7
+      000049 12r00r00         [24]  206 	lcall	_rimeaddr_cmp
+      00004C AE 82            [24]  207 	mov	r6,dpl
+      00004E AF 83            [24]  208 	mov	r7,dph
+      000050 15 81            [12]  209 	dec	sp
+      000052 15 81            [12]  210 	dec	sp
+      000054 15 81            [12]  211 	dec	sp
+      000056 D0 02            [24]  212 	pop	ar2
+      000058 D0 03            [24]  213 	pop	ar3
+      00005A D0 04            [24]  214 	pop	ar4
+      00005C EE               [12]  215 	mov	a,r6
+      00005D 4F               [12]  216 	orl	a,r7
+      00005E 60 08            [24]  217 	jz	00102$
+                                    218 ;	/home/user/contiki/core/net/mac/csma.c:127: return n;
+      000060 8A 82            [24]  219 	mov	dpl,r2
+      000062 8B 83            [24]  220 	mov	dph,r3
+      000064 8C F0            [24]  221 	mov	b,r4
+      000066 80 23            [24]  222 	sjmp	00106$
+      000068                        223 00102$:
+                                    224 ;	/home/user/contiki/core/net/mac/csma.c:129: n = list_item_next(n);
+      000068 8A 05            [24]  225 	mov	ar5,r2
+      00006A 8B 06            [24]  226 	mov	ar6,r3
+      00006C 8C 07            [24]  227 	mov	ar7,r4
+      00006E 8D 82            [24]  228 	mov	dpl,r5
+      000070 8E 83            [24]  229 	mov	dph,r6
+      000072 8F F0            [24]  230 	mov	b,r7
+      000074 12r00r00         [24]  231 	lcall	_list_item_next
+      000077 AD 82            [24]  232 	mov	r5,dpl
+      000079 AE 83            [24]  233 	mov	r6,dph
+      00007B AF F0            [24]  234 	mov	r7,b
+      00007D 8D 02            [24]  235 	mov	ar2,r5
+      00007F 8E 03            [24]  236 	mov	ar3,r6
+      000081 8F 04            [24]  237 	mov	ar4,r7
+      000083 80 9B            [24]  238 	sjmp	00103$
+      000085                        239 00105$:
+                                    240 ;	/home/user/contiki/core/net/mac/csma.c:131: return NULL;
+      000085 90 00 00         [24]  241 	mov	dptr,#0x0000
+      000088 75 F0 00         [24]  242 	mov	b,#0x00
+      00008B                        243 00106$:
+      00008B 15 81            [12]  244 	dec	sp
+      00008D 15 81            [12]  245 	dec	sp
+      00008F 15 81            [12]  246 	dec	sp
+      000091 22               [24]  247 	ret
+                                    248 ;------------------------------------------------------------
+                                    249 ;Allocation info for local variables in function 'default_timebase'
+                                    250 ;------------------------------------------------------------
+                                    251 ;time                      Allocated to registers r6 r7 
+                                    252 ;------------------------------------------------------------
+                                    253 ;	/home/user/contiki/core/net/mac/csma.c:135: default_timebase(void)
+                                    254 ;	-----------------------------------------
+                                    255 ;	 function default_timebase
+                                    256 ;	-----------------------------------------
+      000092                        257 _default_timebase:
+                                    258 ;	/home/user/contiki/core/net/mac/csma.c:140: time = NETSTACK_RDC.channel_check_interval();
+      000092 90r00r0F         [24]  259 	mov	dptr,#(_nullrdc_driver + 0x000f)
+      000095 E4               [12]  260 	clr	a
+      000096 93               [24]  261 	movc	a,@a+dptr
+      000097 FE               [12]  262 	mov	r6,a
+      000098 A3               [24]  263 	inc	dptr
+      000099 E4               [12]  264 	clr	a
+      00009A 93               [24]  265 	movc	a,@a+dptr
+      00009B FF               [12]  266 	mov	r7,a
+      00009C 8E 82            [24]  267 	mov	dpl,r6
+      00009E 8F 83            [24]  268 	mov	dph,r7
+      0000A0 12r00r00         [24]  269 	lcall	__sdcc_call_dptr
+      0000A3 AE 82            [24]  270 	mov	r6,dpl
+      0000A5 AF 83            [24]  271 	mov	r7,dph
+                                    272 ;	/home/user/contiki/core/net/mac/csma.c:145: if(time == 0) {
+      0000A7 EE               [12]  273 	mov	a,r6
+      0000A8 4F               [12]  274 	orl	a,r7
+                                    275 ;	/home/user/contiki/core/net/mac/csma.c:146: time = CLOCK_SECOND / NETSTACK_RDC_CHANNEL_CHECK_RATE;
+      0000A9 70 03            [24]  276 	jnz	00102$
+      0000AB 7E 10            [12]  277 	mov	r6,#0x10
+      0000AD FF               [12]  278 	mov	r7,a
+      0000AE                        279 00102$:
+                                    280 ;	/home/user/contiki/core/net/mac/csma.c:148: return time;
+      0000AE 8E 82            [24]  281 	mov	dpl,r6
+      0000B0 8F 83            [24]  282 	mov	dph,r7
+      0000B2 22               [24]  283 	ret
+                                    284 ;------------------------------------------------------------
+                                    285 ;Allocation info for local variables in function 'transmit_packet_list'
+                                    286 ;------------------------------------------------------------
+                                    287 ;ptr                       Allocated to registers r5 r6 r7 
+                                    288 ;n                         Allocated to registers r5 r6 r7 
+                                    289 ;q                         Allocated to stack - sp -2
+                                    290 ;------------------------------------------------------------
+                                    291 ;	/home/user/contiki/core/net/mac/csma.c:152: transmit_packet_list(void *ptr)
+                                    292 ;	-----------------------------------------
+                                    293 ;	 function transmit_packet_list
+                                    294 ;	-----------------------------------------
+      0000B3                        295 _transmit_packet_list:
+      0000B3 05 81            [12]  296 	inc	sp
+      0000B5 05 81            [12]  297 	inc	sp
+      0000B7 05 81            [12]  298 	inc	sp
+      0000B9 AD 82            [24]  299 	mov	r5,dpl
+      0000BB AE 83            [24]  300 	mov	r6,dph
+      0000BD AF F0            [24]  301 	mov	r7,b
+                                    302 ;	/home/user/contiki/core/net/mac/csma.c:154: struct neighbor_queue *n = ptr;
+                                    303 ;	/home/user/contiki/core/net/mac/csma.c:155: if(n) {
+      0000BF ED               [12]  304 	mov	a,r5
+      0000C0 4E               [12]  305 	orl	a,r6
+      0000C1 70 03            [24]  306 	jnz	00113$
+      0000C3 02r01r4E         [24]  307 	ljmp	00105$
+      0000C6                        308 00113$:
+                                    309 ;	/home/user/contiki/core/net/mac/csma.c:156: struct rdc_buf_list *q = list_head(n->queued_packet_list);
+      0000C6 74 20            [12]  310 	mov	a,#0x20
+      0000C8 2D               [12]  311 	add	a,r5
+      0000C9 FA               [12]  312 	mov	r2,a
+      0000CA E4               [12]  313 	clr	a
+      0000CB 3E               [12]  314 	addc	a,r6
+      0000CC FB               [12]  315 	mov	r3,a
+      0000CD 8F 04            [24]  316 	mov	ar4,r7
+      0000CF 8A 82            [24]  317 	mov	dpl,r2
+      0000D1 8B 83            [24]  318 	mov	dph,r3
+      0000D3 8C F0            [24]  319 	mov	b,r4
+      0000D5 12r00r00         [24]  320 	lcall	__gptrget
+      0000D8 FA               [12]  321 	mov	r2,a
+      0000D9 A3               [24]  322 	inc	dptr
+      0000DA 12r00r00         [24]  323 	lcall	__gptrget
+      0000DD FB               [12]  324 	mov	r3,a
+      0000DE A3               [24]  325 	inc	dptr
+      0000DF 12r00r00         [24]  326 	lcall	__gptrget
+      0000E2 FC               [12]  327 	mov	r4,a
+      0000E3 8A 82            [24]  328 	mov	dpl,r2
+      0000E5 8B 83            [24]  329 	mov	dph,r3
+      0000E7 8C F0            [24]  330 	mov	b,r4
+      0000E9 C0 07            [24]  331 	push	ar7
+      0000EB C0 06            [24]  332 	push	ar6
+      0000ED C0 05            [24]  333 	push	ar5
+      0000EF 12r00r00         [24]  334 	lcall	_list_head
+      0000F2 AA 82            [24]  335 	mov	r2,dpl
+      0000F4 AB 83            [24]  336 	mov	r3,dph
+      0000F6 AC F0            [24]  337 	mov	r4,b
+      0000F8 D0 05            [24]  338 	pop	ar5
+      0000FA D0 06            [24]  339 	pop	ar6
+      0000FC D0 07            [24]  340 	pop	ar7
+      0000FE A8 81            [24]  341 	mov	r0,sp
+      000100 18               [12]  342 	dec	r0
+      000101 18               [12]  343 	dec	r0
+      000102 A6 02            [24]  344 	mov	@r0,ar2
+      000104 08               [12]  345 	inc	r0
+      000105 A6 03            [24]  346 	mov	@r0,ar3
+      000107 08               [12]  347 	inc	r0
+      000108 A6 04            [24]  348 	mov	@r0,ar4
+                                    349 ;	/home/user/contiki/core/net/mac/csma.c:157: if(q != NULL) {
+      00010A A8 81            [24]  350 	mov	r0,sp
+      00010C 18               [12]  351 	dec	r0
+      00010D 18               [12]  352 	dec	r0
+      00010E E6               [12]  353 	mov	a,@r0
+      00010F 08               [12]  354 	inc	r0
+      000110 46               [12]  355 	orl	a,@r0
+      000111 60 3B            [24]  356 	jz	00105$
+                                    357 ;	/home/user/contiki/core/net/mac/csma.c:161: NETSTACK_RDC.send_list(packet_sent, n, q);
+      000113 90r00r07         [24]  358 	mov	dptr,#(_nullrdc_driver + 0x0007)
+      000116 E4               [12]  359 	clr	a
+      000117 93               [24]  360 	movc	a,@a+dptr
+      000118 FB               [12]  361 	mov	r3,a
+      000119 A3               [24]  362 	inc	dptr
+      00011A E4               [12]  363 	clr	a
+      00011B 93               [24]  364 	movc	a,@a+dptr
+      00011C FC               [12]  365 	mov	r4,a
+      00011D C0 04            [24]  366 	push	ar4
+      00011F C0 03            [24]  367 	push	ar3
+      000121 E5 81            [12]  368 	mov	a,sp
+      000123 24 FC            [12]  369 	add	a,#0xfc
+      000125 F8               [12]  370 	mov	r0,a
+      000126 E6               [12]  371 	mov	a,@r0
+      000127 C0 E0            [24]  372 	push	acc
+      000129 08               [12]  373 	inc	r0
+      00012A E6               [12]  374 	mov	a,@r0
+      00012B C0 E0            [24]  375 	push	acc
+      00012D 08               [12]  376 	inc	r0
+      00012E E6               [12]  377 	mov	a,@r0
+      00012F C0 E0            [24]  378 	push	acc
+      000131 C0 05            [24]  379 	push	ar5
+      000133 C0 06            [24]  380 	push	ar6
+      000135 C0 07            [24]  381 	push	ar7
+      000137 12r01r3C         [24]  382 	lcall	00115$
+      00013A 80 08            [24]  383 	sjmp	00116$
+      00013C                        384 00115$:
+      00013C C0 03            [24]  385 	push	ar3
+      00013E C0 04            [24]  386 	push	ar4
+      000140 90r03rD6         [24]  387 	mov	dptr,#_packet_sent
+      000143 22               [24]  388 	ret
+      000144                        389 00116$:
+      000144 E5 81            [12]  390 	mov	a,sp
+      000146 24 FA            [12]  391 	add	a,#0xfa
+      000148 F5 81            [12]  392 	mov	sp,a
+      00014A D0 03            [24]  393 	pop	ar3
+      00014C D0 04            [24]  394 	pop	ar4
+      00014E                        395 00105$:
+      00014E 15 81            [12]  396 	dec	sp
+      000150 15 81            [12]  397 	dec	sp
+      000152 15 81            [12]  398 	dec	sp
+      000154 22               [24]  399 	ret
+                                    400 ;------------------------------------------------------------
+                                    401 ;Allocation info for local variables in function 'free_packet'
+                                    402 ;------------------------------------------------------------
+                                    403 ;p                         Allocated to stack - sp -10
+                                    404 ;n                         Allocated to stack - sp -5
+                                    405 ;sloc0                     Allocated to stack - sp -2
+                                    406 ;------------------------------------------------------------
+                                    407 ;	/home/user/contiki/core/net/mac/csma.c:167: free_packet(struct neighbor_queue *n, struct rdc_buf_list *p)
+                                    408 ;	-----------------------------------------
+                                    409 ;	 function free_packet
+                                    410 ;	-----------------------------------------
+      000155                        411 _free_packet:
+      000155 C0 82            [24]  412 	push	dpl
+      000157 C0 83            [24]  413 	push	dph
+      000159 C0 F0            [24]  414 	push	b
+      00015B 05 81            [12]  415 	inc	sp
+      00015D 05 81            [12]  416 	inc	sp
+      00015F 05 81            [12]  417 	inc	sp
+                                    418 ;	/home/user/contiki/core/net/mac/csma.c:169: if(p != NULL) {
+      000161 E5 81            [12]  419 	mov	a,sp
+      000163 24 F6            [12]  420 	add	a,#0xf6
+      000165 F8               [12]  421 	mov	r0,a
+      000166 E6               [12]  422 	mov	a,@r0
+      000167 08               [12]  423 	inc	r0
+      000168 46               [12]  424 	orl	a,@r0
+      000169 70 03            [24]  425 	jnz	00114$
+      00016B 02r03rCF         [24]  426 	ljmp	00106$
+      00016E                        427 00114$:
+                                    428 ;	/home/user/contiki/core/net/mac/csma.c:171: list_remove(n->queued_packet_list, p);
+      00016E E5 81            [12]  429 	mov	a,sp
+      000170 24 F6            [12]  430 	add	a,#0xf6
+      000172 F8               [12]  431 	mov	r0,a
+      000173 A9 81            [24]  432 	mov	r1,sp
+      000175 19               [12]  433 	dec	r1
+      000176 19               [12]  434 	dec	r1
+      000177 E6               [12]  435 	mov	a,@r0
+      000178 F7               [12]  436 	mov	@r1,a
+      000179 08               [12]  437 	inc	r0
+      00017A 09               [12]  438 	inc	r1
+      00017B E6               [12]  439 	mov	a,@r0
+      00017C F7               [12]  440 	mov	@r1,a
+      00017D 08               [12]  441 	inc	r0
+      00017E 09               [12]  442 	inc	r1
+      00017F E6               [12]  443 	mov	a,@r0
+      000180 F7               [12]  444 	mov	@r1,a
+      000181 E5 81            [12]  445 	mov	a,sp
+      000183 24 FB            [12]  446 	add	a,#0xfb
+      000185 F8               [12]  447 	mov	r0,a
+      000186 74 20            [12]  448 	mov	a,#0x20
+      000188 26               [12]  449 	add	a,@r0
+      000189 FD               [12]  450 	mov	r5,a
+      00018A E4               [12]  451 	clr	a
+      00018B 08               [12]  452 	inc	r0
+      00018C 36               [12]  453 	addc	a,@r0
+      00018D FE               [12]  454 	mov	r6,a
+      00018E 08               [12]  455 	inc	r0
+      00018F 86 07            [24]  456 	mov	ar7,@r0
+      000191 8D 82            [24]  457 	mov	dpl,r5
+      000193 8E 83            [24]  458 	mov	dph,r6
+      000195 8F F0            [24]  459 	mov	b,r7
+      000197 12r00r00         [24]  460 	lcall	__gptrget
+      00019A FA               [12]  461 	mov	r2,a
+      00019B A3               [24]  462 	inc	dptr
+      00019C 12r00r00         [24]  463 	lcall	__gptrget
+      00019F FB               [12]  464 	mov	r3,a
+      0001A0 A3               [24]  465 	inc	dptr
+      0001A1 12r00r00         [24]  466 	lcall	__gptrget
+      0001A4 FC               [12]  467 	mov	r4,a
+      0001A5 C0 07            [24]  468 	push	ar7
+      0001A7 C0 06            [24]  469 	push	ar6
+      0001A9 C0 05            [24]  470 	push	ar5
+      0001AB E5 81            [12]  471 	mov	a,sp
+      0001AD 24 FB            [12]  472 	add	a,#0xfb
+      0001AF F8               [12]  473 	mov	r0,a
+      0001B0 E6               [12]  474 	mov	a,@r0
+      0001B1 C0 E0            [24]  475 	push	acc
+      0001B3 08               [12]  476 	inc	r0
+      0001B4 E6               [12]  477 	mov	a,@r0
+      0001B5 C0 E0            [24]  478 	push	acc
+      0001B7 08               [12]  479 	inc	r0
+      0001B8 E6               [12]  480 	mov	a,@r0
+      0001B9 C0 E0            [24]  481 	push	acc
+      0001BB 8A 82            [24]  482 	mov	dpl,r2
+      0001BD 8B 83            [24]  483 	mov	dph,r3
+      0001BF 8C F0            [24]  484 	mov	b,r4
+      0001C1 12r00r00         [24]  485 	lcall	_list_remove
+      0001C4 15 81            [12]  486 	dec	sp
+      0001C6 15 81            [12]  487 	dec	sp
+      0001C8 15 81            [12]  488 	dec	sp
+      0001CA D0 05            [24]  489 	pop	ar5
+      0001CC D0 06            [24]  490 	pop	ar6
+      0001CE D0 07            [24]  491 	pop	ar7
+                                    492 ;	/home/user/contiki/core/net/mac/csma.c:173: queuebuf_free(p->buf);
+      0001D0 E5 81            [12]  493 	mov	a,sp
+      0001D2 24 F6            [12]  494 	add	a,#0xf6
+      0001D4 F8               [12]  495 	mov	r0,a
+      0001D5 A9 81            [24]  496 	mov	r1,sp
+      0001D7 19               [12]  497 	dec	r1
+      0001D8 19               [12]  498 	dec	r1
+      0001D9 E6               [12]  499 	mov	a,@r0
+      0001DA F7               [12]  500 	mov	@r1,a
+      0001DB 08               [12]  501 	inc	r0
+      0001DC 09               [12]  502 	inc	r1
+      0001DD E6               [12]  503 	mov	a,@r0
+      0001DE F7               [12]  504 	mov	@r1,a
+      0001DF 08               [12]  505 	inc	r0
+      0001E0 09               [12]  506 	inc	r1
+      0001E1 E6               [12]  507 	mov	a,@r0
+      0001E2 F7               [12]  508 	mov	@r1,a
+      0001E3 A8 81            [24]  509 	mov	r0,sp
+      0001E5 18               [12]  510 	dec	r0
+      0001E6 18               [12]  511 	dec	r0
+      0001E7 74 03            [12]  512 	mov	a,#0x03
+      0001E9 26               [12]  513 	add	a,@r0
+      0001EA FA               [12]  514 	mov	r2,a
+      0001EB E4               [12]  515 	clr	a
+      0001EC 08               [12]  516 	inc	r0
+      0001ED 36               [12]  517 	addc	a,@r0
+      0001EE FB               [12]  518 	mov	r3,a
+      0001EF 08               [12]  519 	inc	r0
+      0001F0 86 04            [24]  520 	mov	ar4,@r0
+      0001F2 8A 82            [24]  521 	mov	dpl,r2
+      0001F4 8B 83            [24]  522 	mov	dph,r3
+      0001F6 8C F0            [24]  523 	mov	b,r4
+      0001F8 12r00r00         [24]  524 	lcall	__gptrget
+      0001FB FA               [12]  525 	mov	r2,a
+      0001FC A3               [24]  526 	inc	dptr
+      0001FD 12r00r00         [24]  527 	lcall	__gptrget
+      000200 FB               [12]  528 	mov	r3,a
+      000201 A3               [24]  529 	inc	dptr
+      000202 12r00r00         [24]  530 	lcall	__gptrget
+      000205 FC               [12]  531 	mov	r4,a
+      000206 8A 82            [24]  532 	mov	dpl,r2
+      000208 8B 83            [24]  533 	mov	dph,r3
+      00020A 8C F0            [24]  534 	mov	b,r4
+      00020C C0 07            [24]  535 	push	ar7
+      00020E C0 06            [24]  536 	push	ar6
+      000210 C0 05            [24]  537 	push	ar5
+      000212 12r00r00         [24]  538 	lcall	_queuebuf_free
+      000215 D0 05            [24]  539 	pop	ar5
+      000217 D0 06            [24]  540 	pop	ar6
+      000219 D0 07            [24]  541 	pop	ar7
+                                    542 ;	/home/user/contiki/core/net/mac/csma.c:174: memb_free(&metadata_memb, p->ptr);
+      00021B A8 81            [24]  543 	mov	r0,sp
+      00021D 18               [12]  544 	dec	r0
+      00021E 18               [12]  545 	dec	r0
+      00021F 74 06            [12]  546 	mov	a,#0x06
+      000221 26               [12]  547 	add	a,@r0
+      000222 FA               [12]  548 	mov	r2,a
+      000223 E4               [12]  549 	clr	a
+      000224 08               [12]  550 	inc	r0
+      000225 36               [12]  551 	addc	a,@r0
+      000226 FB               [12]  552 	mov	r3,a
+      000227 08               [12]  553 	inc	r0
+      000228 86 04            [24]  554 	mov	ar4,@r0
+      00022A 8A 82            [24]  555 	mov	dpl,r2
+      00022C 8B 83            [24]  556 	mov	dph,r3
+      00022E 8C F0            [24]  557 	mov	b,r4
+      000230 12r00r00         [24]  558 	lcall	__gptrget
+      000233 FA               [12]  559 	mov	r2,a
+      000234 A3               [24]  560 	inc	dptr
+      000235 12r00r00         [24]  561 	lcall	__gptrget
+      000238 FB               [12]  562 	mov	r3,a
+      000239 A3               [24]  563 	inc	dptr
+      00023A 12r00r00         [24]  564 	lcall	__gptrget
+      00023D FC               [12]  565 	mov	r4,a
+      00023E C0 07            [24]  566 	push	ar7
+      000240 C0 06            [24]  567 	push	ar6
+      000242 C0 05            [24]  568 	push	ar5
+      000244 C0 02            [24]  569 	push	ar2
+      000246 C0 03            [24]  570 	push	ar3
+      000248 C0 04            [24]  571 	push	ar4
+      00024A 90r00r14         [24]  572 	mov	dptr,#_metadata_memb
+      00024D 75 F0 00         [24]  573 	mov	b,#0x00
+      000250 12r00r00         [24]  574 	lcall	_memb_free
+      000253 15 81            [12]  575 	dec	sp
+      000255 15 81            [12]  576 	dec	sp
+      000257 15 81            [12]  577 	dec	sp
+      000259 D0 05            [24]  578 	pop	ar5
+      00025B D0 06            [24]  579 	pop	ar6
+      00025D D0 07            [24]  580 	pop	ar7
+                                    581 ;	/home/user/contiki/core/net/mac/csma.c:175: memb_free(&packet_memb, p);
+      00025F E5 81            [12]  582 	mov	a,sp
+      000261 24 F6            [12]  583 	add	a,#0xf6
+      000263 F8               [12]  584 	mov	r0,a
+      000264 86 02            [24]  585 	mov	ar2,@r0
+      000266 08               [12]  586 	inc	r0
+      000267 86 03            [24]  587 	mov	ar3,@r0
+      000269 08               [12]  588 	inc	r0
+      00026A 86 04            [24]  589 	mov	ar4,@r0
+      00026C C0 07            [24]  590 	push	ar7
+      00026E C0 06            [24]  591 	push	ar6
+      000270 C0 05            [24]  592 	push	ar5
+      000272 C0 02            [24]  593 	push	ar2
+      000274 C0 03            [24]  594 	push	ar3
+      000276 C0 04            [24]  595 	push	ar4
+      000278 90r00r0A         [24]  596 	mov	dptr,#_packet_memb
+      00027B 75 F0 00         [24]  597 	mov	b,#0x00
+      00027E 12r00r00         [24]  598 	lcall	_memb_free
+      000281 15 81            [12]  599 	dec	sp
+      000283 15 81            [12]  600 	dec	sp
+      000285 15 81            [12]  601 	dec	sp
+      000287 D0 05            [24]  602 	pop	ar5
+      000289 D0 06            [24]  603 	pop	ar6
+      00028B D0 07            [24]  604 	pop	ar7
+                                    605 ;	/home/user/contiki/core/net/mac/csma.c:178: if(list_head(n->queued_packet_list) != NULL) {
+      00028D 8D 82            [24]  606 	mov	dpl,r5
+      00028F 8E 83            [24]  607 	mov	dph,r6
+      000291 8F F0            [24]  608 	mov	b,r7
+      000293 12r00r00         [24]  609 	lcall	__gptrget
+      000296 FD               [12]  610 	mov	r5,a
+      000297 A3               [24]  611 	inc	dptr
+      000298 12r00r00         [24]  612 	lcall	__gptrget
+      00029B FE               [12]  613 	mov	r6,a
+      00029C A3               [24]  614 	inc	dptr
+      00029D 12r00r00         [24]  615 	lcall	__gptrget
+      0002A0 FF               [12]  616 	mov	r7,a
+      0002A1 8D 82            [24]  617 	mov	dpl,r5
+      0002A3 8E 83            [24]  618 	mov	dph,r6
+      0002A5 8F F0            [24]  619 	mov	b,r7
+      0002A7 12r00r00         [24]  620 	lcall	_list_head
+      0002AA AD 82            [24]  621 	mov	r5,dpl
+      0002AC AE 83            [24]  622 	mov	r6,dph
+      0002AE AF F0            [24]  623 	mov	r7,b
+      0002B0 ED               [12]  624 	mov	a,r5
+      0002B1 4E               [12]  625 	orl	a,r6
+      0002B2 70 03            [24]  626 	jnz	00115$
+      0002B4 02r03r67         [24]  627 	ljmp	00102$
+      0002B7                        628 00115$:
+                                    629 ;	/home/user/contiki/core/net/mac/csma.c:180: n->transmissions = 0;
+      0002B7 E5 81            [12]  630 	mov	a,sp
+      0002B9 24 FB            [12]  631 	add	a,#0xfb
+      0002BB F8               [12]  632 	mov	r0,a
+      0002BC 74 1A            [12]  633 	mov	a,#0x1A
+      0002BE 26               [12]  634 	add	a,@r0
+      0002BF FD               [12]  635 	mov	r5,a
+      0002C0 E4               [12]  636 	clr	a
+      0002C1 08               [12]  637 	inc	r0
+      0002C2 36               [12]  638 	addc	a,@r0
+      0002C3 FE               [12]  639 	mov	r6,a
+      0002C4 08               [12]  640 	inc	r0
+      0002C5 86 07            [24]  641 	mov	ar7,@r0
+      0002C7 8D 82            [24]  642 	mov	dpl,r5
+      0002C9 8E 83            [24]  643 	mov	dph,r6
+      0002CB 8F F0            [24]  644 	mov	b,r7
+      0002CD E4               [12]  645 	clr	a
+      0002CE 12r00r00         [24]  646 	lcall	__gptrput
+                                    647 ;	/home/user/contiki/core/net/mac/csma.c:181: n->collisions = 0;
+      0002D1 E5 81            [12]  648 	mov	a,sp
+      0002D3 24 FB            [12]  649 	add	a,#0xfb
+      0002D5 F8               [12]  650 	mov	r0,a
+      0002D6 74 1B            [12]  651 	mov	a,#0x1B
+      0002D8 26               [12]  652 	add	a,@r0
+      0002D9 FD               [12]  653 	mov	r5,a
+      0002DA E4               [12]  654 	clr	a
+      0002DB 08               [12]  655 	inc	r0
+      0002DC 36               [12]  656 	addc	a,@r0
+      0002DD FE               [12]  657 	mov	r6,a
+      0002DE 08               [12]  658 	inc	r0
+      0002DF 86 07            [24]  659 	mov	ar7,@r0
+      0002E1 8D 82            [24]  660 	mov	dpl,r5
+      0002E3 8E 83            [24]  661 	mov	dph,r6
+      0002E5 8F F0            [24]  662 	mov	b,r7
+      0002E7 E4               [12]  663 	clr	a
+      0002E8 12r00r00         [24]  664 	lcall	__gptrput
+                                    665 ;	/home/user/contiki/core/net/mac/csma.c:182: n->deferrals = 0;
+      0002EB E5 81            [12]  666 	mov	a,sp
+      0002ED 24 FB            [12]  667 	add	a,#0xfb
+      0002EF F8               [12]  668 	mov	r0,a
+      0002F0 74 1C            [12]  669 	mov	a,#0x1C
+      0002F2 26               [12]  670 	add	a,@r0
+      0002F3 FD               [12]  671 	mov	r5,a
+      0002F4 E4               [12]  672 	clr	a
+      0002F5 08               [12]  673 	inc	r0
+      0002F6 36               [12]  674 	addc	a,@r0
+      0002F7 FE               [12]  675 	mov	r6,a
+      0002F8 08               [12]  676 	inc	r0
+      0002F9 86 07            [24]  677 	mov	ar7,@r0
+      0002FB 8D 82            [24]  678 	mov	dpl,r5
+      0002FD 8E 83            [24]  679 	mov	dph,r6
+      0002FF 8F F0            [24]  680 	mov	b,r7
+      000301 E4               [12]  681 	clr	a
+      000302 12r00r00         [24]  682 	lcall	__gptrput
+                                    683 ;	/home/user/contiki/core/net/mac/csma.c:185: transmit_packet_list, n);
+      000305 E5 81            [12]  684 	mov	a,sp
+      000307 24 FB            [12]  685 	add	a,#0xfb
+      000309 F8               [12]  686 	mov	r0,a
+      00030A 86 05            [24]  687 	mov	ar5,@r0
+      00030C 08               [12]  688 	inc	r0
+      00030D 86 06            [24]  689 	mov	ar6,@r0
+      00030F 08               [12]  690 	inc	r0
+      000310 86 07            [24]  691 	mov	ar7,@r0
+                                    692 ;	/home/user/contiki/core/net/mac/csma.c:184: ctimer_set(&n->transmit_timer, default_timebase(),
+      000312 C0 07            [24]  693 	push	ar7
+      000314 C0 06            [24]  694 	push	ar6
+      000316 C0 05            [24]  695 	push	ar5
+      000318 12r00r92         [24]  696 	lcall	_default_timebase
+      00031B C8               [12]  697 	xch	a,r0
+      00031C E5 81            [12]  698 	mov	a,sp
+      00031E 24 FB            [12]  699 	add	a,#0xfb
+      000320 C8               [12]  700 	xch	a,r0
+      000321 A6 82            [24]  701 	mov	@r0,dpl
+      000323 08               [12]  702 	inc	r0
+      000324 A6 83            [24]  703 	mov	@r0,dph
+      000326 D0 05            [24]  704 	pop	ar5
+      000328 D0 06            [24]  705 	pop	ar6
+      00032A D0 07            [24]  706 	pop	ar7
+      00032C E5 81            [12]  707 	mov	a,sp
+      00032E 24 FB            [12]  708 	add	a,#0xfb
+      000330 F8               [12]  709 	mov	r0,a
+      000331 74 05            [12]  710 	mov	a,#0x05
+      000333 26               [12]  711 	add	a,@r0
+      000334 FA               [12]  712 	mov	r2,a
+      000335 E4               [12]  713 	clr	a
+      000336 08               [12]  714 	inc	r0
+      000337 36               [12]  715 	addc	a,@r0
+      000338 FB               [12]  716 	mov	r3,a
+      000339 08               [12]  717 	inc	r0
+      00033A 86 04            [24]  718 	mov	ar4,@r0
+      00033C C0 05            [24]  719 	push	ar5
+      00033E C0 06            [24]  720 	push	ar6
+      000340 C0 07            [24]  721 	push	ar7
+      000342 74rB3            [12]  722 	mov	a,#_transmit_packet_list
+      000344 C0 E0            [24]  723 	push	acc
+      000346 74s00            [12]  724 	mov	a,#(_transmit_packet_list >> 8)
+      000348 C0 E0            [24]  725 	push	acc
+      00034A E5 81            [12]  726 	mov	a,sp
+      00034C 24 F9            [12]  727 	add	a,#0xf9
+      00034E F8               [12]  728 	mov	r0,a
+      00034F E6               [12]  729 	mov	a,@r0
+      000350 C0 E0            [24]  730 	push	acc
+      000352 08               [12]  731 	inc	r0
+      000353 E6               [12]  732 	mov	a,@r0
+      000354 C0 E0            [24]  733 	push	acc
+      000356 8A 82            [24]  734 	mov	dpl,r2
+      000358 8B 83            [24]  735 	mov	dph,r3
+      00035A 8C F0            [24]  736 	mov	b,r4
+      00035C 12r00r00         [24]  737 	lcall	_ctimer_set
+      00035F E5 81            [12]  738 	mov	a,sp
+      000361 24 F9            [12]  739 	add	a,#0xf9
+      000363 F5 81            [12]  740 	mov	sp,a
+      000365 80 68            [24]  741 	sjmp	00106$
+      000367                        742 00102$:
+                                    743 ;	/home/user/contiki/core/net/mac/csma.c:188: ctimer_stop(&n->transmit_timer);
+      000367 E5 81            [12]  744 	mov	a,sp
+      000369 24 FB            [12]  745 	add	a,#0xfb
+      00036B F8               [12]  746 	mov	r0,a
+      00036C 74 05            [12]  747 	mov	a,#0x05
+      00036E 26               [12]  748 	add	a,@r0
+      00036F FD               [12]  749 	mov	r5,a
+      000370 E4               [12]  750 	clr	a
+      000371 08               [12]  751 	inc	r0
+      000372 36               [12]  752 	addc	a,@r0
+      000373 FE               [12]  753 	mov	r6,a
+      000374 08               [12]  754 	inc	r0
+      000375 86 07            [24]  755 	mov	ar7,@r0
+      000377 8D 82            [24]  756 	mov	dpl,r5
+      000379 8E 83            [24]  757 	mov	dph,r6
+      00037B 8F F0            [24]  758 	mov	b,r7
+      00037D 12r00r00         [24]  759 	lcall	_ctimer_stop
+                                    760 ;	/home/user/contiki/core/net/mac/csma.c:189: list_remove(neighbor_list, n);
+      000380 E5 81            [12]  761 	mov	a,sp
+      000382 24 FB            [12]  762 	add	a,#0xfb
+      000384 F8               [12]  763 	mov	r0,a
+      000385 86 05            [24]  764 	mov	ar5,@r0
+      000387 08               [12]  765 	inc	r0
+      000388 86 06            [24]  766 	mov	ar6,@r0
+      00038A 08               [12]  767 	inc	r0
+      00038B 86 07            [24]  768 	mov	ar7,@r0
+      00038D 90r00r21         [24]  769 	mov	dptr,#_neighbor_list
+      000390 E0               [24]  770 	movx	a,@dptr
+      000391 FA               [12]  771 	mov	r2,a
+      000392 A3               [24]  772 	inc	dptr
+      000393 E0               [24]  773 	movx	a,@dptr
+      000394 FB               [12]  774 	mov	r3,a
+      000395 A3               [24]  775 	inc	dptr
+      000396 E0               [24]  776 	movx	a,@dptr
+      000397 FC               [12]  777 	mov	r4,a
+      000398 C0 05            [24]  778 	push	ar5
+      00039A C0 06            [24]  779 	push	ar6
+      00039C C0 07            [24]  780 	push	ar7
+      00039E 8A 82            [24]  781 	mov	dpl,r2
+      0003A0 8B 83            [24]  782 	mov	dph,r3
+      0003A2 8C F0            [24]  783 	mov	b,r4
+      0003A4 12r00r00         [24]  784 	lcall	_list_remove
+      0003A7 15 81            [12]  785 	dec	sp
+      0003A9 15 81            [12]  786 	dec	sp
+      0003AB 15 81            [12]  787 	dec	sp
+                                    788 ;	/home/user/contiki/core/net/mac/csma.c:190: memb_free(&neighbor_memb, n);
+      0003AD E5 81            [12]  789 	mov	a,sp
+      0003AF 24 FB            [12]  790 	add	a,#0xfb
+      0003B1 F8               [12]  791 	mov	r0,a
+      0003B2 86 05            [24]  792 	mov	ar5,@r0
+      0003B4 08               [12]  793 	inc	r0
+      0003B5 86 06            [24]  794 	mov	ar6,@r0
+      0003B7 08               [12]  795 	inc	r0
+      0003B8 86 07            [24]  796 	mov	ar7,@r0
+      0003BA C0 05            [24]  797 	push	ar5
+      0003BC C0 06            [24]  798 	push	ar6
+      0003BE C0 07            [24]  799 	push	ar7
+      0003C0 90r00r00         [24]  800 	mov	dptr,#_neighbor_memb
+      0003C3 75 F0 00         [24]  801 	mov	b,#0x00
+      0003C6 12r00r00         [24]  802 	lcall	_memb_free
+      0003C9 15 81            [12]  803 	dec	sp
+      0003CB 15 81            [12]  804 	dec	sp
+      0003CD 15 81            [12]  805 	dec	sp
+      0003CF                        806 00106$:
+      0003CF E5 81            [12]  807 	mov	a,sp
+      0003D1 24 FA            [12]  808 	add	a,#0xFA
+      0003D3 F5 81            [12]  809 	mov	sp,a
+      0003D5 22               [24]  810 	ret
+                                    811 ;------------------------------------------------------------
+                                    812 ;Allocation info for local variables in function 'packet_sent'
+                                    813 ;------------------------------------------------------------
+                                    814 ;status                    Allocated to stack - sp -25
+                                    815 ;num_transmissions         Allocated to stack - sp -27
+                                    816 ;ptr                       Allocated to registers r5 r6 r7 
+                                    817 ;n                         Allocated to stack - sp -19
+                                    818 ;q                         Allocated to stack - sp -16
+                                    819 ;metadata                  Allocated to stack - sp -13
+                                    820 ;time                      Allocated to stack - sp -10
+                                    821 ;sent                      Allocated to stack - sp -8
+                                    822 ;cptr                      Allocated to stack - sp -6
+                                    823 ;num_tx                    Allocated to stack - sp -3
+                                    824 ;backoff_exponent          Allocated to registers r4 r3 
+                                    825 ;backoff_transmissions     Allocated to stack - sp -1
+                                    826 ;sloc0                     Allocated to stack - sp -21
+                                    827 ;------------------------------------------------------------
+                                    828 ;	/home/user/contiki/core/net/mac/csma.c:196: packet_sent(void *ptr, int status, int num_transmissions)
+                                    829 ;	-----------------------------------------
+                                    830 ;	 function packet_sent
+                                    831 ;	-----------------------------------------
+      0003D6                        832 _packet_sent:
+      0003D6 E5 81            [12]  833 	mov	a,sp
+      0003D8 24 16            [12]  834 	add	a,#0x16
+      0003DA F5 81            [12]  835 	mov	sp,a
+      0003DC AD 82            [24]  836 	mov	r5,dpl
+      0003DE AE 83            [24]  837 	mov	r6,dph
+      0003E0 AF F0            [24]  838 	mov	r7,b
+                                    839 ;	/home/user/contiki/core/net/mac/csma.c:208: n = ptr;
+      0003E2 E5 81            [12]  840 	mov	a,sp
+      0003E4 24 ED            [12]  841 	add	a,#0xed
+      0003E6 F8               [12]  842 	mov	r0,a
+      0003E7 A6 05            [24]  843 	mov	@r0,ar5
+      0003E9 08               [12]  844 	inc	r0
+      0003EA A6 06            [24]  845 	mov	@r0,ar6
+      0003EC 08               [12]  846 	inc	r0
+      0003ED A6 07            [24]  847 	mov	@r0,ar7
+                                    848 ;	/home/user/contiki/core/net/mac/csma.c:209: if(n == NULL) {
+      0003EF E5 81            [12]  849 	mov	a,sp
+      0003F1 24 ED            [12]  850 	add	a,#0xed
+      0003F3 F8               [12]  851 	mov	r0,a
+      0003F4 E6               [12]  852 	mov	a,@r0
+      0003F5 08               [12]  853 	inc	r0
+      0003F6 46               [12]  854 	orl	a,@r0
+      0003F7 70 03            [24]  855 	jnz	00102$
+                                    856 ;	/home/user/contiki/core/net/mac/csma.c:210: return;
+      0003F9 02r08r8A         [24]  857 	ljmp	00131$
+      0003FC                        858 00102$:
+                                    859 ;	/home/user/contiki/core/net/mac/csma.c:212: switch(status) {
+      0003FC E5 81            [12]  860 	mov	a,sp
+      0003FE 24 E7            [12]  861 	add	a,#0xe7
+      000400 F8               [12]  862 	mov	r0,a
+      000401 B6 00 06         [24]  863 	cjne	@r0,#0x00,00174$
+      000404 08               [12]  864 	inc	r0
+      000405 B6 00 02         [24]  865 	cjne	@r0,#0x00,00174$
+      000408 80 2A            [24]  866 	sjmp	00104$
+      00040A                        867 00174$:
+      00040A E5 81            [12]  868 	mov	a,sp
+      00040C 24 E7            [12]  869 	add	a,#0xe7
+      00040E F8               [12]  870 	mov	r0,a
+      00040F B6 01 06         [24]  871 	cjne	@r0,#0x01,00175$
+      000412 08               [12]  872 	inc	r0
+      000413 B6 00 02         [24]  873 	cjne	@r0,#0x00,00175$
+      000416 80 43            [24]  874 	sjmp	00105$
+      000418                        875 00175$:
+      000418 E5 81            [12]  876 	mov	a,sp
+      00041A 24 E7            [12]  877 	add	a,#0xe7
+      00041C F8               [12]  878 	mov	r0,a
+      00041D B6 02 06         [24]  879 	cjne	@r0,#0x02,00176$
+      000420 08               [12]  880 	inc	r0
+      000421 B6 00 02         [24]  881 	cjne	@r0,#0x00,00176$
+      000424 80 0E            [24]  882 	sjmp	00104$
+      000426                        883 00176$:
+      000426 E5 81            [12]  884 	mov	a,sp
+      000428 24 E7            [12]  885 	add	a,#0xe7
+      00042A F8               [12]  886 	mov	r0,a
+                                    887 ;	/home/user/contiki/core/net/mac/csma.c:214: case MAC_TX_NOACK:
+      00042B B6 03 79         [24]  888 	cjne	@r0,#0x03,00107$
+      00042E 08               [12]  889 	inc	r0
+      00042F B6 00 75         [24]  890 	cjne	@r0,#0x00,00107$
+      000432 80 4E            [24]  891 	sjmp	00106$
+      000434                        892 00104$:
+                                    893 ;	/home/user/contiki/core/net/mac/csma.c:215: n->transmissions++;
+      000434 E5 81            [12]  894 	mov	a,sp
+      000436 24 ED            [12]  895 	add	a,#0xed
+      000438 F8               [12]  896 	mov	r0,a
+      000439 74 1A            [12]  897 	mov	a,#0x1A
+      00043B 26               [12]  898 	add	a,@r0
+      00043C FA               [12]  899 	mov	r2,a
+      00043D E4               [12]  900 	clr	a
+      00043E 08               [12]  901 	inc	r0
+      00043F 36               [12]  902 	addc	a,@r0
+      000440 FB               [12]  903 	mov	r3,a
+      000441 08               [12]  904 	inc	r0
+      000442 86 04            [24]  905 	mov	ar4,@r0
+      000444 8A 82            [24]  906 	mov	dpl,r2
+      000446 8B 83            [24]  907 	mov	dph,r3
+      000448 8C F0            [24]  908 	mov	b,r4
+      00044A 12r00r00         [24]  909 	lcall	__gptrget
+      00044D FF               [12]  910 	mov	r7,a
+      00044E 0F               [12]  911 	inc	r7
+      00044F 8A 82            [24]  912 	mov	dpl,r2
+      000451 8B 83            [24]  913 	mov	dph,r3
+      000453 8C F0            [24]  914 	mov	b,r4
+      000455 EF               [12]  915 	mov	a,r7
+      000456 12r00r00         [24]  916 	lcall	__gptrput
+                                    917 ;	/home/user/contiki/core/net/mac/csma.c:216: break;
+                                    918 ;	/home/user/contiki/core/net/mac/csma.c:217: case MAC_TX_COLLISION:
+      000459 80 4C            [24]  919 	sjmp	00107$
+      00045B                        920 00105$:
+                                    921 ;	/home/user/contiki/core/net/mac/csma.c:218: n->collisions++;
+      00045B E5 81            [12]  922 	mov	a,sp
+      00045D 24 ED            [12]  923 	add	a,#0xed
+      00045F F8               [12]  924 	mov	r0,a
+      000460 74 1B            [12]  925 	mov	a,#0x1B
+      000462 26               [12]  926 	add	a,@r0
+      000463 FA               [12]  927 	mov	r2,a
+      000464 E4               [12]  928 	clr	a
+      000465 08               [12]  929 	inc	r0
+      000466 36               [12]  930 	addc	a,@r0
+      000467 FB               [12]  931 	mov	r3,a
+      000468 08               [12]  932 	inc	r0
+      000469 86 04            [24]  933 	mov	ar4,@r0
+      00046B 8A 82            [24]  934 	mov	dpl,r2
+      00046D 8B 83            [24]  935 	mov	dph,r3
+      00046F 8C F0            [24]  936 	mov	b,r4
+      000471 12r00r00         [24]  937 	lcall	__gptrget
+      000474 FF               [12]  938 	mov	r7,a
+      000475 0F               [12]  939 	inc	r7
+      000476 8A 82            [24]  940 	mov	dpl,r2
+      000478 8B 83            [24]  941 	mov	dph,r3
+      00047A 8C F0            [24]  942 	mov	b,r4
+      00047C EF               [12]  943 	mov	a,r7
+      00047D 12r00r00         [24]  944 	lcall	__gptrput
+                                    945 ;	/home/user/contiki/core/net/mac/csma.c:219: break;
+                                    946 ;	/home/user/contiki/core/net/mac/csma.c:220: case MAC_TX_DEFERRED:
+      000480 80 25            [24]  947 	sjmp	00107$
+      000482                        948 00106$:
+                                    949 ;	/home/user/contiki/core/net/mac/csma.c:221: n->deferrals++;
+      000482 E5 81            [12]  950 	mov	a,sp
+      000484 24 ED            [12]  951 	add	a,#0xed
+      000486 F8               [12]  952 	mov	r0,a
+      000487 74 1C            [12]  953 	mov	a,#0x1C
+      000489 26               [12]  954 	add	a,@r0
+      00048A FA               [12]  955 	mov	r2,a
+      00048B E4               [12]  956 	clr	a
+      00048C 08               [12]  957 	inc	r0
+      00048D 36               [12]  958 	addc	a,@r0
+      00048E FB               [12]  959 	mov	r3,a
+      00048F 08               [12]  960 	inc	r0
+      000490 86 04            [24]  961 	mov	ar4,@r0
+      000492 8A 82            [24]  962 	mov	dpl,r2
+      000494 8B 83            [24]  963 	mov	dph,r3
+      000496 8C F0            [24]  964 	mov	b,r4
+      000498 12r00r00         [24]  965 	lcall	__gptrget
+      00049B FF               [12]  966 	mov	r7,a
+      00049C 0F               [12]  967 	inc	r7
+      00049D 8A 82            [24]  968 	mov	dpl,r2
+      00049F 8B 83            [24]  969 	mov	dph,r3
+      0004A1 8C F0            [24]  970 	mov	b,r4
+      0004A3 EF               [12]  971 	mov	a,r7
+      0004A4 12r00r00         [24]  972 	lcall	__gptrput
+                                    973 ;	/home/user/contiki/core/net/mac/csma.c:298: mac_call_sent_callback(sent, cptr, status, num_tx);
+                                    974 ;	/home/user/contiki/core/net/mac/csma.c:223: }
+      0004A7                        975 00107$:
+                                    976 ;	/home/user/contiki/core/net/mac/csma.c:225: for(q = list_head(n->queued_packet_list);
+      0004A7 E5 81            [12]  977 	mov	a,sp
+      0004A9 24 ED            [12]  978 	add	a,#0xed
+      0004AB F8               [12]  979 	mov	r0,a
+      0004AC 74 20            [12]  980 	mov	a,#0x20
+      0004AE 26               [12]  981 	add	a,@r0
+      0004AF FA               [12]  982 	mov	r2,a
+      0004B0 E4               [12]  983 	clr	a
+      0004B1 08               [12]  984 	inc	r0
+      0004B2 36               [12]  985 	addc	a,@r0
+      0004B3 FB               [12]  986 	mov	r3,a
+      0004B4 08               [12]  987 	inc	r0
+      0004B5 86 04            [24]  988 	mov	ar4,@r0
+      0004B7 8A 82            [24]  989 	mov	dpl,r2
+      0004B9 8B 83            [24]  990 	mov	dph,r3
+      0004BB 8C F0            [24]  991 	mov	b,r4
+      0004BD 12r00r00         [24]  992 	lcall	__gptrget
+      0004C0 FA               [12]  993 	mov	r2,a
+      0004C1 A3               [24]  994 	inc	dptr
+      0004C2 12r00r00         [24]  995 	lcall	__gptrget
+      0004C5 FB               [12]  996 	mov	r3,a
+      0004C6 A3               [24]  997 	inc	dptr
+      0004C7 12r00r00         [24]  998 	lcall	__gptrget
+      0004CA FC               [12]  999 	mov	r4,a
+      0004CB 8A 82            [24] 1000 	mov	dpl,r2
+      0004CD 8B 83            [24] 1001 	mov	dph,r3
+      0004CF 8C F0            [24] 1002 	mov	b,r4
+      0004D1 12r00r00         [24] 1003 	lcall	_list_head
+      0004D4 AA 82            [24] 1004 	mov	r2,dpl
+      0004D6 AB 83            [24] 1005 	mov	r3,dph
+      0004D8 AC F0            [24] 1006 	mov	r4,b
+      0004DA E5 81            [12] 1007 	mov	a,sp
+      0004DC 24 F0            [12] 1008 	add	a,#0xf0
+      0004DE F8               [12] 1009 	mov	r0,a
+      0004DF A6 02            [24] 1010 	mov	@r0,ar2
+      0004E1 08               [12] 1011 	inc	r0
+      0004E2 A6 03            [24] 1012 	mov	@r0,ar3
+      0004E4 08               [12] 1013 	inc	r0
+      0004E5 A6 04            [24] 1014 	mov	@r0,ar4
+      0004E7                       1015 00129$:
+                                   1016 ;	/home/user/contiki/core/net/mac/csma.c:226: q != NULL; q = list_item_next(q)) {
+      0004E7 E5 81            [12] 1017 	mov	a,sp
+      0004E9 24 F0            [12] 1018 	add	a,#0xf0
+      0004EB F8               [12] 1019 	mov	r0,a
+      0004EC E4               [12] 1020 	clr	a
+      0004ED C0 E0            [24] 1021 	push	acc
+      0004EF E4               [12] 1022 	clr	a
+      0004F0 C0 E0            [24] 1023 	push	acc
+      0004F2 E4               [12] 1024 	clr	a
+      0004F3 C0 E0            [24] 1025 	push	acc
+      0004F5 86 82            [24] 1026 	mov	dpl,@r0
+      0004F7 08               [12] 1027 	inc	r0
+      0004F8 86 83            [24] 1028 	mov	dph,@r0
+      0004FA 08               [12] 1029 	inc	r0
+      0004FB 86 F0            [24] 1030 	mov	b,@r0
+      0004FD 12r00r00         [24] 1031 	lcall	___gptr_cmp
+      000500 15 81            [12] 1032 	dec	sp
+      000502 15 81            [12] 1033 	dec	sp
+      000504 15 81            [12] 1034 	dec	sp
+      000506 70 03            [24] 1035 	jnz	00178$
+      000508 02r05r8A         [24] 1036 	ljmp	00110$
+      00050B                       1037 00178$:
+                                   1038 ;	/home/user/contiki/core/net/mac/csma.c:227: if(queuebuf_attr(q->buf, PACKETBUF_ATTR_MAC_SEQNO) ==
+      00050B E5 81            [12] 1039 	mov	a,sp
+      00050D 24 F0            [12] 1040 	add	a,#0xf0
+      00050F F8               [12] 1041 	mov	r0,a
+      000510 74 03            [12] 1042 	mov	a,#0x03
+      000512 26               [12] 1043 	add	a,@r0
+      000513 FD               [12] 1044 	mov	r5,a
+      000514 E4               [12] 1045 	clr	a
+      000515 08               [12] 1046 	inc	r0
+      000516 36               [12] 1047 	addc	a,@r0
+      000517 FE               [12] 1048 	mov	r6,a
+      000518 08               [12] 1049 	inc	r0
+      000519 86 07            [24] 1050 	mov	ar7,@r0
+      00051B 8D 82            [24] 1051 	mov	dpl,r5
+      00051D 8E 83            [24] 1052 	mov	dph,r6
+      00051F 8F F0            [24] 1053 	mov	b,r7
+      000521 12r00r00         [24] 1054 	lcall	__gptrget
+      000524 FD               [12] 1055 	mov	r5,a
+      000525 A3               [24] 1056 	inc	dptr
+      000526 12r00r00         [24] 1057 	lcall	__gptrget
+      000529 FE               [12] 1058 	mov	r6,a
+      00052A A3               [24] 1059 	inc	dptr
+      00052B 12r00r00         [24] 1060 	lcall	__gptrget
+      00052E FF               [12] 1061 	mov	r7,a
+      00052F 74 0A            [12] 1062 	mov	a,#0x0A
+      000531 C0 E0            [24] 1063 	push	acc
+      000533 8D 82            [24] 1064 	mov	dpl,r5
+      000535 8E 83            [24] 1065 	mov	dph,r6
+      000537 8F F0            [24] 1066 	mov	b,r7
+      000539 12r00r00         [24] 1067 	lcall	_queuebuf_attr
+      00053C AE 82            [24] 1068 	mov	r6,dpl
+      00053E AF 83            [24] 1069 	mov	r7,dph
+      000540 15 81            [12] 1070 	dec	sp
+                                   1071 ;	/home/user/contiki/core/net/mac/csma.c:228: packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO)) {
+      000542 75 82 0A         [24] 1072 	mov	dpl,#0x0A
+      000545 C0 07            [24] 1073 	push	ar7
+      000547 C0 06            [24] 1074 	push	ar6
+      000549 12r00r00         [24] 1075 	lcall	_packetbuf_attr
+      00054C AC 82            [24] 1076 	mov	r4,dpl
+      00054E AD 83            [24] 1077 	mov	r5,dph
+      000550 D0 06            [24] 1078 	pop	ar6
+      000552 D0 07            [24] 1079 	pop	ar7
+      000554 EE               [12] 1080 	mov	a,r6
+      000555 B5 04 06         [24] 1081 	cjne	a,ar4,00179$
+      000558 EF               [12] 1082 	mov	a,r7
+      000559 B5 05 02         [24] 1083 	cjne	a,ar5,00179$
+      00055C 80 2C            [24] 1084 	sjmp	00110$
+      00055E                       1085 00179$:
+                                   1086 ;	/home/user/contiki/core/net/mac/csma.c:226: q != NULL; q = list_item_next(q)) {
+      00055E E5 81            [12] 1087 	mov	a,sp
+      000560 24 F0            [12] 1088 	add	a,#0xf0
+      000562 F8               [12] 1089 	mov	r0,a
+      000563 86 02            [24] 1090 	mov	ar2,@r0
+      000565 08               [12] 1091 	inc	r0
+      000566 86 03            [24] 1092 	mov	ar3,@r0
+      000568 08               [12] 1093 	inc	r0
+      000569 86 04            [24] 1094 	mov	ar4,@r0
+      00056B 8A 82            [24] 1095 	mov	dpl,r2
+      00056D 8B 83            [24] 1096 	mov	dph,r3
+      00056F 8C F0            [24] 1097 	mov	b,r4
+      000571 12r00r00         [24] 1098 	lcall	_list_item_next
+      000574 AA 82            [24] 1099 	mov	r2,dpl
+      000576 AB 83            [24] 1100 	mov	r3,dph
+      000578 AC F0            [24] 1101 	mov	r4,b
+      00057A E5 81            [12] 1102 	mov	a,sp
+      00057C 24 F0            [12] 1103 	add	a,#0xf0
+      00057E F8               [12] 1104 	mov	r0,a
+      00057F A6 02            [24] 1105 	mov	@r0,ar2
+      000581 08               [12] 1106 	inc	r0
+      000582 A6 03            [24] 1107 	mov	@r0,ar3
+      000584 08               [12] 1108 	inc	r0
+      000585 A6 04            [24] 1109 	mov	@r0,ar4
+      000587 02r04rE7         [24] 1110 	ljmp	00129$
+      00058A                       1111 00110$:
+                                   1112 ;	/home/user/contiki/core/net/mac/csma.c:233: if(q != NULL) {
+      00058A E5 81            [12] 1113 	mov	a,sp
+      00058C 24 F0            [12] 1114 	add	a,#0xf0
+      00058E F8               [12] 1115 	mov	r0,a
+      00058F E6               [12] 1116 	mov	a,@r0
+      000590 08               [12] 1117 	inc	r0
+      000591 46               [12] 1118 	orl	a,@r0
+      000592 70 03            [24] 1119 	jnz	00180$
+      000594 02r08r8A         [24] 1120 	ljmp	00131$
+      000597                       1121 00180$:
+                                   1122 ;	/home/user/contiki/core/net/mac/csma.c:234: metadata = (struct qbuf_metadata *)q->ptr;
+      000597 E5 81            [12] 1123 	mov	a,sp
+      000599 24 F0            [12] 1124 	add	a,#0xf0
+      00059B F8               [12] 1125 	mov	r0,a
+      00059C 74 06            [12] 1126 	mov	a,#0x06
+      00059E 26               [12] 1127 	add	a,@r0
+      00059F FA               [12] 1128 	mov	r2,a
+      0005A0 E4               [12] 1129 	clr	a
+      0005A1 08               [12] 1130 	inc	r0
+      0005A2 36               [12] 1131 	addc	a,@r0
+      0005A3 FB               [12] 1132 	mov	r3,a
+      0005A4 08               [12] 1133 	inc	r0
+      0005A5 86 04            [24] 1134 	mov	ar4,@r0
+      0005A7 8A 82            [24] 1135 	mov	dpl,r2
+      0005A9 8B 83            [24] 1136 	mov	dph,r3
+      0005AB 8C F0            [24] 1137 	mov	b,r4
+      0005AD 12r00r00         [24] 1138 	lcall	__gptrget
+      0005B0 FA               [12] 1139 	mov	r2,a
+      0005B1 A3               [24] 1140 	inc	dptr
+      0005B2 12r00r00         [24] 1141 	lcall	__gptrget
+      0005B5 FB               [12] 1142 	mov	r3,a
+      0005B6 A3               [24] 1143 	inc	dptr
+      0005B7 12r00r00         [24] 1144 	lcall	__gptrget
+      0005BA FC               [12] 1145 	mov	r4,a
+      0005BB E5 81            [12] 1146 	mov	a,sp
+      0005BD 24 F3            [12] 1147 	add	a,#0xf3
+      0005BF F8               [12] 1148 	mov	r0,a
+      0005C0 A6 02            [24] 1149 	mov	@r0,ar2
+      0005C2 08               [12] 1150 	inc	r0
+      0005C3 A6 03            [24] 1151 	mov	@r0,ar3
+      0005C5 08               [12] 1152 	inc	r0
+      0005C6 A6 04            [24] 1153 	mov	@r0,ar4
+                                   1154 ;	/home/user/contiki/core/net/mac/csma.c:236: if(metadata != NULL) {
+      0005C8 E5 81            [12] 1155 	mov	a,sp
+      0005CA 24 F3            [12] 1156 	add	a,#0xf3
+      0005CC F8               [12] 1157 	mov	r0,a
+      0005CD E6               [12] 1158 	mov	a,@r0
+      0005CE 08               [12] 1159 	inc	r0
+      0005CF 46               [12] 1160 	orl	a,@r0
+      0005D0 70 03            [24] 1161 	jnz	00181$
+      0005D2 02r08r8A         [24] 1162 	ljmp	00131$
+      0005D5                       1163 00181$:
+                                   1164 ;	/home/user/contiki/core/net/mac/csma.c:237: sent = metadata->sent;
+      0005D5 E5 81            [12] 1165 	mov	a,sp
+      0005D7 24 F3            [12] 1166 	add	a,#0xf3
+      0005D9 F8               [12] 1167 	mov	r0,a
+      0005DA 86 82            [24] 1168 	mov	dpl,@r0
+      0005DC 08               [12] 1169 	inc	r0
+      0005DD 86 83            [24] 1170 	mov	dph,@r0
+      0005DF 08               [12] 1171 	inc	r0
+      0005E0 86 F0            [24] 1172 	mov	b,@r0
+      0005E2 E5 81            [12] 1173 	mov	a,sp
+      0005E4 24 F8            [12] 1174 	add	a,#0xf8
+      0005E6 F9               [12] 1175 	mov	r1,a
+      0005E7 12r00r00         [24] 1176 	lcall	__gptrget
+      0005EA F7               [12] 1177 	mov	@r1,a
+      0005EB A3               [24] 1178 	inc	dptr
+      0005EC 12r00r00         [24] 1179 	lcall	__gptrget
+      0005EF 09               [12] 1180 	inc	r1
+      0005F0 F7               [12] 1181 	mov	@r1,a
+                                   1182 ;	/home/user/contiki/core/net/mac/csma.c:238: cptr = metadata->cptr;
+      0005F1 E5 81            [12] 1183 	mov	a,sp
+      0005F3 24 F3            [12] 1184 	add	a,#0xf3
+      0005F5 F8               [12] 1185 	mov	r0,a
+      0005F6 74 02            [12] 1186 	mov	a,#0x02
+      0005F8 26               [12] 1187 	add	a,@r0
+      0005F9 FD               [12] 1188 	mov	r5,a
+      0005FA E4               [12] 1189 	clr	a
+      0005FB 08               [12] 1190 	inc	r0
+      0005FC 36               [12] 1191 	addc	a,@r0
+      0005FD FE               [12] 1192 	mov	r6,a
+      0005FE 08               [12] 1193 	inc	r0
+      0005FF 86 07            [24] 1194 	mov	ar7,@r0
+      000601 8D 82            [24] 1195 	mov	dpl,r5
+      000603 8E 83            [24] 1196 	mov	dph,r6
+      000605 8F F0            [24] 1197 	mov	b,r7
+      000607 E5 81            [12] 1198 	mov	a,sp
+      000609 24 FA            [12] 1199 	add	a,#0xfa
+      00060B F8               [12] 1200 	mov	r0,a
+      00060C 12r00r00         [24] 1201 	lcall	__gptrget
+      00060F F6               [12] 1202 	mov	@r0,a
+      000610 A3               [24] 1203 	inc	dptr
+      000611 12r00r00         [24] 1204 	lcall	__gptrget
+      000614 08               [12] 1205 	inc	r0
+      000615 F6               [12] 1206 	mov	@r0,a
+      000616 A3               [24] 1207 	inc	dptr
+      000617 12r00r00         [24] 1208 	lcall	__gptrget
+      00061A 08               [12] 1209 	inc	r0
+      00061B F6               [12] 1210 	mov	@r0,a
+                                   1211 ;	/home/user/contiki/core/net/mac/csma.c:239: num_tx = n->transmissions;
+      00061C E5 81            [12] 1212 	mov	a,sp
+      00061E 24 ED            [12] 1213 	add	a,#0xed
+      000620 F8               [12] 1214 	mov	r0,a
+      000621 74 1A            [12] 1215 	mov	a,#0x1A
+      000623 26               [12] 1216 	add	a,@r0
+      000624 FD               [12] 1217 	mov	r5,a
+      000625 E4               [12] 1218 	clr	a
+      000626 08               [12] 1219 	inc	r0
+      000627 36               [12] 1220 	addc	a,@r0
+      000628 FE               [12] 1221 	mov	r6,a
+      000629 08               [12] 1222 	inc	r0
+      00062A 86 07            [24] 1223 	mov	ar7,@r0
+      00062C 8D 82            [24] 1224 	mov	dpl,r5
+      00062E 8E 83            [24] 1225 	mov	dph,r6
+      000630 8F F0            [24] 1226 	mov	b,r7
+      000632 12r00r00         [24] 1227 	lcall	__gptrget
+      000635 FC               [12] 1228 	mov	r4,a
+      000636 E5 81            [12] 1229 	mov	a,sp
+      000638 24 FD            [12] 1230 	add	a,#0xfd
+      00063A F8               [12] 1231 	mov	r0,a
+      00063B A6 04            [24] 1232 	mov	@r0,ar4
+      00063D 08               [12] 1233 	inc	r0
+      00063E 76 00            [12] 1234 	mov	@r0,#0x00
+                                   1235 ;	/home/user/contiki/core/net/mac/csma.c:240: if(status == MAC_TX_COLLISION ||
+      000640 E5 81            [12] 1236 	mov	a,sp
+      000642 24 E7            [12] 1237 	add	a,#0xe7
+      000644 F8               [12] 1238 	mov	r0,a
+      000645 B6 01 06         [24] 1239 	cjne	@r0,#0x01,00182$
+      000648 08               [12] 1240 	inc	r0
+      000649 B6 00 02         [24] 1241 	cjne	@r0,#0x00,00182$
+      00064C 80 11            [24] 1242 	sjmp	00114$
+      00064E                       1243 00182$:
+                                   1244 ;	/home/user/contiki/core/net/mac/csma.c:241: status == MAC_TX_NOACK) {
+      00064E E5 81            [12] 1245 	mov	a,sp
+      000650 24 E7            [12] 1246 	add	a,#0xe7
+      000652 F8               [12] 1247 	mov	r0,a
+      000653 B6 02 06         [24] 1248 	cjne	@r0,#0x02,00183$
+      000656 08               [12] 1249 	inc	r0
+      000657 B6 00 02         [24] 1250 	cjne	@r0,#0x00,00183$
+      00065A 80 03            [24] 1251 	sjmp	00184$
+      00065C                       1252 00183$:
+      00065C 02r08r29         [24] 1253 	ljmp	00121$
+      00065F                       1254 00184$:
+                                   1255 ;	/home/user/contiki/core/net/mac/csma.c:255: }
+      00065F                       1256 00114$:
+                                   1257 ;	/home/user/contiki/core/net/mac/csma.c:259: time = default_timebase();
+      00065F C0 07            [24] 1258 	push	ar7
+      000661 C0 06            [24] 1259 	push	ar6
+      000663 C0 05            [24] 1260 	push	ar5
+      000665 12r00r92         [24] 1261 	lcall	_default_timebase
+      000668 AC 82            [24] 1262 	mov	r4,dpl
+      00066A AB 83            [24] 1263 	mov	r3,dph
+      00066C D0 05            [24] 1264 	pop	ar5
+      00066E D0 06            [24] 1265 	pop	ar6
+      000670 D0 07            [24] 1266 	pop	ar7
+      000672 E5 81            [12] 1267 	mov	a,sp
+      000674 24 F6            [12] 1268 	add	a,#0xf6
+      000676 F8               [12] 1269 	mov	r0,a
+      000677 A6 04            [24] 1270 	mov	@r0,ar4
+      000679 08               [12] 1271 	inc	r0
+      00067A A6 03            [24] 1272 	mov	@r0,ar3
+                                   1273 ;	/home/user/contiki/core/net/mac/csma.c:264: backoff_exponent = num_tx;
+      00067C E5 81            [12] 1274 	mov	a,sp
+      00067E 24 FD            [12] 1275 	add	a,#0xfd
+      000680 F8               [12] 1276 	mov	r0,a
+      000681 86 04            [24] 1277 	mov	ar4,@r0
+      000683 08               [12] 1278 	inc	r0
+      000684 86 03            [24] 1279 	mov	ar3,@r0
+                                   1280 ;	/home/user/contiki/core/net/mac/csma.c:267: if(backoff_exponent > CSMA_MAX_BACKOFF_EXPONENT) {
+      000686 E5 81            [12] 1281 	mov	a,sp
+      000688 24 FD            [12] 1282 	add	a,#0xfd
+      00068A F8               [12] 1283 	mov	r0,a
+      00068B C3               [12] 1284 	clr	c
+      00068C 74 03            [12] 1285 	mov	a,#0x03
+      00068E 96               [12] 1286 	subb	a,@r0
+      00068F E4               [12] 1287 	clr	a
+      000690 64 80            [12] 1288 	xrl	a,#0x80
+      000692 08               [12] 1289 	inc	r0
+      000693 86 F0            [24] 1290 	mov	b,@r0
+      000695 63 F0 80         [24] 1291 	xrl	b,#0x80
+      000698 95 F0            [12] 1292 	subb	a,b
+      00069A 50 04            [24] 1293 	jnc	00116$
+                                   1294 ;	/home/user/contiki/core/net/mac/csma.c:268: backoff_exponent = CSMA_MAX_BACKOFF_EXPONENT;
+      00069C 7C 03            [12] 1295 	mov	r4,#0x03
+      00069E 7B 00            [12] 1296 	mov	r3,#0x00
+      0006A0                       1297 00116$:
+                                   1298 ;	/home/user/contiki/core/net/mac/csma.c:272: backoff_transmissions = 1 << backoff_exponent;
+      0006A0 8C F0            [24] 1299 	mov	b,r4
+      0006A2 05 F0            [12] 1300 	inc	b
+      0006A4 A8 81            [24] 1301 	mov	r0,sp
+      0006A6 18               [12] 1302 	dec	r0
+      0006A7 76 01            [12] 1303 	mov	@r0,#0x01
+      0006A9 08               [12] 1304 	inc	r0
+      0006AA 76 00            [12] 1305 	mov	@r0,#0x00
+      0006AC 18               [12] 1306 	dec	r0
+      0006AD 80 09            [24] 1307 	sjmp	00187$
+      0006AF                       1308 00186$:
+      0006AF E6               [12] 1309 	mov	a,@r0
+      0006B0 25 E0            [12] 1310 	add	a,acc
+      0006B2 F6               [12] 1311 	mov	@r0,a
+      0006B3 08               [12] 1312 	inc	r0
+      0006B4 E6               [12] 1313 	mov	a,@r0
+      0006B5 33               [12] 1314 	rlc	a
+      0006B6 F6               [12] 1315 	mov	@r0,a
+      0006B7 18               [12] 1316 	dec	r0
+      0006B8                       1317 00187$:
+      0006B8 D5 F0 F4         [24] 1318 	djnz	b,00186$
+                                   1319 ;	/home/user/contiki/core/net/mac/csma.c:276: time = time + (random_rand() % (backoff_transmissions * time));
+      0006BB C0 07            [24] 1320 	push	ar7
+      0006BD C0 06            [24] 1321 	push	ar6
+      0006BF C0 05            [24] 1322 	push	ar5
+      0006C1 12r00r00         [24] 1323 	lcall	_random_rand
+      0006C4 C8               [12] 1324 	xch	a,r0
+      0006C5 E5 81            [12] 1325 	mov	a,sp
+      0006C7 24 E8            [12] 1326 	add	a,#0xe8
+      0006C9 C8               [12] 1327 	xch	a,r0
+      0006CA A6 82            [24] 1328 	mov	@r0,dpl
+      0006CC 08               [12] 1329 	inc	r0
+      0006CD A6 83            [24] 1330 	mov	@r0,dph
+      0006CF D0 05            [24] 1331 	pop	ar5
+      0006D1 D0 06            [24] 1332 	pop	ar6
+      0006D3 D0 07            [24] 1333 	pop	ar7
+      0006D5 A8 81            [24] 1334 	mov	r0,sp
+      0006D7 18               [12] 1335 	dec	r0
+      0006D8 86 03            [24] 1336 	mov	ar3,@r0
+      0006DA 08               [12] 1337 	inc	r0
+      0006DB 86 04            [24] 1338 	mov	ar4,@r0
+      0006DD C0 07            [24] 1339 	push	ar7
+      0006DF C0 06            [24] 1340 	push	ar6
+      0006E1 C0 05            [24] 1341 	push	ar5
+      0006E3 E5 81            [12] 1342 	mov	a,sp
+      0006E5 24 F3            [12] 1343 	add	a,#0xf3
+      0006E7 F8               [12] 1344 	mov	r0,a
+      0006E8 E6               [12] 1345 	mov	a,@r0
+      0006E9 C0 E0            [24] 1346 	push	acc
+      0006EB 08               [12] 1347 	inc	r0
+      0006EC E6               [12] 1348 	mov	a,@r0
+      0006ED C0 E0            [24] 1349 	push	acc
+      0006EF 8B 82            [24] 1350 	mov	dpl,r3
+      0006F1 8C 83            [24] 1351 	mov	dph,r4
+      0006F3 12r00r00         [24] 1352 	lcall	__mulint
+      0006F6 AB 82            [24] 1353 	mov	r3,dpl
+      0006F8 AC 83            [24] 1354 	mov	r4,dph
+      0006FA 15 81            [12] 1355 	dec	sp
+      0006FC 15 81            [12] 1356 	dec	sp
+      0006FE C0 03            [24] 1357 	push	ar3
+      000700 C0 04            [24] 1358 	push	ar4
+      000702 E5 81            [12] 1359 	mov	a,sp
+      000704 24 E6            [12] 1360 	add	a,#0xe6
+      000706 F8               [12] 1361 	mov	r0,a
+      000707 86 82            [24] 1362 	mov	dpl,@r0
+      000709 08               [12] 1363 	inc	r0
+      00070A 86 83            [24] 1364 	mov	dph,@r0
+      00070C 12r00r00         [24] 1365 	lcall	__moduint
+      00070F AB 82            [24] 1366 	mov	r3,dpl
+      000711 AC 83            [24] 1367 	mov	r4,dph
+      000713 15 81            [12] 1368 	dec	sp
+      000715 15 81            [12] 1369 	dec	sp
+      000717 D0 05            [24] 1370 	pop	ar5
+      000719 D0 06            [24] 1371 	pop	ar6
+      00071B D0 07            [24] 1372 	pop	ar7
+      00071D E5 81            [12] 1373 	mov	a,sp
+      00071F 24 F6            [12] 1374 	add	a,#0xf6
+      000721 F8               [12] 1375 	mov	r0,a
+      000722 EB               [12] 1376 	mov	a,r3
+      000723 26               [12] 1377 	add	a,@r0
+      000724 F6               [12] 1378 	mov	@r0,a
+      000725 EC               [12] 1379 	mov	a,r4
+      000726 08               [12] 1380 	inc	r0
+      000727 36               [12] 1381 	addc	a,@r0
+      000728 F6               [12] 1382 	mov	@r0,a
+                                   1383 ;	/home/user/contiki/core/net/mac/csma.c:278: if(n->transmissions < metadata->max_transmissions) {
+      000729 8D 82            [24] 1384 	mov	dpl,r5
+      00072B 8E 83            [24] 1385 	mov	dph,r6
+      00072D 8F F0            [24] 1386 	mov	b,r7
+      00072F 12r00r00         [24] 1387 	lcall	__gptrget
+      000732 FD               [12] 1388 	mov	r5,a
+      000733 E5 81            [12] 1389 	mov	a,sp
+      000735 24 F3            [12] 1390 	add	a,#0xf3
+      000737 F8               [12] 1391 	mov	r0,a
+      000738 74 05            [12] 1392 	mov	a,#0x05
+      00073A 26               [12] 1393 	add	a,@r0
+      00073B FC               [12] 1394 	mov	r4,a
+      00073C E4               [12] 1395 	clr	a
+      00073D 08               [12] 1396 	inc	r0
+      00073E 36               [12] 1397 	addc	a,@r0
+      00073F FE               [12] 1398 	mov	r6,a
+      000740 08               [12] 1399 	inc	r0
+      000741 86 07            [24] 1400 	mov	ar7,@r0
+      000743 8C 82            [24] 1401 	mov	dpl,r4
+      000745 8E 83            [24] 1402 	mov	dph,r6
+      000747 8F F0            [24] 1403 	mov	b,r7
+      000749 12r00r00         [24] 1404 	lcall	__gptrget
+      00074C FC               [12] 1405 	mov	r4,a
+      00074D C3               [12] 1406 	clr	c
+      00074E ED               [12] 1407 	mov	a,r5
+      00074F 9C               [12] 1408 	subb	a,r4
+      000750 50 74            [24] 1409 	jnc	00118$
+                                   1410 ;	/home/user/contiki/core/net/mac/csma.c:281: transmit_packet_list, n);
+      000752 E5 81            [12] 1411 	mov	a,sp
+      000754 24 ED            [12] 1412 	add	a,#0xed
+      000756 F8               [12] 1413 	mov	r0,a
+      000757 86 05            [24] 1414 	mov	ar5,@r0
+      000759 08               [12] 1415 	inc	r0
+      00075A 86 06            [24] 1416 	mov	ar6,@r0
+      00075C 08               [12] 1417 	inc	r0
+      00075D 86 07            [24] 1418 	mov	ar7,@r0
+                                   1419 ;	/home/user/contiki/core/net/mac/csma.c:280: ctimer_set(&n->transmit_timer, time,
+      00075F E5 81            [12] 1420 	mov	a,sp
+      000761 24 ED            [12] 1421 	add	a,#0xed
+      000763 F8               [12] 1422 	mov	r0,a
+      000764 74 05            [12] 1423 	mov	a,#0x05
+      000766 26               [12] 1424 	add	a,@r0
+      000767 FA               [12] 1425 	mov	r2,a
+      000768 E4               [12] 1426 	clr	a
+      000769 08               [12] 1427 	inc	r0
+      00076A 36               [12] 1428 	addc	a,@r0
+      00076B FB               [12] 1429 	mov	r3,a
+      00076C 08               [12] 1430 	inc	r0
+      00076D 86 04            [24] 1431 	mov	ar4,@r0
+      00076F C0 05            [24] 1432 	push	ar5
+      000771 C0 06            [24] 1433 	push	ar6
+      000773 C0 07            [24] 1434 	push	ar7
+      000775 74rB3            [12] 1435 	mov	a,#_transmit_packet_list
+      000777 C0 E0            [24] 1436 	push	acc
+      000779 74s00            [12] 1437 	mov	a,#(_transmit_packet_list >> 8)
+      00077B C0 E0            [24] 1438 	push	acc
+      00077D E5 81            [12] 1439 	mov	a,sp
+      00077F 24 F1            [12] 1440 	add	a,#0xf1
+      000781 F8               [12] 1441 	mov	r0,a
+      000782 E6               [12] 1442 	mov	a,@r0
+      000783 C0 E0            [24] 1443 	push	acc
+      000785 08               [12] 1444 	inc	r0
+      000786 E6               [12] 1445 	mov	a,@r0
+      000787 C0 E0            [24] 1446 	push	acc
+      000789 8A 82            [24] 1447 	mov	dpl,r2
+      00078B 8B 83            [24] 1448 	mov	dph,r3
+      00078D 8C F0            [24] 1449 	mov	b,r4
+      00078F 12r00r00         [24] 1450 	lcall	_ctimer_set
+      000792 E5 81            [12] 1451 	mov	a,sp
+      000794 24 F9            [12] 1452 	add	a,#0xf9
+                                   1453 ;	/home/user/contiki/core/net/mac/csma.c:284: queuebuf_update_attr_from_packetbuf(q->buf);
+      000796 F5 81            [12] 1454 	mov	sp,a
+      000798 24 F0            [12] 1455 	add	a,#0xf0
+      00079A F8               [12] 1456 	mov	r0,a
+      00079B 74 03            [12] 1457 	mov	a,#0x03
+      00079D 26               [12] 1458 	add	a,@r0
+      00079E FD               [12] 1459 	mov	r5,a
+      00079F E4               [12] 1460 	clr	a
+      0007A0 08               [12] 1461 	inc	r0
+      0007A1 36               [12] 1462 	addc	a,@r0
+      0007A2 FE               [12] 1463 	mov	r6,a
+      0007A3 08               [12] 1464 	inc	r0
+      0007A4 86 07            [24] 1465 	mov	ar7,@r0
+      0007A6 8D 82            [24] 1466 	mov	dpl,r5
+      0007A8 8E 83            [24] 1467 	mov	dph,r6
+      0007AA 8F F0            [24] 1468 	mov	b,r7
+      0007AC 12r00r00         [24] 1469 	lcall	__gptrget
+      0007AF FD               [12] 1470 	mov	r5,a
+      0007B0 A3               [24] 1471 	inc	dptr
+      0007B1 12r00r00         [24] 1472 	lcall	__gptrget
+      0007B4 FE               [12] 1473 	mov	r6,a
+      0007B5 A3               [24] 1474 	inc	dptr
+      0007B6 12r00r00         [24] 1475 	lcall	__gptrget
+      0007B9 FF               [12] 1476 	mov	r7,a
+      0007BA 8D 82            [24] 1477 	mov	dpl,r5
+      0007BC 8E 83            [24] 1478 	mov	dph,r6
+      0007BE 8F F0            [24] 1479 	mov	b,r7
+      0007C0 12r00r00         [24] 1480 	lcall	_queuebuf_update_attr_from_packetbuf
+      0007C3 02r08r8A         [24] 1481 	ljmp	00131$
+      0007C6                       1482 00118$:
+                                   1483 ;	/home/user/contiki/core/net/mac/csma.c:288: free_packet(n, q);
+      0007C6 E5 81            [12] 1484 	mov	a,sp
+      0007C8 24 F0            [12] 1485 	add	a,#0xf0
+      0007CA F8               [12] 1486 	mov	r0,a
+      0007CB E6               [12] 1487 	mov	a,@r0
+      0007CC C0 E0            [24] 1488 	push	acc
+      0007CE 08               [12] 1489 	inc	r0
+      0007CF E6               [12] 1490 	mov	a,@r0
+      0007D0 C0 E0            [24] 1491 	push	acc
+      0007D2 08               [12] 1492 	inc	r0
+      0007D3 E6               [12] 1493 	mov	a,@r0
+      0007D4 C0 E0            [24] 1494 	push	acc
+      0007D6 E5 81            [12] 1495 	mov	a,sp
+      0007D8 24 EA            [12] 1496 	add	a,#0xea
+      0007DA F8               [12] 1497 	mov	r0,a
+      0007DB 86 82            [24] 1498 	mov	dpl,@r0
+      0007DD 08               [12] 1499 	inc	r0
+      0007DE 86 83            [24] 1500 	mov	dph,@r0
+      0007E0 08               [12] 1501 	inc	r0
+      0007E1 86 F0            [24] 1502 	mov	b,@r0
+      0007E3 12r01r55         [24] 1503 	lcall	_free_packet
+      0007E6 15 81            [12] 1504 	dec	sp
+      0007E8 15 81            [12] 1505 	dec	sp
+      0007EA 15 81            [12] 1506 	dec	sp
+                                   1507 ;	/home/user/contiki/core/net/mac/csma.c:289: mac_call_sent_callback(sent, cptr, status, num_tx);
+      0007EC E5 81            [12] 1508 	mov	a,sp
+      0007EE 24 FD            [12] 1509 	add	a,#0xfd
+      0007F0 F8               [12] 1510 	mov	r0,a
+      0007F1 E6               [12] 1511 	mov	a,@r0
+      0007F2 C0 E0            [24] 1512 	push	acc
+      0007F4 08               [12] 1513 	inc	r0
+      0007F5 E6               [12] 1514 	mov	a,@r0
+      0007F6 C0 E0            [24] 1515 	push	acc
+      0007F8 E5 81            [12] 1516 	mov	a,sp
+      0007FA 24 E5            [12] 1517 	add	a,#0xe5
+      0007FC F8               [12] 1518 	mov	r0,a
+      0007FD E6               [12] 1519 	mov	a,@r0
+      0007FE C0 E0            [24] 1520 	push	acc
+      000800 08               [12] 1521 	inc	r0
+      000801 E6               [12] 1522 	mov	a,@r0
+      000802 C0 E0            [24] 1523 	push	acc
+      000804 E5 81            [12] 1524 	mov	a,sp
+      000806 24 F6            [12] 1525 	add	a,#0xf6
+      000808 F8               [12] 1526 	mov	r0,a
+      000809 E6               [12] 1527 	mov	a,@r0
+      00080A C0 E0            [24] 1528 	push	acc
+      00080C 08               [12] 1529 	inc	r0
+      00080D E6               [12] 1530 	mov	a,@r0
+      00080E C0 E0            [24] 1531 	push	acc
+      000810 08               [12] 1532 	inc	r0
+      000811 E6               [12] 1533 	mov	a,@r0
+      000812 C0 E0            [24] 1534 	push	acc
+      000814 E5 81            [12] 1535 	mov	a,sp
+      000816 24 F1            [12] 1536 	add	a,#0xf1
+      000818 F8               [12] 1537 	mov	r0,a
+      000819 86 82            [24] 1538 	mov	dpl,@r0
+      00081B 08               [12] 1539 	inc	r0
+      00081C 86 83            [24] 1540 	mov	dph,@r0
+      00081E 12r00r00         [24] 1541 	lcall	_mac_call_sent_callback
+      000821 E5 81            [12] 1542 	mov	a,sp
+      000823 24 F9            [12] 1543 	add	a,#0xf9
+      000825 F5 81            [12] 1544 	mov	sp,a
+      000827 80 61            [24] 1545 	sjmp	00131$
+      000829                       1546 00121$:
+                                   1547 ;	/home/user/contiki/core/net/mac/csma.c:297: free_packet(n, q);
+      000829 E5 81            [12] 1548 	mov	a,sp
+      00082B 24 F0            [12] 1549 	add	a,#0xf0
+      00082D F8               [12] 1550 	mov	r0,a
+      00082E E6               [12] 1551 	mov	a,@r0
+      00082F C0 E0            [24] 1552 	push	acc
+      000831 08               [12] 1553 	inc	r0
+      000832 E6               [12] 1554 	mov	a,@r0
+      000833 C0 E0            [24] 1555 	push	acc
+      000835 08               [12] 1556 	inc	r0
+      000836 E6               [12] 1557 	mov	a,@r0
+      000837 C0 E0            [24] 1558 	push	acc
+      000839 E5 81            [12] 1559 	mov	a,sp
+      00083B 24 EA            [12] 1560 	add	a,#0xea
+      00083D F8               [12] 1561 	mov	r0,a
+      00083E 86 82            [24] 1562 	mov	dpl,@r0
+      000840 08               [12] 1563 	inc	r0
+      000841 86 83            [24] 1564 	mov	dph,@r0
+      000843 08               [12] 1565 	inc	r0
+      000844 86 F0            [24] 1566 	mov	b,@r0
+      000846 12r01r55         [24] 1567 	lcall	_free_packet
+      000849 15 81            [12] 1568 	dec	sp
+      00084B 15 81            [12] 1569 	dec	sp
+      00084D 15 81            [12] 1570 	dec	sp
+                                   1571 ;	/home/user/contiki/core/net/mac/csma.c:298: mac_call_sent_callback(sent, cptr, status, num_tx);
+      00084F E5 81            [12] 1572 	mov	a,sp
+      000851 24 FD            [12] 1573 	add	a,#0xfd
+      000853 F8               [12] 1574 	mov	r0,a
+      000854 E6               [12] 1575 	mov	a,@r0
+      000855 C0 E0            [24] 1576 	push	acc
+      000857 08               [12] 1577 	inc	r0
+      000858 E6               [12] 1578 	mov	a,@r0
+      000859 C0 E0            [24] 1579 	push	acc
+      00085B E5 81            [12] 1580 	mov	a,sp
+      00085D 24 E5            [12] 1581 	add	a,#0xe5
+      00085F F8               [12] 1582 	mov	r0,a
+      000860 E6               [12] 1583 	mov	a,@r0
+      000861 C0 E0            [24] 1584 	push	acc
+      000863 08               [12] 1585 	inc	r0
+      000864 E6               [12] 1586 	mov	a,@r0
+      000865 C0 E0            [24] 1587 	push	acc
+      000867 E5 81            [12] 1588 	mov	a,sp
+      000869 24 F6            [12] 1589 	add	a,#0xf6
+      00086B F8               [12] 1590 	mov	r0,a
+      00086C E6               [12] 1591 	mov	a,@r0
+      00086D C0 E0            [24] 1592 	push	acc
+      00086F 08               [12] 1593 	inc	r0
+      000870 E6               [12] 1594 	mov	a,@r0
+      000871 C0 E0            [24] 1595 	push	acc
+      000873 08               [12] 1596 	inc	r0
+      000874 E6               [12] 1597 	mov	a,@r0
+      000875 C0 E0            [24] 1598 	push	acc
+      000877 E5 81            [12] 1599 	mov	a,sp
+      000879 24 F1            [12] 1600 	add	a,#0xf1
+      00087B F8               [12] 1601 	mov	r0,a
+      00087C 86 82            [24] 1602 	mov	dpl,@r0
+      00087E 08               [12] 1603 	inc	r0
+      00087F 86 83            [24] 1604 	mov	dph,@r0
+      000881 12r00r00         [24] 1605 	lcall	_mac_call_sent_callback
+      000884 E5 81            [12] 1606 	mov	a,sp
+      000886 24 F9            [12] 1607 	add	a,#0xf9
+      000888 F5 81            [12] 1608 	mov	sp,a
+      00088A                       1609 00131$:
+      00088A E5 81            [12] 1610 	mov	a,sp
+      00088C 24 EA            [12] 1611 	add	a,#0xEA
+      00088E F5 81            [12] 1612 	mov	sp,a
+      000890 22               [24] 1613 	ret
+                                   1614 ;------------------------------------------------------------
+                                   1615 ;Allocation info for local variables in function 'send_packet'
+                                   1616 ;------------------------------------------------------------
+                                   1617 ;ptr                       Allocated to stack - sp -18
+                                   1618 ;sent                      Allocated to stack - sp -13
+                                   1619 ;q                         Allocated to stack - sp -5
+                                   1620 ;n                         Allocated to stack - sp -2
+                                   1621 ;addr                      Allocated to stack - sp -8
+                                   1622 ;metadata                  Allocated to registers r4 r3 r2 
+                                   1623 ;sloc0                     Allocated to stack - sp -11
+                                   1624 ;seqno                     Allocated with name '_send_packet_seqno_1_203'
+                                   1625 ;------------------------------------------------------------
+                                   1626 ;	/home/user/contiki/core/net/mac/csma.c:305: send_packet(mac_callback_t sent, void *ptr)
+                                   1627 ;	-----------------------------------------
+                                   1628 ;	 function send_packet
+                                   1629 ;	-----------------------------------------
+      000891                       1630 _send_packet:
+      000891 C0 82            [24] 1631 	push	dpl
+      000893 C0 83            [24] 1632 	push	dph
+      000895 E5 81            [12] 1633 	mov	a,sp
+      000897 24 0C            [12] 1634 	add	a,#0x0C
+      000899 F5 81            [12] 1635 	mov	sp,a
+                                   1636 ;	/home/user/contiki/core/net/mac/csma.c:310: const rimeaddr_t *addr = packetbuf_addr(PACKETBUF_ADDR_RECEIVER);
+      00089B 75 82 19         [24] 1637 	mov	dpl,#0x19
+      00089E 12r00r00         [24] 1638 	lcall	_packetbuf_addr
+      0008A1 AB 82            [24] 1639 	mov	r3,dpl
+      0008A3 AC 83            [24] 1640 	mov	r4,dph
+      0008A5 AD F0            [24] 1641 	mov	r5,b
+      0008A7 E5 81            [12] 1642 	mov	a,sp
+      0008A9 24 F8            [12] 1643 	add	a,#0xf8
+      0008AB F8               [12] 1644 	mov	r0,a
+      0008AC A6 03            [24] 1645 	mov	@r0,ar3
+      0008AE 08               [12] 1646 	inc	r0
+      0008AF A6 04            [24] 1647 	mov	@r0,ar4
+      0008B1 08               [12] 1648 	inc	r0
+      0008B2 A6 05            [24] 1649 	mov	@r0,ar5
+                                   1650 ;	/home/user/contiki/core/net/mac/csma.c:312: if(seqno == 0) {
+      0008B4 90r00rD0         [24] 1651 	mov	dptr,#_send_packet_seqno_1_203
+      0008B7 E0               [24] 1652 	movx	a,@dptr
+      0008B8 FA               [12] 1653 	mov	r2,a
+      0008B9 A3               [24] 1654 	inc	dptr
+      0008BA E0               [24] 1655 	movx	a,@dptr
+      0008BB FF               [12] 1656 	mov	r7,a
+      0008BC 4A               [12] 1657 	orl	a,r2
+      0008BD 70 0B            [24] 1658 	jnz	00102$
+                                   1659 ;	/home/user/contiki/core/net/mac/csma.c:315: seqno++;
+      0008BF 90r00rD0         [24] 1660 	mov	dptr,#_send_packet_seqno_1_203
+      0008C2 74 01            [12] 1661 	mov	a,#0x01
+      0008C4 2A               [12] 1662 	add	a,r2
+      0008C5 F0               [24] 1663 	movx	@dptr,a
+      0008C6 E4               [12] 1664 	clr	a
+      0008C7 3F               [12] 1665 	addc	a,r7
+      0008C8 A3               [24] 1666 	inc	dptr
+      0008C9 F0               [24] 1667 	movx	@dptr,a
+      0008CA                       1668 00102$:
+                                   1669 ;	/home/user/contiki/core/net/mac/csma.c:317: packetbuf_set_attr(PACKETBUF_ATTR_MAC_SEQNO, seqno++);
+      0008CA 90r00rD0         [24] 1670 	mov	dptr,#_send_packet_seqno_1_203
+      0008CD E0               [24] 1671 	movx	a,@dptr
+      0008CE FE               [12] 1672 	mov	r6,a
+      0008CF A3               [24] 1673 	inc	dptr
+      0008D0 E0               [24] 1674 	movx	a,@dptr
+      0008D1 FF               [12] 1675 	mov	r7,a
+      0008D2 90r00rD0         [24] 1676 	mov	dptr,#_send_packet_seqno_1_203
+      0008D5 74 01            [12] 1677 	mov	a,#0x01
+      0008D7 2E               [12] 1678 	add	a,r6
+      0008D8 F0               [24] 1679 	movx	@dptr,a
+      0008D9 E4               [12] 1680 	clr	a
+      0008DA 3F               [12] 1681 	addc	a,r7
+      0008DB A3               [24] 1682 	inc	dptr
+      0008DC F0               [24] 1683 	movx	@dptr,a
+      0008DD C0 06            [24] 1684 	push	ar6
+      0008DF C0 07            [24] 1685 	push	ar7
+      0008E1 75 82 0A         [24] 1686 	mov	dpl,#0x0A
+      0008E4 12r00r00         [24] 1687 	lcall	_packetbuf_set_attr
+      0008E7 15 81            [12] 1688 	dec	sp
+      0008E9 15 81            [12] 1689 	dec	sp
+                                   1690 ;	/home/user/contiki/core/net/mac/csma.c:320: n = neighbor_queue_from_addr(addr);
+      0008EB E5 81            [12] 1691 	mov	a,sp
+      0008ED 24 F8            [12] 1692 	add	a,#0xf8
+      0008EF F8               [12] 1693 	mov	r0,a
+      0008F0 86 82            [24] 1694 	mov	dpl,@r0
+      0008F2 08               [12] 1695 	inc	r0
+      0008F3 86 83            [24] 1696 	mov	dph,@r0
+      0008F5 08               [12] 1697 	inc	r0
+      0008F6 86 F0            [24] 1698 	mov	b,@r0
+      0008F8 12r00r00         [24] 1699 	lcall	_neighbor_queue_from_addr
+      0008FB AA 82            [24] 1700 	mov	r2,dpl
+      0008FD AE 83            [24] 1701 	mov	r6,dph
+      0008FF AF F0            [24] 1702 	mov	r7,b
+      000901 A8 81            [24] 1703 	mov	r0,sp
+      000903 18               [12] 1704 	dec	r0
+      000904 18               [12] 1705 	dec	r0
+      000905 A6 02            [24] 1706 	mov	@r0,ar2
+      000907 08               [12] 1707 	inc	r0
+      000908 A6 06            [24] 1708 	mov	@r0,ar6
+      00090A 08               [12] 1709 	inc	r0
+      00090B A6 07            [24] 1710 	mov	@r0,ar7
+                                   1711 ;	/home/user/contiki/core/net/mac/csma.c:321: if(n == NULL) {
+      00090D A8 81            [24] 1712 	mov	r0,sp
+      00090F 18               [12] 1713 	dec	r0
+      000910 18               [12] 1714 	dec	r0
+      000911 E6               [12] 1715 	mov	a,@r0
+      000912 08               [12] 1716 	inc	r0
+      000913 46               [12] 1717 	orl	a,@r0
+      000914 60 03            [24] 1718 	jz	00164$
+      000916 02r0Ar34         [24] 1719 	ljmp	00109$
+      000919                       1720 00164$:
+                                   1721 ;	/home/user/contiki/core/net/mac/csma.c:323: n = memb_alloc(&neighbor_memb);
+      000919 90r00r00         [24] 1722 	mov	dptr,#_neighbor_memb
+      00091C 75 F0 00         [24] 1723 	mov	b,#0x00
+      00091F 12r00r00         [24] 1724 	lcall	_memb_alloc
+      000922 AB 82            [24] 1725 	mov	r3,dpl
+      000924 AC 83            [24] 1726 	mov	r4,dph
+      000926 AD F0            [24] 1727 	mov	r5,b
+      000928 A8 81            [24] 1728 	mov	r0,sp
+      00092A 18               [12] 1729 	dec	r0
+      00092B 18               [12] 1730 	dec	r0
+      00092C A6 03            [24] 1731 	mov	@r0,ar3
+      00092E 08               [12] 1732 	inc	r0
+      00092F A6 04            [24] 1733 	mov	@r0,ar4
+      000931 08               [12] 1734 	inc	r0
+      000932 A6 05            [24] 1735 	mov	@r0,ar5
+                                   1736 ;	/home/user/contiki/core/net/mac/csma.c:324: if(n != NULL) {
+      000934 A8 81            [24] 1737 	mov	r0,sp
+      000936 18               [12] 1738 	dec	r0
+      000937 18               [12] 1739 	dec	r0
+      000938 E6               [12] 1740 	mov	a,@r0
+      000939 08               [12] 1741 	inc	r0
+      00093A 46               [12] 1742 	orl	a,@r0
+      00093B 70 03            [24] 1743 	jnz	00165$
+      00093D 02r0Ar34         [24] 1744 	ljmp	00109$
+      000940                       1745 00165$:
+                                   1746 ;	/home/user/contiki/core/net/mac/csma.c:326: rimeaddr_copy(&n->addr, addr);
+      000940 A8 81            [24] 1747 	mov	r0,sp
+      000942 18               [12] 1748 	dec	r0
+      000943 18               [12] 1749 	dec	r0
+      000944 74 03            [12] 1750 	mov	a,#0x03
+      000946 26               [12] 1751 	add	a,@r0
+      000947 FB               [12] 1752 	mov	r3,a
+      000948 E4               [12] 1753 	clr	a
+      000949 08               [12] 1754 	inc	r0
+      00094A 36               [12] 1755 	addc	a,@r0
+      00094B FC               [12] 1756 	mov	r4,a
+      00094C 08               [12] 1757 	inc	r0
+      00094D 86 05            [24] 1758 	mov	ar5,@r0
+      00094F E5 81            [12] 1759 	mov	a,sp
+      000951 24 F8            [12] 1760 	add	a,#0xf8
+      000953 F8               [12] 1761 	mov	r0,a
+      000954 E6               [12] 1762 	mov	a,@r0
+      000955 C0 E0            [24] 1763 	push	acc
+      000957 08               [12] 1764 	inc	r0
+      000958 E6               [12] 1765 	mov	a,@r0
+      000959 C0 E0            [24] 1766 	push	acc
+      00095B 08               [12] 1767 	inc	r0
+      00095C E6               [12] 1768 	mov	a,@r0
+      00095D C0 E0            [24] 1769 	push	acc
+      00095F 8B 82            [24] 1770 	mov	dpl,r3
+      000961 8C 83            [24] 1771 	mov	dph,r4
+      000963 8D F0            [24] 1772 	mov	b,r5
+      000965 12r00r00         [24] 1773 	lcall	_rimeaddr_copy
+      000968 15 81            [12] 1774 	dec	sp
+      00096A 15 81            [12] 1775 	dec	sp
+      00096C 15 81            [12] 1776 	dec	sp
+                                   1777 ;	/home/user/contiki/core/net/mac/csma.c:327: n->transmissions = 0;
+      00096E A8 81            [24] 1778 	mov	r0,sp
+      000970 18               [12] 1779 	dec	r0
+      000971 18               [12] 1780 	dec	r0
+      000972 74 1A            [12] 1781 	mov	a,#0x1A
+      000974 26               [12] 1782 	add	a,@r0
+      000975 FB               [12] 1783 	mov	r3,a
+      000976 E4               [12] 1784 	clr	a
+      000977 08               [12] 1785 	inc	r0
+      000978 36               [12] 1786 	addc	a,@r0
+      000979 FC               [12] 1787 	mov	r4,a
+      00097A 08               [12] 1788 	inc	r0
+      00097B 86 05            [24] 1789 	mov	ar5,@r0
+      00097D 8B 82            [24] 1790 	mov	dpl,r3
+      00097F 8C 83            [24] 1791 	mov	dph,r4
+      000981 8D F0            [24] 1792 	mov	b,r5
+      000983 E4               [12] 1793 	clr	a
+      000984 12r00r00         [24] 1794 	lcall	__gptrput
+                                   1795 ;	/home/user/contiki/core/net/mac/csma.c:328: n->collisions = 0;
+      000987 A8 81            [24] 1796 	mov	r0,sp
+      000989 18               [12] 1797 	dec	r0
+      00098A 18               [12] 1798 	dec	r0
+      00098B 74 1B            [12] 1799 	mov	a,#0x1B
+      00098D 26               [12] 1800 	add	a,@r0
+      00098E FB               [12] 1801 	mov	r3,a
+      00098F E4               [12] 1802 	clr	a
+      000990 08               [12] 1803 	inc	r0
+      000991 36               [12] 1804 	addc	a,@r0
+      000992 FC               [12] 1805 	mov	r4,a
+      000993 08               [12] 1806 	inc	r0
+      000994 86 05            [24] 1807 	mov	ar5,@r0
+      000996 8B 82            [24] 1808 	mov	dpl,r3
+      000998 8C 83            [24] 1809 	mov	dph,r4
+      00099A 8D F0            [24] 1810 	mov	b,r5
+      00099C E4               [12] 1811 	clr	a
+      00099D 12r00r00         [24] 1812 	lcall	__gptrput
+                                   1813 ;	/home/user/contiki/core/net/mac/csma.c:329: n->deferrals = 0;
+      0009A0 A8 81            [24] 1814 	mov	r0,sp
+      0009A2 18               [12] 1815 	dec	r0
+      0009A3 18               [12] 1816 	dec	r0
+      0009A4 74 1C            [12] 1817 	mov	a,#0x1C
+      0009A6 26               [12] 1818 	add	a,@r0
+      0009A7 FB               [12] 1819 	mov	r3,a
+      0009A8 E4               [12] 1820 	clr	a
+      0009A9 08               [12] 1821 	inc	r0
+      0009AA 36               [12] 1822 	addc	a,@r0
+      0009AB FC               [12] 1823 	mov	r4,a
+      0009AC 08               [12] 1824 	inc	r0
+      0009AD 86 05            [24] 1825 	mov	ar5,@r0
+      0009AF 8B 82            [24] 1826 	mov	dpl,r3
+      0009B1 8C 83            [24] 1827 	mov	dph,r4
+      0009B3 8D F0            [24] 1828 	mov	b,r5
+      0009B5 E4               [12] 1829 	clr	a
+      0009B6 12r00r00         [24] 1830 	lcall	__gptrput
+                                   1831 ;	/home/user/contiki/core/net/mac/csma.c:331: LIST_STRUCT_INIT(n, queued_packet_list);
+      0009B9 A8 81            [24] 1832 	mov	r0,sp
+      0009BB 18               [12] 1833 	dec	r0
+      0009BC 18               [12] 1834 	dec	r0
+      0009BD 74 20            [12] 1835 	mov	a,#0x20
+      0009BF 26               [12] 1836 	add	a,@r0
+      0009C0 FB               [12] 1837 	mov	r3,a
+      0009C1 E4               [12] 1838 	clr	a
+      0009C2 08               [12] 1839 	inc	r0
+      0009C3 36               [12] 1840 	addc	a,@r0
+      0009C4 FC               [12] 1841 	mov	r4,a
+      0009C5 08               [12] 1842 	inc	r0
+      0009C6 86 05            [24] 1843 	mov	ar5,@r0
+      0009C8 A8 81            [24] 1844 	mov	r0,sp
+      0009CA 18               [12] 1845 	dec	r0
+      0009CB 18               [12] 1846 	dec	r0
+      0009CC 74 1D            [12] 1847 	mov	a,#0x1D
+      0009CE 26               [12] 1848 	add	a,@r0
+      0009CF FA               [12] 1849 	mov	r2,a
+      0009D0 E4               [12] 1850 	clr	a
+      0009D1 08               [12] 1851 	inc	r0
+      0009D2 36               [12] 1852 	addc	a,@r0
+      0009D3 FE               [12] 1853 	mov	r6,a
+      0009D4 08               [12] 1854 	inc	r0
+      0009D5 86 07            [24] 1855 	mov	ar7,@r0
+      0009D7 8B 82            [24] 1856 	mov	dpl,r3
+      0009D9 8C 83            [24] 1857 	mov	dph,r4
+      0009DB 8D F0            [24] 1858 	mov	b,r5
+      0009DD EA               [12] 1859 	mov	a,r2
+      0009DE 12r00r00         [24] 1860 	lcall	__gptrput
+      0009E1 A3               [24] 1861 	inc	dptr
+      0009E2 EE               [12] 1862 	mov	a,r6
+      0009E3 12r00r00         [24] 1863 	lcall	__gptrput
+      0009E6 A3               [24] 1864 	inc	dptr
+      0009E7 EF               [12] 1865 	mov	a,r7
+      0009E8 12r00r00         [24] 1866 	lcall	__gptrput
+      0009EB 8A 82            [24] 1867 	mov	dpl,r2
+      0009ED 8E 83            [24] 1868 	mov	dph,r6
+      0009EF 8F F0            [24] 1869 	mov	b,r7
+      0009F1 E4               [12] 1870 	clr	a
+      0009F2 12r00r00         [24] 1871 	lcall	__gptrput
+      0009F5 A3               [24] 1872 	inc	dptr
+      0009F6 E4               [12] 1873 	clr	a
+      0009F7 12r00r00         [24] 1874 	lcall	__gptrput
+      0009FA A3               [24] 1875 	inc	dptr
+      0009FB E4               [12] 1876 	clr	a
+      0009FC 12r00r00         [24] 1877 	lcall	__gptrput
+      0009FF 8A 82            [24] 1878 	mov	dpl,r2
+      000A01 8E 83            [24] 1879 	mov	dph,r6
+      000A03 8F F0            [24] 1880 	mov	b,r7
+      000A05 12r00r00         [24] 1881 	lcall	_list_init
+                                   1882 ;	/home/user/contiki/core/net/mac/csma.c:333: list_add(neighbor_list, n);
+      000A08 A8 81            [24] 1883 	mov	r0,sp
+      000A0A 18               [12] 1884 	dec	r0
+      000A0B 18               [12] 1885 	dec	r0
+      000A0C 86 02            [24] 1886 	mov	ar2,@r0
+      000A0E 08               [12] 1887 	inc	r0
+      000A0F 86 06            [24] 1888 	mov	ar6,@r0
+      000A11 08               [12] 1889 	inc	r0
+      000A12 86 07            [24] 1890 	mov	ar7,@r0
+      000A14 90r00r21         [24] 1891 	mov	dptr,#_neighbor_list
+      000A17 E0               [24] 1892 	movx	a,@dptr
+      000A18 FB               [12] 1893 	mov	r3,a
+      000A19 A3               [24] 1894 	inc	dptr
+      000A1A E0               [24] 1895 	movx	a,@dptr
+      000A1B FC               [12] 1896 	mov	r4,a
+      000A1C A3               [24] 1897 	inc	dptr
+      000A1D E0               [24] 1898 	movx	a,@dptr
+      000A1E FD               [12] 1899 	mov	r5,a
+      000A1F C0 02            [24] 1900 	push	ar2
+      000A21 C0 06            [24] 1901 	push	ar6
+      000A23 C0 07            [24] 1902 	push	ar7
+      000A25 8B 82            [24] 1903 	mov	dpl,r3
+      000A27 8C 83            [24] 1904 	mov	dph,r4
+      000A29 8D F0            [24] 1905 	mov	b,r5
+      000A2B 12r00r00         [24] 1906 	lcall	_list_add
+      000A2E 15 81            [12] 1907 	dec	sp
+      000A30 15 81            [12] 1908 	dec	sp
+      000A32 15 81            [12] 1909 	dec	sp
+      000A34                       1910 00109$:
+                                   1911 ;	/home/user/contiki/core/net/mac/csma.c:337: if(n != NULL) {
+      000A34 A8 81            [24] 1912 	mov	r0,sp
+      000A36 18               [12] 1913 	dec	r0
+      000A37 18               [12] 1914 	dec	r0
+      000A38 E6               [12] 1915 	mov	a,@r0
+      000A39 08               [12] 1916 	inc	r0
+      000A3A 46               [12] 1917 	orl	a,@r0
+      000A3B 70 03            [24] 1918 	jnz	00166$
+      000A3D 02r0DrB9         [24] 1919 	ljmp	00127$
+      000A40                       1920 00166$:
+                                   1921 ;	/home/user/contiki/core/net/mac/csma.c:339: q = memb_alloc(&packet_memb);
+      000A40 90r00r0A         [24] 1922 	mov	dptr,#_packet_memb
+      000A43 75 F0 00         [24] 1923 	mov	b,#0x00
+      000A46 12r00r00         [24] 1924 	lcall	_memb_alloc
+      000A49 AD 82            [24] 1925 	mov	r5,dpl
+      000A4B AE 83            [24] 1926 	mov	r6,dph
+      000A4D AF F0            [24] 1927 	mov	r7,b
+      000A4F E5 81            [12] 1928 	mov	a,sp
+      000A51 24 FB            [12] 1929 	add	a,#0xfb
+      000A53 F8               [12] 1930 	mov	r0,a
+      000A54 A6 05            [24] 1931 	mov	@r0,ar5
+      000A56 08               [12] 1932 	inc	r0
+      000A57 A6 06            [24] 1933 	mov	@r0,ar6
+      000A59 08               [12] 1934 	inc	r0
+      000A5A A6 07            [24] 1935 	mov	@r0,ar7
+                                   1936 ;	/home/user/contiki/core/net/mac/csma.c:340: if(q != NULL) {
+      000A5C E5 81            [12] 1937 	mov	a,sp
+      000A5E 24 FB            [12] 1938 	add	a,#0xfb
+      000A60 F8               [12] 1939 	mov	r0,a
+      000A61 E6               [12] 1940 	mov	a,@r0
+      000A62 08               [12] 1941 	inc	r0
+      000A63 46               [12] 1942 	orl	a,@r0
+      000A64 70 03            [24] 1943 	jnz	00167$
+      000A66 02r0Dr37         [24] 1944 	ljmp	00123$
+      000A69                       1945 00167$:
+                                   1946 ;	/home/user/contiki/core/net/mac/csma.c:341: q->ptr = memb_alloc(&metadata_memb);
+      000A69 E5 81            [12] 1947 	mov	a,sp
+      000A6B 24 FB            [12] 1948 	add	a,#0xfb
+      000A6D F8               [12] 1949 	mov	r0,a
+      000A6E 74 06            [12] 1950 	mov	a,#0x06
+      000A70 26               [12] 1951 	add	a,@r0
+      000A71 FA               [12] 1952 	mov	r2,a
+      000A72 E4               [12] 1953 	clr	a
+      000A73 08               [12] 1954 	inc	r0
+      000A74 36               [12] 1955 	addc	a,@r0
+      000A75 FB               [12] 1956 	mov	r3,a
+      000A76 08               [12] 1957 	inc	r0
+      000A77 86 04            [24] 1958 	mov	ar4,@r0
+      000A79 90r00r14         [24] 1959 	mov	dptr,#_metadata_memb
+      000A7C 75 F0 00         [24] 1960 	mov	b,#0x00
+      000A7F C0 04            [24] 1961 	push	ar4
+      000A81 C0 03            [24] 1962 	push	ar3
+      000A83 C0 02            [24] 1963 	push	ar2
+      000A85 12r00r00         [24] 1964 	lcall	_memb_alloc
+      000A88 AD 82            [24] 1965 	mov	r5,dpl
+      000A8A AE 83            [24] 1966 	mov	r6,dph
+      000A8C AF F0            [24] 1967 	mov	r7,b
+      000A8E D0 02            [24] 1968 	pop	ar2
+      000A90 D0 03            [24] 1969 	pop	ar3
+      000A92 D0 04            [24] 1970 	pop	ar4
+      000A94 8A 82            [24] 1971 	mov	dpl,r2
+      000A96 8B 83            [24] 1972 	mov	dph,r3
+      000A98 8C F0            [24] 1973 	mov	b,r4
+      000A9A ED               [12] 1974 	mov	a,r5
+      000A9B 12r00r00         [24] 1975 	lcall	__gptrput
+      000A9E A3               [24] 1976 	inc	dptr
+      000A9F EE               [12] 1977 	mov	a,r6
+      000AA0 12r00r00         [24] 1978 	lcall	__gptrput
+      000AA3 A3               [24] 1979 	inc	dptr
+      000AA4 EF               [12] 1980 	mov	a,r7
+      000AA5 12r00r00         [24] 1981 	lcall	__gptrput
+                                   1982 ;	/home/user/contiki/core/net/mac/csma.c:342: if(q->ptr != NULL) {
+      000AA8 ED               [12] 1983 	mov	a,r5
+      000AA9 4E               [12] 1984 	orl	a,r6
+      000AAA 70 03            [24] 1985 	jnz	00168$
+      000AAC 02r0Dr15         [24] 1986 	ljmp	00121$
+      000AAF                       1987 00168$:
+                                   1988 ;	/home/user/contiki/core/net/mac/csma.c:343: q->buf = queuebuf_new_from_packetbuf();
+      000AAF E5 81            [12] 1989 	mov	a,sp
+      000AB1 24 FB            [12] 1990 	add	a,#0xfb
+      000AB3 F8               [12] 1991 	mov	r0,a
+      000AB4 E5 81            [12] 1992 	mov	a,sp
+      000AB6 24 F5            [12] 1993 	add	a,#0xf5
+      000AB8 F9               [12] 1994 	mov	r1,a
+      000AB9 74 03            [12] 1995 	mov	a,#0x03
+      000ABB 26               [12] 1996 	add	a,@r0
+      000ABC F7               [12] 1997 	mov	@r1,a
+      000ABD E4               [12] 1998 	clr	a
+      000ABE 08               [12] 1999 	inc	r0
+      000ABF 36               [12] 2000 	addc	a,@r0
+      000AC0 09               [12] 2001 	inc	r1
+      000AC1 F7               [12] 2002 	mov	@r1,a
+      000AC2 08               [12] 2003 	inc	r0
+      000AC3 09               [12] 2004 	inc	r1
+      000AC4 E6               [12] 2005 	mov	a,@r0
+      000AC5 F7               [12] 2006 	mov	@r1,a
+      000AC6 C0 04            [24] 2007 	push	ar4
+      000AC8 C0 03            [24] 2008 	push	ar3
+      000ACA C0 02            [24] 2009 	push	ar2
+      000ACC 12r00r00         [24] 2010 	lcall	_queuebuf_new_from_packetbuf
+      000ACF AD 82            [24] 2011 	mov	r5,dpl
+      000AD1 AE 83            [24] 2012 	mov	r6,dph
+      000AD3 AF F0            [24] 2013 	mov	r7,b
+      000AD5 D0 02            [24] 2014 	pop	ar2
+      000AD7 D0 03            [24] 2015 	pop	ar3
+      000AD9 D0 04            [24] 2016 	pop	ar4
+      000ADB E5 81            [12] 2017 	mov	a,sp
+      000ADD 24 F5            [12] 2018 	add	a,#0xf5
+      000ADF F8               [12] 2019 	mov	r0,a
+      000AE0 86 82            [24] 2020 	mov	dpl,@r0
+      000AE2 08               [12] 2021 	inc	r0
+      000AE3 86 83            [24] 2022 	mov	dph,@r0
+      000AE5 08               [12] 2023 	inc	r0
+      000AE6 86 F0            [24] 2024 	mov	b,@r0
+      000AE8 ED               [12] 2025 	mov	a,r5
+      000AE9 12r00r00         [24] 2026 	lcall	__gptrput
+      000AEC A3               [24] 2027 	inc	dptr
+      000AED EE               [12] 2028 	mov	a,r6
+      000AEE 12r00r00         [24] 2029 	lcall	__gptrput
+      000AF1 A3               [24] 2030 	inc	dptr
+      000AF2 EF               [12] 2031 	mov	a,r7
+      000AF3 12r00r00         [24] 2032 	lcall	__gptrput
+                                   2033 ;	/home/user/contiki/core/net/mac/csma.c:344: if(q->buf != NULL) {
+      000AF6 ED               [12] 2034 	mov	a,r5
+      000AF7 4E               [12] 2035 	orl	a,r6
+      000AF8 70 03            [24] 2036 	jnz	00169$
+      000AFA 02r0CrEC         [24] 2037 	ljmp	00119$
+      000AFD                       2038 00169$:
+                                   2039 ;	/home/user/contiki/core/net/mac/csma.c:345: struct qbuf_metadata *metadata = (struct qbuf_metadata *)q->ptr;
+      000AFD 8A 82            [24] 2040 	mov	dpl,r2
+      000AFF 8B 83            [24] 2041 	mov	dph,r3
+      000B01 8C F0            [24] 2042 	mov	b,r4
+      000B03 12r00r00         [24] 2043 	lcall	__gptrget
+      000B06 FD               [12] 2044 	mov	r5,a
+      000B07 A3               [24] 2045 	inc	dptr
+      000B08 12r00r00         [24] 2046 	lcall	__gptrget
+      000B0B FE               [12] 2047 	mov	r6,a
+      000B0C A3               [24] 2048 	inc	dptr
+      000B0D 12r00r00         [24] 2049 	lcall	__gptrget
+      000B10 FF               [12] 2050 	mov	r7,a
+      000B11 8D 04            [24] 2051 	mov	ar4,r5
+      000B13 8E 03            [24] 2052 	mov	ar3,r6
+      000B15 8F 02            [24] 2053 	mov	ar2,r7
+                                   2054 ;	/home/user/contiki/core/net/mac/csma.c:347: if(packetbuf_attr(PACKETBUF_ATTR_MAX_MAC_TRANSMISSIONS) == 0) {
+      000B17 75 82 09         [24] 2055 	mov	dpl,#0x09
+      000B1A C0 04            [24] 2056 	push	ar4
+      000B1C C0 03            [24] 2057 	push	ar3
+      000B1E C0 02            [24] 2058 	push	ar2
+      000B20 12r00r00         [24] 2059 	lcall	_packetbuf_attr
+      000B23 E5 82            [12] 2060 	mov	a,dpl
+      000B25 85 83 F0         [24] 2061 	mov	b,dph
+      000B28 D0 02            [24] 2062 	pop	ar2
+      000B2A D0 03            [24] 2063 	pop	ar3
+      000B2C D0 04            [24] 2064 	pop	ar4
+      000B2E 45 F0            [12] 2065 	orl	a,b
+      000B30 70 16            [24] 2066 	jnz	00111$
+                                   2067 ;	/home/user/contiki/core/net/mac/csma.c:349: metadata->max_transmissions = CSMA_MAX_MAC_TRANSMISSIONS;
+      000B32 74 05            [12] 2068 	mov	a,#0x05
+      000B34 2C               [12] 2069 	add	a,r4
+      000B35 FD               [12] 2070 	mov	r5,a
+      000B36 E4               [12] 2071 	clr	a
+      000B37 3B               [12] 2072 	addc	a,r3
+      000B38 FE               [12] 2073 	mov	r6,a
+      000B39 8A 07            [24] 2074 	mov	ar7,r2
+      000B3B 8D 82            [24] 2075 	mov	dpl,r5
+      000B3D 8E 83            [24] 2076 	mov	dph,r6
+      000B3F 8F F0            [24] 2077 	mov	b,r7
+      000B41 74 03            [12] 2078 	mov	a,#0x03
+      000B43 12r00r00         [24] 2079 	lcall	__gptrput
+      000B46 80 37            [24] 2080 	sjmp	00112$
+      000B48                       2081 00111$:
+                                   2082 ;	/home/user/contiki/core/net/mac/csma.c:351: metadata->max_transmissions =
+      000B48 E5 81            [12] 2083 	mov	a,sp
+      000B4A 24 F5            [12] 2084 	add	a,#0xf5
+      000B4C F8               [12] 2085 	mov	r0,a
+      000B4D 74 05            [12] 2086 	mov	a,#0x05
+      000B4F 2C               [12] 2087 	add	a,r4
+      000B50 F6               [12] 2088 	mov	@r0,a
+      000B51 E4               [12] 2089 	clr	a
+      000B52 3B               [12] 2090 	addc	a,r3
+      000B53 08               [12] 2091 	inc	r0
+      000B54 F6               [12] 2092 	mov	@r0,a
+      000B55 08               [12] 2093 	inc	r0
+      000B56 A6 02            [24] 2094 	mov	@r0,ar2
+                                   2095 ;	/home/user/contiki/core/net/mac/csma.c:352: packetbuf_attr(PACKETBUF_ATTR_MAX_MAC_TRANSMISSIONS);
+      000B58 75 82 09         [24] 2096 	mov	dpl,#0x09
+      000B5B C0 04            [24] 2097 	push	ar4
+      000B5D C0 03            [24] 2098 	push	ar3
+      000B5F C0 02            [24] 2099 	push	ar2
+      000B61 12r00r00         [24] 2100 	lcall	_packetbuf_attr
+      000B64 AE 82            [24] 2101 	mov	r6,dpl
+      000B66 AF 83            [24] 2102 	mov	r7,dph
+      000B68 D0 02            [24] 2103 	pop	ar2
+      000B6A D0 03            [24] 2104 	pop	ar3
+      000B6C D0 04            [24] 2105 	pop	ar4
+      000B6E E5 81            [12] 2106 	mov	a,sp
+      000B70 24 F5            [12] 2107 	add	a,#0xf5
+      000B72 F8               [12] 2108 	mov	r0,a
+      000B73 86 82            [24] 2109 	mov	dpl,@r0
+      000B75 08               [12] 2110 	inc	r0
+      000B76 86 83            [24] 2111 	mov	dph,@r0
+      000B78 08               [12] 2112 	inc	r0
+      000B79 86 F0            [24] 2113 	mov	b,@r0
+      000B7B EE               [12] 2114 	mov	a,r6
+      000B7C 12r00r00         [24] 2115 	lcall	__gptrput
+      000B7F                       2116 00112$:
+                                   2117 ;	/home/user/contiki/core/net/mac/csma.c:354: metadata->sent = sent;
+      000B7F 8C 82            [24] 2118 	mov	dpl,r4
+      000B81 8B 83            [24] 2119 	mov	dph,r3
+      000B83 8A F0            [24] 2120 	mov	b,r2
+      000B85 E5 81            [12] 2121 	mov	a,sp
+      000B87 24 F3            [12] 2122 	add	a,#0xf3
+      000B89 F8               [12] 2123 	mov	r0,a
+      000B8A E6               [12] 2124 	mov	a,@r0
+      000B8B 12r00r00         [24] 2125 	lcall	__gptrput
+      000B8E A3               [24] 2126 	inc	dptr
+      000B8F 08               [12] 2127 	inc	r0
+      000B90 E6               [12] 2128 	mov	a,@r0
+      000B91 12r00r00         [24] 2129 	lcall	__gptrput
+                                   2130 ;	/home/user/contiki/core/net/mac/csma.c:355: metadata->cptr = ptr;
+      000B94 74 02            [12] 2131 	mov	a,#0x02
+      000B96 2C               [12] 2132 	add	a,r4
+      000B97 FD               [12] 2133 	mov	r5,a
+      000B98 E4               [12] 2134 	clr	a
+      000B99 3B               [12] 2135 	addc	a,r3
+      000B9A FE               [12] 2136 	mov	r6,a
+      000B9B 8A 07            [24] 2137 	mov	ar7,r2
+      000B9D 8D 82            [24] 2138 	mov	dpl,r5
+      000B9F 8E 83            [24] 2139 	mov	dph,r6
+      000BA1 8F F0            [24] 2140 	mov	b,r7
+      000BA3 E5 81            [12] 2141 	mov	a,sp
+      000BA5 24 EE            [12] 2142 	add	a,#0xee
+      000BA7 F8               [12] 2143 	mov	r0,a
+      000BA8 E6               [12] 2144 	mov	a,@r0
+      000BA9 12r00r00         [24] 2145 	lcall	__gptrput
+      000BAC A3               [24] 2146 	inc	dptr
+      000BAD 08               [12] 2147 	inc	r0
+      000BAE E6               [12] 2148 	mov	a,@r0
+      000BAF 12r00r00         [24] 2149 	lcall	__gptrput
+      000BB2 A3               [24] 2150 	inc	dptr
+      000BB3 08               [12] 2151 	inc	r0
+      000BB4 E6               [12] 2152 	mov	a,@r0
+      000BB5 12r00r00         [24] 2153 	lcall	__gptrput
+                                   2154 ;	/home/user/contiki/core/net/mac/csma.c:357: if(packetbuf_attr(PACKETBUF_ATTR_PACKET_TYPE) ==
+      000BB8 75 82 0E         [24] 2155 	mov	dpl,#0x0E
+      000BBB 12r00r00         [24] 2156 	lcall	_packetbuf_attr
+      000BBE AE 82            [24] 2157 	mov	r6,dpl
+      000BC0 AF 83            [24] 2158 	mov	r7,dph
+      000BC2 BE 01 4A         [24] 2159 	cjne	r6,#0x01,00114$
+      000BC5 BF 00 47         [24] 2160 	cjne	r7,#0x00,00114$
+                                   2161 ;	/home/user/contiki/core/net/mac/csma.c:359: list_push(n->queued_packet_list, q);
+      000BC8 E5 81            [12] 2162 	mov	a,sp
+      000BCA 24 FB            [12] 2163 	add	a,#0xfb
+      000BCC F8               [12] 2164 	mov	r0,a
+      000BCD 86 04            [24] 2165 	mov	ar4,@r0
+      000BCF 08               [12] 2166 	inc	r0
+      000BD0 86 03            [24] 2167 	mov	ar3,@r0
+      000BD2 08               [12] 2168 	inc	r0
+      000BD3 86 02            [24] 2169 	mov	ar2,@r0
+      000BD5 A8 81            [24] 2170 	mov	r0,sp
+      000BD7 18               [12] 2171 	dec	r0
+      000BD8 18               [12] 2172 	dec	r0
+      000BD9 74 20            [12] 2173 	mov	a,#0x20
+      000BDB 26               [12] 2174 	add	a,@r0
+      000BDC FD               [12] 2175 	mov	r5,a
+      000BDD E4               [12] 2176 	clr	a
+      000BDE 08               [12] 2177 	inc	r0
+      000BDF 36               [12] 2178 	addc	a,@r0
+      000BE0 FE               [12] 2179 	mov	r6,a
+      000BE1 08               [12] 2180 	inc	r0
+      000BE2 86 07            [24] 2181 	mov	ar7,@r0
+      000BE4 8D 82            [24] 2182 	mov	dpl,r5
+      000BE6 8E 83            [24] 2183 	mov	dph,r6
+      000BE8 8F F0            [24] 2184 	mov	b,r7
+      000BEA 12r00r00         [24] 2185 	lcall	__gptrget
+      000BED FD               [12] 2186 	mov	r5,a
+      000BEE A3               [24] 2187 	inc	dptr
+      000BEF 12r00r00         [24] 2188 	lcall	__gptrget
+      000BF2 FE               [12] 2189 	mov	r6,a
+      000BF3 A3               [24] 2190 	inc	dptr
+      000BF4 12r00r00         [24] 2191 	lcall	__gptrget
+      000BF7 FF               [12] 2192 	mov	r7,a
+      000BF8 C0 04            [24] 2193 	push	ar4
+      000BFA C0 03            [24] 2194 	push	ar3
+      000BFC C0 02            [24] 2195 	push	ar2
+      000BFE 8D 82            [24] 2196 	mov	dpl,r5
+      000C00 8E 83            [24] 2197 	mov	dph,r6
+      000C02 8F F0            [24] 2198 	mov	b,r7
+      000C04 12r00r00         [24] 2199 	lcall	_list_push
+      000C07 15 81            [12] 2200 	dec	sp
+      000C09 15 81            [12] 2201 	dec	sp
+      000C0B 15 81            [12] 2202 	dec	sp
+      000C0D 80 45            [24] 2203 	sjmp	00115$
+      000C0F                       2204 00114$:
+                                   2205 ;	/home/user/contiki/core/net/mac/csma.c:361: list_add(n->queued_packet_list, q);
+      000C0F E5 81            [12] 2206 	mov	a,sp
+      000C11 24 FB            [12] 2207 	add	a,#0xfb
+      000C13 F8               [12] 2208 	mov	r0,a
+      000C14 86 04            [24] 2209 	mov	ar4,@r0
+      000C16 08               [12] 2210 	inc	r0
+      000C17 86 03            [24] 2211 	mov	ar3,@r0
+      000C19 08               [12] 2212 	inc	r0
+      000C1A 86 02            [24] 2213 	mov	ar2,@r0
+      000C1C A8 81            [24] 2214 	mov	r0,sp
+      000C1E 18               [12] 2215 	dec	r0
+      000C1F 18               [12] 2216 	dec	r0
+      000C20 74 20            [12] 2217 	mov	a,#0x20
+      000C22 26               [12] 2218 	add	a,@r0
+      000C23 FD               [12] 2219 	mov	r5,a
+      000C24 E4               [12] 2220 	clr	a
+      000C25 08               [12] 2221 	inc	r0
+      000C26 36               [12] 2222 	addc	a,@r0
+      000C27 FE               [12] 2223 	mov	r6,a
+      000C28 08               [12] 2224 	inc	r0
+      000C29 86 07            [24] 2225 	mov	ar7,@r0
+      000C2B 8D 82            [24] 2226 	mov	dpl,r5
+      000C2D 8E 83            [24] 2227 	mov	dph,r6
+      000C2F 8F F0            [24] 2228 	mov	b,r7
+      000C31 12r00r00         [24] 2229 	lcall	__gptrget
+      000C34 FD               [12] 2230 	mov	r5,a
+      000C35 A3               [24] 2231 	inc	dptr
+      000C36 12r00r00         [24] 2232 	lcall	__gptrget
+      000C39 FE               [12] 2233 	mov	r6,a
+      000C3A A3               [24] 2234 	inc	dptr
+      000C3B 12r00r00         [24] 2235 	lcall	__gptrget
+      000C3E FF               [12] 2236 	mov	r7,a
+      000C3F C0 04            [24] 2237 	push	ar4
+      000C41 C0 03            [24] 2238 	push	ar3
+      000C43 C0 02            [24] 2239 	push	ar2
+      000C45 8D 82            [24] 2240 	mov	dpl,r5
+      000C47 8E 83            [24] 2241 	mov	dph,r6
+      000C49 8F F0            [24] 2242 	mov	b,r7
+      000C4B 12r00r00         [24] 2243 	lcall	_list_add
+      000C4E 15 81            [12] 2244 	dec	sp
+      000C50 15 81            [12] 2245 	dec	sp
+      000C52 15 81            [12] 2246 	dec	sp
+      000C54                       2247 00115$:
+                                   2248 ;	/home/user/contiki/core/net/mac/csma.c:365: if(list_head(n->queued_packet_list) == q) {
+      000C54 A8 81            [24] 2249 	mov	r0,sp
+      000C56 18               [12] 2250 	dec	r0
+      000C57 18               [12] 2251 	dec	r0
+      000C58 74 20            [12] 2252 	mov	a,#0x20
+      000C5A 26               [12] 2253 	add	a,@r0
+      000C5B FD               [12] 2254 	mov	r5,a
+      000C5C E4               [12] 2255 	clr	a
+      000C5D 08               [12] 2256 	inc	r0
+      000C5E 36               [12] 2257 	addc	a,@r0
+      000C5F FE               [12] 2258 	mov	r6,a
+      000C60 08               [12] 2259 	inc	r0
+      000C61 86 07            [24] 2260 	mov	ar7,@r0
+      000C63 8D 82            [24] 2261 	mov	dpl,r5
+      000C65 8E 83            [24] 2262 	mov	dph,r6
+      000C67 8F F0            [24] 2263 	mov	b,r7
+      000C69 12r00r00         [24] 2264 	lcall	__gptrget
+      000C6C FD               [12] 2265 	mov	r5,a
+      000C6D A3               [24] 2266 	inc	dptr
+      000C6E 12r00r00         [24] 2267 	lcall	__gptrget
+      000C71 FE               [12] 2268 	mov	r6,a
+      000C72 A3               [24] 2269 	inc	dptr
+      000C73 12r00r00         [24] 2270 	lcall	__gptrget
+      000C76 FF               [12] 2271 	mov	r7,a
+      000C77 8D 82            [24] 2272 	mov	dpl,r5
+      000C79 8E 83            [24] 2273 	mov	dph,r6
+      000C7B 8F F0            [24] 2274 	mov	b,r7
+      000C7D 12r00r00         [24] 2275 	lcall	_list_head
+      000C80 AC 82            [24] 2276 	mov	r4,dpl
+      000C82 AB 83            [24] 2277 	mov	r3,dph
+      000C84 AA F0            [24] 2278 	mov	r2,b
+      000C86 E5 81            [12] 2279 	mov	a,sp
+      000C88 24 FB            [12] 2280 	add	a,#0xfb
+      000C8A F8               [12] 2281 	mov	r0,a
+      000C8B 86 05            [24] 2282 	mov	ar5,@r0
+      000C8D 08               [12] 2283 	inc	r0
+      000C8E 86 06            [24] 2284 	mov	ar6,@r0
+      000C90 08               [12] 2285 	inc	r0
+      000C91 86 07            [24] 2286 	mov	ar7,@r0
+      000C93 C0 05            [24] 2287 	push	ar5
+      000C95 C0 06            [24] 2288 	push	ar6
+      000C97 C0 07            [24] 2289 	push	ar7
+      000C99 8C 82            [24] 2290 	mov	dpl,r4
+      000C9B 8B 83            [24] 2291 	mov	dph,r3
+      000C9D 8A F0            [24] 2292 	mov	b,r2
+      000C9F 12r00r00         [24] 2293 	lcall	___gptr_cmp
+      000CA2 15 81            [12] 2294 	dec	sp
+      000CA4 15 81            [12] 2295 	dec	sp
+      000CA6 15 81            [12] 2296 	dec	sp
+      000CA8 60 02            [24] 2297 	jz	00174$
+      000CAA 80 3D            [24] 2298 	sjmp	00117$
+      000CAC                       2299 00174$:
+                                   2300 ;	/home/user/contiki/core/net/mac/csma.c:366: ctimer_set(&n->transmit_timer, 0, transmit_packet_list, n);
+      000CAC A8 81            [24] 2301 	mov	r0,sp
+      000CAE 18               [12] 2302 	dec	r0
+      000CAF 18               [12] 2303 	dec	r0
+      000CB0 86 02            [24] 2304 	mov	ar2,@r0
+      000CB2 08               [12] 2305 	inc	r0
+      000CB3 86 04            [24] 2306 	mov	ar4,@r0
+      000CB5 08               [12] 2307 	inc	r0
+      000CB6 86 03            [24] 2308 	mov	ar3,@r0
+      000CB8 A8 81            [24] 2309 	mov	r0,sp
+      000CBA 18               [12] 2310 	dec	r0
+      000CBB 18               [12] 2311 	dec	r0
+      000CBC 74 05            [12] 2312 	mov	a,#0x05
+      000CBE 26               [12] 2313 	add	a,@r0
+      000CBF FD               [12] 2314 	mov	r5,a
+      000CC0 E4               [12] 2315 	clr	a
+      000CC1 08               [12] 2316 	inc	r0
+      000CC2 36               [12] 2317 	addc	a,@r0
+      000CC3 FE               [12] 2318 	mov	r6,a
+      000CC4 08               [12] 2319 	inc	r0
+      000CC5 86 07            [24] 2320 	mov	ar7,@r0
+      000CC7 C0 02            [24] 2321 	push	ar2
+      000CC9 C0 04            [24] 2322 	push	ar4
+      000CCB C0 03            [24] 2323 	push	ar3
+      000CCD 74rB3            [12] 2324 	mov	a,#_transmit_packet_list
+      000CCF C0 E0            [24] 2325 	push	acc
+      000CD1 74s00            [12] 2326 	mov	a,#(_transmit_packet_list >> 8)
+      000CD3 C0 E0            [24] 2327 	push	acc
+      000CD5 E4               [12] 2328 	clr	a
+      000CD6 C0 E0            [24] 2329 	push	acc
+      000CD8 C0 E0            [24] 2330 	push	acc
+      000CDA 8D 82            [24] 2331 	mov	dpl,r5
+      000CDC 8E 83            [24] 2332 	mov	dph,r6
+      000CDE 8F F0            [24] 2333 	mov	b,r7
+      000CE0 12r00r00         [24] 2334 	lcall	_ctimer_set
+      000CE3 E5 81            [12] 2335 	mov	a,sp
+      000CE5 24 F9            [12] 2336 	add	a,#0xf9
+      000CE7 F5 81            [12] 2337 	mov	sp,a
+      000CE9                       2338 00117$:
+                                   2339 ;	/home/user/contiki/core/net/mac/csma.c:368: return;
+      000CE9 02r0DrEA         [24] 2340 	ljmp	00128$
+      000CEC                       2341 00119$:
+                                   2342 ;	/home/user/contiki/core/net/mac/csma.c:370: memb_free(&metadata_memb, q->ptr);
+      000CEC 8A 82            [24] 2343 	mov	dpl,r2
+      000CEE 8B 83            [24] 2344 	mov	dph,r3
+      000CF0 8C F0            [24] 2345 	mov	b,r4
+      000CF2 12r00r00         [24] 2346 	lcall	__gptrget
+      000CF5 FA               [12] 2347 	mov	r2,a
+      000CF6 A3               [24] 2348 	inc	dptr
+      000CF7 12r00r00         [24] 2349 	lcall	__gptrget
+      000CFA FB               [12] 2350 	mov	r3,a
+      000CFB A3               [24] 2351 	inc	dptr
+      000CFC 12r00r00         [24] 2352 	lcall	__gptrget
+      000CFF FC               [12] 2353 	mov	r4,a
+      000D00 C0 02            [24] 2354 	push	ar2
+      000D02 C0 03            [24] 2355 	push	ar3
+      000D04 C0 04            [24] 2356 	push	ar4
+      000D06 90r00r14         [24] 2357 	mov	dptr,#_metadata_memb
+      000D09 75 F0 00         [24] 2358 	mov	b,#0x00
+      000D0C 12r00r00         [24] 2359 	lcall	_memb_free
+      000D0F 15 81            [12] 2360 	dec	sp
+      000D11 15 81            [12] 2361 	dec	sp
+      000D13 15 81            [12] 2362 	dec	sp
+      000D15                       2363 00121$:
+                                   2364 ;	/home/user/contiki/core/net/mac/csma.c:373: memb_free(&packet_memb, q);
+      000D15 E5 81            [12] 2365 	mov	a,sp
+      000D17 24 FB            [12] 2366 	add	a,#0xfb
+      000D19 F8               [12] 2367 	mov	r0,a
+      000D1A 86 05            [24] 2368 	mov	ar5,@r0
+      000D1C 08               [12] 2369 	inc	r0
+      000D1D 86 06            [24] 2370 	mov	ar6,@r0
+      000D1F 08               [12] 2371 	inc	r0
+      000D20 86 07            [24] 2372 	mov	ar7,@r0
+      000D22 C0 05            [24] 2373 	push	ar5
+      000D24 C0 06            [24] 2374 	push	ar6
+      000D26 C0 07            [24] 2375 	push	ar7
+      000D28 90r00r0A         [24] 2376 	mov	dptr,#_packet_memb
+      000D2B 75 F0 00         [24] 2377 	mov	b,#0x00
+      000D2E 12r00r00         [24] 2378 	lcall	_memb_free
+      000D31 15 81            [12] 2379 	dec	sp
+      000D33 15 81            [12] 2380 	dec	sp
+      000D35 15 81            [12] 2381 	dec	sp
+      000D37                       2382 00123$:
+                                   2383 ;	/home/user/contiki/core/net/mac/csma.c:377: if(list_length(n->queued_packet_list) == 0) {
+      000D37 A8 81            [24] 2384 	mov	r0,sp
+      000D39 18               [12] 2385 	dec	r0
+      000D3A 18               [12] 2386 	dec	r0
+      000D3B 74 20            [12] 2387 	mov	a,#0x20
+      000D3D 26               [12] 2388 	add	a,@r0
+      000D3E FD               [12] 2389 	mov	r5,a
+      000D3F E4               [12] 2390 	clr	a
+      000D40 08               [12] 2391 	inc	r0
+      000D41 36               [12] 2392 	addc	a,@r0
+      000D42 FE               [12] 2393 	mov	r6,a
+      000D43 08               [12] 2394 	inc	r0
+      000D44 86 07            [24] 2395 	mov	ar7,@r0
+      000D46 8D 82            [24] 2396 	mov	dpl,r5
+      000D48 8E 83            [24] 2397 	mov	dph,r6
+      000D4A 8F F0            [24] 2398 	mov	b,r7
+      000D4C 12r00r00         [24] 2399 	lcall	__gptrget
+      000D4F FD               [12] 2400 	mov	r5,a
+      000D50 A3               [24] 2401 	inc	dptr
+      000D51 12r00r00         [24] 2402 	lcall	__gptrget
+      000D54 FE               [12] 2403 	mov	r6,a
+      000D55 A3               [24] 2404 	inc	dptr
+      000D56 12r00r00         [24] 2405 	lcall	__gptrget
+      000D59 FF               [12] 2406 	mov	r7,a
+      000D5A 8D 82            [24] 2407 	mov	dpl,r5
+      000D5C 8E 83            [24] 2408 	mov	dph,r6
+      000D5E 8F F0            [24] 2409 	mov	b,r7
+      000D60 12r00r00         [24] 2410 	lcall	_list_length
+      000D63 E5 82            [12] 2411 	mov	a,dpl
+      000D65 85 83 F0         [24] 2412 	mov	b,dph
+      000D68 45 F0            [12] 2413 	orl	a,b
+      000D6A 70 4D            [24] 2414 	jnz	00127$
+                                   2415 ;	/home/user/contiki/core/net/mac/csma.c:378: list_remove(neighbor_list, n);
+      000D6C A8 81            [24] 2416 	mov	r0,sp
+      000D6E 18               [12] 2417 	dec	r0
+      000D6F 18               [12] 2418 	dec	r0
+      000D70 86 02            [24] 2419 	mov	ar2,@r0
+      000D72 08               [12] 2420 	inc	r0
+      000D73 86 06            [24] 2421 	mov	ar6,@r0
+      000D75 08               [12] 2422 	inc	r0
+      000D76 86 07            [24] 2423 	mov	ar7,@r0
+      000D78 90r00r21         [24] 2424 	mov	dptr,#_neighbor_list
+      000D7B E0               [24] 2425 	movx	a,@dptr
+      000D7C FB               [12] 2426 	mov	r3,a
+      000D7D A3               [24] 2427 	inc	dptr
+      000D7E E0               [24] 2428 	movx	a,@dptr
+      000D7F FC               [12] 2429 	mov	r4,a
+      000D80 A3               [24] 2430 	inc	dptr
+      000D81 E0               [24] 2431 	movx	a,@dptr
+      000D82 FD               [12] 2432 	mov	r5,a
+      000D83 C0 02            [24] 2433 	push	ar2
+      000D85 C0 06            [24] 2434 	push	ar6
+      000D87 C0 07            [24] 2435 	push	ar7
+      000D89 8B 82            [24] 2436 	mov	dpl,r3
+      000D8B 8C 83            [24] 2437 	mov	dph,r4
+      000D8D 8D F0            [24] 2438 	mov	b,r5
+      000D8F 12r00r00         [24] 2439 	lcall	_list_remove
+      000D92 15 81            [12] 2440 	dec	sp
+      000D94 15 81            [12] 2441 	dec	sp
+      000D96 15 81            [12] 2442 	dec	sp
+                                   2443 ;	/home/user/contiki/core/net/mac/csma.c:379: memb_free(&neighbor_memb, n);
+      000D98 A8 81            [24] 2444 	mov	r0,sp
+      000D9A 18               [12] 2445 	dec	r0
+      000D9B 18               [12] 2446 	dec	r0
+      000D9C 86 02            [24] 2447 	mov	ar2,@r0
+      000D9E 08               [12] 2448 	inc	r0
+      000D9F 86 06            [24] 2449 	mov	ar6,@r0
+      000DA1 08               [12] 2450 	inc	r0
+      000DA2 86 07            [24] 2451 	mov	ar7,@r0
+      000DA4 C0 02            [24] 2452 	push	ar2
+      000DA6 C0 06            [24] 2453 	push	ar6
+      000DA8 C0 07            [24] 2454 	push	ar7
+      000DAA 90r00r00         [24] 2455 	mov	dptr,#_neighbor_memb
+      000DAD 75 F0 00         [24] 2456 	mov	b,#0x00
+      000DB0 12r00r00         [24] 2457 	lcall	_memb_free
+      000DB3 15 81            [12] 2458 	dec	sp
+      000DB5 15 81            [12] 2459 	dec	sp
+      000DB7 15 81            [12] 2460 	dec	sp
+      000DB9                       2461 00127$:
+                                   2462 ;	/home/user/contiki/core/net/mac/csma.c:385: mac_call_sent_callback(sent, ptr, MAC_TX_ERR, 1);
+      000DB9 74 01            [12] 2463 	mov	a,#0x01
+      000DBB C0 E0            [24] 2464 	push	acc
+      000DBD E4               [12] 2465 	clr	a
+      000DBE C0 E0            [24] 2466 	push	acc
+      000DC0 74 04            [12] 2467 	mov	a,#0x04
+      000DC2 C0 E0            [24] 2468 	push	acc
+      000DC4 E4               [12] 2469 	clr	a
+      000DC5 C0 E0            [24] 2470 	push	acc
+      000DC7 E5 81            [12] 2471 	mov	a,sp
+      000DC9 24 EA            [12] 2472 	add	a,#0xea
+      000DCB F8               [12] 2473 	mov	r0,a
+      000DCC E6               [12] 2474 	mov	a,@r0
+      000DCD C0 E0            [24] 2475 	push	acc
+      000DCF 08               [12] 2476 	inc	r0
+      000DD0 E6               [12] 2477 	mov	a,@r0
+      000DD1 C0 E0            [24] 2478 	push	acc
+      000DD3 08               [12] 2479 	inc	r0
+      000DD4 E6               [12] 2480 	mov	a,@r0
+      000DD5 C0 E0            [24] 2481 	push	acc
+      000DD7 E5 81            [12] 2482 	mov	a,sp
+      000DD9 24 EC            [12] 2483 	add	a,#0xec
+      000DDB F8               [12] 2484 	mov	r0,a
+      000DDC 86 82            [24] 2485 	mov	dpl,@r0
+      000DDE 08               [12] 2486 	inc	r0
+      000DDF 86 83            [24] 2487 	mov	dph,@r0
+      000DE1 12r00r00         [24] 2488 	lcall	_mac_call_sent_callback
+      000DE4 E5 81            [12] 2489 	mov	a,sp
+      000DE6 24 F9            [12] 2490 	add	a,#0xf9
+      000DE8 F5 81            [12] 2491 	mov	sp,a
+      000DEA                       2492 00128$:
+      000DEA E5 81            [12] 2493 	mov	a,sp
+      000DEC 24 F2            [12] 2494 	add	a,#0xF2
+      000DEE F5 81            [12] 2495 	mov	sp,a
+      000DF0 22               [24] 2496 	ret
+                                   2497 ;------------------------------------------------------------
+                                   2498 ;Allocation info for local variables in function 'input_packet'
+                                   2499 ;------------------------------------------------------------
+                                   2500 ;	/home/user/contiki/core/net/mac/csma.c:389: input_packet(void)
+                                   2501 ;	-----------------------------------------
+                                   2502 ;	 function input_packet
+                                   2503 ;	-----------------------------------------
+      000DF1                       2504 _input_packet:
+                                   2505 ;	/home/user/contiki/core/net/mac/csma.c:391: NETSTACK_NETWORK.input();
+      000DF1 90r00r05         [24] 2506 	mov	dptr,#(_rime_driver + 0x0005)
+      000DF4 E4               [12] 2507 	clr	a
+      000DF5 93               [24] 2508 	movc	a,@a+dptr
+      000DF6 FE               [12] 2509 	mov	r6,a
+      000DF7 A3               [24] 2510 	inc	dptr
+      000DF8 E4               [12] 2511 	clr	a
+      000DF9 93               [24] 2512 	movc	a,@a+dptr
+      000DFA FF               [12] 2513 	mov	r7,a
+      000DFB C0 07            [24] 2514 	push	ar7
+      000DFD C0 06            [24] 2515 	push	ar6
+      000DFF 8E 82            [24] 2516 	mov	dpl,r6
+      000E01 8F 83            [24] 2517 	mov	dph,r7
+      000E03 12r00r00         [24] 2518 	lcall	__sdcc_call_dptr
+      000E06 D0 06            [24] 2519 	pop	ar6
+      000E08 D0 07            [24] 2520 	pop	ar7
+      000E0A 22               [24] 2521 	ret
+                                   2522 ;------------------------------------------------------------
+                                   2523 ;Allocation info for local variables in function 'on'
+                                   2524 ;------------------------------------------------------------
+                                   2525 ;	/home/user/contiki/core/net/mac/csma.c:395: on(void)
+                                   2526 ;	-----------------------------------------
+                                   2527 ;	 function on
+                                   2528 ;	-----------------------------------------
+      000E0B                       2529 _on:
+                                   2530 ;	/home/user/contiki/core/net/mac/csma.c:397: return NETSTACK_RDC.on();
+      000E0B 90r00r0B         [24] 2531 	mov	dptr,#(_nullrdc_driver + 0x000b)
+      000E0E E4               [12] 2532 	clr	a
+      000E0F 93               [24] 2533 	movc	a,@a+dptr
+      000E10 FE               [12] 2534 	mov	r6,a
+      000E11 A3               [24] 2535 	inc	dptr
+      000E12 E4               [12] 2536 	clr	a
+      000E13 93               [24] 2537 	movc	a,@a+dptr
+      000E14 FF               [12] 2538 	mov	r7,a
+      000E15 8E 82            [24] 2539 	mov	dpl,r6
+      000E17 8F 83            [24] 2540 	mov	dph,r7
+      000E19 02r00r00         [24] 2541 	ljmp	__sdcc_call_dptr
+                                   2542 ;------------------------------------------------------------
+                                   2543 ;Allocation info for local variables in function 'off'
+                                   2544 ;------------------------------------------------------------
+                                   2545 ;keep_radio_on             Allocated to registers r6 r7 
+                                   2546 ;------------------------------------------------------------
+                                   2547 ;	/home/user/contiki/core/net/mac/csma.c:401: off(int keep_radio_on)
+                                   2548 ;	-----------------------------------------
+                                   2549 ;	 function off
+                                   2550 ;	-----------------------------------------
+      000E1C                       2551 _off:
+      000E1C AE 82            [24] 2552 	mov	r6,dpl
+      000E1E AF 83            [24] 2553 	mov	r7,dph
+                                   2554 ;	/home/user/contiki/core/net/mac/csma.c:403: return NETSTACK_RDC.off(keep_radio_on);
+      000E20 90r00r0D         [24] 2555 	mov	dptr,#(_nullrdc_driver + 0x000d)
+      000E23 E4               [12] 2556 	clr	a
+      000E24 93               [24] 2557 	movc	a,@a+dptr
+      000E25 FC               [12] 2558 	mov	r4,a
+      000E26 A3               [24] 2559 	inc	dptr
+      000E27 E4               [12] 2560 	clr	a
+      000E28 93               [24] 2561 	movc	a,@a+dptr
+      000E29 FD               [12] 2562 	mov	r5,a
+      000E2A 12r0Er2F         [24] 2563 	lcall	00103$
+      000E2D 80 09            [24] 2564 	sjmp	00104$
+      000E2F                       2565 00103$:
+      000E2F C0 04            [24] 2566 	push	ar4
+      000E31 C0 05            [24] 2567 	push	ar5
+      000E33 8E 82            [24] 2568 	mov	dpl,r6
+      000E35 8F 83            [24] 2569 	mov	dph,r7
+      000E37 22               [24] 2570 	ret
+      000E38                       2571 00104$:
+      000E38 22               [24] 2572 	ret
+                                   2573 ;------------------------------------------------------------
+                                   2574 ;Allocation info for local variables in function 'channel_check_interval'
+                                   2575 ;------------------------------------------------------------
+                                   2576 ;	/home/user/contiki/core/net/mac/csma.c:407: channel_check_interval(void)
+                                   2577 ;	-----------------------------------------
+                                   2578 ;	 function channel_check_interval
+                                   2579 ;	-----------------------------------------
+      000E39                       2580 _channel_check_interval:
+                                   2581 ;	/home/user/contiki/core/net/mac/csma.c:409: if(NETSTACK_RDC.channel_check_interval) {
+      000E39 90r00r0F         [24] 2582 	mov	dptr,#(_nullrdc_driver + 0x000f)
+      000E3C E4               [12] 2583 	clr	a
+      000E3D 93               [24] 2584 	movc	a,@a+dptr
+      000E3E FE               [12] 2585 	mov	r6,a
+      000E3F A3               [24] 2586 	inc	dptr
+      000E40 E4               [12] 2587 	clr	a
+      000E41 93               [24] 2588 	movc	a,@a+dptr
+      000E42 FF               [12] 2589 	mov	r7,a
+      000E43 4E               [12] 2590 	orl	a,r6
+      000E44 60 07            [24] 2591 	jz	00102$
+                                   2592 ;	/home/user/contiki/core/net/mac/csma.c:410: return NETSTACK_RDC.channel_check_interval();
+      000E46 8E 82            [24] 2593 	mov	dpl,r6
+      000E48 8F 83            [24] 2594 	mov	dph,r7
+      000E4A 02r00r00         [24] 2595 	ljmp	__sdcc_call_dptr
+      000E4D                       2596 00102$:
+                                   2597 ;	/home/user/contiki/core/net/mac/csma.c:412: return 0;
+      000E4D 90 00 00         [24] 2598 	mov	dptr,#0x0000
+      000E50 22               [24] 2599 	ret
+                                   2600 ;------------------------------------------------------------
+                                   2601 ;Allocation info for local variables in function 'init'
+                                   2602 ;------------------------------------------------------------
+                                   2603 ;	/home/user/contiki/core/net/mac/csma.c:416: init(void)
+                                   2604 ;	-----------------------------------------
+                                   2605 ;	 function init
+                                   2606 ;	-----------------------------------------
+      000E51                       2607 _init:
+                                   2608 ;	/home/user/contiki/core/net/mac/csma.c:418: memb_init(&packet_memb);
+      000E51 90r00r0A         [24] 2609 	mov	dptr,#_packet_memb
+      000E54 75 F0 00         [24] 2610 	mov	b,#0x00
+      000E57 12r00r00         [24] 2611 	lcall	_memb_init
+                                   2612 ;	/home/user/contiki/core/net/mac/csma.c:419: memb_init(&metadata_memb);
+      000E5A 90r00r14         [24] 2613 	mov	dptr,#_metadata_memb
+      000E5D 75 F0 00         [24] 2614 	mov	b,#0x00
+      000E60 12r00r00         [24] 2615 	lcall	_memb_init
+                                   2616 ;	/home/user/contiki/core/net/mac/csma.c:420: memb_init(&neighbor_memb);
+      000E63 90r00r00         [24] 2617 	mov	dptr,#_neighbor_memb
+      000E66 75 F0 00         [24] 2618 	mov	b,#0x00
+      000E69 02r00r00         [24] 2619 	ljmp	_memb_init
+                                   2620 	.area CSEG    (CODE)
+                                   2621 	.area CONST   (CODE)
+      000000                       2622 _csma_driver:
+      000000r0Fs00 80              2623 	.byte _str_0,(_str_0 >> 8),#0x80
+      000003r51s0E                 2624 	.byte _init,(_init >> 8)
+      000005r91s08                 2625 	.byte _send_packet,(_send_packet >> 8)
+      000007rF1s0D                 2626 	.byte _input_packet,(_input_packet >> 8)
+      000009r0Bs0E                 2627 	.byte _on,(_on >> 8)
+      00000Br1Cs0E                 2628 	.byte _off,(_off >> 8)
+      00000Dr39s0E                 2629 	.byte _channel_check_interval,(_channel_check_interval >> 8)
+      00000F                       2630 _str_0:
+      00000F 43 53 4D 41           2631 	.ascii "CSMA"
+      000013 00                    2632 	.db 0x00
+                                   2633 	.area XINIT   (CODE)
+      000000                       2634 __xinit__neighbor_memb:
+      000000 23 00                 2635 	.byte #0x23,#0x00	; 35
+      000002 02 00                 2636 	.byte #0x02,#0x00	; 2
+      000004r00s00 00              2637 	.byte _neighbor_memb_memb_count,(_neighbor_memb_memb_count >> 8),#0x00
+      000007r02s00 00              2638 	.byte _neighbor_memb_memb_mem,(_neighbor_memb_memb_mem >> 8),#0x00
+      00000A                       2639 __xinit__packet_memb:
+      00000A 09 00                 2640 	.byte #0x09,#0x00	; 9
+      00000C 08 00                 2641 	.byte #0x08,#0x00	; 8
+      00000Er48s00 00              2642 	.byte _packet_memb_memb_count,(_packet_memb_memb_count >> 8),#0x00
+      000011r50s00 00              2643 	.byte _packet_memb_memb_mem,(_packet_memb_memb_mem >> 8),#0x00
+      000014                       2644 __xinit__metadata_memb:
+      000014 06 00                 2645 	.byte #0x06,#0x00	; 6
+      000016 08 00                 2646 	.byte #0x08,#0x00	; 8
+      000018r98s00 00              2647 	.byte _metadata_memb_memb_count,(_metadata_memb_memb_count >> 8),#0x00
+      00001BrA0s00 00              2648 	.byte _metadata_memb_memb_mem,(_metadata_memb_memb_mem >> 8),#0x00
+      00001E                       2649 __xinit__neighbor_list_list:
+                                   2650 ; generic printIvalPtr
+      00001E 00 00 00              2651 	.byte #0x00,#0x00,#0x00
+      000021                       2652 __xinit__neighbor_list:
+      000021r1Es00 00              2653 	.byte _neighbor_list_list,(_neighbor_list_list >> 8),#0x00
+                                   2654 	.area CABS    (ABS,CODE)

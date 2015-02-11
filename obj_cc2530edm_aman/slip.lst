@@ -1,0 +1,2819 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:55 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module slip
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _slip_arch_writeb
+                                     13 	.globl _uip_ipchksum
+                                     14 	.globl _uip_htons
+                                     15 	.globl _tcpip_input
+                                     16 	.globl _process_interrupt
+                                     17 	.globl _memset
+                                     18 	.globl _strncmp
+                                     19 	.globl _memcmp
+                                     20 	.globl _memcpy
+                                     21 	.globl _ACTIVE
+                                     22 	.globl _TX_BYTE
+                                     23 	.globl _RX_BYTE
+                                     24 	.globl _ERR
+                                     25 	.globl _FE
+                                     26 	.globl _SLAVE
+                                     27 	.globl _RE
+                                     28 	.globl _MODE
+                                     29 	.globl _T3OVFIF
+                                     30 	.globl _T3CH0IF
+                                     31 	.globl _T3CH1IF
+                                     32 	.globl _T4OVFIF
+                                     33 	.globl _T4CH0IF
+                                     34 	.globl _T4CH1IF
+                                     35 	.globl _OVFIM
+                                     36 	.globl _B_0
+                                     37 	.globl _B_1
+                                     38 	.globl _B_2
+                                     39 	.globl _B_3
+                                     40 	.globl _B_4
+                                     41 	.globl _B_5
+                                     42 	.globl _B_6
+                                     43 	.globl _B_7
+                                     44 	.globl _P2IF
+                                     45 	.globl _UTX0IF
+                                     46 	.globl _UTX1IF
+                                     47 	.globl _P1IF
+                                     48 	.globl _WDTIF
+                                     49 	.globl _ACC_0
+                                     50 	.globl _ACC_1
+                                     51 	.globl _ACC_2
+                                     52 	.globl _ACC_3
+                                     53 	.globl _ACC_4
+                                     54 	.globl _ACC_5
+                                     55 	.globl _ACC_6
+                                     56 	.globl _ACC_7
+                                     57 	.globl _P
+                                     58 	.globl _F1
+                                     59 	.globl _OV
+                                     60 	.globl _RS0
+                                     61 	.globl _RS1
+                                     62 	.globl _F0
+                                     63 	.globl _AC
+                                     64 	.globl _CY
+                                     65 	.globl _DMAIF
+                                     66 	.globl _T1IF
+                                     67 	.globl _T2IF
+                                     68 	.globl _T3IF
+                                     69 	.globl _T4IF
+                                     70 	.globl _P0IF
+                                     71 	.globl _STIF
+                                     72 	.globl _DMAIE
+                                     73 	.globl _T1IE
+                                     74 	.globl _T2IE
+                                     75 	.globl _T3IE
+                                     76 	.globl _T4IE
+                                     77 	.globl _P0IE
+                                     78 	.globl _RFERRIE
+                                     79 	.globl _ADCIE
+                                     80 	.globl _URX0IE
+                                     81 	.globl _URX1IE
+                                     82 	.globl _ENCIE
+                                     83 	.globl _STIE
+                                     84 	.globl _EA
+                                     85 	.globl _P2_0
+                                     86 	.globl _P2_1
+                                     87 	.globl _P2_2
+                                     88 	.globl _P2_3
+                                     89 	.globl _P2_4
+                                     90 	.globl _P2_5
+                                     91 	.globl _P2_6
+                                     92 	.globl _P2_7
+                                     93 	.globl _ENCIF_0
+                                     94 	.globl _ENCIF_1
+                                     95 	.globl _P1_0
+                                     96 	.globl _P1_1
+                                     97 	.globl _P1_2
+                                     98 	.globl _P1_3
+                                     99 	.globl _P1_4
+                                    100 	.globl _P1_5
+                                    101 	.globl _P1_6
+                                    102 	.globl _P1_7
+                                    103 	.globl _IT0
+                                    104 	.globl _RFERRIF
+                                    105 	.globl _IT1
+                                    106 	.globl _URX0IF
+                                    107 	.globl _ADCIF
+                                    108 	.globl _URX1IF
+                                    109 	.globl _P0_0
+                                    110 	.globl _P0_1
+                                    111 	.globl _P0_2
+                                    112 	.globl _P0_3
+                                    113 	.globl _P0_4
+                                    114 	.globl _P0_5
+                                    115 	.globl _P0_6
+                                    116 	.globl _P0_7
+                                    117 	.globl _WDCTL
+                                    118 	.globl _U1GCR
+                                    119 	.globl _U1UCR
+                                    120 	.globl _U1BAUD
+                                    121 	.globl _U1DBUF
+                                    122 	.globl _U1CSR
+                                    123 	.globl _U0GCR
+                                    124 	.globl _U0UCR
+                                    125 	.globl _U0BAUD
+                                    126 	.globl _U0DBUF
+                                    127 	.globl _U0CSR
+                                    128 	.globl _TIMIF
+                                    129 	.globl _T4CC1
+                                    130 	.globl _T4CCTL1
+                                    131 	.globl _T4CC0
+                                    132 	.globl _T4CCTL0
+                                    133 	.globl _T4CTL
+                                    134 	.globl _T4CNT
+                                    135 	.globl _T3CC1
+                                    136 	.globl _T3CCTL1
+                                    137 	.globl _T3CC0
+                                    138 	.globl _T3CCTL0
+                                    139 	.globl _T3CTL
+                                    140 	.globl _T3CNT
+                                    141 	.globl _T2MSEL
+                                    142 	.globl _T2IRQM
+                                    143 	.globl _T2MOVF2
+                                    144 	.globl _T2MOVF1
+                                    145 	.globl _T2MOVF0
+                                    146 	.globl _T2M1
+                                    147 	.globl _T2M0
+                                    148 	.globl _T2IRQF
+                                    149 	.globl _T2EVTCFG
+                                    150 	.globl _T2CTRL
+                                    151 	.globl _T1STAT
+                                    152 	.globl _T1CCTL2
+                                    153 	.globl _T1CCTL1
+                                    154 	.globl _T1CCTL0
+                                    155 	.globl _T1CTL
+                                    156 	.globl _T1CNTH
+                                    157 	.globl _T1CNTL
+                                    158 	.globl _T1CC2H
+                                    159 	.globl _T1CC2L
+                                    160 	.globl _T1CC1H
+                                    161 	.globl _T1CC1L
+                                    162 	.globl _T1CC0H
+                                    163 	.globl _T1CC0L
+                                    164 	.globl _CLKCONSTA
+                                    165 	.globl _CLKCONCMD
+                                    166 	.globl _SLEEPSTA
+                                    167 	.globl _SLEEPCMD
+                                    168 	.globl _STLOAD
+                                    169 	.globl _ST2
+                                    170 	.globl _ST1
+                                    171 	.globl _ST0
+                                    172 	.globl _RFERRF
+                                    173 	.globl _RFIRQF0
+                                    174 	.globl _RFST
+                                    175 	.globl _RFD
+                                    176 	.globl _RFIRQF1
+                                    177 	.globl _PSBANK
+                                    178 	.globl _FMAP
+                                    179 	.globl _MEMCTR
+                                    180 	.globl __XPAGE
+                                    181 	.globl _MPAGE
+                                    182 	.globl _PMUX
+                                    183 	.globl _P2DIR
+                                    184 	.globl _P1DIR
+                                    185 	.globl _P0DIR
+                                    186 	.globl _P2INP
+                                    187 	.globl _P1INP
+                                    188 	.globl _P2SEL
+                                    189 	.globl _P1SEL
+                                    190 	.globl _P0SEL
+                                    191 	.globl _APCFG
+                                    192 	.globl _PERCFG
+                                    193 	.globl _P0INP
+                                    194 	.globl _P2IEN
+                                    195 	.globl _P1IEN
+                                    196 	.globl _P0IEN
+                                    197 	.globl _PICTL
+                                    198 	.globl _P2IFG
+                                    199 	.globl _P1IFG
+                                    200 	.globl _P0IFG
+                                    201 	.globl _DMAREQ
+                                    202 	.globl _DMAARM
+                                    203 	.globl _DMA0CFGH
+                                    204 	.globl _DMA0CFGL
+                                    205 	.globl _DMA1CFGH
+                                    206 	.globl _DMA1CFGL
+                                    207 	.globl _DMAIRQ
+                                    208 	.globl _ENCCS
+                                    209 	.globl _ENCDO
+                                    210 	.globl _ENCDI
+                                    211 	.globl _RNDH
+                                    212 	.globl _RNDL
+                                    213 	.globl _ADCH
+                                    214 	.globl _ADCL
+                                    215 	.globl _ADCCON3
+                                    216 	.globl _ADCCON2
+                                    217 	.globl _ADCCON1
+                                    218 	.globl _B
+                                    219 	.globl _IRCON2
+                                    220 	.globl _ACC
+                                    221 	.globl _PSW
+                                    222 	.globl _IRCON
+                                    223 	.globl _IP1
+                                    224 	.globl _IEN1
+                                    225 	.globl _IP0
+                                    226 	.globl _IEN0
+                                    227 	.globl _P2
+                                    228 	.globl _S1CON
+                                    229 	.globl _IEN2
+                                    230 	.globl _S0CON
+                                    231 	.globl _DPS
+                                    232 	.globl _P1
+                                    233 	.globl _TCON
+                                    234 	.globl _PCON
+                                    235 	.globl _DPH1
+                                    236 	.globl _DPL1
+                                    237 	.globl _DPH0
+                                    238 	.globl _DPL0
+                                    239 	.globl _SP
+                                    240 	.globl _P0
+                                    241 	.globl _slip_process
+                                    242 	.globl _slip_active
+                                    243 	.globl _X_IEEE_ADDR
+                                    244 	.globl _X_INFOPAGE
+                                    245 	.globl _X_P2DIR
+                                    246 	.globl _X_P1DIR
+                                    247 	.globl _X_P0DIR
+                                    248 	.globl _X_U1GCR
+                                    249 	.globl _X_U1UCR
+                                    250 	.globl _X_U1BAUD
+                                    251 	.globl _X_U1DBUF
+                                    252 	.globl _X_U1CSR
+                                    253 	.globl _X_P2INP
+                                    254 	.globl _X_P1INP
+                                    255 	.globl _X_P2SEL
+                                    256 	.globl _X_P1SEL
+                                    257 	.globl _X_P0SEL
+                                    258 	.globl _X_APCFG
+                                    259 	.globl _X_PERCFG
+                                    260 	.globl _X_T4CC1
+                                    261 	.globl _X_T4CCTL1
+                                    262 	.globl _X_T4CC0
+                                    263 	.globl _X_T4CCTL0
+                                    264 	.globl _X_T4CTL
+                                    265 	.globl _X_T4CNT
+                                    266 	.globl _X_RFIRQF0
+                                    267 	.globl _X_T1CCTL2
+                                    268 	.globl _X_T1CCTL1
+                                    269 	.globl _X_T1CCTL0
+                                    270 	.globl _X_T1CTL
+                                    271 	.globl _X_T1CNTH
+                                    272 	.globl _X_T1CNTL
+                                    273 	.globl _X_RFST
+                                    274 	.globl _X_T1CC2H
+                                    275 	.globl _X_T1CC2L
+                                    276 	.globl _X_T1CC1H
+                                    277 	.globl _X_T1CC1L
+                                    278 	.globl _X_T1CC0H
+                                    279 	.globl _X_T1CC0L
+                                    280 	.globl _X_RFD
+                                    281 	.globl _X_TIMIF
+                                    282 	.globl _X_DMAREQ
+                                    283 	.globl _X_DMAARM
+                                    284 	.globl _X_DMA0CFGH
+                                    285 	.globl _X_DMA0CFGL
+                                    286 	.globl _X_DMA1CFGH
+                                    287 	.globl _X_DMA1CFGL
+                                    288 	.globl _X_DMAIRQ
+                                    289 	.globl _X_T3CC1
+                                    290 	.globl _X_T3CCTL1
+                                    291 	.globl _X_T3CC0
+                                    292 	.globl _X_T3CCTL0
+                                    293 	.globl _X_T3CTL
+                                    294 	.globl _X_T3CNT
+                                    295 	.globl _X_WDCTL
+                                    296 	.globl _X_MEMCTR
+                                    297 	.globl _X_CLKCONCMD
+                                    298 	.globl _X_U0GCR
+                                    299 	.globl _X_U0UCR
+                                    300 	.globl _X_T2MSEL
+                                    301 	.globl _X_U0BAUD
+                                    302 	.globl _X_U0DBUF
+                                    303 	.globl _X_RFERRF
+                                    304 	.globl _X_SLEEPCMD
+                                    305 	.globl _X_RNDH
+                                    306 	.globl _X_RNDL
+                                    307 	.globl _X_ADCH
+                                    308 	.globl _X_ADCL
+                                    309 	.globl _X_ADCCON3
+                                    310 	.globl _X_ADCCON2
+                                    311 	.globl _X_ADCCON1
+                                    312 	.globl _X_ENCCS
+                                    313 	.globl _X_ENCDO
+                                    314 	.globl _X_ENCDI
+                                    315 	.globl _X_T1STAT
+                                    316 	.globl _X_PMUX
+                                    317 	.globl _X_STLOAD
+                                    318 	.globl _X_P2IEN
+                                    319 	.globl _X_P0IEN
+                                    320 	.globl _X_T2IRQM
+                                    321 	.globl _X_T2MOVF2
+                                    322 	.globl _X_T2MOVF1
+                                    323 	.globl _X_T2MOVF0
+                                    324 	.globl _X_T2M1
+                                    325 	.globl _X_T2M0
+                                    326 	.globl _X_T2IRQF
+                                    327 	.globl _X_P2
+                                    328 	.globl _X_PSBANK
+                                    329 	.globl _X_FMAP
+                                    330 	.globl _X_CLKCONSTA
+                                    331 	.globl _X_SLEEPSTA
+                                    332 	.globl _X_T2EVTCFG
+                                    333 	.globl _X_ST2
+                                    334 	.globl _X_ST1
+                                    335 	.globl _X_ST0
+                                    336 	.globl _X_T2CTRL
+                                    337 	.globl _X__XPAGE
+                                    338 	.globl _X_MPAGE
+                                    339 	.globl _X_RFIRQF1
+                                    340 	.globl _X_P1
+                                    341 	.globl _X_P0INP
+                                    342 	.globl _X_P1IEN
+                                    343 	.globl _X_PICTL
+                                    344 	.globl _X_P2IFG
+                                    345 	.globl _X_P1IFG
+                                    346 	.globl _X_P0IFG
+                                    347 	.globl _X_U0CSR
+                                    348 	.globl _X_P0
+                                    349 	.globl _USBF5
+                                    350 	.globl _USBF4
+                                    351 	.globl _USBF3
+                                    352 	.globl _USBF2
+                                    353 	.globl _USBF1
+                                    354 	.globl _USBF0
+                                    355 	.globl _USBCNTH
+                                    356 	.globl _USBCNTL
+                                    357 	.globl _USBCNT0
+                                    358 	.globl _USBCSOH
+                                    359 	.globl _USBCSOL
+                                    360 	.globl _USBMAXO
+                                    361 	.globl _USBCSIH
+                                    362 	.globl _USBCSIL
+                                    363 	.globl _USBCS0
+                                    364 	.globl _USBMAXI
+                                    365 	.globl _USBCTRL
+                                    366 	.globl _USBINDEX
+                                    367 	.globl _USBFRMH
+                                    368 	.globl _USBFRML
+                                    369 	.globl _USBCIE
+                                    370 	.globl _USBOIE
+                                    371 	.globl _USBIIE
+                                    372 	.globl _USBCIF
+                                    373 	.globl _USBOIF
+                                    374 	.globl _USBIIF
+                                    375 	.globl _USBPOW
+                                    376 	.globl _USBADDR
+                                    377 	.globl _CSPT
+                                    378 	.globl _CSPZ
+                                    379 	.globl _CSPY
+                                    380 	.globl _CSPX
+                                    381 	.globl _CSPSTAT
+                                    382 	.globl _CSPCTRL
+                                    383 	.globl _CSPPROG23
+                                    384 	.globl _CSPPROG22
+                                    385 	.globl _CSPPROG21
+                                    386 	.globl _CSPPROG20
+                                    387 	.globl _CSPPROG19
+                                    388 	.globl _CSPPROG18
+                                    389 	.globl _CSPPROG17
+                                    390 	.globl _CSPPROG16
+                                    391 	.globl _CSPPROG15
+                                    392 	.globl _CSPPROG14
+                                    393 	.globl _CSPPROG13
+                                    394 	.globl _CSPPROG12
+                                    395 	.globl _CSPPROG11
+                                    396 	.globl _CSPPROG10
+                                    397 	.globl _CSPPROG9
+                                    398 	.globl _CSPPROG8
+                                    399 	.globl _CSPPROG7
+                                    400 	.globl _CSPPROG6
+                                    401 	.globl _CSPPROG5
+                                    402 	.globl _CSPPROG4
+                                    403 	.globl _CSPPROG3
+                                    404 	.globl _CSPPROG2
+                                    405 	.globl _CSPPROG1
+                                    406 	.globl _CSPPROG0
+                                    407 	.globl _RFC_OBS_CTRL2
+                                    408 	.globl _RFC_OBS_CTRL1
+                                    409 	.globl _RFC_OBS_CTRL0
+                                    410 	.globl _TXFILTCFG
+                                    411 	.globl _PTEST1
+                                    412 	.globl _PTEST0
+                                    413 	.globl _ATEST
+                                    414 	.globl _DACTEST2
+                                    415 	.globl _DACTEST1
+                                    416 	.globl _DACTEST0
+                                    417 	.globl _MDMTEST1
+                                    418 	.globl _MDMTEST0
+                                    419 	.globl _ADCTEST2
+                                    420 	.globl _ADCTEST1
+                                    421 	.globl _ADCTEST0
+                                    422 	.globl _AGCCTRL3
+                                    423 	.globl _AGCCTRL2
+                                    424 	.globl _AGCCTRL1
+                                    425 	.globl _AGCCTRL0
+                                    426 	.globl _FSCAL3
+                                    427 	.globl _FSCAL2
+                                    428 	.globl _FSCAL1
+                                    429 	.globl _FSCAL0
+                                    430 	.globl _FSCTRL
+                                    431 	.globl _RXCTRL
+                                    432 	.globl _FREQEST
+                                    433 	.globl _MDMCTRL1
+                                    434 	.globl _MDMCTRL0
+                                    435 	.globl _RFRND
+                                    436 	.globl _RFERRM
+                                    437 	.globl _RFIRQM1
+                                    438 	.globl _RFIRQM0
+                                    439 	.globl _TXLAST_PTR
+                                    440 	.globl _TXFIRST_PTR
+                                    441 	.globl _RXP1_PTR
+                                    442 	.globl _RXLAST_PTR
+                                    443 	.globl _RXFIRST_PTR
+                                    444 	.globl _TXFIFOCNT
+                                    445 	.globl _RXFIFOCNT
+                                    446 	.globl _RXFIRST
+                                    447 	.globl _RSSISTAT
+                                    448 	.globl _RSSI
+                                    449 	.globl _CCACTRL1
+                                    450 	.globl _CCACTRL0
+                                    451 	.globl _FSMCTRL
+                                    452 	.globl _FIFOPCTRL
+                                    453 	.globl _FSMSTAT1
+                                    454 	.globl _FSMSTAT0
+                                    455 	.globl _TXCTRL
+                                    456 	.globl _TXPOWER
+                                    457 	.globl _FREQCTRL
+                                    458 	.globl _FREQTUNE
+                                    459 	.globl _RXMASKCLR
+                                    460 	.globl _RXMASKSET
+                                    461 	.globl _RXENABLE
+                                    462 	.globl _FRMCTRL1
+                                    463 	.globl _FRMCTRL0
+                                    464 	.globl _SRCEXTEN2
+                                    465 	.globl _SRCEXTEN1
+                                    466 	.globl _SRCEXTEN0
+                                    467 	.globl _SRCSHORTEN2
+                                    468 	.globl _SRCSHORTEN1
+                                    469 	.globl _SRCSHORTEN0
+                                    470 	.globl _SRCMATCH
+                                    471 	.globl _FRMFILT1
+                                    472 	.globl _FRMFILT0
+                                    473 	.globl _SHORT_ADDR1
+                                    474 	.globl _SHORT_ADDR0
+                                    475 	.globl _PAN_ID1
+                                    476 	.globl _PAN_ID0
+                                    477 	.globl _EXT_ADDR7
+                                    478 	.globl _EXT_ADDR6
+                                    479 	.globl _EXT_ADDR5
+                                    480 	.globl _EXT_ADDR4
+                                    481 	.globl _EXT_ADDR3
+                                    482 	.globl _EXT_ADDR2
+                                    483 	.globl _EXT_ADDR1
+                                    484 	.globl _EXT_ADDR0
+                                    485 	.globl _SRCSHORTPENDEN2
+                                    486 	.globl _SRCSHORTPENDEN1
+                                    487 	.globl _SRCSHORTPENDEN0
+                                    488 	.globl _SRCEXTPENDEN2
+                                    489 	.globl _SRCEXTPENDEN1
+                                    490 	.globl _SRCEXTPENDEN0
+                                    491 	.globl _SRCRESINDEX
+                                    492 	.globl _SRCRESMASK2
+                                    493 	.globl _SRCRESMASK1
+                                    494 	.globl _SRCRESMASK0
+                                    495 	.globl _SRC_ADDR_TABLE
+                                    496 	.globl _TXFIFO
+                                    497 	.globl _RXFIFO
+                                    498 	.globl _RFCORE_RAM
+                                    499 	.globl _CMPCTL
+                                    500 	.globl _OPAMPS
+                                    501 	.globl _OPAMPC
+                                    502 	.globl _STCV2
+                                    503 	.globl _STCV1
+                                    504 	.globl _STCV0
+                                    505 	.globl _STCS
+                                    506 	.globl _STCC
+                                    507 	.globl _T1CC4H
+                                    508 	.globl _T1CC4L
+                                    509 	.globl _T1CC3H
+                                    510 	.globl _T1CC3L
+                                    511 	.globl _XX_T1CC2H
+                                    512 	.globl _XX_T1CC2L
+                                    513 	.globl _XX_T1CC1H
+                                    514 	.globl _XX_T1CC1L
+                                    515 	.globl _XX_T1CC0H
+                                    516 	.globl _XX_T1CC0L
+                                    517 	.globl _T1CCTL4
+                                    518 	.globl _T1CCTL3
+                                    519 	.globl _XX_T1CCTL2
+                                    520 	.globl _XX_T1CCTL1
+                                    521 	.globl _XX_T1CCTL0
+                                    522 	.globl _CLD
+                                    523 	.globl _IRCTL
+                                    524 	.globl _CHIPINFO1
+                                    525 	.globl _CHIPINFO0
+                                    526 	.globl _FWDATA
+                                    527 	.globl _FADDRH
+                                    528 	.globl _FADDRL
+                                    529 	.globl _FCTL
+                                    530 	.globl _IVCTRL
+                                    531 	.globl _BATTMON
+                                    532 	.globl _SRCRC
+                                    533 	.globl _DBGDATA
+                                    534 	.globl _TESTREG0
+                                    535 	.globl _CHIPID
+                                    536 	.globl _CHVER
+                                    537 	.globl _OBSSEL5
+                                    538 	.globl _OBSSEL4
+                                    539 	.globl _OBSSEL3
+                                    540 	.globl _OBSSEL2
+                                    541 	.globl _OBSSEL1
+                                    542 	.globl _OBSSEL0
+                                    543 	.globl _I2CIO
+                                    544 	.globl _I2CWC
+                                    545 	.globl _I2CADDR
+                                    546 	.globl _I2CDATA
+                                    547 	.globl _I2CSTAT
+                                    548 	.globl _I2CCFG
+                                    549 	.globl _OPAMPMC
+                                    550 	.globl _MONMUX
+                                    551 	.globl _slip_set_input_callback
+                                    552 	.globl _slip_send
+                                    553 	.globl _slip_write
+                                    554 	.globl _slip_input_byte
+                                    555 ;--------------------------------------------------------
+                                    556 ; special function registers
+                                    557 ;--------------------------------------------------------
+                                    558 	.area RSEG    (ABS,DATA)
+      000000                        559 	.org 0x0000
+                           000080   560 _P0	=	0x0080
+                           000081   561 _SP	=	0x0081
+                           000082   562 _DPL0	=	0x0082
+                           000083   563 _DPH0	=	0x0083
+                           000084   564 _DPL1	=	0x0084
+                           000085   565 _DPH1	=	0x0085
+                           000087   566 _PCON	=	0x0087
+                           000088   567 _TCON	=	0x0088
+                           000090   568 _P1	=	0x0090
+                           000092   569 _DPS	=	0x0092
+                           000098   570 _S0CON	=	0x0098
+                           00009A   571 _IEN2	=	0x009a
+                           00009B   572 _S1CON	=	0x009b
+                           0000A0   573 _P2	=	0x00a0
+                           0000A8   574 _IEN0	=	0x00a8
+                           0000A9   575 _IP0	=	0x00a9
+                           0000B8   576 _IEN1	=	0x00b8
+                           0000B9   577 _IP1	=	0x00b9
+                           0000C0   578 _IRCON	=	0x00c0
+                           0000D0   579 _PSW	=	0x00d0
+                           0000E0   580 _ACC	=	0x00e0
+                           0000E8   581 _IRCON2	=	0x00e8
+                           0000F0   582 _B	=	0x00f0
+                           0000B4   583 _ADCCON1	=	0x00b4
+                           0000B5   584 _ADCCON2	=	0x00b5
+                           0000B6   585 _ADCCON3	=	0x00b6
+                           0000BA   586 _ADCL	=	0x00ba
+                           0000BB   587 _ADCH	=	0x00bb
+                           0000BC   588 _RNDL	=	0x00bc
+                           0000BD   589 _RNDH	=	0x00bd
+                           0000B1   590 _ENCDI	=	0x00b1
+                           0000B2   591 _ENCDO	=	0x00b2
+                           0000B3   592 _ENCCS	=	0x00b3
+                           0000D1   593 _DMAIRQ	=	0x00d1
+                           0000D2   594 _DMA1CFGL	=	0x00d2
+                           0000D3   595 _DMA1CFGH	=	0x00d3
+                           0000D4   596 _DMA0CFGL	=	0x00d4
+                           0000D5   597 _DMA0CFGH	=	0x00d5
+                           0000D6   598 _DMAARM	=	0x00d6
+                           0000D7   599 _DMAREQ	=	0x00d7
+                           000089   600 _P0IFG	=	0x0089
+                           00008A   601 _P1IFG	=	0x008a
+                           00008B   602 _P2IFG	=	0x008b
+                           00008C   603 _PICTL	=	0x008c
+                           0000AB   604 _P0IEN	=	0x00ab
+                           00008D   605 _P1IEN	=	0x008d
+                           0000AC   606 _P2IEN	=	0x00ac
+                           00008F   607 _P0INP	=	0x008f
+                           0000F1   608 _PERCFG	=	0x00f1
+                           0000F2   609 _APCFG	=	0x00f2
+                           0000F3   610 _P0SEL	=	0x00f3
+                           0000F4   611 _P1SEL	=	0x00f4
+                           0000F5   612 _P2SEL	=	0x00f5
+                           0000F6   613 _P1INP	=	0x00f6
+                           0000F7   614 _P2INP	=	0x00f7
+                           0000FD   615 _P0DIR	=	0x00fd
+                           0000FE   616 _P1DIR	=	0x00fe
+                           0000FF   617 _P2DIR	=	0x00ff
+                           0000AE   618 _PMUX	=	0x00ae
+                           000093   619 _MPAGE	=	0x0093
+                           000093   620 __XPAGE	=	0x0093
+                           0000C7   621 _MEMCTR	=	0x00c7
+                           00009F   622 _FMAP	=	0x009f
+                           00009F   623 _PSBANK	=	0x009f
+                           000091   624 _RFIRQF1	=	0x0091
+                           0000D9   625 _RFD	=	0x00d9
+                           0000E1   626 _RFST	=	0x00e1
+                           0000E9   627 _RFIRQF0	=	0x00e9
+                           0000BF   628 _RFERRF	=	0x00bf
+                           000095   629 _ST0	=	0x0095
+                           000096   630 _ST1	=	0x0096
+                           000097   631 _ST2	=	0x0097
+                           0000AD   632 _STLOAD	=	0x00ad
+                           0000BE   633 _SLEEPCMD	=	0x00be
+                           00009D   634 _SLEEPSTA	=	0x009d
+                           0000C6   635 _CLKCONCMD	=	0x00c6
+                           00009E   636 _CLKCONSTA	=	0x009e
+                           0000DA   637 _T1CC0L	=	0x00da
+                           0000DB   638 _T1CC0H	=	0x00db
+                           0000DC   639 _T1CC1L	=	0x00dc
+                           0000DD   640 _T1CC1H	=	0x00dd
+                           0000DE   641 _T1CC2L	=	0x00de
+                           0000DF   642 _T1CC2H	=	0x00df
+                           0000E2   643 _T1CNTL	=	0x00e2
+                           0000E3   644 _T1CNTH	=	0x00e3
+                           0000E4   645 _T1CTL	=	0x00e4
+                           0000E5   646 _T1CCTL0	=	0x00e5
+                           0000E6   647 _T1CCTL1	=	0x00e6
+                           0000E7   648 _T1CCTL2	=	0x00e7
+                           0000AF   649 _T1STAT	=	0x00af
+                           000094   650 _T2CTRL	=	0x0094
+                           00009C   651 _T2EVTCFG	=	0x009c
+                           0000A1   652 _T2IRQF	=	0x00a1
+                           0000A2   653 _T2M0	=	0x00a2
+                           0000A3   654 _T2M1	=	0x00a3
+                           0000A4   655 _T2MOVF0	=	0x00a4
+                           0000A5   656 _T2MOVF1	=	0x00a5
+                           0000A6   657 _T2MOVF2	=	0x00a6
+                           0000A7   658 _T2IRQM	=	0x00a7
+                           0000C3   659 _T2MSEL	=	0x00c3
+                           0000CA   660 _T3CNT	=	0x00ca
+                           0000CB   661 _T3CTL	=	0x00cb
+                           0000CC   662 _T3CCTL0	=	0x00cc
+                           0000CD   663 _T3CC0	=	0x00cd
+                           0000CE   664 _T3CCTL1	=	0x00ce
+                           0000CF   665 _T3CC1	=	0x00cf
+                           0000EA   666 _T4CNT	=	0x00ea
+                           0000EB   667 _T4CTL	=	0x00eb
+                           0000EC   668 _T4CCTL0	=	0x00ec
+                           0000ED   669 _T4CC0	=	0x00ed
+                           0000EE   670 _T4CCTL1	=	0x00ee
+                           0000EF   671 _T4CC1	=	0x00ef
+                           0000D8   672 _TIMIF	=	0x00d8
+                           000086   673 _U0CSR	=	0x0086
+                           0000C1   674 _U0DBUF	=	0x00c1
+                           0000C2   675 _U0BAUD	=	0x00c2
+                           0000C4   676 _U0UCR	=	0x00c4
+                           0000C5   677 _U0GCR	=	0x00c5
+                           0000F8   678 _U1CSR	=	0x00f8
+                           0000F9   679 _U1DBUF	=	0x00f9
+                           0000FA   680 _U1BAUD	=	0x00fa
+                           0000FB   681 _U1UCR	=	0x00fb
+                           0000FC   682 _U1GCR	=	0x00fc
+                           0000C9   683 _WDCTL	=	0x00c9
+                                    684 ;--------------------------------------------------------
+                                    685 ; special function bits
+                                    686 ;--------------------------------------------------------
+                                    687 	.area RSEG    (ABS,DATA)
+      000000                        688 	.org 0x0000
+                           000087   689 _P0_7	=	0x0087
+                           000086   690 _P0_6	=	0x0086
+                           000085   691 _P0_5	=	0x0085
+                           000084   692 _P0_4	=	0x0084
+                           000083   693 _P0_3	=	0x0083
+                           000082   694 _P0_2	=	0x0082
+                           000081   695 _P0_1	=	0x0081
+                           000080   696 _P0_0	=	0x0080
+                           00008F   697 _URX1IF	=	0x008f
+                           00008D   698 _ADCIF	=	0x008d
+                           00008B   699 _URX0IF	=	0x008b
+                           00008A   700 _IT1	=	0x008a
+                           000089   701 _RFERRIF	=	0x0089
+                           000088   702 _IT0	=	0x0088
+                           000097   703 _P1_7	=	0x0097
+                           000096   704 _P1_6	=	0x0096
+                           000095   705 _P1_5	=	0x0095
+                           000094   706 _P1_4	=	0x0094
+                           000093   707 _P1_3	=	0x0093
+                           000092   708 _P1_2	=	0x0092
+                           000091   709 _P1_1	=	0x0091
+                           000090   710 _P1_0	=	0x0090
+                           000099   711 _ENCIF_1	=	0x0099
+                           000098   712 _ENCIF_0	=	0x0098
+                           0000A7   713 _P2_7	=	0x00a7
+                           0000A6   714 _P2_6	=	0x00a6
+                           0000A5   715 _P2_5	=	0x00a5
+                           0000A4   716 _P2_4	=	0x00a4
+                           0000A3   717 _P2_3	=	0x00a3
+                           0000A2   718 _P2_2	=	0x00a2
+                           0000A1   719 _P2_1	=	0x00a1
+                           0000A0   720 _P2_0	=	0x00a0
+                           0000AF   721 _EA	=	0x00af
+                           0000AD   722 _STIE	=	0x00ad
+                           0000AC   723 _ENCIE	=	0x00ac
+                           0000AB   724 _URX1IE	=	0x00ab
+                           0000AA   725 _URX0IE	=	0x00aa
+                           0000A9   726 _ADCIE	=	0x00a9
+                           0000A8   727 _RFERRIE	=	0x00a8
+                           0000BD   728 _P0IE	=	0x00bd
+                           0000BC   729 _T4IE	=	0x00bc
+                           0000BB   730 _T3IE	=	0x00bb
+                           0000BA   731 _T2IE	=	0x00ba
+                           0000B9   732 _T1IE	=	0x00b9
+                           0000B8   733 _DMAIE	=	0x00b8
+                           0000C7   734 _STIF	=	0x00c7
+                           0000C5   735 _P0IF	=	0x00c5
+                           0000C4   736 _T4IF	=	0x00c4
+                           0000C3   737 _T3IF	=	0x00c3
+                           0000C2   738 _T2IF	=	0x00c2
+                           0000C1   739 _T1IF	=	0x00c1
+                           0000C0   740 _DMAIF	=	0x00c0
+                           0000D7   741 _CY	=	0x00d7
+                           0000D6   742 _AC	=	0x00d6
+                           0000D5   743 _F0	=	0x00d5
+                           0000D4   744 _RS1	=	0x00d4
+                           0000D3   745 _RS0	=	0x00d3
+                           0000D2   746 _OV	=	0x00d2
+                           0000D1   747 _F1	=	0x00d1
+                           0000D0   748 _P	=	0x00d0
+                           0000E7   749 _ACC_7	=	0x00e7
+                           0000E6   750 _ACC_6	=	0x00e6
+                           0000E5   751 _ACC_5	=	0x00e5
+                           0000E4   752 _ACC_4	=	0x00e4
+                           0000E3   753 _ACC_3	=	0x00e3
+                           0000E2   754 _ACC_2	=	0x00e2
+                           0000E1   755 _ACC_1	=	0x00e1
+                           0000E0   756 _ACC_0	=	0x00e0
+                           0000EC   757 _WDTIF	=	0x00ec
+                           0000EB   758 _P1IF	=	0x00eb
+                           0000EA   759 _UTX1IF	=	0x00ea
+                           0000E9   760 _UTX0IF	=	0x00e9
+                           0000E8   761 _P2IF	=	0x00e8
+                           0000F7   762 _B_7	=	0x00f7
+                           0000F6   763 _B_6	=	0x00f6
+                           0000F5   764 _B_5	=	0x00f5
+                           0000F4   765 _B_4	=	0x00f4
+                           0000F3   766 _B_3	=	0x00f3
+                           0000F2   767 _B_2	=	0x00f2
+                           0000F1   768 _B_1	=	0x00f1
+                           0000F0   769 _B_0	=	0x00f0
+                           0000DE   770 _OVFIM	=	0x00de
+                           0000DD   771 _T4CH1IF	=	0x00dd
+                           0000DC   772 _T4CH0IF	=	0x00dc
+                           0000DB   773 _T4OVFIF	=	0x00db
+                           0000DA   774 _T3CH1IF	=	0x00da
+                           0000D9   775 _T3CH0IF	=	0x00d9
+                           0000D8   776 _T3OVFIF	=	0x00d8
+                           0000FF   777 _MODE	=	0x00ff
+                           0000FE   778 _RE	=	0x00fe
+                           0000FD   779 _SLAVE	=	0x00fd
+                           0000FC   780 _FE	=	0x00fc
+                           0000FB   781 _ERR	=	0x00fb
+                           0000FA   782 _RX_BYTE	=	0x00fa
+                           0000F9   783 _TX_BYTE	=	0x00f9
+                           0000F8   784 _ACTIVE	=	0x00f8
+                                    785 ;--------------------------------------------------------
+                                    786 ; overlayable register banks
+                                    787 ;--------------------------------------------------------
+                                    788 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        789 	.ds 8
+                                    790 ;--------------------------------------------------------
+                                    791 ; internal ram data
+                                    792 ;--------------------------------------------------------
+                                    793 	.area DSEG    (DATA)
+                                    794 ;--------------------------------------------------------
+                                    795 ; overlayable items in internal ram 
+                                    796 ;--------------------------------------------------------
+                                    797 ;--------------------------------------------------------
+                                    798 ; indirectly addressable internal ram data
+                                    799 ;--------------------------------------------------------
+                                    800 	.area ISEG    (DATA)
+                                    801 ;--------------------------------------------------------
+                                    802 ; absolute internal ram data
+                                    803 ;--------------------------------------------------------
+                                    804 	.area IABS    (ABS,DATA)
+                                    805 	.area IABS    (ABS,DATA)
+                                    806 ;--------------------------------------------------------
+                                    807 ; bit data
+                                    808 ;--------------------------------------------------------
+                                    809 	.area BSEG    (BIT)
+                                    810 ;--------------------------------------------------------
+                                    811 ; paged external ram data
+                                    812 ;--------------------------------------------------------
+                                    813 	.area PSEG    (PAG,XDATA)
+                                    814 ;--------------------------------------------------------
+                                    815 ; external ram data
+                                    816 ;--------------------------------------------------------
+                                    817 	.area XSEG    (XDATA)
+                           0061A6   818 _MONMUX	=	0x61a6
+                           0061A6   819 _OPAMPMC	=	0x61a6
+                           006230   820 _I2CCFG	=	0x6230
+                           006231   821 _I2CSTAT	=	0x6231
+                           006232   822 _I2CDATA	=	0x6232
+                           006233   823 _I2CADDR	=	0x6233
+                           006234   824 _I2CWC	=	0x6234
+                           006235   825 _I2CIO	=	0x6235
+                           006243   826 _OBSSEL0	=	0x6243
+                           006244   827 _OBSSEL1	=	0x6244
+                           006245   828 _OBSSEL2	=	0x6245
+                           006246   829 _OBSSEL3	=	0x6246
+                           006247   830 _OBSSEL4	=	0x6247
+                           006248   831 _OBSSEL5	=	0x6248
+                           006249   832 _CHVER	=	0x6249
+                           00624A   833 _CHIPID	=	0x624a
+                           00624B   834 _TESTREG0	=	0x624b
+                           006260   835 _DBGDATA	=	0x6260
+                           006262   836 _SRCRC	=	0x6262
+                           006264   837 _BATTMON	=	0x6264
+                           006265   838 _IVCTRL	=	0x6265
+                           006270   839 _FCTL	=	0x6270
+                           006271   840 _FADDRL	=	0x6271
+                           006272   841 _FADDRH	=	0x6272
+                           006273   842 _FWDATA	=	0x6273
+                           006276   843 _CHIPINFO0	=	0x6276
+                           006277   844 _CHIPINFO1	=	0x6277
+                           006281   845 _IRCTL	=	0x6281
+                           006290   846 _CLD	=	0x6290
+                           0062A0   847 _XX_T1CCTL0	=	0x62a0
+                           0062A1   848 _XX_T1CCTL1	=	0x62a1
+                           0062A2   849 _XX_T1CCTL2	=	0x62a2
+                           0062A3   850 _T1CCTL3	=	0x62a3
+                           0062A4   851 _T1CCTL4	=	0x62a4
+                           0062A6   852 _XX_T1CC0L	=	0x62a6
+                           0062A7   853 _XX_T1CC0H	=	0x62a7
+                           0062A8   854 _XX_T1CC1L	=	0x62a8
+                           0062A9   855 _XX_T1CC1H	=	0x62a9
+                           0062AA   856 _XX_T1CC2L	=	0x62aa
+                           0062AB   857 _XX_T1CC2H	=	0x62ab
+                           0062AC   858 _T1CC3L	=	0x62ac
+                           0062AD   859 _T1CC3H	=	0x62ad
+                           0062AE   860 _T1CC4L	=	0x62ae
+                           0062AF   861 _T1CC4H	=	0x62af
+                           0062B0   862 _STCC	=	0x62b0
+                           0062B1   863 _STCS	=	0x62b1
+                           0062B2   864 _STCV0	=	0x62b2
+                           0062B3   865 _STCV1	=	0x62b3
+                           0062B4   866 _STCV2	=	0x62b4
+                           0062C0   867 _OPAMPC	=	0x62c0
+                           0062C1   868 _OPAMPS	=	0x62c1
+                           0062D0   869 _CMPCTL	=	0x62d0
+                           006000   870 _RFCORE_RAM	=	0x6000
+                           006000   871 _RXFIFO	=	0x6000
+                           006080   872 _TXFIFO	=	0x6080
+                           006100   873 _SRC_ADDR_TABLE	=	0x6100
+                           006160   874 _SRCRESMASK0	=	0x6160
+                           006161   875 _SRCRESMASK1	=	0x6161
+                           006162   876 _SRCRESMASK2	=	0x6162
+                           006163   877 _SRCRESINDEX	=	0x6163
+                           006164   878 _SRCEXTPENDEN0	=	0x6164
+                           006165   879 _SRCEXTPENDEN1	=	0x6165
+                           006166   880 _SRCEXTPENDEN2	=	0x6166
+                           006167   881 _SRCSHORTPENDEN0	=	0x6167
+                           006168   882 _SRCSHORTPENDEN1	=	0x6168
+                           006169   883 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   884 _EXT_ADDR0	=	0x616a
+                           00616B   885 _EXT_ADDR1	=	0x616b
+                           00616C   886 _EXT_ADDR2	=	0x616c
+                           00616D   887 _EXT_ADDR3	=	0x616d
+                           00616E   888 _EXT_ADDR4	=	0x616e
+                           00616F   889 _EXT_ADDR5	=	0x616f
+                           006170   890 _EXT_ADDR6	=	0x6170
+                           006171   891 _EXT_ADDR7	=	0x6171
+                           006172   892 _PAN_ID0	=	0x6172
+                           006173   893 _PAN_ID1	=	0x6173
+                           006174   894 _SHORT_ADDR0	=	0x6174
+                           006175   895 _SHORT_ADDR1	=	0x6175
+                           006180   896 _FRMFILT0	=	0x6180
+                           006181   897 _FRMFILT1	=	0x6181
+                           006182   898 _SRCMATCH	=	0x6182
+                           006183   899 _SRCSHORTEN0	=	0x6183
+                           006184   900 _SRCSHORTEN1	=	0x6184
+                           006185   901 _SRCSHORTEN2	=	0x6185
+                           006186   902 _SRCEXTEN0	=	0x6186
+                           006187   903 _SRCEXTEN1	=	0x6187
+                           006188   904 _SRCEXTEN2	=	0x6188
+                           006189   905 _FRMCTRL0	=	0x6189
+                           00618A   906 _FRMCTRL1	=	0x618a
+                           00618B   907 _RXENABLE	=	0x618b
+                           00618C   908 _RXMASKSET	=	0x618c
+                           00618D   909 _RXMASKCLR	=	0x618d
+                           00618E   910 _FREQTUNE	=	0x618e
+                           00618F   911 _FREQCTRL	=	0x618f
+                           006190   912 _TXPOWER	=	0x6190
+                           006191   913 _TXCTRL	=	0x6191
+                           006192   914 _FSMSTAT0	=	0x6192
+                           006193   915 _FSMSTAT1	=	0x6193
+                           006194   916 _FIFOPCTRL	=	0x6194
+                           006195   917 _FSMCTRL	=	0x6195
+                           006196   918 _CCACTRL0	=	0x6196
+                           006197   919 _CCACTRL1	=	0x6197
+                           006198   920 _RSSI	=	0x6198
+                           006199   921 _RSSISTAT	=	0x6199
+                           00619A   922 _RXFIRST	=	0x619a
+                           00619B   923 _RXFIFOCNT	=	0x619b
+                           00619C   924 _TXFIFOCNT	=	0x619c
+                           00619D   925 _RXFIRST_PTR	=	0x619d
+                           00619E   926 _RXLAST_PTR	=	0x619e
+                           00619F   927 _RXP1_PTR	=	0x619f
+                           0061A1   928 _TXFIRST_PTR	=	0x61a1
+                           0061A2   929 _TXLAST_PTR	=	0x61a2
+                           0061A3   930 _RFIRQM0	=	0x61a3
+                           0061A4   931 _RFIRQM1	=	0x61a4
+                           0061A5   932 _RFERRM	=	0x61a5
+                           0061A7   933 _RFRND	=	0x61a7
+                           0061A8   934 _MDMCTRL0	=	0x61a8
+                           0061A9   935 _MDMCTRL1	=	0x61a9
+                           0061AA   936 _FREQEST	=	0x61aa
+                           0061AB   937 _RXCTRL	=	0x61ab
+                           0061AC   938 _FSCTRL	=	0x61ac
+                           0061AD   939 _FSCAL0	=	0x61ad
+                           0061AE   940 _FSCAL1	=	0x61ae
+                           0061AF   941 _FSCAL2	=	0x61af
+                           0061B0   942 _FSCAL3	=	0x61b0
+                           0061B1   943 _AGCCTRL0	=	0x61b1
+                           0061B2   944 _AGCCTRL1	=	0x61b2
+                           0061B3   945 _AGCCTRL2	=	0x61b3
+                           0061B4   946 _AGCCTRL3	=	0x61b4
+                           0061B5   947 _ADCTEST0	=	0x61b5
+                           0061B6   948 _ADCTEST1	=	0x61b6
+                           0061B7   949 _ADCTEST2	=	0x61b7
+                           0061B8   950 _MDMTEST0	=	0x61b8
+                           0061B9   951 _MDMTEST1	=	0x61b9
+                           0061BA   952 _DACTEST0	=	0x61ba
+                           0061BB   953 _DACTEST1	=	0x61bb
+                           0061BC   954 _DACTEST2	=	0x61bc
+                           0061BD   955 _ATEST	=	0x61bd
+                           0061BE   956 _PTEST0	=	0x61be
+                           0061BF   957 _PTEST1	=	0x61bf
+                           0061FA   958 _TXFILTCFG	=	0x61fa
+                           0061EB   959 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   960 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   961 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   962 _CSPPROG0	=	0x61c0
+                           0061C1   963 _CSPPROG1	=	0x61c1
+                           0061C2   964 _CSPPROG2	=	0x61c2
+                           0061C3   965 _CSPPROG3	=	0x61c3
+                           0061C4   966 _CSPPROG4	=	0x61c4
+                           0061C5   967 _CSPPROG5	=	0x61c5
+                           0061C6   968 _CSPPROG6	=	0x61c6
+                           0061C7   969 _CSPPROG7	=	0x61c7
+                           0061C8   970 _CSPPROG8	=	0x61c8
+                           0061C9   971 _CSPPROG9	=	0x61c9
+                           0061CA   972 _CSPPROG10	=	0x61ca
+                           0061CB   973 _CSPPROG11	=	0x61cb
+                           0061CC   974 _CSPPROG12	=	0x61cc
+                           0061CD   975 _CSPPROG13	=	0x61cd
+                           0061CE   976 _CSPPROG14	=	0x61ce
+                           0061CF   977 _CSPPROG15	=	0x61cf
+                           0061D0   978 _CSPPROG16	=	0x61d0
+                           0061D1   979 _CSPPROG17	=	0x61d1
+                           0061D2   980 _CSPPROG18	=	0x61d2
+                           0061D3   981 _CSPPROG19	=	0x61d3
+                           0061D4   982 _CSPPROG20	=	0x61d4
+                           0061D5   983 _CSPPROG21	=	0x61d5
+                           0061D6   984 _CSPPROG22	=	0x61d6
+                           0061D7   985 _CSPPROG23	=	0x61d7
+                           0061E0   986 _CSPCTRL	=	0x61e0
+                           0061E1   987 _CSPSTAT	=	0x61e1
+                           0061E2   988 _CSPX	=	0x61e2
+                           0061E3   989 _CSPY	=	0x61e3
+                           0061E4   990 _CSPZ	=	0x61e4
+                           0061E5   991 _CSPT	=	0x61e5
+                           006200   992 _USBADDR	=	0x6200
+                           006201   993 _USBPOW	=	0x6201
+                           006202   994 _USBIIF	=	0x6202
+                           006204   995 _USBOIF	=	0x6204
+                           006206   996 _USBCIF	=	0x6206
+                           006207   997 _USBIIE	=	0x6207
+                           006209   998 _USBOIE	=	0x6209
+                           00620B   999 _USBCIE	=	0x620b
+                           00620C  1000 _USBFRML	=	0x620c
+                           00620D  1001 _USBFRMH	=	0x620d
+                           00620E  1002 _USBINDEX	=	0x620e
+                           00620F  1003 _USBCTRL	=	0x620f
+                           006210  1004 _USBMAXI	=	0x6210
+                           006211  1005 _USBCS0	=	0x6211
+                           006211  1006 _USBCSIL	=	0x6211
+                           006212  1007 _USBCSIH	=	0x6212
+                           006213  1008 _USBMAXO	=	0x6213
+                           006214  1009 _USBCSOL	=	0x6214
+                           006215  1010 _USBCSOH	=	0x6215
+                           006216  1011 _USBCNT0	=	0x6216
+                           006216  1012 _USBCNTL	=	0x6216
+                           006217  1013 _USBCNTH	=	0x6217
+                           006220  1014 _USBF0	=	0x6220
+                           006222  1015 _USBF1	=	0x6222
+                           006224  1016 _USBF2	=	0x6224
+                           006226  1017 _USBF3	=	0x6226
+                           006228  1018 _USBF4	=	0x6228
+                           00622A  1019 _USBF5	=	0x622a
+                           007080  1020 _X_P0	=	0x7080
+                           007086  1021 _X_U0CSR	=	0x7086
+                           007089  1022 _X_P0IFG	=	0x7089
+                           00708A  1023 _X_P1IFG	=	0x708a
+                           00708B  1024 _X_P2IFG	=	0x708b
+                           00708C  1025 _X_PICTL	=	0x708c
+                           00708D  1026 _X_P1IEN	=	0x708d
+                           00708F  1027 _X_P0INP	=	0x708f
+                           007090  1028 _X_P1	=	0x7090
+                           007091  1029 _X_RFIRQF1	=	0x7091
+                           007093  1030 _X_MPAGE	=	0x7093
+                           007093  1031 _X__XPAGE	=	0x7093
+                           007094  1032 _X_T2CTRL	=	0x7094
+                           007095  1033 _X_ST0	=	0x7095
+                           007096  1034 _X_ST1	=	0x7096
+                           007097  1035 _X_ST2	=	0x7097
+                           00709C  1036 _X_T2EVTCFG	=	0x709c
+                           00709D  1037 _X_SLEEPSTA	=	0x709d
+                           00709E  1038 _X_CLKCONSTA	=	0x709e
+                           00709F  1039 _X_FMAP	=	0x709f
+                           00709F  1040 _X_PSBANK	=	0x709f
+                           0070A0  1041 _X_P2	=	0x70a0
+                           0070A1  1042 _X_T2IRQF	=	0x70a1
+                           0070A2  1043 _X_T2M0	=	0x70a2
+                           0070A3  1044 _X_T2M1	=	0x70a3
+                           0070A4  1045 _X_T2MOVF0	=	0x70a4
+                           0070A5  1046 _X_T2MOVF1	=	0x70a5
+                           0070A6  1047 _X_T2MOVF2	=	0x70a6
+                           0070A7  1048 _X_T2IRQM	=	0x70a7
+                           0070AB  1049 _X_P0IEN	=	0x70ab
+                           0070AC  1050 _X_P2IEN	=	0x70ac
+                           0070AD  1051 _X_STLOAD	=	0x70ad
+                           0070AE  1052 _X_PMUX	=	0x70ae
+                           0070AF  1053 _X_T1STAT	=	0x70af
+                           0070B1  1054 _X_ENCDI	=	0x70b1
+                           0070B2  1055 _X_ENCDO	=	0x70b2
+                           0070B3  1056 _X_ENCCS	=	0x70b3
+                           0070B4  1057 _X_ADCCON1	=	0x70b4
+                           0070B5  1058 _X_ADCCON2	=	0x70b5
+                           0070B6  1059 _X_ADCCON3	=	0x70b6
+                           0070BA  1060 _X_ADCL	=	0x70ba
+                           0070BB  1061 _X_ADCH	=	0x70bb
+                           0070BC  1062 _X_RNDL	=	0x70bc
+                           0070BD  1063 _X_RNDH	=	0x70bd
+                           0070BE  1064 _X_SLEEPCMD	=	0x70be
+                           0070BF  1065 _X_RFERRF	=	0x70bf
+                           0070C1  1066 _X_U0DBUF	=	0x70c1
+                           0070C2  1067 _X_U0BAUD	=	0x70c2
+                           0070C3  1068 _X_T2MSEL	=	0x70c3
+                           0070C4  1069 _X_U0UCR	=	0x70c4
+                           0070C5  1070 _X_U0GCR	=	0x70c5
+                           0070C6  1071 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1072 _X_MEMCTR	=	0x70c7
+                           0070C9  1073 _X_WDCTL	=	0x70c9
+                           0070CA  1074 _X_T3CNT	=	0x70ca
+                           0070CB  1075 _X_T3CTL	=	0x70cb
+                           0070CC  1076 _X_T3CCTL0	=	0x70cc
+                           0070CD  1077 _X_T3CC0	=	0x70cd
+                           0070CE  1078 _X_T3CCTL1	=	0x70ce
+                           0070CF  1079 _X_T3CC1	=	0x70cf
+                           0070D1  1080 _X_DMAIRQ	=	0x70d1
+                           0070D2  1081 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1082 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1083 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1084 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1085 _X_DMAARM	=	0x70d6
+                           0070D7  1086 _X_DMAREQ	=	0x70d7
+                           0070D8  1087 _X_TIMIF	=	0x70d8
+                           0070D9  1088 _X_RFD	=	0x70d9
+                           0070DA  1089 _X_T1CC0L	=	0x70da
+                           0070DB  1090 _X_T1CC0H	=	0x70db
+                           0070DC  1091 _X_T1CC1L	=	0x70dc
+                           0070DD  1092 _X_T1CC1H	=	0x70dd
+                           0070DE  1093 _X_T1CC2L	=	0x70de
+                           0070DF  1094 _X_T1CC2H	=	0x70df
+                           0070E1  1095 _X_RFST	=	0x70e1
+                           0070E2  1096 _X_T1CNTL	=	0x70e2
+                           0070E3  1097 _X_T1CNTH	=	0x70e3
+                           0070E4  1098 _X_T1CTL	=	0x70e4
+                           0070E5  1099 _X_T1CCTL0	=	0x70e5
+                           0070E6  1100 _X_T1CCTL1	=	0x70e6
+                           0070E7  1101 _X_T1CCTL2	=	0x70e7
+                           0070E9  1102 _X_RFIRQF0	=	0x70e9
+                           0070EA  1103 _X_T4CNT	=	0x70ea
+                           0070EB  1104 _X_T4CTL	=	0x70eb
+                           0070EC  1105 _X_T4CCTL0	=	0x70ec
+                           0070ED  1106 _X_T4CC0	=	0x70ed
+                           0070EE  1107 _X_T4CCTL1	=	0x70ee
+                           0070EF  1108 _X_T4CC1	=	0x70ef
+                           0070F1  1109 _X_PERCFG	=	0x70f1
+                           0070F2  1110 _X_APCFG	=	0x70f2
+                           0070F3  1111 _X_P0SEL	=	0x70f3
+                           0070F4  1112 _X_P1SEL	=	0x70f4
+                           0070F5  1113 _X_P2SEL	=	0x70f5
+                           0070F6  1114 _X_P1INP	=	0x70f6
+                           0070F7  1115 _X_P2INP	=	0x70f7
+                           0070F8  1116 _X_U1CSR	=	0x70f8
+                           0070F9  1117 _X_U1DBUF	=	0x70f9
+                           0070FA  1118 _X_U1BAUD	=	0x70fa
+                           0070FB  1119 _X_U1UCR	=	0x70fb
+                           0070FC  1120 _X_U1GCR	=	0x70fc
+                           0070FD  1121 _X_P0DIR	=	0x70fd
+                           0070FE  1122 _X_P1DIR	=	0x70fe
+                           0070FF  1123 _X_P2DIR	=	0x70ff
+                           007800  1124 _X_INFOPAGE	=	0x7800
+                           00780C  1125 _X_IEEE_ADDR	=	0x780c
+      000000                       1126 _slip_active::
+      000000                       1127 	.ds 1
+      000001                       1128 _begin:
+      000001                       1129 	.ds 2
+      000003                       1130 _end:
+      000003                       1131 	.ds 2
+      000005                       1132 _rxbuf:
+      000005                       1133 	.ds 110
+      000073                       1134 _pkt_end:
+      000073                       1135 	.ds 2
+      000075                       1136 _process_thread_slip_process_ip_id_6_186:
+      000075                       1137 	.ds 2
+                                   1138 ;--------------------------------------------------------
+                                   1139 ; absolute external ram data
+                                   1140 ;--------------------------------------------------------
+                                   1141 	.area XABS    (ABS,XDATA)
+                                   1142 ;--------------------------------------------------------
+                                   1143 ; external initialized ram data
+                                   1144 ;--------------------------------------------------------
+                                   1145 	.area XISEG   (XDATA)
+      000000                       1146 _slip_process::
+      000000                       1147 	.ds 9
+      000009                       1148 _state:
+      000009                       1149 	.ds 1
+      00000A                       1150 _input_callback:
+      00000A                       1151 	.ds 2
+                                   1152 	.area HOME    (CODE)
+                                   1153 	.area GSINIT0 (CODE)
+                                   1154 	.area GSINIT1 (CODE)
+                                   1155 	.area GSINIT2 (CODE)
+                                   1156 	.area GSINIT3 (CODE)
+                                   1157 	.area GSINIT4 (CODE)
+                                   1158 	.area GSINIT5 (CODE)
+                                   1159 	.area GSINIT  (CODE)
+                                   1160 	.area GSFINAL (CODE)
+                                   1161 	.area CSEG    (CODE)
+                                   1162 ;--------------------------------------------------------
+                                   1163 ; global & static initialisations
+                                   1164 ;--------------------------------------------------------
+                                   1165 	.area HOME    (CODE)
+                                   1166 	.area GSINIT  (CODE)
+                                   1167 	.area GSFINAL (CODE)
+                                   1168 	.area GSINIT  (CODE)
+                                   1169 ;--------------------------------------------------------
+                                   1170 ; Home
+                                   1171 ;--------------------------------------------------------
+                                   1172 	.area HOME    (CODE)
+                                   1173 	.area HOME    (CODE)
+                                   1174 ;--------------------------------------------------------
+                                   1175 ; code
+                                   1176 ;--------------------------------------------------------
+                                   1177 	.area CSEG    (CODE)
+                                   1178 ;------------------------------------------------------------
+                                   1179 ;Allocation info for local variables in function 'slip_set_input_callback'
+                                   1180 ;------------------------------------------------------------
+                                   1181 ;c                         Allocated to registers 
+                                   1182 ;------------------------------------------------------------
+                                   1183 ;	/home/user/contiki/core/dev/slip.c:91: slip_set_input_callback(void (*c)(void))
+                                   1184 ;	-----------------------------------------
+                                   1185 ;	 function slip_set_input_callback
+                                   1186 ;	-----------------------------------------
+      000000                       1187 _slip_set_input_callback:
+                           000007  1188 	ar7 = 0x07
+                           000006  1189 	ar6 = 0x06
+                           000005  1190 	ar5 = 0x05
+                           000004  1191 	ar4 = 0x04
+                           000003  1192 	ar3 = 0x03
+                           000002  1193 	ar2 = 0x02
+                           000001  1194 	ar1 = 0x01
+                           000000  1195 	ar0 = 0x00
+      000000 AF 83            [24] 1196 	mov	r7,dph
+      000002 E5 82            [12] 1197 	mov	a,dpl
+      000004 90r00r0A         [24] 1198 	mov	dptr,#_input_callback
+      000007 F0               [24] 1199 	movx	@dptr,a
+      000008 EF               [12] 1200 	mov	a,r7
+      000009 A3               [24] 1201 	inc	dptr
+      00000A F0               [24] 1202 	movx	@dptr,a
+                                   1203 ;	/home/user/contiki/core/dev/slip.c:93: input_callback = c;
+      00000B 22               [24] 1204 	ret
+                                   1205 ;------------------------------------------------------------
+                                   1206 ;Allocation info for local variables in function 'slip_send'
+                                   1207 ;------------------------------------------------------------
+                                   1208 ;i                         Allocated to stack - sp -1
+                                   1209 ;ptr                       Allocated to registers r5 r6 r7 
+                                   1210 ;c                         Allocated to registers r4 
+                                   1211 ;------------------------------------------------------------
+                                   1212 ;	/home/user/contiki/core/dev/slip.c:101: slip_send(void)
+                                   1213 ;	-----------------------------------------
+                                   1214 ;	 function slip_send
+                                   1215 ;	-----------------------------------------
+      00000C                       1216 _slip_send:
+      00000C 05 81            [12] 1217 	inc	sp
+      00000E 05 81            [12] 1218 	inc	sp
+                                   1219 ;	/home/user/contiki/core/dev/slip.c:107: slip_arch_writeb(SLIP_END);
+      000010 75 82 C0         [24] 1220 	mov	dpl,#0xC0
+      000013 12r00r00         [24] 1221 	lcall	_slip_arch_writeb
+                                   1222 ;	/home/user/contiki/core/dev/slip.c:109: ptr = &uip_buf[UIP_LLH_LEN];
+      000016 7Dr0E            [12] 1223 	mov	r5,#(_uip_aligned_buf + 0x000e)
+      000018 7Es00            [12] 1224 	mov	r6,#((_uip_aligned_buf + 0x000e) >> 8)
+      00001A 7F 00            [12] 1225 	mov	r7,#0x00
+                                   1226 ;	/home/user/contiki/core/dev/slip.c:110: for(i = 0; i < uip_len; ++i) {
+      00001C A8 81            [24] 1227 	mov	r0,sp
+      00001E 18               [12] 1228 	dec	r0
+      00001F E4               [12] 1229 	clr	a
+      000020 F6               [12] 1230 	mov	@r0,a
+      000021 08               [12] 1231 	inc	r0
+      000022 F6               [12] 1232 	mov	@r0,a
+      000023                       1233 00110$:
+      000023 C0 05            [24] 1234 	push	ar5
+      000025 C0 06            [24] 1235 	push	ar6
+      000027 C0 07            [24] 1236 	push	ar7
+      000029 90r00r00         [24] 1237 	mov	dptr,#_uip_len
+      00002C E0               [24] 1238 	movx	a,@dptr
+      00002D FA               [12] 1239 	mov	r2,a
+      00002E A3               [24] 1240 	inc	dptr
+      00002F E0               [24] 1241 	movx	a,@dptr
+      000030 FF               [12] 1242 	mov	r7,a
+      000031 E5 81            [12] 1243 	mov	a,sp
+      000033 24 FC            [12] 1244 	add	a,#0xfc
+      000035 F8               [12] 1245 	mov	r0,a
+      000036 C3               [12] 1246 	clr	c
+      000037 E6               [12] 1247 	mov	a,@r0
+      000038 9A               [12] 1248 	subb	a,r2
+      000039 08               [12] 1249 	inc	r0
+      00003A E6               [12] 1250 	mov	a,@r0
+      00003B 9F               [12] 1251 	subb	a,r7
+      00003C D0 07            [24] 1252 	pop	ar7
+      00003E D0 06            [24] 1253 	pop	ar6
+      000040 D0 05            [24] 1254 	pop	ar5
+      000042 40 03            [24] 1255 	jc	00130$
+      000044 02r00rBE         [24] 1256 	ljmp	00108$
+      000047                       1257 00130$:
+                                   1258 ;	/home/user/contiki/core/dev/slip.c:111: if(i == UIP_TCPIP_HLEN) {
+      000047 A8 81            [24] 1259 	mov	r0,sp
+      000049 18               [12] 1260 	dec	r0
+      00004A B6 28 15         [24] 1261 	cjne	@r0,#0x28,00102$
+      00004D 08               [12] 1262 	inc	r0
+      00004E B6 00 11         [24] 1263 	cjne	@r0,#0x00,00102$
+                                   1264 ;	/home/user/contiki/core/dev/slip.c:112: ptr = (uint8_t *)uip_appdata;
+      000051 90r00r00         [24] 1265 	mov	dptr,#_uip_appdata
+      000054 E0               [24] 1266 	movx	a,@dptr
+      000055 FA               [12] 1267 	mov	r2,a
+      000056 A3               [24] 1268 	inc	dptr
+      000057 E0               [24] 1269 	movx	a,@dptr
+      000058 FB               [12] 1270 	mov	r3,a
+      000059 A3               [24] 1271 	inc	dptr
+      00005A E0               [24] 1272 	movx	a,@dptr
+      00005B FC               [12] 1273 	mov	r4,a
+      00005C 8A 05            [24] 1274 	mov	ar5,r2
+      00005E 8B 06            [24] 1275 	mov	ar6,r3
+      000060 8C 07            [24] 1276 	mov	ar7,r4
+      000062                       1277 00102$:
+                                   1278 ;	/home/user/contiki/core/dev/slip.c:114: c = *ptr++;
+      000062 8D 82            [24] 1279 	mov	dpl,r5
+      000064 8E 83            [24] 1280 	mov	dph,r6
+      000066 8F F0            [24] 1281 	mov	b,r7
+      000068 12r00r00         [24] 1282 	lcall	__gptrget
+      00006B FC               [12] 1283 	mov	r4,a
+      00006C A3               [24] 1284 	inc	dptr
+      00006D AD 82            [24] 1285 	mov	r5,dpl
+      00006F AE 83            [24] 1286 	mov	r6,dph
+                                   1287 ;	/home/user/contiki/core/dev/slip.c:115: if(c == SLIP_END) {
+      000071 BC C0 16         [24] 1288 	cjne	r4,#0xC0,00106$
+                                   1289 ;	/home/user/contiki/core/dev/slip.c:116: slip_arch_writeb(SLIP_ESC);
+      000074 75 82 DB         [24] 1290 	mov	dpl,#0xDB
+      000077 C0 07            [24] 1291 	push	ar7
+      000079 C0 06            [24] 1292 	push	ar6
+      00007B C0 05            [24] 1293 	push	ar5
+      00007D 12r00r00         [24] 1294 	lcall	_slip_arch_writeb
+      000080 D0 05            [24] 1295 	pop	ar5
+      000082 D0 06            [24] 1296 	pop	ar6
+      000084 D0 07            [24] 1297 	pop	ar7
+                                   1298 ;	/home/user/contiki/core/dev/slip.c:117: c = SLIP_ESC_END;
+      000086 7C DC            [12] 1299 	mov	r4,#0xDC
+      000088 80 17            [24] 1300 	sjmp	00107$
+      00008A                       1301 00106$:
+                                   1302 ;	/home/user/contiki/core/dev/slip.c:118: } else if(c == SLIP_ESC) {
+      00008A BC DB 14         [24] 1303 	cjne	r4,#0xDB,00107$
+                                   1304 ;	/home/user/contiki/core/dev/slip.c:119: slip_arch_writeb(SLIP_ESC);
+      00008D 75 82 DB         [24] 1305 	mov	dpl,#0xDB
+      000090 C0 07            [24] 1306 	push	ar7
+      000092 C0 06            [24] 1307 	push	ar6
+      000094 C0 05            [24] 1308 	push	ar5
+      000096 12r00r00         [24] 1309 	lcall	_slip_arch_writeb
+      000099 D0 05            [24] 1310 	pop	ar5
+      00009B D0 06            [24] 1311 	pop	ar6
+      00009D D0 07            [24] 1312 	pop	ar7
+                                   1313 ;	/home/user/contiki/core/dev/slip.c:120: c = SLIP_ESC_ESC;
+      00009F 7C DD            [12] 1314 	mov	r4,#0xDD
+      0000A1                       1315 00107$:
+                                   1316 ;	/home/user/contiki/core/dev/slip.c:122: slip_arch_writeb(c);
+      0000A1 8C 82            [24] 1317 	mov	dpl,r4
+      0000A3 C0 07            [24] 1318 	push	ar7
+      0000A5 C0 06            [24] 1319 	push	ar6
+      0000A7 C0 05            [24] 1320 	push	ar5
+      0000A9 12r00r00         [24] 1321 	lcall	_slip_arch_writeb
+      0000AC D0 05            [24] 1322 	pop	ar5
+      0000AE D0 06            [24] 1323 	pop	ar6
+      0000B0 D0 07            [24] 1324 	pop	ar7
+                                   1325 ;	/home/user/contiki/core/dev/slip.c:110: for(i = 0; i < uip_len; ++i) {
+      0000B2 A8 81            [24] 1326 	mov	r0,sp
+      0000B4 18               [12] 1327 	dec	r0
+      0000B5 06               [12] 1328 	inc	@r0
+      0000B6 B6 00 02         [24] 1329 	cjne	@r0,#0x00,00137$
+      0000B9 08               [12] 1330 	inc	r0
+      0000BA 06               [12] 1331 	inc	@r0
+      0000BB                       1332 00137$:
+      0000BB 02r00r23         [24] 1333 	ljmp	00110$
+      0000BE                       1334 00108$:
+                                   1335 ;	/home/user/contiki/core/dev/slip.c:124: slip_arch_writeb(SLIP_END);
+      0000BE 75 82 C0         [24] 1336 	mov	dpl,#0xC0
+      0000C1 12r00r00         [24] 1337 	lcall	_slip_arch_writeb
+                                   1338 ;	/home/user/contiki/core/dev/slip.c:126: return UIP_FW_OK;
+      0000C4 75 82 00         [24] 1339 	mov	dpl,#0x00
+      0000C7 15 81            [12] 1340 	dec	sp
+      0000C9 15 81            [12] 1341 	dec	sp
+      0000CB 22               [24] 1342 	ret
+                                   1343 ;------------------------------------------------------------
+                                   1344 ;Allocation info for local variables in function 'slip_write'
+                                   1345 ;------------------------------------------------------------
+                                   1346 ;len                       Allocated to stack - sp -3
+                                   1347 ;_ptr                      Allocated to registers r5 r6 r7 
+                                   1348 ;ptr                       Allocated to registers r5 r6 r7 
+                                   1349 ;i                         Allocated to registers r3 r4 
+                                   1350 ;c                         Allocated to registers r2 
+                                   1351 ;------------------------------------------------------------
+                                   1352 ;	/home/user/contiki/core/dev/slip.c:131: slip_write(const void *_ptr, int len)
+                                   1353 ;	-----------------------------------------
+                                   1354 ;	 function slip_write
+                                   1355 ;	-----------------------------------------
+      0000CC                       1356 _slip_write:
+      0000CC AD 82            [24] 1357 	mov	r5,dpl
+      0000CE AE 83            [24] 1358 	mov	r6,dph
+      0000D0 AF F0            [24] 1359 	mov	r7,b
+                                   1360 ;	/home/user/contiki/core/dev/slip.c:133: const uint8_t *ptr = _ptr;
+                                   1361 ;	/home/user/contiki/core/dev/slip.c:137: slip_arch_writeb(SLIP_END);
+      0000D2 75 82 C0         [24] 1362 	mov	dpl,#0xC0
+      0000D5 C0 07            [24] 1363 	push	ar7
+      0000D7 C0 06            [24] 1364 	push	ar6
+      0000D9 C0 05            [24] 1365 	push	ar5
+      0000DB 12r00r00         [24] 1366 	lcall	_slip_arch_writeb
+      0000DE D0 05            [24] 1367 	pop	ar5
+      0000E0 D0 06            [24] 1368 	pop	ar6
+      0000E2 D0 07            [24] 1369 	pop	ar7
+                                   1370 ;	/home/user/contiki/core/dev/slip.c:139: for(i = 0; i < len; ++i) {
+      0000E4 7B 00            [12] 1371 	mov	r3,#0x00
+      0000E6 7C 00            [12] 1372 	mov	r4,#0x00
+      0000E8                       1373 00108$:
+      0000E8 C0 05            [24] 1374 	push	ar5
+      0000EA C0 06            [24] 1375 	push	ar6
+      0000EC C0 07            [24] 1376 	push	ar7
+      0000EE E5 81            [12] 1377 	mov	a,sp
+      0000F0 24 FA            [12] 1378 	add	a,#0xfa
+      0000F2 F8               [12] 1379 	mov	r0,a
+      0000F3 86 02            [24] 1380 	mov	ar2,@r0
+      0000F5 08               [12] 1381 	inc	r0
+      0000F6 86 07            [24] 1382 	mov	ar7,@r0
+      0000F8 C3               [12] 1383 	clr	c
+      0000F9 EB               [12] 1384 	mov	a,r3
+      0000FA 9A               [12] 1385 	subb	a,r2
+      0000FB EC               [12] 1386 	mov	a,r4
+      0000FC 9F               [12] 1387 	subb	a,r7
+      0000FD D0 07            [24] 1388 	pop	ar7
+      0000FF D0 06            [24] 1389 	pop	ar6
+      000101 D0 05            [24] 1390 	pop	ar5
+      000103 50 70            [24] 1391 	jnc	00106$
+                                   1392 ;	/home/user/contiki/core/dev/slip.c:140: c = *ptr++;
+      000105 8D 82            [24] 1393 	mov	dpl,r5
+      000107 8E 83            [24] 1394 	mov	dph,r6
+      000109 8F F0            [24] 1395 	mov	b,r7
+      00010B 12r00r00         [24] 1396 	lcall	__gptrget
+      00010E FA               [12] 1397 	mov	r2,a
+      00010F A3               [24] 1398 	inc	dptr
+      000110 AD 82            [24] 1399 	mov	r5,dpl
+      000112 AE 83            [24] 1400 	mov	r6,dph
+                                   1401 ;	/home/user/contiki/core/dev/slip.c:141: if(c == SLIP_END) {
+      000114 BA C0 1E         [24] 1402 	cjne	r2,#0xC0,00104$
+                                   1403 ;	/home/user/contiki/core/dev/slip.c:142: slip_arch_writeb(SLIP_ESC);
+      000117 75 82 DB         [24] 1404 	mov	dpl,#0xDB
+      00011A C0 07            [24] 1405 	push	ar7
+      00011C C0 06            [24] 1406 	push	ar6
+      00011E C0 05            [24] 1407 	push	ar5
+      000120 C0 04            [24] 1408 	push	ar4
+      000122 C0 03            [24] 1409 	push	ar3
+      000124 12r00r00         [24] 1410 	lcall	_slip_arch_writeb
+      000127 D0 03            [24] 1411 	pop	ar3
+      000129 D0 04            [24] 1412 	pop	ar4
+      00012B D0 05            [24] 1413 	pop	ar5
+      00012D D0 06            [24] 1414 	pop	ar6
+      00012F D0 07            [24] 1415 	pop	ar7
+                                   1416 ;	/home/user/contiki/core/dev/slip.c:143: c = SLIP_ESC_END;
+      000131 7A DC            [12] 1417 	mov	r2,#0xDC
+      000133 80 1F            [24] 1418 	sjmp	00105$
+      000135                       1419 00104$:
+                                   1420 ;	/home/user/contiki/core/dev/slip.c:144: } else if(c == SLIP_ESC) {
+      000135 BA DB 1C         [24] 1421 	cjne	r2,#0xDB,00105$
+                                   1422 ;	/home/user/contiki/core/dev/slip.c:145: slip_arch_writeb(SLIP_ESC);
+      000138 75 82 DB         [24] 1423 	mov	dpl,#0xDB
+      00013B C0 07            [24] 1424 	push	ar7
+      00013D C0 06            [24] 1425 	push	ar6
+      00013F C0 05            [24] 1426 	push	ar5
+      000141 C0 04            [24] 1427 	push	ar4
+      000143 C0 03            [24] 1428 	push	ar3
+      000145 12r00r00         [24] 1429 	lcall	_slip_arch_writeb
+      000148 D0 03            [24] 1430 	pop	ar3
+      00014A D0 04            [24] 1431 	pop	ar4
+      00014C D0 05            [24] 1432 	pop	ar5
+      00014E D0 06            [24] 1433 	pop	ar6
+      000150 D0 07            [24] 1434 	pop	ar7
+                                   1435 ;	/home/user/contiki/core/dev/slip.c:146: c = SLIP_ESC_ESC;
+      000152 7A DD            [12] 1436 	mov	r2,#0xDD
+      000154                       1437 00105$:
+                                   1438 ;	/home/user/contiki/core/dev/slip.c:148: slip_arch_writeb(c);
+      000154 8A 82            [24] 1439 	mov	dpl,r2
+      000156 C0 07            [24] 1440 	push	ar7
+      000158 C0 06            [24] 1441 	push	ar6
+      00015A C0 05            [24] 1442 	push	ar5
+      00015C C0 04            [24] 1443 	push	ar4
+      00015E C0 03            [24] 1444 	push	ar3
+      000160 12r00r00         [24] 1445 	lcall	_slip_arch_writeb
+      000163 D0 03            [24] 1446 	pop	ar3
+      000165 D0 04            [24] 1447 	pop	ar4
+      000167 D0 05            [24] 1448 	pop	ar5
+      000169 D0 06            [24] 1449 	pop	ar6
+      00016B D0 07            [24] 1450 	pop	ar7
+                                   1451 ;	/home/user/contiki/core/dev/slip.c:139: for(i = 0; i < len; ++i) {
+      00016D 0B               [12] 1452 	inc	r3
+      00016E BB 00 01         [24] 1453 	cjne	r3,#0x00,00130$
+      000171 0C               [12] 1454 	inc	r4
+      000172                       1455 00130$:
+      000172 02r00rE8         [24] 1456 	ljmp	00108$
+      000175                       1457 00106$:
+                                   1458 ;	/home/user/contiki/core/dev/slip.c:150: slip_arch_writeb(SLIP_END);
+      000175 75 82 C0         [24] 1459 	mov	dpl,#0xC0
+      000178 12r00r00         [24] 1460 	lcall	_slip_arch_writeb
+                                   1461 ;	/home/user/contiki/core/dev/slip.c:152: return len;
+      00017B E5 81            [12] 1462 	mov	a,sp
+      00017D 24 FD            [12] 1463 	add	a,#0xfd
+      00017F F8               [12] 1464 	mov	r0,a
+      000180 86 07            [24] 1465 	mov	ar7,@r0
+      000182 8F 82            [24] 1466 	mov	dpl,r7
+      000184 22               [24] 1467 	ret
+                                   1468 ;------------------------------------------------------------
+                                   1469 ;Allocation info for local variables in function 'rxbuf_init'
+                                   1470 ;------------------------------------------------------------
+                                   1471 ;	/home/user/contiki/core/dev/slip.c:156: rxbuf_init(void)
+                                   1472 ;	-----------------------------------------
+                                   1473 ;	 function rxbuf_init
+                                   1474 ;	-----------------------------------------
+      000185                       1475 _rxbuf_init:
+                                   1476 ;	/home/user/contiki/core/dev/slip.c:158: begin = end = pkt_end = 0;
+      000185 90r00r73         [24] 1477 	mov	dptr,#_pkt_end
+      000188 E4               [12] 1478 	clr	a
+      000189 F0               [24] 1479 	movx	@dptr,a
+      00018A E4               [12] 1480 	clr	a
+      00018B A3               [24] 1481 	inc	dptr
+      00018C F0               [24] 1482 	movx	@dptr,a
+      00018D 90r00r03         [24] 1483 	mov	dptr,#_end
+      000190 E4               [12] 1484 	clr	a
+      000191 F0               [24] 1485 	movx	@dptr,a
+      000192 E4               [12] 1486 	clr	a
+      000193 A3               [24] 1487 	inc	dptr
+      000194 F0               [24] 1488 	movx	@dptr,a
+      000195 90r00r01         [24] 1489 	mov	dptr,#_begin
+      000198 E4               [12] 1490 	clr	a
+      000199 F0               [24] 1491 	movx	@dptr,a
+      00019A E4               [12] 1492 	clr	a
+      00019B A3               [24] 1493 	inc	dptr
+      00019C F0               [24] 1494 	movx	@dptr,a
+                                   1495 ;	/home/user/contiki/core/dev/slip.c:159: state = STATE_OK;
+      00019D 90r00r09         [24] 1496 	mov	dptr,#_state
+      0001A0 74 01            [12] 1497 	mov	a,#0x01
+      0001A2 F0               [24] 1498 	movx	@dptr,a
+      0001A3 22               [24] 1499 	ret
+                                   1500 ;------------------------------------------------------------
+                                   1501 ;Allocation info for local variables in function 'slip_intr_handler'
+                                   1502 ;------------------------------------------------------------
+                                   1503 ;blen                      Allocated to stack - sp -8
+                                   1504 ;outbuf                    Allocated to stack - sp -4
+                                   1505 ;i                         Allocated to registers r3 r4 
+                                   1506 ;len                       Allocated to stack - sp -1
+                                   1507 ;i                         Allocated to registers 
+                                   1508 ;sloc0                     Allocated to stack - sp +5
+                                   1509 ;sloc1                     Allocated to stack - sp +7
+                                   1510 ;sloc2                     Allocated to stack - sp +9
+                                   1511 ;------------------------------------------------------------
+                                   1512 ;	/home/user/contiki/core/dev/slip.c:164: slip_intr_handler(uint8_t *outbuf, uint16_t blen)
+                                   1513 ;	-----------------------------------------
+                                   1514 ;	 function slip_intr_handler
+                                   1515 ;	-----------------------------------------
+      0001A4                       1516 _slip_intr_handler:
+      0001A4 C0 82            [24] 1517 	push	dpl
+      0001A6 C0 83            [24] 1518 	push	dph
+      0001A8 C0 F0            [24] 1519 	push	b
+      0001AA 05 81            [12] 1520 	inc	sp
+      0001AC 05 81            [12] 1521 	inc	sp
+                                   1522 ;	/home/user/contiki/core/dev/slip.c:167: if(rxbuf[begin] == 'C') {
+      0001AE 90r00r01         [24] 1523 	mov	dptr,#_begin
+      0001B1 E0               [24] 1524 	movx	a,@dptr
+      0001B2 FB               [12] 1525 	mov	r3,a
+      0001B3 A3               [24] 1526 	inc	dptr
+      0001B4 E0               [24] 1527 	movx	a,@dptr
+      0001B5 FC               [12] 1528 	mov	r4,a
+      0001B6 EB               [12] 1529 	mov	a,r3
+      0001B7 24r05            [12] 1530 	add	a,#_rxbuf
+      0001B9 FF               [12] 1531 	mov	r7,a
+      0001BA EC               [12] 1532 	mov	a,r4
+      0001BB 34s00            [12] 1533 	addc	a,#(_rxbuf >> 8)
+      0001BD FE               [12] 1534 	mov	r6,a
+      0001BE 8F 82            [24] 1535 	mov	dpl,r7
+      0001C0 8E 83            [24] 1536 	mov	dph,r6
+      0001C2 E0               [24] 1537 	movx	a,@dptr
+      0001C3 FA               [12] 1538 	mov	r2,a
+      0001C4 BA 43 02         [24] 1539 	cjne	r2,#0x43,00181$
+      0001C7 80 03            [24] 1540 	sjmp	00182$
+      0001C9                       1541 00181$:
+      0001C9 02r02r87         [24] 1542 	ljmp	00107$
+      0001CC                       1543 00182$:
+                                   1544 ;	/home/user/contiki/core/dev/slip.c:169: if(begin < end && (end - begin) >= 6
+      0001CC 90r00r03         [24] 1545 	mov	dptr,#_end
+      0001CF E0               [24] 1546 	movx	a,@dptr
+      0001D0 FD               [12] 1547 	mov	r5,a
+      0001D1 A3               [24] 1548 	inc	dptr
+      0001D2 E0               [24] 1549 	movx	a,@dptr
+      0001D3 FA               [12] 1550 	mov	r2,a
+      0001D4 C3               [12] 1551 	clr	c
+      0001D5 EB               [12] 1552 	mov	a,r3
+      0001D6 9D               [12] 1553 	subb	a,r5
+      0001D7 EC               [12] 1554 	mov	a,r4
+      0001D8 9A               [12] 1555 	subb	a,r2
+      0001D9 40 03            [24] 1556 	jc	00183$
+      0001DB 02r02r87         [24] 1557 	ljmp	00107$
+      0001DE                       1558 00183$:
+      0001DE ED               [12] 1559 	mov	a,r5
+      0001DF C3               [12] 1560 	clr	c
+      0001E0 9B               [12] 1561 	subb	a,r3
+      0001E1 FB               [12] 1562 	mov	r3,a
+      0001E2 EA               [12] 1563 	mov	a,r2
+      0001E3 9C               [12] 1564 	subb	a,r4
+      0001E4 FC               [12] 1565 	mov	r4,a
+      0001E5 C3               [12] 1566 	clr	c
+      0001E6 EB               [12] 1567 	mov	a,r3
+      0001E7 94 06            [12] 1568 	subb	a,#0x06
+      0001E9 EC               [12] 1569 	mov	a,r4
+      0001EA 94 00            [12] 1570 	subb	a,#0x00
+      0001EC 50 03            [24] 1571 	jnc	00184$
+      0001EE 02r02r87         [24] 1572 	ljmp	00107$
+      0001F1                       1573 00184$:
+                                   1574 ;	/home/user/contiki/core/dev/slip.c:170: && memcmp(&rxbuf[begin], "CLIENT", 6) == 0) {
+      0001F1 8F 03            [24] 1575 	mov	ar3,r7
+      0001F3 8E 04            [24] 1576 	mov	ar4,r6
+      0001F5 7A 00            [12] 1577 	mov	r2,#0x00
+      0001F7 74 06            [12] 1578 	mov	a,#0x06
+      0001F9 C0 E0            [24] 1579 	push	acc
+      0001FB E4               [12] 1580 	clr	a
+      0001FC C0 E0            [24] 1581 	push	acc
+      0001FE 74r00            [12] 1582 	mov	a,#__str_0
+      000200 C0 E0            [24] 1583 	push	acc
+      000202 74s00            [12] 1584 	mov	a,#(__str_0 >> 8)
+      000204 C0 E0            [24] 1585 	push	acc
+      000206 74 80            [12] 1586 	mov	a,#0x80
+      000208 C0 E0            [24] 1587 	push	acc
+      00020A 8B 82            [24] 1588 	mov	dpl,r3
+      00020C 8C 83            [24] 1589 	mov	dph,r4
+      00020E 8A F0            [24] 1590 	mov	b,r2
+      000210 12r00r00         [24] 1591 	lcall	_memcmp
+      000213 AB 82            [24] 1592 	mov	r3,dpl
+      000215 AC 83            [24] 1593 	mov	r4,dph
+      000217 E5 81            [12] 1594 	mov	a,sp
+      000219 24 FB            [12] 1595 	add	a,#0xfb
+      00021B F5 81            [12] 1596 	mov	sp,a
+      00021D EB               [12] 1597 	mov	a,r3
+      00021E 4C               [12] 1598 	orl	a,r4
+      00021F 70 66            [24] 1599 	jnz	00107$
+                                   1600 ;	/home/user/contiki/core/dev/slip.c:171: state = STATE_TWOPACKETS;	/* Interrupts do nothing. */
+      000221 90r00r09         [24] 1601 	mov	dptr,#_state
+      000224 E4               [12] 1602 	clr	a
+      000225 F0               [24] 1603 	movx	@dptr,a
+                                   1604 ;	/home/user/contiki/core/dev/slip.c:172: memset(&rxbuf[begin], 0x0, 6);
+      000226 90r00r01         [24] 1605 	mov	dptr,#_begin
+      000229 E0               [24] 1606 	movx	a,@dptr
+      00022A FB               [12] 1607 	mov	r3,a
+      00022B A3               [24] 1608 	inc	dptr
+      00022C E0               [24] 1609 	movx	a,@dptr
+      00022D FC               [12] 1610 	mov	r4,a
+      00022E EB               [12] 1611 	mov	a,r3
+      00022F 24r05            [12] 1612 	add	a,#_rxbuf
+      000231 FB               [12] 1613 	mov	r3,a
+      000232 EC               [12] 1614 	mov	a,r4
+      000233 34s00            [12] 1615 	addc	a,#(_rxbuf >> 8)
+      000235 FC               [12] 1616 	mov	r4,a
+      000236 7A 00            [12] 1617 	mov	r2,#0x00
+      000238 74 06            [12] 1618 	mov	a,#0x06
+      00023A C0 E0            [24] 1619 	push	acc
+      00023C E4               [12] 1620 	clr	a
+      00023D C0 E0            [24] 1621 	push	acc
+      00023F E4               [12] 1622 	clr	a
+      000240 C0 E0            [24] 1623 	push	acc
+      000242 8B 82            [24] 1624 	mov	dpl,r3
+      000244 8C 83            [24] 1625 	mov	dph,r4
+      000246 8A F0            [24] 1626 	mov	b,r2
+      000248 12r00r00         [24] 1627 	lcall	_memset
+      00024B 15 81            [12] 1628 	dec	sp
+      00024D 15 81            [12] 1629 	dec	sp
+      00024F 15 81            [12] 1630 	dec	sp
+                                   1631 ;	/home/user/contiki/core/dev/slip.c:174: rxbuf_init();
+      000251 12r01r85         [24] 1632 	lcall	_rxbuf_init
+                                   1633 ;	/home/user/contiki/core/dev/slip.c:176: for(i = 0; i < 13; i++) {
+      000254 7B 00            [12] 1634 	mov	r3,#0x00
+      000256 7C 00            [12] 1635 	mov	r4,#0x00
+      000258                       1636 00123$:
+                                   1637 ;	/home/user/contiki/core/dev/slip.c:177: slip_arch_writeb("CLIENTSERVER\300"[i]);
+      000258 EB               [12] 1638 	mov	a,r3
+      000259 24r07            [12] 1639 	add	a,#__str_1
+      00025B F5 82            [12] 1640 	mov	dpl,a
+      00025D EC               [12] 1641 	mov	a,r4
+      00025E 34s00            [12] 1642 	addc	a,#(__str_1 >> 8)
+      000260 F5 83            [12] 1643 	mov	dph,a
+      000262 E4               [12] 1644 	clr	a
+      000263 93               [24] 1645 	movc	a,@a+dptr
+      000264 F5 82            [12] 1646 	mov	dpl,a
+      000266 C0 04            [24] 1647 	push	ar4
+      000268 C0 03            [24] 1648 	push	ar3
+      00026A 12r00r00         [24] 1649 	lcall	_slip_arch_writeb
+      00026D D0 03            [24] 1650 	pop	ar3
+      00026F D0 04            [24] 1651 	pop	ar4
+                                   1652 ;	/home/user/contiki/core/dev/slip.c:176: for(i = 0; i < 13; i++) {
+      000271 0B               [12] 1653 	inc	r3
+      000272 BB 00 01         [24] 1654 	cjne	r3,#0x00,00186$
+      000275 0C               [12] 1655 	inc	r4
+      000276                       1656 00186$:
+      000276 C3               [12] 1657 	clr	c
+      000277 EB               [12] 1658 	mov	a,r3
+      000278 94 0D            [12] 1659 	subb	a,#0x0D
+      00027A EC               [12] 1660 	mov	a,r4
+      00027B 64 80            [12] 1661 	xrl	a,#0x80
+      00027D 94 80            [12] 1662 	subb	a,#0x80
+      00027F 40 D7            [24] 1663 	jc	00123$
+                                   1664 ;	/home/user/contiki/core/dev/slip.c:179: return 0;
+      000281 90 00 00         [24] 1665 	mov	dptr,#0x0000
+      000284 02r03rFF         [24] 1666 	ljmp	00131$
+      000287                       1667 00107$:
+                                   1668 ;	/home/user/contiki/core/dev/slip.c:213: if(begin != pkt_end) {
+      000287 90r00r01         [24] 1669 	mov	dptr,#_begin
+      00028A E0               [24] 1670 	movx	a,@dptr
+      00028B FB               [12] 1671 	mov	r3,a
+      00028C A3               [24] 1672 	inc	dptr
+      00028D E0               [24] 1673 	movx	a,@dptr
+      00028E FC               [12] 1674 	mov	r4,a
+      00028F 90r00r73         [24] 1675 	mov	dptr,#_pkt_end
+      000292 E0               [24] 1676 	movx	a,@dptr
+      000293 FD               [12] 1677 	mov	r5,a
+      000294 A3               [24] 1678 	inc	dptr
+      000295 E0               [24] 1679 	movx	a,@dptr
+      000296 FA               [12] 1680 	mov	r2,a
+      000297 EB               [12] 1681 	mov	a,r3
+      000298 B5 05 07         [24] 1682 	cjne	a,ar5,00188$
+      00029B EC               [12] 1683 	mov	a,r4
+      00029C B5 02 03         [24] 1684 	cjne	a,ar2,00188$
+      00029F 02r03rFC         [24] 1685 	ljmp	00122$
+      0002A2                       1686 00188$:
+                                   1687 ;	/home/user/contiki/core/dev/slip.c:216: if(begin < pkt_end) {
+      0002A2 C3               [12] 1688 	clr	c
+      0002A3 EB               [12] 1689 	mov	a,r3
+      0002A4 9D               [12] 1690 	subb	a,r5
+      0002A5 EC               [12] 1691 	mov	a,r4
+      0002A6 9A               [12] 1692 	subb	a,r2
+      0002A7 50 63            [24] 1693 	jnc	00117$
+                                   1694 ;	/home/user/contiki/core/dev/slip.c:217: len = pkt_end - begin;
+      0002A9 ED               [12] 1695 	mov	a,r5
+      0002AA C3               [12] 1696 	clr	c
+      0002AB 9B               [12] 1697 	subb	a,r3
+      0002AC FF               [12] 1698 	mov	r7,a
+      0002AD EA               [12] 1699 	mov	a,r2
+      0002AE 9C               [12] 1700 	subb	a,r4
+      0002AF FE               [12] 1701 	mov	r6,a
+      0002B0 A8 81            [24] 1702 	mov	r0,sp
+      0002B2 18               [12] 1703 	dec	r0
+      0002B3 A6 07            [24] 1704 	mov	@r0,ar7
+      0002B5 08               [12] 1705 	inc	r0
+      0002B6 A6 06            [24] 1706 	mov	@r0,ar6
+                                   1707 ;	/home/user/contiki/core/dev/slip.c:218: if(len > blen) {
+      0002B8 A8 81            [24] 1708 	mov	r0,sp
+      0002BA 18               [12] 1709 	dec	r0
+      0002BB E5 81            [12] 1710 	mov	a,sp
+      0002BD 24 F8            [12] 1711 	add	a,#0xf8
+      0002BF F9               [12] 1712 	mov	r1,a
+      0002C0 C3               [12] 1713 	clr	c
+      0002C1 E7               [12] 1714 	mov	a,@r1
+      0002C2 96               [12] 1715 	subb	a,@r0
+      0002C3 09               [12] 1716 	inc	r1
+      0002C4 E7               [12] 1717 	mov	a,@r1
+      0002C5 08               [12] 1718 	inc	r0
+      0002C6 96               [12] 1719 	subb	a,@r0
+      0002C7 50 0A            [24] 1720 	jnc	00109$
+                                   1721 ;	/home/user/contiki/core/dev/slip.c:219: len = 0;
+      0002C9 A8 81            [24] 1722 	mov	r0,sp
+      0002CB 18               [12] 1723 	dec	r0
+      0002CC E4               [12] 1724 	clr	a
+      0002CD F6               [12] 1725 	mov	@r0,a
+      0002CE 08               [12] 1726 	inc	r0
+      0002CF F6               [12] 1727 	mov	@r0,a
+      0002D0 02r03rBC         [24] 1728 	ljmp	00118$
+      0002D3                       1729 00109$:
+                                   1730 ;	/home/user/contiki/core/dev/slip.c:221: memcpy(outbuf, &rxbuf[begin], len);
+      0002D3 EB               [12] 1731 	mov	a,r3
+      0002D4 24r05            [12] 1732 	add	a,#_rxbuf
+      0002D6 FD               [12] 1733 	mov	r5,a
+      0002D7 EC               [12] 1734 	mov	a,r4
+      0002D8 34s00            [12] 1735 	addc	a,#(_rxbuf >> 8)
+      0002DA FC               [12] 1736 	mov	r4,a
+      0002DB 7B 00            [12] 1737 	mov	r3,#0x00
+      0002DD E5 81            [12] 1738 	mov	a,sp
+      0002DF 24 FC            [12] 1739 	add	a,#0xfc
+      0002E1 F8               [12] 1740 	mov	r0,a
+      0002E2 86 02            [24] 1741 	mov	ar2,@r0
+      0002E4 08               [12] 1742 	inc	r0
+      0002E5 86 06            [24] 1743 	mov	ar6,@r0
+      0002E7 08               [12] 1744 	inc	r0
+      0002E8 86 07            [24] 1745 	mov	ar7,@r0
+      0002EA A8 81            [24] 1746 	mov	r0,sp
+      0002EC 18               [12] 1747 	dec	r0
+      0002ED E6               [12] 1748 	mov	a,@r0
+      0002EE C0 E0            [24] 1749 	push	acc
+      0002F0 08               [12] 1750 	inc	r0
+      0002F1 E6               [12] 1751 	mov	a,@r0
+      0002F2 C0 E0            [24] 1752 	push	acc
+      0002F4 C0 05            [24] 1753 	push	ar5
+      0002F6 C0 04            [24] 1754 	push	ar4
+      0002F8 C0 03            [24] 1755 	push	ar3
+      0002FA 8A 82            [24] 1756 	mov	dpl,r2
+      0002FC 8E 83            [24] 1757 	mov	dph,r6
+      0002FE 8F F0            [24] 1758 	mov	b,r7
+      000300 12r00r00         [24] 1759 	lcall	_memcpy
+      000303 E5 81            [12] 1760 	mov	a,sp
+      000305 24 FB            [12] 1761 	add	a,#0xfb
+      000307 F5 81            [12] 1762 	mov	sp,a
+      000309 02r03rBC         [24] 1763 	ljmp	00118$
+      00030C                       1764 00117$:
+                                   1765 ;	/home/user/contiki/core/dev/slip.c:224: len = (RX_BUFSIZE - begin) + (pkt_end - 0);
+      00030C 74 6E            [12] 1766 	mov	a,#0x6E
+      00030E C3               [12] 1767 	clr	c
+      00030F 9B               [12] 1768 	subb	a,r3
+      000310 FE               [12] 1769 	mov	r6,a
+      000311 E4               [12] 1770 	clr	a
+      000312 9C               [12] 1771 	subb	a,r4
+      000313 FF               [12] 1772 	mov	r7,a
+      000314 ED               [12] 1773 	mov	a,r5
+      000315 2E               [12] 1774 	add	a,r6
+      000316 FE               [12] 1775 	mov	r6,a
+      000317 EA               [12] 1776 	mov	a,r2
+      000318 3F               [12] 1777 	addc	a,r7
+      000319 FF               [12] 1778 	mov	r7,a
+      00031A A8 81            [24] 1779 	mov	r0,sp
+      00031C 18               [12] 1780 	dec	r0
+      00031D A6 06            [24] 1781 	mov	@r0,ar6
+      00031F 08               [12] 1782 	inc	r0
+      000320 A6 07            [24] 1783 	mov	@r0,ar7
+                                   1784 ;	/home/user/contiki/core/dev/slip.c:225: if(len > blen) {
+      000322 A8 81            [24] 1785 	mov	r0,sp
+      000324 18               [12] 1786 	dec	r0
+      000325 E5 81            [12] 1787 	mov	a,sp
+      000327 24 F8            [12] 1788 	add	a,#0xf8
+      000329 F9               [12] 1789 	mov	r1,a
+      00032A C3               [12] 1790 	clr	c
+      00032B E7               [12] 1791 	mov	a,@r1
+      00032C 96               [12] 1792 	subb	a,@r0
+      00032D 09               [12] 1793 	inc	r1
+      00032E E7               [12] 1794 	mov	a,@r1
+      00032F 08               [12] 1795 	inc	r0
+      000330 96               [12] 1796 	subb	a,@r0
+      000331 50 0A            [24] 1797 	jnc	00114$
+                                   1798 ;	/home/user/contiki/core/dev/slip.c:226: len = 0;
+      000333 A8 81            [24] 1799 	mov	r0,sp
+      000335 18               [12] 1800 	dec	r0
+      000336 E4               [12] 1801 	clr	a
+      000337 F6               [12] 1802 	mov	@r0,a
+      000338 08               [12] 1803 	inc	r0
+      000339 F6               [12] 1804 	mov	@r0,a
+      00033A 02r03rBC         [24] 1805 	ljmp	00118$
+      00033D                       1806 00114$:
+                                   1807 ;	/home/user/contiki/core/dev/slip.c:229: for(i = begin; i < RX_BUFSIZE; i++) {
+      00033D 8B 06            [24] 1808 	mov	ar6,r3
+      00033F 8C 07            [24] 1809 	mov	ar7,r4
+      000341 E5 81            [12] 1810 	mov	a,sp
+      000343 24 FC            [12] 1811 	add	a,#0xfc
+      000345 F8               [12] 1812 	mov	r0,a
+      000346 86 03            [24] 1813 	mov	ar3,@r0
+      000348 08               [12] 1814 	inc	r0
+      000349 86 04            [24] 1815 	mov	ar4,@r0
+      00034B 08               [12] 1816 	inc	r0
+      00034C 86 05            [24] 1817 	mov	ar5,@r0
+      00034E                       1818 00126$:
+      00034E C3               [12] 1819 	clr	c
+      00034F EE               [12] 1820 	mov	a,r6
+      000350 94 6E            [12] 1821 	subb	a,#0x6E
+      000352 EF               [12] 1822 	mov	a,r7
+      000353 94 00            [12] 1823 	subb	a,#0x00
+      000355 50 21            [24] 1824 	jnc	00111$
+                                   1825 ;	/home/user/contiki/core/dev/slip.c:230: *outbuf++ = rxbuf[i];
+      000357 EE               [12] 1826 	mov	a,r6
+      000358 24r05            [12] 1827 	add	a,#_rxbuf
+      00035A F5 82            [12] 1828 	mov	dpl,a
+      00035C EF               [12] 1829 	mov	a,r7
+      00035D 34s00            [12] 1830 	addc	a,#(_rxbuf >> 8)
+      00035F F5 83            [12] 1831 	mov	dph,a
+      000361 E0               [24] 1832 	movx	a,@dptr
+      000362 FA               [12] 1833 	mov	r2,a
+      000363 8B 82            [24] 1834 	mov	dpl,r3
+      000365 8C 83            [24] 1835 	mov	dph,r4
+      000367 8D F0            [24] 1836 	mov	b,r5
+      000369 12r00r00         [24] 1837 	lcall	__gptrput
+      00036C A3               [24] 1838 	inc	dptr
+      00036D AB 82            [24] 1839 	mov	r3,dpl
+      00036F AC 83            [24] 1840 	mov	r4,dph
+                                   1841 ;	/home/user/contiki/core/dev/slip.c:229: for(i = begin; i < RX_BUFSIZE; i++) {
+      000371 0E               [12] 1842 	inc	r6
+      000372 BE 00 D9         [24] 1843 	cjne	r6,#0x00,00126$
+      000375 0F               [12] 1844 	inc	r7
+      000376 80 D6            [24] 1845 	sjmp	00126$
+      000378                       1846 00111$:
+                                   1847 ;	/home/user/contiki/core/dev/slip.c:232: for(i = 0; i < pkt_end; i++) {
+      000378 8B 07            [24] 1848 	mov	ar7,r3
+      00037A 8C 06            [24] 1849 	mov	ar6,r4
+      00037C 7B 00            [12] 1850 	mov	r3,#0x00
+      00037E 7C 00            [12] 1851 	mov	r4,#0x00
+      000380                       1852 00129$:
+      000380 C0 07            [24] 1853 	push	ar7
+      000382 C0 06            [24] 1854 	push	ar6
+      000384 C0 05            [24] 1855 	push	ar5
+      000386 90r00r73         [24] 1856 	mov	dptr,#_pkt_end
+      000389 E0               [24] 1857 	movx	a,@dptr
+      00038A FA               [12] 1858 	mov	r2,a
+      00038B A3               [24] 1859 	inc	dptr
+      00038C E0               [24] 1860 	movx	a,@dptr
+      00038D FF               [12] 1861 	mov	r7,a
+      00038E C3               [12] 1862 	clr	c
+      00038F EB               [12] 1863 	mov	a,r3
+      000390 9A               [12] 1864 	subb	a,r2
+      000391 EC               [12] 1865 	mov	a,r4
+      000392 9F               [12] 1866 	subb	a,r7
+      000393 D0 05            [24] 1867 	pop	ar5
+      000395 D0 06            [24] 1868 	pop	ar6
+      000397 D0 07            [24] 1869 	pop	ar7
+      000399 50 21            [24] 1870 	jnc	00118$
+                                   1871 ;	/home/user/contiki/core/dev/slip.c:233: *outbuf++ = rxbuf[i];
+      00039B EB               [12] 1872 	mov	a,r3
+      00039C 24r05            [12] 1873 	add	a,#_rxbuf
+      00039E F5 82            [12] 1874 	mov	dpl,a
+      0003A0 EC               [12] 1875 	mov	a,r4
+      0003A1 34s00            [12] 1876 	addc	a,#(_rxbuf >> 8)
+      0003A3 F5 83            [12] 1877 	mov	dph,a
+      0003A5 E0               [24] 1878 	movx	a,@dptr
+      0003A6 FA               [12] 1879 	mov	r2,a
+      0003A7 8F 82            [24] 1880 	mov	dpl,r7
+      0003A9 8E 83            [24] 1881 	mov	dph,r6
+      0003AB 8D F0            [24] 1882 	mov	b,r5
+      0003AD 12r00r00         [24] 1883 	lcall	__gptrput
+      0003B0 A3               [24] 1884 	inc	dptr
+      0003B1 AF 82            [24] 1885 	mov	r7,dpl
+      0003B3 AE 83            [24] 1886 	mov	r6,dph
+                                   1887 ;	/home/user/contiki/core/dev/slip.c:232: for(i = 0; i < pkt_end; i++) {
+      0003B5 0B               [12] 1888 	inc	r3
+      0003B6 BB 00 C7         [24] 1889 	cjne	r3,#0x00,00129$
+      0003B9 0C               [12] 1890 	inc	r4
+      0003BA 80 C4            [24] 1891 	sjmp	00129$
+      0003BC                       1892 00118$:
+                                   1893 ;	/home/user/contiki/core/dev/slip.c:239: begin = pkt_end;
+      0003BC 90r00r73         [24] 1894 	mov	dptr,#_pkt_end
+      0003BF E0               [24] 1895 	movx	a,@dptr
+      0003C0 FE               [12] 1896 	mov	r6,a
+      0003C1 A3               [24] 1897 	inc	dptr
+      0003C2 E0               [24] 1898 	movx	a,@dptr
+      0003C3 FF               [12] 1899 	mov	r7,a
+      0003C4 90r00r01         [24] 1900 	mov	dptr,#_begin
+      0003C7 EE               [12] 1901 	mov	a,r6
+      0003C8 F0               [24] 1902 	movx	@dptr,a
+      0003C9 EF               [12] 1903 	mov	a,r7
+      0003CA A3               [24] 1904 	inc	dptr
+      0003CB F0               [24] 1905 	movx	@dptr,a
+                                   1906 ;	/home/user/contiki/core/dev/slip.c:240: if(state == STATE_TWOPACKETS) {
+      0003CC 90r00r09         [24] 1907 	mov	dptr,#_state
+      0003CF E0               [24] 1908 	movx	a,@dptr
+      0003D0 FF               [12] 1909 	mov	r7,a
+      0003D1 70 1F            [24] 1910 	jnz	00120$
+                                   1911 ;	/home/user/contiki/core/dev/slip.c:241: pkt_end = end;
+      0003D3 90r00r03         [24] 1912 	mov	dptr,#_end
+      0003D6 E0               [24] 1913 	movx	a,@dptr
+      0003D7 FE               [12] 1914 	mov	r6,a
+      0003D8 A3               [24] 1915 	inc	dptr
+      0003D9 E0               [24] 1916 	movx	a,@dptr
+      0003DA FF               [12] 1917 	mov	r7,a
+      0003DB 90r00r73         [24] 1918 	mov	dptr,#_pkt_end
+      0003DE EE               [12] 1919 	mov	a,r6
+      0003DF F0               [24] 1920 	movx	@dptr,a
+      0003E0 EF               [12] 1921 	mov	a,r7
+      0003E1 A3               [24] 1922 	inc	dptr
+      0003E2 F0               [24] 1923 	movx	@dptr,a
+                                   1924 ;	/home/user/contiki/core/dev/slip.c:242: state = STATE_OK;		/* Assume no bytes where lost! */
+      0003E3 90r00r09         [24] 1925 	mov	dptr,#_state
+      0003E6 74 01            [12] 1926 	mov	a,#0x01
+      0003E8 F0               [24] 1927 	movx	@dptr,a
+                                   1928 ;	/home/user/contiki/core/dev/slip.c:245: process_interrupt(&slip_process);          
+      0003E9 90r00r00         [24] 1929 	mov	dptr,#_slip_process
+      0003EC 75 F0 00         [24] 1930 	mov	b,#0x00
+      0003EF 12r00r00         [24] 1931 	lcall	_process_interrupt
+      0003F2                       1932 00120$:
+                                   1933 ;	/home/user/contiki/core/dev/slip.c:247: return len;
+      0003F2 A8 81            [24] 1934 	mov	r0,sp
+      0003F4 18               [12] 1935 	dec	r0
+      0003F5 86 82            [24] 1936 	mov	dpl,@r0
+      0003F7 08               [12] 1937 	inc	r0
+      0003F8 86 83            [24] 1938 	mov	dph,@r0
+      0003FA 80 03            [24] 1939 	sjmp	00131$
+      0003FC                       1940 00122$:
+                                   1941 ;	/home/user/contiki/core/dev/slip.c:250: return 0;
+      0003FC 90 00 00         [24] 1942 	mov	dptr,#0x0000
+      0003FF                       1943 00131$:
+      0003FF E5 81            [12] 1944 	mov	a,sp
+      000401 24 FB            [12] 1945 	add	a,#0xFB
+      000403 F5 81            [12] 1946 	mov	sp,a
+      000405 22               [24] 1947 	ret
+                                   1948 ;------------------------------------------------------------
+                                   1949 ;Allocation info for local variables in function 'process_thread_slip_process'
+                                   1950 ;------------------------------------------------------------
+                                   1951 ;ev                        Allocated to stack - sp -10
+                                   1952 ;data                      Allocated to stack - sp -13
+                                   1953 ;process_pt                Allocated to registers r5 r6 r7 
+                                   1954 ;PT_YIELD_FLAG             Allocated to registers r4 
+                                   1955 ;buf                       Allocated to stack - sp -7
+                                   1956 ;nid                       Allocated to registers r3 r4 
+                                   1957 ;ip_id                     Allocated with name '_process_thread_slip_process_ip_id_6_186'
+                                   1958 ;------------------------------------------------------------
+                                   1959 ;	/home/user/contiki/core/dev/slip.c:253: PROCESS_THREAD(slip_process, ev, data)
+                                   1960 ;	-----------------------------------------
+                                   1961 ;	 function process_thread_slip_process
+                                   1962 ;	-----------------------------------------
+      000406                       1963 _process_thread_slip_process:
+      000406 E5 81            [12] 1964 	mov	a,sp
+      000408 24 08            [12] 1965 	add	a,#0x08
+      00040A F5 81            [12] 1966 	mov	sp,a
+                                   1967 ;	/home/user/contiki/core/dev/slip.c:255: PROCESS_BEGIN();
+      00040C AD 82            [24] 1968 	mov	r5,dpl
+      00040E AE 83            [24] 1969 	mov	r6,dph
+      000410 AF F0            [24] 1970 	mov	r7,b
+      000412 7C 01            [12] 1971 	mov	r4,#0x01
+      000414 12r00r00         [24] 1972 	lcall	__gptrget
+      000417 FA               [12] 1973 	mov	r2,a
+      000418 A3               [24] 1974 	inc	dptr
+      000419 12r00r00         [24] 1975 	lcall	__gptrget
+      00041C FB               [12] 1976 	mov	r3,a
+      00041D BA 00 05         [24] 1977 	cjne	r2,#0x00,00174$
+      000420 BB 00 02         [24] 1978 	cjne	r3,#0x00,00174$
+      000423 80 0B            [24] 1979 	sjmp	00101$
+      000425                       1980 00174$:
+      000425 BA 04 05         [24] 1981 	cjne	r2,#0x04,00175$
+      000428 BB 01 02         [24] 1982 	cjne	r3,#0x01,00175$
+      00042B 80 25            [24] 1983 	sjmp	00102$
+      00042D                       1984 00175$:
+      00042D 02r07r4B         [24] 1985 	ljmp	00129$
+      000430                       1986 00101$:
+                                   1987 ;	/home/user/contiki/core/dev/slip.c:257: rxbuf_init();
+      000430 C0 07            [24] 1988 	push	ar7
+      000432 C0 06            [24] 1989 	push	ar6
+      000434 C0 05            [24] 1990 	push	ar5
+      000436 12r01r85         [24] 1991 	lcall	_rxbuf_init
+      000439 D0 05            [24] 1992 	pop	ar5
+      00043B D0 06            [24] 1993 	pop	ar6
+      00043D D0 07            [24] 1994 	pop	ar7
+                                   1995 ;	/home/user/contiki/core/dev/slip.c:259: while(1) {
+      00043F                       1996 00127$:
+                                   1997 ;	/home/user/contiki/core/dev/slip.c:260: PROCESS_YIELD_UNTIL(ev == PROCESS_EVENT_INTR);
+      00043F 7C 00            [12] 1998 	mov	r4,#0x00
+      000441 8D 82            [24] 1999 	mov	dpl,r5
+      000443 8E 83            [24] 2000 	mov	dph,r6
+      000445 8F F0            [24] 2001 	mov	b,r7
+      000447 74 04            [12] 2002 	mov	a,#0x04
+      000449 12r00r00         [24] 2003 	lcall	__gptrput
+      00044C A3               [24] 2004 	inc	dptr
+      00044D 74 01            [12] 2005 	mov	a,#0x01
+      00044F 12r00r00         [24] 2006 	lcall	__gptrput
+      000452                       2007 00102$:
+      000452 EC               [12] 2008 	mov	a,r4
+      000453 60 0A            [24] 2009 	jz	00103$
+      000455 E5 81            [12] 2010 	mov	a,sp
+      000457 24 F6            [12] 2011 	add	a,#0xf6
+      000459 F8               [12] 2012 	mov	r0,a
+      00045A B6 F5 02         [24] 2013 	cjne	@r0,#0xF5,00177$
+      00045D 80 06            [24] 2014 	sjmp	00107$
+      00045F                       2015 00177$:
+      00045F                       2016 00103$:
+      00045F 75 82 01         [24] 2017 	mov	dpl,#0x01
+      000462 02r07r5D         [24] 2018 	ljmp	00130$
+      000465                       2019 00107$:
+                                   2020 ;	/home/user/contiki/core/dev/slip.c:262: slip_active = 1;
+      000465 90r00r00         [24] 2021 	mov	dptr,#_slip_active
+      000468 74 01            [12] 2022 	mov	a,#0x01
+      00046A F0               [24] 2023 	movx	@dptr,a
+                                   2024 ;	/home/user/contiki/core/dev/slip.c:265: uip_len = slip_intr_handler(&uip_buf[UIP_LLH_LEN],
+      00046B C0 07            [24] 2025 	push	ar7
+      00046D C0 06            [24] 2026 	push	ar6
+      00046F C0 05            [24] 2027 	push	ar5
+      000471 74 5E            [12] 2028 	mov	a,#0x5E
+      000473 C0 E0            [24] 2029 	push	acc
+      000475 E4               [12] 2030 	clr	a
+      000476 C0 E0            [24] 2031 	push	acc
+      000478 90r00r0E         [24] 2032 	mov	dptr,#(_uip_aligned_buf + 0x000e)
+      00047B 75 F0 00         [24] 2033 	mov	b,#0x00
+      00047E 12r01rA4         [24] 2034 	lcall	_slip_intr_handler
+      000481 AB 82            [24] 2035 	mov	r3,dpl
+      000483 AC 83            [24] 2036 	mov	r4,dph
+      000485 15 81            [12] 2037 	dec	sp
+      000487 15 81            [12] 2038 	dec	sp
+      000489 D0 05            [24] 2039 	pop	ar5
+      00048B D0 06            [24] 2040 	pop	ar6
+      00048D D0 07            [24] 2041 	pop	ar7
+      00048F 90r00r00         [24] 2042 	mov	dptr,#_uip_len
+      000492 EB               [12] 2043 	mov	a,r3
+      000493 F0               [24] 2044 	movx	@dptr,a
+      000494 EC               [12] 2045 	mov	a,r4
+      000495 A3               [24] 2046 	inc	dptr
+      000496 F0               [24] 2047 	movx	@dptr,a
+                                   2048 ;	/home/user/contiki/core/dev/slip.c:268: if(uip_len == 4 && strncmp((char*)&uip_buf[UIP_LLH_LEN], "?IPA", 4) == 0) {
+      000497 BB 04 05         [24] 2049 	cjne	r3,#0x04,00178$
+      00049A BC 00 02         [24] 2050 	cjne	r4,#0x00,00178$
+      00049D 80 03            [24] 2051 	sjmp	00179$
+      00049F                       2052 00178$:
+      00049F 02r05rB1         [24] 2053 	ljmp	00123$
+      0004A2                       2054 00179$:
+      0004A2 7Br0E            [12] 2055 	mov	r3,#(_uip_aligned_buf + 0x000e)
+      0004A4 7Cs00            [12] 2056 	mov	r4,#((_uip_aligned_buf + 0x000e) >> 8)
+      0004A6 7A 00            [12] 2057 	mov	r2,#0x00
+      0004A8 C0 07            [24] 2058 	push	ar7
+      0004AA C0 06            [24] 2059 	push	ar6
+      0004AC C0 05            [24] 2060 	push	ar5
+      0004AE 74 04            [12] 2061 	mov	a,#0x04
+      0004B0 C0 E0            [24] 2062 	push	acc
+      0004B2 E4               [12] 2063 	clr	a
+      0004B3 C0 E0            [24] 2064 	push	acc
+      0004B5 74r15            [12] 2065 	mov	a,#__str_2
+      0004B7 C0 E0            [24] 2066 	push	acc
+      0004B9 74s00            [12] 2067 	mov	a,#(__str_2 >> 8)
+      0004BB C0 E0            [24] 2068 	push	acc
+      0004BD 74 80            [12] 2069 	mov	a,#0x80
+      0004BF C0 E0            [24] 2070 	push	acc
+      0004C1 8B 82            [24] 2071 	mov	dpl,r3
+      0004C3 8C 83            [24] 2072 	mov	dph,r4
+      0004C5 8A F0            [24] 2073 	mov	b,r2
+      0004C7 12r00r00         [24] 2074 	lcall	_strncmp
+      0004CA AB 82            [24] 2075 	mov	r3,dpl
+      0004CC AC 83            [24] 2076 	mov	r4,dph
+      0004CE E5 81            [12] 2077 	mov	a,sp
+      0004D0 24 FB            [12] 2078 	add	a,#0xfb
+      0004D2 F5 81            [12] 2079 	mov	sp,a
+      0004D4 D0 05            [24] 2080 	pop	ar5
+      0004D6 D0 06            [24] 2081 	pop	ar6
+      0004D8 D0 07            [24] 2082 	pop	ar7
+      0004DA EB               [12] 2083 	mov	a,r3
+      0004DB 4C               [12] 2084 	orl	a,r4
+      0004DC 60 03            [24] 2085 	jz	00180$
+      0004DE 02r05rB1         [24] 2086 	ljmp	00123$
+      0004E1                       2087 00180$:
+                                   2088 ;	/home/user/contiki/core/dev/slip.c:270: memcpy(&buf[0], "=IPA", 4);
+      0004E1 C0 05            [24] 2089 	push	ar5
+      0004E3 C0 06            [24] 2090 	push	ar6
+      0004E5 C0 07            [24] 2091 	push	ar7
+      0004E7 E5 81            [12] 2092 	mov	a,sp
+      0004E9 24 F6            [12] 2093 	add	a,#0xF6
+      0004EB FC               [12] 2094 	mov	r4,a
+      0004EC FA               [12] 2095 	mov	r2,a
+      0004ED 7B 00            [12] 2096 	mov	r3,#0x00
+      0004EF 7F 40            [12] 2097 	mov	r7,#0x40
+      0004F1 C0 07            [24] 2098 	push	ar7
+      0004F3 C0 06            [24] 2099 	push	ar6
+      0004F5 C0 05            [24] 2100 	push	ar5
+      0004F7 C0 04            [24] 2101 	push	ar4
+      0004F9 74 04            [12] 2102 	mov	a,#0x04
+      0004FB C0 E0            [24] 2103 	push	acc
+      0004FD E4               [12] 2104 	clr	a
+      0004FE C0 E0            [24] 2105 	push	acc
+      000500 74r1A            [12] 2106 	mov	a,#__str_3
+      000502 C0 E0            [24] 2107 	push	acc
+      000504 74s00            [12] 2108 	mov	a,#(__str_3 >> 8)
+      000506 C0 E0            [24] 2109 	push	acc
+      000508 74 80            [12] 2110 	mov	a,#0x80
+      00050A C0 E0            [24] 2111 	push	acc
+      00050C 8A 82            [24] 2112 	mov	dpl,r2
+      00050E 8B 83            [24] 2113 	mov	dph,r3
+      000510 8F F0            [24] 2114 	mov	b,r7
+      000512 12r00r00         [24] 2115 	lcall	_memcpy
+      000515 E5 81            [12] 2116 	mov	a,sp
+      000517 24 FB            [12] 2117 	add	a,#0xfb
+      000519 F5 81            [12] 2118 	mov	sp,a
+      00051B D0 04            [24] 2119 	pop	ar4
+      00051D D0 05            [24] 2120 	pop	ar5
+      00051F D0 06            [24] 2121 	pop	ar6
+      000521 D0 07            [24] 2122 	pop	ar7
+                                   2123 ;	/home/user/contiki/core/dev/slip.c:271: memcpy(&buf[4], &uip_hostaddr, 4);
+      000523 74 04            [12] 2124 	mov	a,#0x04
+      000525 2C               [12] 2125 	add	a,r4
+      000526 FF               [12] 2126 	mov	r7,a
+      000527 7E 00            [12] 2127 	mov	r6,#0x00
+      000529 7D 40            [12] 2128 	mov	r5,#0x40
+      00052B C0 07            [24] 2129 	push	ar7
+      00052D C0 06            [24] 2130 	push	ar6
+      00052F C0 05            [24] 2131 	push	ar5
+      000531 C0 04            [24] 2132 	push	ar4
+      000533 74 04            [12] 2133 	mov	a,#0x04
+      000535 C0 E0            [24] 2134 	push	acc
+      000537 E4               [12] 2135 	clr	a
+      000538 C0 E0            [24] 2136 	push	acc
+      00053A 74r00            [12] 2137 	mov	a,#_uip_hostaddr
+      00053C C0 E0            [24] 2138 	push	acc
+      00053E 74s00            [12] 2139 	mov	a,#(_uip_hostaddr >> 8)
+      000540 C0 E0            [24] 2140 	push	acc
+      000542 E4               [12] 2141 	clr	a
+      000543 C0 E0            [24] 2142 	push	acc
+      000545 8F 82            [24] 2143 	mov	dpl,r7
+      000547 8E 83            [24] 2144 	mov	dph,r6
+      000549 8D F0            [24] 2145 	mov	b,r5
+      00054B 12r00r00         [24] 2146 	lcall	_memcpy
+      00054E E5 81            [12] 2147 	mov	a,sp
+      000550 24 FB            [12] 2148 	add	a,#0xfb
+      000552 F5 81            [12] 2149 	mov	sp,a
+      000554 D0 04            [24] 2150 	pop	ar4
+      000556 D0 05            [24] 2151 	pop	ar5
+      000558 D0 06            [24] 2152 	pop	ar6
+      00055A D0 07            [24] 2153 	pop	ar7
+                                   2154 ;	/home/user/contiki/core/dev/slip.c:272: if(input_callback) {
+      00055C 90r00r0A         [24] 2155 	mov	dptr,#_input_callback
+      00055F E0               [24] 2156 	movx	a,@dptr
+      000560 FE               [12] 2157 	mov	r6,a
+      000561 A3               [24] 2158 	inc	dptr
+      000562 E0               [24] 2159 	movx	a,@dptr
+      000563 4E               [12] 2160 	orl	a,r6
+      000564 D0 07            [24] 2161 	pop	ar7
+      000566 D0 06            [24] 2162 	pop	ar6
+      000568 D0 05            [24] 2163 	pop	ar5
+      00056A 60 1E            [24] 2164 	jz	00110$
+                                   2165 ;	/home/user/contiki/core/dev/slip.c:273: input_callback();
+      00056C C0 07            [24] 2166 	push	ar7
+      00056E C0 06            [24] 2167 	push	ar6
+      000570 C0 05            [24] 2168 	push	ar5
+      000572 C0 04            [24] 2169 	push	ar4
+      000574 90r00r0A         [24] 2170 	mov	dptr,#_input_callback
+      000577 E0               [24] 2171 	movx	a,@dptr
+      000578 F8               [12] 2172 	mov	r0,a
+      000579 A3               [24] 2173 	inc	dptr
+      00057A E0               [24] 2174 	movx	a,@dptr
+      00057B F5 83            [12] 2175 	mov	dph,a
+      00057D 88 82            [24] 2176 	mov	dpl,r0
+      00057F 12r00r00         [24] 2177 	lcall	__sdcc_call_dptr
+      000582 D0 04            [24] 2178 	pop	ar4
+      000584 D0 05            [24] 2179 	pop	ar5
+      000586 D0 06            [24] 2180 	pop	ar6
+      000588 D0 07            [24] 2181 	pop	ar7
+      00058A                       2182 00110$:
+                                   2183 ;	/home/user/contiki/core/dev/slip.c:275: slip_write(buf, 8);
+      00058A 7B 00            [12] 2184 	mov	r3,#0x00
+      00058C 7A 40            [12] 2185 	mov	r2,#0x40
+      00058E C0 07            [24] 2186 	push	ar7
+      000590 C0 06            [24] 2187 	push	ar6
+      000592 C0 05            [24] 2188 	push	ar5
+      000594 74 08            [12] 2189 	mov	a,#0x08
+      000596 C0 E0            [24] 2190 	push	acc
+      000598 E4               [12] 2191 	clr	a
+      000599 C0 E0            [24] 2192 	push	acc
+      00059B 8C 82            [24] 2193 	mov	dpl,r4
+      00059D 8B 83            [24] 2194 	mov	dph,r3
+      00059F 8A F0            [24] 2195 	mov	b,r2
+      0005A1 12r00rCC         [24] 2196 	lcall	_slip_write
+      0005A4 15 81            [12] 2197 	dec	sp
+      0005A6 15 81            [12] 2198 	dec	sp
+      0005A8 D0 05            [24] 2199 	pop	ar5
+      0005AA D0 06            [24] 2200 	pop	ar6
+      0005AC D0 07            [24] 2201 	pop	ar7
+      0005AE 02r04r3F         [24] 2202 	ljmp	00127$
+      0005B1                       2203 00123$:
+                                   2204 ;	/home/user/contiki/core/dev/slip.c:276: } else if(uip_len > 0
+      0005B1 90r00r00         [24] 2205 	mov	dptr,#_uip_len
+      0005B4 E0               [24] 2206 	movx	a,@dptr
+      0005B5 FB               [12] 2207 	mov	r3,a
+      0005B6 A3               [24] 2208 	inc	dptr
+      0005B7 E0               [24] 2209 	movx	a,@dptr
+      0005B8 FC               [12] 2210 	mov	r4,a
+      0005B9 4B               [12] 2211 	orl	a,r3
+      0005BA 70 03            [24] 2212 	jnz	00182$
+      0005BC 02r07r40         [24] 2213 	ljmp	00118$
+      0005BF                       2214 00182$:
+                                   2215 ;	/home/user/contiki/core/dev/slip.c:277: && uip_len == (((uint16_t)(BUF->len[0]) << 8) + BUF->len[1])
+      0005BF C0 05            [24] 2216 	push	ar5
+      0005C1 C0 06            [24] 2217 	push	ar6
+      0005C3 C0 07            [24] 2218 	push	ar7
+      0005C5 7Ar0E            [12] 2219 	mov	r2,#(_uip_aligned_buf + 0x000e)
+      0005C7 7Fs00            [12] 2220 	mov	r7,#((_uip_aligned_buf + 0x000e) >> 8)
+      0005C9 8A 82            [24] 2221 	mov	dpl,r2
+      0005CB 8F 83            [24] 2222 	mov	dph,r7
+      0005CD A3               [24] 2223 	inc	dptr
+      0005CE A3               [24] 2224 	inc	dptr
+      0005CF E0               [24] 2225 	movx	a,@dptr
+      0005D0 FE               [12] 2226 	mov	r6,a
+      0005D1 7F 00            [12] 2227 	mov	r7,#0x00
+      0005D3 7Ar0E            [12] 2228 	mov	r2,#(_uip_aligned_buf + 0x000e)
+      0005D5 7Ds00            [12] 2229 	mov	r5,#((_uip_aligned_buf + 0x000e) >> 8)
+      0005D7 8A 82            [24] 2230 	mov	dpl,r2
+      0005D9 8D 83            [24] 2231 	mov	dph,r5
+      0005DB A3               [24] 2232 	inc	dptr
+      0005DC A3               [24] 2233 	inc	dptr
+      0005DD A3               [24] 2234 	inc	dptr
+      0005DE E0               [24] 2235 	movx	a,@dptr
+      0005DF FD               [12] 2236 	mov	r5,a
+      0005E0 7A 00            [12] 2237 	mov	r2,#0x00
+      0005E2 2F               [12] 2238 	add	a,r7
+      0005E3 FF               [12] 2239 	mov	r7,a
+      0005E4 EA               [12] 2240 	mov	a,r2
+      0005E5 3E               [12] 2241 	addc	a,r6
+      0005E6 FE               [12] 2242 	mov	r6,a
+      0005E7 EB               [12] 2243 	mov	a,r3
+      0005E8 B5 07 06         [24] 2244 	cjne	a,ar7,00183$
+      0005EB EC               [12] 2245 	mov	a,r4
+      0005EC B5 06 02         [24] 2246 	cjne	a,ar6,00183$
+      0005EF 80 09            [24] 2247 	sjmp	00184$
+      0005F1                       2248 00183$:
+      0005F1 D0 07            [24] 2249 	pop	ar7
+      0005F3 D0 06            [24] 2250 	pop	ar6
+      0005F5 D0 05            [24] 2251 	pop	ar5
+      0005F7 02r07r40         [24] 2252 	ljmp	00118$
+      0005FA                       2253 00184$:
+      0005FA D0 07            [24] 2254 	pop	ar7
+      0005FC D0 06            [24] 2255 	pop	ar6
+      0005FE D0 05            [24] 2256 	pop	ar5
+                                   2257 ;	/home/user/contiki/core/dev/slip.c:278: && uip_ipchksum() == 0xffff) {
+      000600 C0 07            [24] 2258 	push	ar7
+      000602 C0 06            [24] 2259 	push	ar6
+      000604 C0 05            [24] 2260 	push	ar5
+      000606 12r00r00         [24] 2261 	lcall	_uip_ipchksum
+      000609 AB 82            [24] 2262 	mov	r3,dpl
+      00060B AC 83            [24] 2263 	mov	r4,dph
+      00060D D0 05            [24] 2264 	pop	ar5
+      00060F D0 06            [24] 2265 	pop	ar6
+      000611 D0 07            [24] 2266 	pop	ar7
+      000613 BB FF 05         [24] 2267 	cjne	r3,#0xFF,00185$
+      000616 BC FF 02         [24] 2268 	cjne	r4,#0xFF,00185$
+      000619 80 03            [24] 2269 	sjmp	00186$
+      00061B                       2270 00185$:
+      00061B 02r07r40         [24] 2271 	ljmp	00118$
+      00061E                       2272 00186$:
+                                   2273 ;	/home/user/contiki/core/dev/slip.c:280: if(BUF->ipid[0] == 0 && BUF->ipid[1] == 0 && BUF->ipoffset[0] & IP_DF) {
+      00061E 7Br0E            [12] 2274 	mov	r3,#(_uip_aligned_buf + 0x000e)
+      000620 7Cs00            [12] 2275 	mov	r4,#((_uip_aligned_buf + 0x000e) >> 8)
+      000622 74 04            [12] 2276 	mov	a,#0x04
+      000624 2B               [12] 2277 	add	a,r3
+      000625 FB               [12] 2278 	mov	r3,a
+      000626 E4               [12] 2279 	clr	a
+      000627 3C               [12] 2280 	addc	a,r4
+      000628 FC               [12] 2281 	mov	r4,a
+      000629 8B 82            [24] 2282 	mov	dpl,r3
+      00062B 8C 83            [24] 2283 	mov	dph,r4
+      00062D E0               [24] 2284 	movx	a,@dptr
+      00062E 60 03            [24] 2285 	jz	00187$
+      000630 02r07r2E         [24] 2286 	ljmp	00114$
+      000633                       2287 00187$:
+      000633 7Br0E            [12] 2288 	mov	r3,#(_uip_aligned_buf + 0x000e)
+      000635 7Cs00            [12] 2289 	mov	r4,#((_uip_aligned_buf + 0x000e) >> 8)
+      000637 74 05            [12] 2290 	mov	a,#0x05
+      000639 2B               [12] 2291 	add	a,r3
+      00063A FB               [12] 2292 	mov	r3,a
+      00063B E4               [12] 2293 	clr	a
+      00063C 3C               [12] 2294 	addc	a,r4
+      00063D FC               [12] 2295 	mov	r4,a
+      00063E 8B 82            [24] 2296 	mov	dpl,r3
+      000640 8C 83            [24] 2297 	mov	dph,r4
+      000642 E0               [24] 2298 	movx	a,@dptr
+      000643 60 03            [24] 2299 	jz	00188$
+      000645 02r07r2E         [24] 2300 	ljmp	00114$
+      000648                       2301 00188$:
+      000648 7Br0E            [12] 2302 	mov	r3,#(_uip_aligned_buf + 0x000e)
+      00064A 7Cs00            [12] 2303 	mov	r4,#((_uip_aligned_buf + 0x000e) >> 8)
+      00064C 74 06            [12] 2304 	mov	a,#0x06
+      00064E 2B               [12] 2305 	add	a,r3
+      00064F F5 82            [12] 2306 	mov	dpl,a
+      000651 E4               [12] 2307 	clr	a
+      000652 3C               [12] 2308 	addc	a,r4
+      000653 F5 83            [12] 2309 	mov	dph,a
+      000655 E0               [24] 2310 	movx	a,@dptr
+      000656 FC               [12] 2311 	mov	r4,a
+      000657 20 E6 03         [24] 2312 	jb	acc.6,00189$
+      00065A 02r07r2E         [24] 2313 	ljmp	00114$
+      00065D                       2314 00189$:
+                                   2315 ;	/home/user/contiki/core/dev/slip.c:282: uint16_t nid = ip_id++;
+      00065D C0 05            [24] 2316 	push	ar5
+      00065F C0 06            [24] 2317 	push	ar6
+      000661 C0 07            [24] 2318 	push	ar7
+      000663 90r00r75         [24] 2319 	mov	dptr,#_process_thread_slip_process_ip_id_6_186
+      000666 E0               [24] 2320 	movx	a,@dptr
+      000667 FB               [12] 2321 	mov	r3,a
+      000668 A3               [24] 2322 	inc	dptr
+      000669 E0               [24] 2323 	movx	a,@dptr
+      00066A FC               [12] 2324 	mov	r4,a
+      00066B 90r00r75         [24] 2325 	mov	dptr,#_process_thread_slip_process_ip_id_6_186
+      00066E 74 01            [12] 2326 	mov	a,#0x01
+      000670 2B               [12] 2327 	add	a,r3
+      000671 F0               [24] 2328 	movx	@dptr,a
+      000672 E4               [12] 2329 	clr	a
+      000673 3C               [12] 2330 	addc	a,r4
+      000674 A3               [24] 2331 	inc	dptr
+      000675 F0               [24] 2332 	movx	@dptr,a
+                                   2333 ;	/home/user/contiki/core/dev/slip.c:283: BUF->ipid[0] = nid >> 8;
+      000676 7Ar0E            [12] 2334 	mov	r2,#(_uip_aligned_buf + 0x000e)
+      000678 7Fs00            [12] 2335 	mov	r7,#((_uip_aligned_buf + 0x000e) >> 8)
+      00067A 74 04            [12] 2336 	mov	a,#0x04
+      00067C 2A               [12] 2337 	add	a,r2
+      00067D FA               [12] 2338 	mov	r2,a
+      00067E E4               [12] 2339 	clr	a
+      00067F 3F               [12] 2340 	addc	a,r7
+      000680 FF               [12] 2341 	mov	r7,a
+      000681 8C 06            [24] 2342 	mov	ar6,r4
+      000683 8A 82            [24] 2343 	mov	dpl,r2
+      000685 8F 83            [24] 2344 	mov	dph,r7
+      000687 EE               [12] 2345 	mov	a,r6
+      000688 F0               [24] 2346 	movx	@dptr,a
+                                   2347 ;	/home/user/contiki/core/dev/slip.c:284: BUF->ipid[1] = nid;
+      000689 7Er0E            [12] 2348 	mov	r6,#(_uip_aligned_buf + 0x000e)
+      00068B 7Fs00            [12] 2349 	mov	r7,#((_uip_aligned_buf + 0x000e) >> 8)
+      00068D 74 05            [12] 2350 	mov	a,#0x05
+      00068F 2E               [12] 2351 	add	a,r6
+      000690 FE               [12] 2352 	mov	r6,a
+      000691 E4               [12] 2353 	clr	a
+      000692 3F               [12] 2354 	addc	a,r7
+      000693 FF               [12] 2355 	mov	r7,a
+      000694 8B 05            [24] 2356 	mov	ar5,r3
+      000696 8E 82            [24] 2357 	mov	dpl,r6
+      000698 8F 83            [24] 2358 	mov	dph,r7
+      00069A ED               [12] 2359 	mov	a,r5
+      00069B F0               [24] 2360 	movx	@dptr,a
+                                   2361 ;	/home/user/contiki/core/dev/slip.c:285: nid = uip_htons(nid);
+      00069C 8B 82            [24] 2362 	mov	dpl,r3
+      00069E 8C 83            [24] 2363 	mov	dph,r4
+      0006A0 C0 05            [24] 2364 	push	ar5
+      0006A2 12r00r00         [24] 2365 	lcall	_uip_htons
+      0006A5 AE 82            [24] 2366 	mov	r6,dpl
+      0006A7 AF 83            [24] 2367 	mov	r7,dph
+      0006A9 D0 05            [24] 2368 	pop	ar5
+      0006AB 8E 03            [24] 2369 	mov	ar3,r6
+      0006AD 8F 04            [24] 2370 	mov	ar4,r7
+                                   2371 ;	/home/user/contiki/core/dev/slip.c:286: nid = ~nid;		/* negate */
+      0006AF EB               [12] 2372 	mov	a,r3
+      0006B0 F4               [12] 2373 	cpl	a
+      0006B1 FB               [12] 2374 	mov	r3,a
+      0006B2 EC               [12] 2375 	mov	a,r4
+      0006B3 F4               [12] 2376 	cpl	a
+      0006B4 FC               [12] 2377 	mov	r4,a
+                                   2378 ;	/home/user/contiki/core/dev/slip.c:287: BUF->ipchksum += nid;	/* add */
+      0006B5 7Er0E            [12] 2379 	mov	r6,#(_uip_aligned_buf + 0x000e)
+      0006B7 7Fs00            [12] 2380 	mov	r7,#((_uip_aligned_buf + 0x000e) >> 8)
+      0006B9 74 0A            [12] 2381 	mov	a,#0x0A
+      0006BB 2E               [12] 2382 	add	a,r6
+      0006BC FE               [12] 2383 	mov	r6,a
+      0006BD E4               [12] 2384 	clr	a
+      0006BE 3F               [12] 2385 	addc	a,r7
+      0006BF FF               [12] 2386 	mov	r7,a
+      0006C0 7Ar0E            [12] 2387 	mov	r2,#(_uip_aligned_buf + 0x000e)
+      0006C2 7Ds00            [12] 2388 	mov	r5,#((_uip_aligned_buf + 0x000e) >> 8)
+      0006C4 74 0A            [12] 2389 	mov	a,#0x0A
+      0006C6 2A               [12] 2390 	add	a,r2
+      0006C7 F5 82            [12] 2391 	mov	dpl,a
+      0006C9 E4               [12] 2392 	clr	a
+      0006CA 3D               [12] 2393 	addc	a,r5
+      0006CB F5 83            [12] 2394 	mov	dph,a
+      0006CD E0               [24] 2395 	movx	a,@dptr
+      0006CE FA               [12] 2396 	mov	r2,a
+      0006CF A3               [24] 2397 	inc	dptr
+      0006D0 E0               [24] 2398 	movx	a,@dptr
+      0006D1 FD               [12] 2399 	mov	r5,a
+      0006D2 EB               [12] 2400 	mov	a,r3
+      0006D3 2A               [12] 2401 	add	a,r2
+      0006D4 FA               [12] 2402 	mov	r2,a
+      0006D5 EC               [12] 2403 	mov	a,r4
+      0006D6 3D               [12] 2404 	addc	a,r5
+      0006D7 FD               [12] 2405 	mov	r5,a
+      0006D8 8E 82            [24] 2406 	mov	dpl,r6
+      0006DA 8F 83            [24] 2407 	mov	dph,r7
+      0006DC EA               [12] 2408 	mov	a,r2
+      0006DD F0               [24] 2409 	movx	@dptr,a
+      0006DE ED               [12] 2410 	mov	a,r5
+      0006DF A3               [24] 2411 	inc	dptr
+      0006E0 F0               [24] 2412 	movx	@dptr,a
+                                   2413 ;	/home/user/contiki/core/dev/slip.c:288: if(BUF->ipchksum < nid) { /* 1-complement overflow? */
+      0006E1 7Er0E            [12] 2414 	mov	r6,#(_uip_aligned_buf + 0x000e)
+      0006E3 7Fs00            [12] 2415 	mov	r7,#((_uip_aligned_buf + 0x000e) >> 8)
+      0006E5 74 0A            [12] 2416 	mov	a,#0x0A
+      0006E7 2E               [12] 2417 	add	a,r6
+      0006E8 F5 82            [12] 2418 	mov	dpl,a
+      0006EA E4               [12] 2419 	clr	a
+      0006EB 3F               [12] 2420 	addc	a,r7
+      0006EC F5 83            [12] 2421 	mov	dph,a
+      0006EE E0               [24] 2422 	movx	a,@dptr
+      0006EF FE               [12] 2423 	mov	r6,a
+      0006F0 A3               [24] 2424 	inc	dptr
+      0006F1 E0               [24] 2425 	movx	a,@dptr
+      0006F2 FF               [12] 2426 	mov	r7,a
+      0006F3 C3               [12] 2427 	clr	c
+      0006F4 EE               [12] 2428 	mov	a,r6
+      0006F5 9B               [12] 2429 	subb	a,r3
+      0006F6 EF               [12] 2430 	mov	a,r7
+      0006F7 9C               [12] 2431 	subb	a,r4
+      0006F8 D0 07            [24] 2432 	pop	ar7
+      0006FA D0 06            [24] 2433 	pop	ar6
+      0006FC D0 05            [24] 2434 	pop	ar5
+      0006FE 50 2E            [24] 2435 	jnc	00114$
+                                   2436 ;	/home/user/contiki/core/dev/slip.c:289: BUF->ipchksum++;
+      000700 C0 05            [24] 2437 	push	ar5
+      000702 C0 06            [24] 2438 	push	ar6
+      000704 C0 07            [24] 2439 	push	ar7
+      000706 7Br0E            [12] 2440 	mov	r3,#(_uip_aligned_buf + 0x000e)
+      000708 7Cs00            [12] 2441 	mov	r4,#((_uip_aligned_buf + 0x000e) >> 8)
+      00070A 74 0A            [12] 2442 	mov	a,#0x0A
+      00070C 2B               [12] 2443 	add	a,r3
+      00070D FB               [12] 2444 	mov	r3,a
+      00070E E4               [12] 2445 	clr	a
+      00070F 3C               [12] 2446 	addc	a,r4
+      000710 FC               [12] 2447 	mov	r4,a
+      000711 8B 82            [24] 2448 	mov	dpl,r3
+      000713 8C 83            [24] 2449 	mov	dph,r4
+      000715 E0               [24] 2450 	movx	a,@dptr
+      000716 FA               [12] 2451 	mov	r2,a
+      000717 A3               [24] 2452 	inc	dptr
+      000718 E0               [24] 2453 	movx	a,@dptr
+      000719 FF               [12] 2454 	mov	r7,a
+      00071A 0A               [12] 2455 	inc	r2
+      00071B BA 00 01         [24] 2456 	cjne	r2,#0x00,00191$
+      00071E 0F               [12] 2457 	inc	r7
+      00071F                       2458 00191$:
+      00071F 8B 82            [24] 2459 	mov	dpl,r3
+      000721 8C 83            [24] 2460 	mov	dph,r4
+      000723 EA               [12] 2461 	mov	a,r2
+      000724 F0               [24] 2462 	movx	@dptr,a
+      000725 EF               [12] 2463 	mov	a,r7
+      000726 A3               [24] 2464 	inc	dptr
+      000727 F0               [24] 2465 	movx	@dptr,a
+                                   2466 ;	/home/user/contiki/core/dev/slip.c:315: PROCESS_END();
+      000728 D0 07            [24] 2467 	pop	ar7
+      00072A D0 06            [24] 2468 	pop	ar6
+      00072C D0 05            [24] 2469 	pop	ar5
+                                   2470 ;	/home/user/contiki/core/dev/slip.c:289: BUF->ipchksum++;
+      00072E                       2471 00114$:
+                                   2472 ;	/home/user/contiki/core/dev/slip.c:295: tcpip_input();
+      00072E C0 07            [24] 2473 	push	ar7
+      000730 C0 06            [24] 2474 	push	ar6
+      000732 C0 05            [24] 2475 	push	ar5
+      000734 12r00r00         [24] 2476 	lcall	_tcpip_input
+      000737 D0 05            [24] 2477 	pop	ar5
+      000739 D0 06            [24] 2478 	pop	ar6
+      00073B D0 07            [24] 2479 	pop	ar7
+      00073D 02r04r3F         [24] 2480 	ljmp	00127$
+      000740                       2481 00118$:
+                                   2482 ;	/home/user/contiki/core/dev/slip.c:298: uip_len = 0;
+      000740 90r00r00         [24] 2483 	mov	dptr,#_uip_len
+      000743 E4               [12] 2484 	clr	a
+      000744 F0               [24] 2485 	movx	@dptr,a
+      000745 E4               [12] 2486 	clr	a
+      000746 A3               [24] 2487 	inc	dptr
+      000747 F0               [24] 2488 	movx	@dptr,a
+      000748 02r04r3F         [24] 2489 	ljmp	00127$
+                                   2490 ;	/home/user/contiki/core/dev/slip.c:315: PROCESS_END();
+      00074B                       2491 00129$:
+      00074B 8D 82            [24] 2492 	mov	dpl,r5
+      00074D 8E 83            [24] 2493 	mov	dph,r6
+      00074F 8F F0            [24] 2494 	mov	b,r7
+      000751 E4               [12] 2495 	clr	a
+      000752 12r00r00         [24] 2496 	lcall	__gptrput
+      000755 A3               [24] 2497 	inc	dptr
+      000756 E4               [12] 2498 	clr	a
+      000757 12r00r00         [24] 2499 	lcall	__gptrput
+      00075A 75 82 03         [24] 2500 	mov	dpl,#0x03
+      00075D                       2501 00130$:
+      00075D E5 81            [12] 2502 	mov	a,sp
+      00075F 24 F8            [12] 2503 	add	a,#0xF8
+      000761 F5 81            [12] 2504 	mov	sp,a
+      000763 22               [24] 2505 	ret
+                                   2506 ;------------------------------------------------------------
+                                   2507 ;Allocation info for local variables in function 'slip_input_byte'
+                                   2508 ;------------------------------------------------------------
+                                   2509 ;c                         Allocated to registers r7 
+                                   2510 ;next                      Allocated to registers r3 r4 
+                                   2511 ;sloc0                     Allocated to stack - sp -1
+                                   2512 ;------------------------------------------------------------
+                                   2513 ;	/home/user/contiki/core/dev/slip.c:319: slip_input_byte(unsigned char c)
+                                   2514 ;	-----------------------------------------
+                                   2515 ;	 function slip_input_byte
+                                   2516 ;	-----------------------------------------
+      000764                       2517 _slip_input_byte:
+      000764 05 81            [12] 2518 	inc	sp
+      000766 05 81            [12] 2519 	inc	sp
+      000768 AF 82            [24] 2520 	mov	r7,dpl
+                                   2521 ;	/home/user/contiki/core/dev/slip.c:321: switch(state) {
+      00076A 90r00r09         [24] 2522 	mov	dptr,#_state
+      00076D E0               [24] 2523 	movx	a,@dptr
+      00076E FE               [12] 2524 	mov  r6,a
+      00076F 24 FC            [12] 2525 	add	a,#0xff - 0x03
+      000771 50 03            [24] 2526 	jnc	00169$
+      000773 02r08r3E         [24] 2527 	ljmp	00123$
+      000776                       2528 00169$:
+      000776 EE               [12] 2529 	mov	a,r6
+      000777 2E               [12] 2530 	add	a,r6
+      000778 2E               [12] 2531 	add	a,r6
+      000779 90r07r7D         [24] 2532 	mov	dptr,#00170$
+      00077C 73               [24] 2533 	jmp	@a+dptr
+      00077D                       2534 00170$:
+      00077D 02r07r95         [24] 2535 	ljmp	00104$
+      000780 02r07rCE         [24] 2536 	ljmp	00112$
+      000783 02r07r9B         [24] 2537 	ljmp	00105$
+                                   2538 ;	/home/user/contiki/core/dev/slip.c:322: case STATE_RUBBISH:
+                                   2539 ;	/home/user/contiki/core/dev/slip.c:323: if(c == SLIP_END) {
+      000786 BF C0 06         [24] 2540 	cjne	r7,#0xC0,00103$
+                                   2541 ;	/home/user/contiki/core/dev/slip.c:324: state = STATE_OK;
+      000789 90r00r09         [24] 2542 	mov	dptr,#_state
+      00078C 74 01            [12] 2543 	mov	a,#0x01
+      00078E F0               [24] 2544 	movx	@dptr,a
+      00078F                       2545 00103$:
+                                   2546 ;	/home/user/contiki/core/dev/slip.c:326: return 0;
+      00078F 90 00 00         [24] 2547 	mov	dptr,#0x0000
+      000792 02r08rD9         [24] 2548 	ljmp	00131$
+                                   2549 ;	/home/user/contiki/core/dev/slip.c:328: case STATE_TWOPACKETS:       /* Two packets are already buffered! */
+      000795                       2550 00104$:
+                                   2551 ;	/home/user/contiki/core/dev/slip.c:329: return 0;
+      000795 90 00 00         [24] 2552 	mov	dptr,#0x0000
+      000798 02r08rD9         [24] 2553 	ljmp	00131$
+                                   2554 ;	/home/user/contiki/core/dev/slip.c:331: case STATE_ESC:
+      00079B                       2555 00105$:
+                                   2556 ;	/home/user/contiki/core/dev/slip.c:332: if(c == SLIP_ESC_END) {
+      00079B BF DC 04         [24] 2557 	cjne	r7,#0xDC,00110$
+                                   2558 ;	/home/user/contiki/core/dev/slip.c:333: c = SLIP_END;
+      00079E 7F C0            [12] 2559 	mov	r7,#0xC0
+      0007A0 80 23            [24] 2560 	sjmp	00111$
+      0007A2                       2561 00110$:
+                                   2562 ;	/home/user/contiki/core/dev/slip.c:334: } else if(c == SLIP_ESC_ESC) {
+      0007A2 BF DD 04         [24] 2563 	cjne	r7,#0xDD,00107$
+                                   2564 ;	/home/user/contiki/core/dev/slip.c:335: c = SLIP_ESC;
+      0007A5 7F DB            [12] 2565 	mov	r7,#0xDB
+      0007A7 80 1C            [24] 2566 	sjmp	00111$
+      0007A9                       2567 00107$:
+                                   2568 ;	/home/user/contiki/core/dev/slip.c:337: state = STATE_RUBBISH;
+      0007A9 90r00r09         [24] 2569 	mov	dptr,#_state
+      0007AC 74 03            [12] 2570 	mov	a,#0x03
+      0007AE F0               [24] 2571 	movx	@dptr,a
+                                   2572 ;	/home/user/contiki/core/dev/slip.c:339: end = pkt_end;		/* remove rubbish */
+      0007AF 90r00r73         [24] 2573 	mov	dptr,#_pkt_end
+      0007B2 E0               [24] 2574 	movx	a,@dptr
+      0007B3 FD               [12] 2575 	mov	r5,a
+      0007B4 A3               [24] 2576 	inc	dptr
+      0007B5 E0               [24] 2577 	movx	a,@dptr
+      0007B6 FE               [12] 2578 	mov	r6,a
+      0007B7 90r00r03         [24] 2579 	mov	dptr,#_end
+      0007BA ED               [12] 2580 	mov	a,r5
+      0007BB F0               [24] 2581 	movx	@dptr,a
+      0007BC EE               [12] 2582 	mov	a,r6
+      0007BD A3               [24] 2583 	inc	dptr
+      0007BE F0               [24] 2584 	movx	@dptr,a
+                                   2585 ;	/home/user/contiki/core/dev/slip.c:340: return 0;
+      0007BF 90 00 00         [24] 2586 	mov	dptr,#0x0000
+      0007C2 02r08rD9         [24] 2587 	ljmp	00131$
+      0007C5                       2588 00111$:
+                                   2589 ;	/home/user/contiki/core/dev/slip.c:342: state = STATE_OK;
+      0007C5 90r00r09         [24] 2590 	mov	dptr,#_state
+      0007C8 74 01            [12] 2591 	mov	a,#0x01
+      0007CA F0               [24] 2592 	movx	@dptr,a
+                                   2593 ;	/home/user/contiki/core/dev/slip.c:343: break;
+      0007CB 02r08r3E         [24] 2594 	ljmp	00123$
+                                   2595 ;	/home/user/contiki/core/dev/slip.c:345: case STATE_OK:
+      0007CE                       2596 00112$:
+                                   2597 ;	/home/user/contiki/core/dev/slip.c:346: if(c == SLIP_ESC) {
+      0007CE BF DB 0C         [24] 2598 	cjne	r7,#0xDB,00121$
+                                   2599 ;	/home/user/contiki/core/dev/slip.c:347: state = STATE_ESC;
+      0007D1 90r00r09         [24] 2600 	mov	dptr,#_state
+      0007D4 74 02            [12] 2601 	mov	a,#0x02
+      0007D6 F0               [24] 2602 	movx	@dptr,a
+                                   2603 ;	/home/user/contiki/core/dev/slip.c:348: return 0;
+      0007D7 90 00 00         [24] 2604 	mov	dptr,#0x0000
+      0007DA 02r08rD9         [24] 2605 	ljmp	00131$
+      0007DD                       2606 00121$:
+                                   2607 ;	/home/user/contiki/core/dev/slip.c:349: } else if(c == SLIP_END) {
+      0007DD BF C0 5E         [24] 2608 	cjne	r7,#0xC0,00123$
+                                   2609 ;	/home/user/contiki/core/dev/slip.c:355: if(end != pkt_end) {	/* Non zero length. */
+      0007E0 90r00r03         [24] 2610 	mov	dptr,#_end
+      0007E3 E0               [24] 2611 	movx	a,@dptr
+      0007E4 FD               [12] 2612 	mov	r5,a
+      0007E5 A3               [24] 2613 	inc	dptr
+      0007E6 E0               [24] 2614 	movx	a,@dptr
+      0007E7 FE               [12] 2615 	mov	r6,a
+      0007E8 90r00r73         [24] 2616 	mov	dptr,#_pkt_end
+      0007EB E0               [24] 2617 	movx	a,@dptr
+      0007EC FB               [12] 2618 	mov	r3,a
+      0007ED A3               [24] 2619 	inc	dptr
+      0007EE E0               [24] 2620 	movx	a,@dptr
+      0007EF FC               [12] 2621 	mov	r4,a
+      0007F0 ED               [12] 2622 	mov	a,r5
+      0007F1 B5 03 06         [24] 2623 	cjne	a,ar3,00181$
+      0007F4 EE               [12] 2624 	mov	a,r6
+      0007F5 B5 04 02         [24] 2625 	cjne	a,ar4,00181$
+      0007F8 80 3E            [24] 2626 	sjmp	00117$
+      0007FA                       2627 00181$:
+                                   2628 ;	/home/user/contiki/core/dev/slip.c:356: if(begin == pkt_end) {	/* None buffered. */
+      0007FA C0 05            [24] 2629 	push	ar5
+      0007FC C0 06            [24] 2630 	push	ar6
+      0007FE 90r00r01         [24] 2631 	mov	dptr,#_begin
+      000801 E0               [24] 2632 	movx	a,@dptr
+      000802 FA               [12] 2633 	mov	r2,a
+      000803 A3               [24] 2634 	inc	dptr
+      000804 E0               [24] 2635 	movx	a,@dptr
+      000805 FE               [12] 2636 	mov	r6,a
+      000806 EA               [12] 2637 	mov	a,r2
+      000807 B5 03 06         [24] 2638 	cjne	a,ar3,00182$
+      00080A EE               [12] 2639 	mov	a,r6
+      00080B B5 04 02         [24] 2640 	cjne	a,ar4,00182$
+      00080E 80 06            [24] 2641 	sjmp	00183$
+      000810                       2642 00182$:
+      000810 D0 06            [24] 2643 	pop	ar6
+      000812 D0 05            [24] 2644 	pop	ar5
+      000814 80 0E            [24] 2645 	sjmp	00114$
+      000816                       2646 00183$:
+      000816 D0 06            [24] 2647 	pop	ar6
+      000818 D0 05            [24] 2648 	pop	ar5
+                                   2649 ;	/home/user/contiki/core/dev/slip.c:357: pkt_end = end;
+      00081A 90r00r73         [24] 2650 	mov	dptr,#_pkt_end
+      00081D ED               [12] 2651 	mov	a,r5
+      00081E F0               [24] 2652 	movx	@dptr,a
+      00081F EE               [12] 2653 	mov	a,r6
+      000820 A3               [24] 2654 	inc	dptr
+      000821 F0               [24] 2655 	movx	@dptr,a
+      000822 80 05            [24] 2656 	sjmp	00115$
+      000824                       2657 00114$:
+                                   2658 ;	/home/user/contiki/core/dev/slip.c:359: state = STATE_TWOPACKETS;
+      000824 90r00r09         [24] 2659 	mov	dptr,#_state
+      000827 E4               [12] 2660 	clr	a
+      000828 F0               [24] 2661 	movx	@dptr,a
+      000829                       2662 00115$:
+                                   2663 ;	/home/user/contiki/core/dev/slip.c:362: process_interrupt(&slip_process);
+      000829 90r00r00         [24] 2664 	mov	dptr,#_slip_process
+      00082C 75 F0 00         [24] 2665 	mov	b,#0x00
+      00082F 12r00r00         [24] 2666 	lcall	_process_interrupt
+                                   2667 ;	/home/user/contiki/core/dev/slip.c:363: return 1;
+      000832 90 00 01         [24] 2668 	mov	dptr,#0x0001
+      000835 02r08rD9         [24] 2669 	ljmp	00131$
+      000838                       2670 00117$:
+                                   2671 ;	/home/user/contiki/core/dev/slip.c:365: return 0;
+      000838 90 00 00         [24] 2672 	mov	dptr,#0x0000
+      00083B 02r08rD9         [24] 2673 	ljmp	00131$
+                                   2674 ;	/home/user/contiki/core/dev/slip.c:368: }
+      00083E                       2675 00123$:
+                                   2676 ;	/home/user/contiki/core/dev/slip.c:373: next = end + 1;
+      00083E 90r00r03         [24] 2677 	mov	dptr,#_end
+      000841 E0               [24] 2678 	movx	a,@dptr
+      000842 FD               [12] 2679 	mov	r5,a
+      000843 A3               [24] 2680 	inc	dptr
+      000844 E0               [24] 2681 	movx	a,@dptr
+      000845 FE               [12] 2682 	mov	r6,a
+      000846 74 01            [12] 2683 	mov	a,#0x01
+      000848 2D               [12] 2684 	add	a,r5
+      000849 FB               [12] 2685 	mov	r3,a
+      00084A E4               [12] 2686 	clr	a
+      00084B 3E               [12] 2687 	addc	a,r6
+      00084C FC               [12] 2688 	mov	r4,a
+                                   2689 ;	/home/user/contiki/core/dev/slip.c:374: if(next == RX_BUFSIZE) {
+      00084D BB 6E 07         [24] 2690 	cjne	r3,#0x6E,00125$
+      000850 BC 00 04         [24] 2691 	cjne	r4,#0x00,00125$
+                                   2692 ;	/home/user/contiki/core/dev/slip.c:375: next = 0;
+      000853 7B 00            [12] 2693 	mov	r3,#0x00
+      000855 7C 00            [12] 2694 	mov	r4,#0x00
+      000857                       2695 00125$:
+                                   2696 ;	/home/user/contiki/core/dev/slip.c:377: if(next == begin) {		/* rxbuf is full */
+      000857 C0 05            [24] 2697 	push	ar5
+      000859 C0 06            [24] 2698 	push	ar6
+      00085B 90r00r01         [24] 2699 	mov	dptr,#_begin
+      00085E E0               [24] 2700 	movx	a,@dptr
+      00085F FA               [12] 2701 	mov	r2,a
+      000860 A3               [24] 2702 	inc	dptr
+      000861 E0               [24] 2703 	movx	a,@dptr
+      000862 FE               [12] 2704 	mov	r6,a
+      000863 EB               [12] 2705 	mov	a,r3
+      000864 B5 02 06         [24] 2706 	cjne	a,ar2,00186$
+      000867 EC               [12] 2707 	mov	a,r4
+      000868 B5 06 02         [24] 2708 	cjne	a,ar6,00186$
+      00086B 80 06            [24] 2709 	sjmp	00187$
+      00086D                       2710 00186$:
+      00086D D0 06            [24] 2711 	pop	ar6
+      00086F D0 05            [24] 2712 	pop	ar5
+      000871 80 27            [24] 2713 	sjmp	00127$
+      000873                       2714 00187$:
+      000873 D0 06            [24] 2715 	pop	ar6
+      000875 D0 05            [24] 2716 	pop	ar5
+                                   2717 ;	/home/user/contiki/core/dev/slip.c:378: state = STATE_RUBBISH;
+      000877 90r00r09         [24] 2718 	mov	dptr,#_state
+      00087A 74 03            [12] 2719 	mov	a,#0x03
+      00087C F0               [24] 2720 	movx	@dptr,a
+                                   2721 ;	/home/user/contiki/core/dev/slip.c:380: end = pkt_end;		/* remove rubbish */
+      00087D 90r00r73         [24] 2722 	mov	dptr,#_pkt_end
+      000880 A8 81            [24] 2723 	mov	r0,sp
+      000882 18               [12] 2724 	dec	r0
+      000883 E0               [24] 2725 	movx	a,@dptr
+      000884 F6               [12] 2726 	mov	@r0,a
+      000885 A3               [24] 2727 	inc	dptr
+      000886 E0               [24] 2728 	movx	a,@dptr
+      000887 08               [12] 2729 	inc	r0
+      000888 F6               [12] 2730 	mov	@r0,a
+      000889 A8 81            [24] 2731 	mov	r0,sp
+      00088B 18               [12] 2732 	dec	r0
+      00088C 90r00r03         [24] 2733 	mov	dptr,#_end
+      00088F E6               [12] 2734 	mov	a,@r0
+      000890 F0               [24] 2735 	movx	@dptr,a
+      000891 08               [12] 2736 	inc	r0
+      000892 E6               [12] 2737 	mov	a,@r0
+      000893 A3               [24] 2738 	inc	dptr
+      000894 F0               [24] 2739 	movx	@dptr,a
+                                   2740 ;	/home/user/contiki/core/dev/slip.c:381: return 0;
+      000895 90 00 00         [24] 2741 	mov	dptr,#0x0000
+      000898 80 3F            [24] 2742 	sjmp	00131$
+      00089A                       2743 00127$:
+                                   2744 ;	/home/user/contiki/core/dev/slip.c:383: rxbuf[end] = c;
+      00089A ED               [12] 2745 	mov	a,r5
+      00089B 24r05            [12] 2746 	add	a,#_rxbuf
+      00089D F5 82            [12] 2747 	mov	dpl,a
+      00089F EE               [12] 2748 	mov	a,r6
+      0008A0 34s00            [12] 2749 	addc	a,#(_rxbuf >> 8)
+      0008A2 F5 83            [12] 2750 	mov	dph,a
+      0008A4 EF               [12] 2751 	mov	a,r7
+      0008A5 F0               [24] 2752 	movx	@dptr,a
+                                   2753 ;	/home/user/contiki/core/dev/slip.c:384: end = next;
+      0008A6 90r00r03         [24] 2754 	mov	dptr,#_end
+      0008A9 EB               [12] 2755 	mov	a,r3
+      0008AA F0               [24] 2756 	movx	@dptr,a
+      0008AB EC               [12] 2757 	mov	a,r4
+      0008AC A3               [24] 2758 	inc	dptr
+      0008AD F0               [24] 2759 	movx	@dptr,a
+                                   2760 ;	/home/user/contiki/core/dev/slip.c:388: if(c == 'T' && rxbuf[begin] == 'C') {
+      0008AE BF 54 25         [24] 2761 	cjne	r7,#0x54,00129$
+      0008B1 90r00r01         [24] 2762 	mov	dptr,#_begin
+      0008B4 E0               [24] 2763 	movx	a,@dptr
+      0008B5 FE               [12] 2764 	mov	r6,a
+      0008B6 A3               [24] 2765 	inc	dptr
+      0008B7 E0               [24] 2766 	movx	a,@dptr
+      0008B8 FF               [12] 2767 	mov	r7,a
+      0008B9 EE               [12] 2768 	mov	a,r6
+      0008BA 24r05            [12] 2769 	add	a,#_rxbuf
+      0008BC F5 82            [12] 2770 	mov	dpl,a
+      0008BE EF               [12] 2771 	mov	a,r7
+      0008BF 34s00            [12] 2772 	addc	a,#(_rxbuf >> 8)
+      0008C1 F5 83            [12] 2773 	mov	dph,a
+      0008C3 E0               [24] 2774 	movx	a,@dptr
+      0008C4 FF               [12] 2775 	mov	r7,a
+      0008C5 BF 43 0E         [24] 2776 	cjne	r7,#0x43,00129$
+                                   2777 ;	/home/user/contiki/core/dev/slip.c:389: process_interrupt(&slip_process);
+      0008C8 90r00r00         [24] 2778 	mov	dptr,#_slip_process
+      0008CB 75 F0 00         [24] 2779 	mov	b,#0x00
+      0008CE 12r00r00         [24] 2780 	lcall	_process_interrupt
+                                   2781 ;	/home/user/contiki/core/dev/slip.c:390: return 1;
+      0008D1 90 00 01         [24] 2782 	mov	dptr,#0x0001
+      0008D4 80 03            [24] 2783 	sjmp	00131$
+      0008D6                       2784 00129$:
+                                   2785 ;	/home/user/contiki/core/dev/slip.c:393: return 0;
+      0008D6 90 00 00         [24] 2786 	mov	dptr,#0x0000
+      0008D9                       2787 00131$:
+      0008D9 15 81            [12] 2788 	dec	sp
+      0008DB 15 81            [12] 2789 	dec	sp
+      0008DD 22               [24] 2790 	ret
+                                   2791 	.area CSEG    (CODE)
+                                   2792 	.area CONST   (CODE)
+      000000                       2793 __str_0:
+      000000 43 4C 49 45 4E 54     2794 	.ascii "CLIENT"
+      000006 00                    2795 	.db 0x00
+      000007                       2796 __str_1:
+      000007 43 4C 49 45 4E 54 53  2797 	.ascii "CLIENTSERVER"
+             45 52 56 45 52
+      000013 C0                    2798 	.db 0xC0
+      000014 00                    2799 	.db 0x00
+      000015                       2800 __str_2:
+      000015 3F 49 50 41           2801 	.ascii "?IPA"
+      000019 00                    2802 	.db 0x00
+      00001A                       2803 __str_3:
+      00001A 3D 49 50 41           2804 	.ascii "=IPA"
+      00001E 00                    2805 	.db 0x00
+                                   2806 	.area XINIT   (CODE)
+      000000                       2807 __xinit__slip_process:
+                                   2808 ; generic printIvalPtr
+      000000 00 00 00              2809 	.byte #0x00,#0x00,#0x00
+      000003r06s04                 2810 	.byte _process_thread_slip_process,(_process_thread_slip_process >> 8)
+      000005 00 00                 2811 	.byte #0x00,#0x00	; 0
+      000007 00                    2812 	.db #0x00	; 0
+      000008 00                    2813 	.db #0x00	; 0
+      000009                       2814 __xinit__state:
+      000009 00                    2815 	.db #0x00	; 0
+      00000A                       2816 __xinit__input_callback:
+      00000A 00 00                 2817 	.byte #0x00,#0x00
+                                   2818 	.area CABS    (ABS,CODE)

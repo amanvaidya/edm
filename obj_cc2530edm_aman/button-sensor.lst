@@ -1,0 +1,2055 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:55 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module button_sensor
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _button_4_sensor
+                                     13 	.globl _button_3_sensor
+                                     14 	.globl _button_2_sensor
+                                     15 	.globl _button_1_sensor
+                                     16 	.globl _leds_toggle
+                                     17 	.globl _sensors_changed
+                                     18 	.globl _timer_expired
+                                     19 	.globl _timer_set
+                                     20 	.globl _ACTIVE
+                                     21 	.globl _TX_BYTE
+                                     22 	.globl _RX_BYTE
+                                     23 	.globl _ERR
+                                     24 	.globl _FE
+                                     25 	.globl _SLAVE
+                                     26 	.globl _RE
+                                     27 	.globl _MODE
+                                     28 	.globl _T3OVFIF
+                                     29 	.globl _T3CH0IF
+                                     30 	.globl _T3CH1IF
+                                     31 	.globl _T4OVFIF
+                                     32 	.globl _T4CH0IF
+                                     33 	.globl _T4CH1IF
+                                     34 	.globl _OVFIM
+                                     35 	.globl _B_0
+                                     36 	.globl _B_1
+                                     37 	.globl _B_2
+                                     38 	.globl _B_3
+                                     39 	.globl _B_4
+                                     40 	.globl _B_5
+                                     41 	.globl _B_6
+                                     42 	.globl _B_7
+                                     43 	.globl _P2IF
+                                     44 	.globl _UTX0IF
+                                     45 	.globl _UTX1IF
+                                     46 	.globl _P1IF
+                                     47 	.globl _WDTIF
+                                     48 	.globl _ACC_0
+                                     49 	.globl _ACC_1
+                                     50 	.globl _ACC_2
+                                     51 	.globl _ACC_3
+                                     52 	.globl _ACC_4
+                                     53 	.globl _ACC_5
+                                     54 	.globl _ACC_6
+                                     55 	.globl _ACC_7
+                                     56 	.globl _P
+                                     57 	.globl _F1
+                                     58 	.globl _OV
+                                     59 	.globl _RS0
+                                     60 	.globl _RS1
+                                     61 	.globl _F0
+                                     62 	.globl _AC
+                                     63 	.globl _CY
+                                     64 	.globl _DMAIF
+                                     65 	.globl _T1IF
+                                     66 	.globl _T2IF
+                                     67 	.globl _T3IF
+                                     68 	.globl _T4IF
+                                     69 	.globl _P0IF
+                                     70 	.globl _STIF
+                                     71 	.globl _DMAIE
+                                     72 	.globl _T1IE
+                                     73 	.globl _T2IE
+                                     74 	.globl _T3IE
+                                     75 	.globl _T4IE
+                                     76 	.globl _P0IE
+                                     77 	.globl _RFERRIE
+                                     78 	.globl _ADCIE
+                                     79 	.globl _URX0IE
+                                     80 	.globl _URX1IE
+                                     81 	.globl _ENCIE
+                                     82 	.globl _STIE
+                                     83 	.globl _EA
+                                     84 	.globl _P2_0
+                                     85 	.globl _P2_1
+                                     86 	.globl _P2_2
+                                     87 	.globl _P2_3
+                                     88 	.globl _P2_4
+                                     89 	.globl _P2_5
+                                     90 	.globl _P2_6
+                                     91 	.globl _P2_7
+                                     92 	.globl _ENCIF_0
+                                     93 	.globl _ENCIF_1
+                                     94 	.globl _P1_0
+                                     95 	.globl _P1_1
+                                     96 	.globl _P1_2
+                                     97 	.globl _P1_3
+                                     98 	.globl _P1_4
+                                     99 	.globl _P1_5
+                                    100 	.globl _P1_6
+                                    101 	.globl _P1_7
+                                    102 	.globl _IT0
+                                    103 	.globl _RFERRIF
+                                    104 	.globl _IT1
+                                    105 	.globl _URX0IF
+                                    106 	.globl _ADCIF
+                                    107 	.globl _URX1IF
+                                    108 	.globl _P0_0
+                                    109 	.globl _P0_1
+                                    110 	.globl _P0_2
+                                    111 	.globl _P0_3
+                                    112 	.globl _P0_4
+                                    113 	.globl _P0_5
+                                    114 	.globl _P0_6
+                                    115 	.globl _P0_7
+                                    116 	.globl _WDCTL
+                                    117 	.globl _U1GCR
+                                    118 	.globl _U1UCR
+                                    119 	.globl _U1BAUD
+                                    120 	.globl _U1DBUF
+                                    121 	.globl _U1CSR
+                                    122 	.globl _U0GCR
+                                    123 	.globl _U0UCR
+                                    124 	.globl _U0BAUD
+                                    125 	.globl _U0DBUF
+                                    126 	.globl _U0CSR
+                                    127 	.globl _TIMIF
+                                    128 	.globl _T4CC1
+                                    129 	.globl _T4CCTL1
+                                    130 	.globl _T4CC0
+                                    131 	.globl _T4CCTL0
+                                    132 	.globl _T4CTL
+                                    133 	.globl _T4CNT
+                                    134 	.globl _T3CC1
+                                    135 	.globl _T3CCTL1
+                                    136 	.globl _T3CC0
+                                    137 	.globl _T3CCTL0
+                                    138 	.globl _T3CTL
+                                    139 	.globl _T3CNT
+                                    140 	.globl _T2MSEL
+                                    141 	.globl _T2IRQM
+                                    142 	.globl _T2MOVF2
+                                    143 	.globl _T2MOVF1
+                                    144 	.globl _T2MOVF0
+                                    145 	.globl _T2M1
+                                    146 	.globl _T2M0
+                                    147 	.globl _T2IRQF
+                                    148 	.globl _T2EVTCFG
+                                    149 	.globl _T2CTRL
+                                    150 	.globl _T1STAT
+                                    151 	.globl _T1CCTL2
+                                    152 	.globl _T1CCTL1
+                                    153 	.globl _T1CCTL0
+                                    154 	.globl _T1CTL
+                                    155 	.globl _T1CNTH
+                                    156 	.globl _T1CNTL
+                                    157 	.globl _T1CC2H
+                                    158 	.globl _T1CC2L
+                                    159 	.globl _T1CC1H
+                                    160 	.globl _T1CC1L
+                                    161 	.globl _T1CC0H
+                                    162 	.globl _T1CC0L
+                                    163 	.globl _CLKCONSTA
+                                    164 	.globl _CLKCONCMD
+                                    165 	.globl _SLEEPSTA
+                                    166 	.globl _SLEEPCMD
+                                    167 	.globl _STLOAD
+                                    168 	.globl _ST2
+                                    169 	.globl _ST1
+                                    170 	.globl _ST0
+                                    171 	.globl _RFERRF
+                                    172 	.globl _RFIRQF0
+                                    173 	.globl _RFST
+                                    174 	.globl _RFD
+                                    175 	.globl _RFIRQF1
+                                    176 	.globl _PSBANK
+                                    177 	.globl _FMAP
+                                    178 	.globl _MEMCTR
+                                    179 	.globl __XPAGE
+                                    180 	.globl _MPAGE
+                                    181 	.globl _PMUX
+                                    182 	.globl _P2DIR
+                                    183 	.globl _P1DIR
+                                    184 	.globl _P0DIR
+                                    185 	.globl _P2INP
+                                    186 	.globl _P1INP
+                                    187 	.globl _P2SEL
+                                    188 	.globl _P1SEL
+                                    189 	.globl _P0SEL
+                                    190 	.globl _APCFG
+                                    191 	.globl _PERCFG
+                                    192 	.globl _P0INP
+                                    193 	.globl _P2IEN
+                                    194 	.globl _P1IEN
+                                    195 	.globl _P0IEN
+                                    196 	.globl _PICTL
+                                    197 	.globl _P2IFG
+                                    198 	.globl _P1IFG
+                                    199 	.globl _P0IFG
+                                    200 	.globl _DMAREQ
+                                    201 	.globl _DMAARM
+                                    202 	.globl _DMA0CFGH
+                                    203 	.globl _DMA0CFGL
+                                    204 	.globl _DMA1CFGH
+                                    205 	.globl _DMA1CFGL
+                                    206 	.globl _DMAIRQ
+                                    207 	.globl _ENCCS
+                                    208 	.globl _ENCDO
+                                    209 	.globl _ENCDI
+                                    210 	.globl _RNDH
+                                    211 	.globl _RNDL
+                                    212 	.globl _ADCH
+                                    213 	.globl _ADCL
+                                    214 	.globl _ADCCON3
+                                    215 	.globl _ADCCON2
+                                    216 	.globl _ADCCON1
+                                    217 	.globl _B
+                                    218 	.globl _IRCON2
+                                    219 	.globl _ACC
+                                    220 	.globl _PSW
+                                    221 	.globl _IRCON
+                                    222 	.globl _IP1
+                                    223 	.globl _IEN1
+                                    224 	.globl _IP0
+                                    225 	.globl _IEN0
+                                    226 	.globl _P2
+                                    227 	.globl _S1CON
+                                    228 	.globl _IEN2
+                                    229 	.globl _S0CON
+                                    230 	.globl _DPS
+                                    231 	.globl _P1
+                                    232 	.globl _TCON
+                                    233 	.globl _PCON
+                                    234 	.globl _DPH1
+                                    235 	.globl _DPL1
+                                    236 	.globl _DPH0
+                                    237 	.globl _DPL0
+                                    238 	.globl _SP
+                                    239 	.globl _P0
+                                    240 	.globl _X_IEEE_ADDR
+                                    241 	.globl _X_INFOPAGE
+                                    242 	.globl _X_P2DIR
+                                    243 	.globl _X_P1DIR
+                                    244 	.globl _X_P0DIR
+                                    245 	.globl _X_U1GCR
+                                    246 	.globl _X_U1UCR
+                                    247 	.globl _X_U1BAUD
+                                    248 	.globl _X_U1DBUF
+                                    249 	.globl _X_U1CSR
+                                    250 	.globl _X_P2INP
+                                    251 	.globl _X_P1INP
+                                    252 	.globl _X_P2SEL
+                                    253 	.globl _X_P1SEL
+                                    254 	.globl _X_P0SEL
+                                    255 	.globl _X_APCFG
+                                    256 	.globl _X_PERCFG
+                                    257 	.globl _X_T4CC1
+                                    258 	.globl _X_T4CCTL1
+                                    259 	.globl _X_T4CC0
+                                    260 	.globl _X_T4CCTL0
+                                    261 	.globl _X_T4CTL
+                                    262 	.globl _X_T4CNT
+                                    263 	.globl _X_RFIRQF0
+                                    264 	.globl _X_T1CCTL2
+                                    265 	.globl _X_T1CCTL1
+                                    266 	.globl _X_T1CCTL0
+                                    267 	.globl _X_T1CTL
+                                    268 	.globl _X_T1CNTH
+                                    269 	.globl _X_T1CNTL
+                                    270 	.globl _X_RFST
+                                    271 	.globl _X_T1CC2H
+                                    272 	.globl _X_T1CC2L
+                                    273 	.globl _X_T1CC1H
+                                    274 	.globl _X_T1CC1L
+                                    275 	.globl _X_T1CC0H
+                                    276 	.globl _X_T1CC0L
+                                    277 	.globl _X_RFD
+                                    278 	.globl _X_TIMIF
+                                    279 	.globl _X_DMAREQ
+                                    280 	.globl _X_DMAARM
+                                    281 	.globl _X_DMA0CFGH
+                                    282 	.globl _X_DMA0CFGL
+                                    283 	.globl _X_DMA1CFGH
+                                    284 	.globl _X_DMA1CFGL
+                                    285 	.globl _X_DMAIRQ
+                                    286 	.globl _X_T3CC1
+                                    287 	.globl _X_T3CCTL1
+                                    288 	.globl _X_T3CC0
+                                    289 	.globl _X_T3CCTL0
+                                    290 	.globl _X_T3CTL
+                                    291 	.globl _X_T3CNT
+                                    292 	.globl _X_WDCTL
+                                    293 	.globl _X_MEMCTR
+                                    294 	.globl _X_CLKCONCMD
+                                    295 	.globl _X_U0GCR
+                                    296 	.globl _X_U0UCR
+                                    297 	.globl _X_T2MSEL
+                                    298 	.globl _X_U0BAUD
+                                    299 	.globl _X_U0DBUF
+                                    300 	.globl _X_RFERRF
+                                    301 	.globl _X_SLEEPCMD
+                                    302 	.globl _X_RNDH
+                                    303 	.globl _X_RNDL
+                                    304 	.globl _X_ADCH
+                                    305 	.globl _X_ADCL
+                                    306 	.globl _X_ADCCON3
+                                    307 	.globl _X_ADCCON2
+                                    308 	.globl _X_ADCCON1
+                                    309 	.globl _X_ENCCS
+                                    310 	.globl _X_ENCDO
+                                    311 	.globl _X_ENCDI
+                                    312 	.globl _X_T1STAT
+                                    313 	.globl _X_PMUX
+                                    314 	.globl _X_STLOAD
+                                    315 	.globl _X_P2IEN
+                                    316 	.globl _X_P0IEN
+                                    317 	.globl _X_T2IRQM
+                                    318 	.globl _X_T2MOVF2
+                                    319 	.globl _X_T2MOVF1
+                                    320 	.globl _X_T2MOVF0
+                                    321 	.globl _X_T2M1
+                                    322 	.globl _X_T2M0
+                                    323 	.globl _X_T2IRQF
+                                    324 	.globl _X_P2
+                                    325 	.globl _X_PSBANK
+                                    326 	.globl _X_FMAP
+                                    327 	.globl _X_CLKCONSTA
+                                    328 	.globl _X_SLEEPSTA
+                                    329 	.globl _X_T2EVTCFG
+                                    330 	.globl _X_ST2
+                                    331 	.globl _X_ST1
+                                    332 	.globl _X_ST0
+                                    333 	.globl _X_T2CTRL
+                                    334 	.globl _X__XPAGE
+                                    335 	.globl _X_MPAGE
+                                    336 	.globl _X_RFIRQF1
+                                    337 	.globl _X_P1
+                                    338 	.globl _X_P0INP
+                                    339 	.globl _X_P1IEN
+                                    340 	.globl _X_PICTL
+                                    341 	.globl _X_P2IFG
+                                    342 	.globl _X_P1IFG
+                                    343 	.globl _X_P0IFG
+                                    344 	.globl _X_U0CSR
+                                    345 	.globl _X_P0
+                                    346 	.globl _USBF5
+                                    347 	.globl _USBF4
+                                    348 	.globl _USBF3
+                                    349 	.globl _USBF2
+                                    350 	.globl _USBF1
+                                    351 	.globl _USBF0
+                                    352 	.globl _USBCNTH
+                                    353 	.globl _USBCNTL
+                                    354 	.globl _USBCNT0
+                                    355 	.globl _USBCSOH
+                                    356 	.globl _USBCSOL
+                                    357 	.globl _USBMAXO
+                                    358 	.globl _USBCSIH
+                                    359 	.globl _USBCSIL
+                                    360 	.globl _USBCS0
+                                    361 	.globl _USBMAXI
+                                    362 	.globl _USBCTRL
+                                    363 	.globl _USBINDEX
+                                    364 	.globl _USBFRMH
+                                    365 	.globl _USBFRML
+                                    366 	.globl _USBCIE
+                                    367 	.globl _USBOIE
+                                    368 	.globl _USBIIE
+                                    369 	.globl _USBCIF
+                                    370 	.globl _USBOIF
+                                    371 	.globl _USBIIF
+                                    372 	.globl _USBPOW
+                                    373 	.globl _USBADDR
+                                    374 	.globl _CSPT
+                                    375 	.globl _CSPZ
+                                    376 	.globl _CSPY
+                                    377 	.globl _CSPX
+                                    378 	.globl _CSPSTAT
+                                    379 	.globl _CSPCTRL
+                                    380 	.globl _CSPPROG23
+                                    381 	.globl _CSPPROG22
+                                    382 	.globl _CSPPROG21
+                                    383 	.globl _CSPPROG20
+                                    384 	.globl _CSPPROG19
+                                    385 	.globl _CSPPROG18
+                                    386 	.globl _CSPPROG17
+                                    387 	.globl _CSPPROG16
+                                    388 	.globl _CSPPROG15
+                                    389 	.globl _CSPPROG14
+                                    390 	.globl _CSPPROG13
+                                    391 	.globl _CSPPROG12
+                                    392 	.globl _CSPPROG11
+                                    393 	.globl _CSPPROG10
+                                    394 	.globl _CSPPROG9
+                                    395 	.globl _CSPPROG8
+                                    396 	.globl _CSPPROG7
+                                    397 	.globl _CSPPROG6
+                                    398 	.globl _CSPPROG5
+                                    399 	.globl _CSPPROG4
+                                    400 	.globl _CSPPROG3
+                                    401 	.globl _CSPPROG2
+                                    402 	.globl _CSPPROG1
+                                    403 	.globl _CSPPROG0
+                                    404 	.globl _RFC_OBS_CTRL2
+                                    405 	.globl _RFC_OBS_CTRL1
+                                    406 	.globl _RFC_OBS_CTRL0
+                                    407 	.globl _TXFILTCFG
+                                    408 	.globl _PTEST1
+                                    409 	.globl _PTEST0
+                                    410 	.globl _ATEST
+                                    411 	.globl _DACTEST2
+                                    412 	.globl _DACTEST1
+                                    413 	.globl _DACTEST0
+                                    414 	.globl _MDMTEST1
+                                    415 	.globl _MDMTEST0
+                                    416 	.globl _ADCTEST2
+                                    417 	.globl _ADCTEST1
+                                    418 	.globl _ADCTEST0
+                                    419 	.globl _AGCCTRL3
+                                    420 	.globl _AGCCTRL2
+                                    421 	.globl _AGCCTRL1
+                                    422 	.globl _AGCCTRL0
+                                    423 	.globl _FSCAL3
+                                    424 	.globl _FSCAL2
+                                    425 	.globl _FSCAL1
+                                    426 	.globl _FSCAL0
+                                    427 	.globl _FSCTRL
+                                    428 	.globl _RXCTRL
+                                    429 	.globl _FREQEST
+                                    430 	.globl _MDMCTRL1
+                                    431 	.globl _MDMCTRL0
+                                    432 	.globl _RFRND
+                                    433 	.globl _RFERRM
+                                    434 	.globl _RFIRQM1
+                                    435 	.globl _RFIRQM0
+                                    436 	.globl _TXLAST_PTR
+                                    437 	.globl _TXFIRST_PTR
+                                    438 	.globl _RXP1_PTR
+                                    439 	.globl _RXLAST_PTR
+                                    440 	.globl _RXFIRST_PTR
+                                    441 	.globl _TXFIFOCNT
+                                    442 	.globl _RXFIFOCNT
+                                    443 	.globl _RXFIRST
+                                    444 	.globl _RSSISTAT
+                                    445 	.globl _RSSI
+                                    446 	.globl _CCACTRL1
+                                    447 	.globl _CCACTRL0
+                                    448 	.globl _FSMCTRL
+                                    449 	.globl _FIFOPCTRL
+                                    450 	.globl _FSMSTAT1
+                                    451 	.globl _FSMSTAT0
+                                    452 	.globl _TXCTRL
+                                    453 	.globl _TXPOWER
+                                    454 	.globl _FREQCTRL
+                                    455 	.globl _FREQTUNE
+                                    456 	.globl _RXMASKCLR
+                                    457 	.globl _RXMASKSET
+                                    458 	.globl _RXENABLE
+                                    459 	.globl _FRMCTRL1
+                                    460 	.globl _FRMCTRL0
+                                    461 	.globl _SRCEXTEN2
+                                    462 	.globl _SRCEXTEN1
+                                    463 	.globl _SRCEXTEN0
+                                    464 	.globl _SRCSHORTEN2
+                                    465 	.globl _SRCSHORTEN1
+                                    466 	.globl _SRCSHORTEN0
+                                    467 	.globl _SRCMATCH
+                                    468 	.globl _FRMFILT1
+                                    469 	.globl _FRMFILT0
+                                    470 	.globl _SHORT_ADDR1
+                                    471 	.globl _SHORT_ADDR0
+                                    472 	.globl _PAN_ID1
+                                    473 	.globl _PAN_ID0
+                                    474 	.globl _EXT_ADDR7
+                                    475 	.globl _EXT_ADDR6
+                                    476 	.globl _EXT_ADDR5
+                                    477 	.globl _EXT_ADDR4
+                                    478 	.globl _EXT_ADDR3
+                                    479 	.globl _EXT_ADDR2
+                                    480 	.globl _EXT_ADDR1
+                                    481 	.globl _EXT_ADDR0
+                                    482 	.globl _SRCSHORTPENDEN2
+                                    483 	.globl _SRCSHORTPENDEN1
+                                    484 	.globl _SRCSHORTPENDEN0
+                                    485 	.globl _SRCEXTPENDEN2
+                                    486 	.globl _SRCEXTPENDEN1
+                                    487 	.globl _SRCEXTPENDEN0
+                                    488 	.globl _SRCRESINDEX
+                                    489 	.globl _SRCRESMASK2
+                                    490 	.globl _SRCRESMASK1
+                                    491 	.globl _SRCRESMASK0
+                                    492 	.globl _SRC_ADDR_TABLE
+                                    493 	.globl _TXFIFO
+                                    494 	.globl _RXFIFO
+                                    495 	.globl _RFCORE_RAM
+                                    496 	.globl _CMPCTL
+                                    497 	.globl _OPAMPS
+                                    498 	.globl _OPAMPC
+                                    499 	.globl _STCV2
+                                    500 	.globl _STCV1
+                                    501 	.globl _STCV0
+                                    502 	.globl _STCS
+                                    503 	.globl _STCC
+                                    504 	.globl _T1CC4H
+                                    505 	.globl _T1CC4L
+                                    506 	.globl _T1CC3H
+                                    507 	.globl _T1CC3L
+                                    508 	.globl _XX_T1CC2H
+                                    509 	.globl _XX_T1CC2L
+                                    510 	.globl _XX_T1CC1H
+                                    511 	.globl _XX_T1CC1L
+                                    512 	.globl _XX_T1CC0H
+                                    513 	.globl _XX_T1CC0L
+                                    514 	.globl _T1CCTL4
+                                    515 	.globl _T1CCTL3
+                                    516 	.globl _XX_T1CCTL2
+                                    517 	.globl _XX_T1CCTL1
+                                    518 	.globl _XX_T1CCTL0
+                                    519 	.globl _CLD
+                                    520 	.globl _IRCTL
+                                    521 	.globl _CHIPINFO1
+                                    522 	.globl _CHIPINFO0
+                                    523 	.globl _FWDATA
+                                    524 	.globl _FADDRH
+                                    525 	.globl _FADDRL
+                                    526 	.globl _FCTL
+                                    527 	.globl _IVCTRL
+                                    528 	.globl _BATTMON
+                                    529 	.globl _SRCRC
+                                    530 	.globl _DBGDATA
+                                    531 	.globl _TESTREG0
+                                    532 	.globl _CHIPID
+                                    533 	.globl _CHVER
+                                    534 	.globl _OBSSEL5
+                                    535 	.globl _OBSSEL4
+                                    536 	.globl _OBSSEL3
+                                    537 	.globl _OBSSEL2
+                                    538 	.globl _OBSSEL1
+                                    539 	.globl _OBSSEL0
+                                    540 	.globl _I2CIO
+                                    541 	.globl _I2CWC
+                                    542 	.globl _I2CADDR
+                                    543 	.globl _I2CDATA
+                                    544 	.globl _I2CSTAT
+                                    545 	.globl _I2CCFG
+                                    546 	.globl _OPAMPMC
+                                    547 	.globl _MONMUX
+                                    548 	.globl _port_0_isr
+                                    549 ;--------------------------------------------------------
+                                    550 ; special function registers
+                                    551 ;--------------------------------------------------------
+                                    552 	.area RSEG    (ABS,DATA)
+      000000                        553 	.org 0x0000
+                           000080   554 _P0	=	0x0080
+                           000081   555 _SP	=	0x0081
+                           000082   556 _DPL0	=	0x0082
+                           000083   557 _DPH0	=	0x0083
+                           000084   558 _DPL1	=	0x0084
+                           000085   559 _DPH1	=	0x0085
+                           000087   560 _PCON	=	0x0087
+                           000088   561 _TCON	=	0x0088
+                           000090   562 _P1	=	0x0090
+                           000092   563 _DPS	=	0x0092
+                           000098   564 _S0CON	=	0x0098
+                           00009A   565 _IEN2	=	0x009a
+                           00009B   566 _S1CON	=	0x009b
+                           0000A0   567 _P2	=	0x00a0
+                           0000A8   568 _IEN0	=	0x00a8
+                           0000A9   569 _IP0	=	0x00a9
+                           0000B8   570 _IEN1	=	0x00b8
+                           0000B9   571 _IP1	=	0x00b9
+                           0000C0   572 _IRCON	=	0x00c0
+                           0000D0   573 _PSW	=	0x00d0
+                           0000E0   574 _ACC	=	0x00e0
+                           0000E8   575 _IRCON2	=	0x00e8
+                           0000F0   576 _B	=	0x00f0
+                           0000B4   577 _ADCCON1	=	0x00b4
+                           0000B5   578 _ADCCON2	=	0x00b5
+                           0000B6   579 _ADCCON3	=	0x00b6
+                           0000BA   580 _ADCL	=	0x00ba
+                           0000BB   581 _ADCH	=	0x00bb
+                           0000BC   582 _RNDL	=	0x00bc
+                           0000BD   583 _RNDH	=	0x00bd
+                           0000B1   584 _ENCDI	=	0x00b1
+                           0000B2   585 _ENCDO	=	0x00b2
+                           0000B3   586 _ENCCS	=	0x00b3
+                           0000D1   587 _DMAIRQ	=	0x00d1
+                           0000D2   588 _DMA1CFGL	=	0x00d2
+                           0000D3   589 _DMA1CFGH	=	0x00d3
+                           0000D4   590 _DMA0CFGL	=	0x00d4
+                           0000D5   591 _DMA0CFGH	=	0x00d5
+                           0000D6   592 _DMAARM	=	0x00d6
+                           0000D7   593 _DMAREQ	=	0x00d7
+                           000089   594 _P0IFG	=	0x0089
+                           00008A   595 _P1IFG	=	0x008a
+                           00008B   596 _P2IFG	=	0x008b
+                           00008C   597 _PICTL	=	0x008c
+                           0000AB   598 _P0IEN	=	0x00ab
+                           00008D   599 _P1IEN	=	0x008d
+                           0000AC   600 _P2IEN	=	0x00ac
+                           00008F   601 _P0INP	=	0x008f
+                           0000F1   602 _PERCFG	=	0x00f1
+                           0000F2   603 _APCFG	=	0x00f2
+                           0000F3   604 _P0SEL	=	0x00f3
+                           0000F4   605 _P1SEL	=	0x00f4
+                           0000F5   606 _P2SEL	=	0x00f5
+                           0000F6   607 _P1INP	=	0x00f6
+                           0000F7   608 _P2INP	=	0x00f7
+                           0000FD   609 _P0DIR	=	0x00fd
+                           0000FE   610 _P1DIR	=	0x00fe
+                           0000FF   611 _P2DIR	=	0x00ff
+                           0000AE   612 _PMUX	=	0x00ae
+                           000093   613 _MPAGE	=	0x0093
+                           000093   614 __XPAGE	=	0x0093
+                           0000C7   615 _MEMCTR	=	0x00c7
+                           00009F   616 _FMAP	=	0x009f
+                           00009F   617 _PSBANK	=	0x009f
+                           000091   618 _RFIRQF1	=	0x0091
+                           0000D9   619 _RFD	=	0x00d9
+                           0000E1   620 _RFST	=	0x00e1
+                           0000E9   621 _RFIRQF0	=	0x00e9
+                           0000BF   622 _RFERRF	=	0x00bf
+                           000095   623 _ST0	=	0x0095
+                           000096   624 _ST1	=	0x0096
+                           000097   625 _ST2	=	0x0097
+                           0000AD   626 _STLOAD	=	0x00ad
+                           0000BE   627 _SLEEPCMD	=	0x00be
+                           00009D   628 _SLEEPSTA	=	0x009d
+                           0000C6   629 _CLKCONCMD	=	0x00c6
+                           00009E   630 _CLKCONSTA	=	0x009e
+                           0000DA   631 _T1CC0L	=	0x00da
+                           0000DB   632 _T1CC0H	=	0x00db
+                           0000DC   633 _T1CC1L	=	0x00dc
+                           0000DD   634 _T1CC1H	=	0x00dd
+                           0000DE   635 _T1CC2L	=	0x00de
+                           0000DF   636 _T1CC2H	=	0x00df
+                           0000E2   637 _T1CNTL	=	0x00e2
+                           0000E3   638 _T1CNTH	=	0x00e3
+                           0000E4   639 _T1CTL	=	0x00e4
+                           0000E5   640 _T1CCTL0	=	0x00e5
+                           0000E6   641 _T1CCTL1	=	0x00e6
+                           0000E7   642 _T1CCTL2	=	0x00e7
+                           0000AF   643 _T1STAT	=	0x00af
+                           000094   644 _T2CTRL	=	0x0094
+                           00009C   645 _T2EVTCFG	=	0x009c
+                           0000A1   646 _T2IRQF	=	0x00a1
+                           0000A2   647 _T2M0	=	0x00a2
+                           0000A3   648 _T2M1	=	0x00a3
+                           0000A4   649 _T2MOVF0	=	0x00a4
+                           0000A5   650 _T2MOVF1	=	0x00a5
+                           0000A6   651 _T2MOVF2	=	0x00a6
+                           0000A7   652 _T2IRQM	=	0x00a7
+                           0000C3   653 _T2MSEL	=	0x00c3
+                           0000CA   654 _T3CNT	=	0x00ca
+                           0000CB   655 _T3CTL	=	0x00cb
+                           0000CC   656 _T3CCTL0	=	0x00cc
+                           0000CD   657 _T3CC0	=	0x00cd
+                           0000CE   658 _T3CCTL1	=	0x00ce
+                           0000CF   659 _T3CC1	=	0x00cf
+                           0000EA   660 _T4CNT	=	0x00ea
+                           0000EB   661 _T4CTL	=	0x00eb
+                           0000EC   662 _T4CCTL0	=	0x00ec
+                           0000ED   663 _T4CC0	=	0x00ed
+                           0000EE   664 _T4CCTL1	=	0x00ee
+                           0000EF   665 _T4CC1	=	0x00ef
+                           0000D8   666 _TIMIF	=	0x00d8
+                           000086   667 _U0CSR	=	0x0086
+                           0000C1   668 _U0DBUF	=	0x00c1
+                           0000C2   669 _U0BAUD	=	0x00c2
+                           0000C4   670 _U0UCR	=	0x00c4
+                           0000C5   671 _U0GCR	=	0x00c5
+                           0000F8   672 _U1CSR	=	0x00f8
+                           0000F9   673 _U1DBUF	=	0x00f9
+                           0000FA   674 _U1BAUD	=	0x00fa
+                           0000FB   675 _U1UCR	=	0x00fb
+                           0000FC   676 _U1GCR	=	0x00fc
+                           0000C9   677 _WDCTL	=	0x00c9
+                                    678 ;--------------------------------------------------------
+                                    679 ; special function bits
+                                    680 ;--------------------------------------------------------
+                                    681 	.area RSEG    (ABS,DATA)
+      000000                        682 	.org 0x0000
+                           000087   683 _P0_7	=	0x0087
+                           000086   684 _P0_6	=	0x0086
+                           000085   685 _P0_5	=	0x0085
+                           000084   686 _P0_4	=	0x0084
+                           000083   687 _P0_3	=	0x0083
+                           000082   688 _P0_2	=	0x0082
+                           000081   689 _P0_1	=	0x0081
+                           000080   690 _P0_0	=	0x0080
+                           00008F   691 _URX1IF	=	0x008f
+                           00008D   692 _ADCIF	=	0x008d
+                           00008B   693 _URX0IF	=	0x008b
+                           00008A   694 _IT1	=	0x008a
+                           000089   695 _RFERRIF	=	0x0089
+                           000088   696 _IT0	=	0x0088
+                           000097   697 _P1_7	=	0x0097
+                           000096   698 _P1_6	=	0x0096
+                           000095   699 _P1_5	=	0x0095
+                           000094   700 _P1_4	=	0x0094
+                           000093   701 _P1_3	=	0x0093
+                           000092   702 _P1_2	=	0x0092
+                           000091   703 _P1_1	=	0x0091
+                           000090   704 _P1_0	=	0x0090
+                           000099   705 _ENCIF_1	=	0x0099
+                           000098   706 _ENCIF_0	=	0x0098
+                           0000A7   707 _P2_7	=	0x00a7
+                           0000A6   708 _P2_6	=	0x00a6
+                           0000A5   709 _P2_5	=	0x00a5
+                           0000A4   710 _P2_4	=	0x00a4
+                           0000A3   711 _P2_3	=	0x00a3
+                           0000A2   712 _P2_2	=	0x00a2
+                           0000A1   713 _P2_1	=	0x00a1
+                           0000A0   714 _P2_0	=	0x00a0
+                           0000AF   715 _EA	=	0x00af
+                           0000AD   716 _STIE	=	0x00ad
+                           0000AC   717 _ENCIE	=	0x00ac
+                           0000AB   718 _URX1IE	=	0x00ab
+                           0000AA   719 _URX0IE	=	0x00aa
+                           0000A9   720 _ADCIE	=	0x00a9
+                           0000A8   721 _RFERRIE	=	0x00a8
+                           0000BD   722 _P0IE	=	0x00bd
+                           0000BC   723 _T4IE	=	0x00bc
+                           0000BB   724 _T3IE	=	0x00bb
+                           0000BA   725 _T2IE	=	0x00ba
+                           0000B9   726 _T1IE	=	0x00b9
+                           0000B8   727 _DMAIE	=	0x00b8
+                           0000C7   728 _STIF	=	0x00c7
+                           0000C5   729 _P0IF	=	0x00c5
+                           0000C4   730 _T4IF	=	0x00c4
+                           0000C3   731 _T3IF	=	0x00c3
+                           0000C2   732 _T2IF	=	0x00c2
+                           0000C1   733 _T1IF	=	0x00c1
+                           0000C0   734 _DMAIF	=	0x00c0
+                           0000D7   735 _CY	=	0x00d7
+                           0000D6   736 _AC	=	0x00d6
+                           0000D5   737 _F0	=	0x00d5
+                           0000D4   738 _RS1	=	0x00d4
+                           0000D3   739 _RS0	=	0x00d3
+                           0000D2   740 _OV	=	0x00d2
+                           0000D1   741 _F1	=	0x00d1
+                           0000D0   742 _P	=	0x00d0
+                           0000E7   743 _ACC_7	=	0x00e7
+                           0000E6   744 _ACC_6	=	0x00e6
+                           0000E5   745 _ACC_5	=	0x00e5
+                           0000E4   746 _ACC_4	=	0x00e4
+                           0000E3   747 _ACC_3	=	0x00e3
+                           0000E2   748 _ACC_2	=	0x00e2
+                           0000E1   749 _ACC_1	=	0x00e1
+                           0000E0   750 _ACC_0	=	0x00e0
+                           0000EC   751 _WDTIF	=	0x00ec
+                           0000EB   752 _P1IF	=	0x00eb
+                           0000EA   753 _UTX1IF	=	0x00ea
+                           0000E9   754 _UTX0IF	=	0x00e9
+                           0000E8   755 _P2IF	=	0x00e8
+                           0000F7   756 _B_7	=	0x00f7
+                           0000F6   757 _B_6	=	0x00f6
+                           0000F5   758 _B_5	=	0x00f5
+                           0000F4   759 _B_4	=	0x00f4
+                           0000F3   760 _B_3	=	0x00f3
+                           0000F2   761 _B_2	=	0x00f2
+                           0000F1   762 _B_1	=	0x00f1
+                           0000F0   763 _B_0	=	0x00f0
+                           0000DE   764 _OVFIM	=	0x00de
+                           0000DD   765 _T4CH1IF	=	0x00dd
+                           0000DC   766 _T4CH0IF	=	0x00dc
+                           0000DB   767 _T4OVFIF	=	0x00db
+                           0000DA   768 _T3CH1IF	=	0x00da
+                           0000D9   769 _T3CH0IF	=	0x00d9
+                           0000D8   770 _T3OVFIF	=	0x00d8
+                           0000FF   771 _MODE	=	0x00ff
+                           0000FE   772 _RE	=	0x00fe
+                           0000FD   773 _SLAVE	=	0x00fd
+                           0000FC   774 _FE	=	0x00fc
+                           0000FB   775 _ERR	=	0x00fb
+                           0000FA   776 _RX_BYTE	=	0x00fa
+                           0000F9   777 _TX_BYTE	=	0x00f9
+                           0000F8   778 _ACTIVE	=	0x00f8
+                                    779 ;--------------------------------------------------------
+                                    780 ; overlayable register banks
+                                    781 ;--------------------------------------------------------
+                                    782 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        783 	.ds 8
+                                    784 ;--------------------------------------------------------
+                                    785 ; overlayable bit register bank
+                                    786 ;--------------------------------------------------------
+                                    787 	.area BIT_BANK	(REL,OVR,DATA)
+      000000                        788 bits:
+      000000                        789 	.ds 1
+                           008000   790 	b0 = bits[0]
+                           008100   791 	b1 = bits[1]
+                           008200   792 	b2 = bits[2]
+                           008300   793 	b3 = bits[3]
+                           008400   794 	b4 = bits[4]
+                           008500   795 	b5 = bits[5]
+                           008600   796 	b6 = bits[6]
+                           008700   797 	b7 = bits[7]
+                                    798 ;--------------------------------------------------------
+                                    799 ; internal ram data
+                                    800 ;--------------------------------------------------------
+                                    801 	.area DSEG    (DATA)
+      000000                        802 _debouncetimer:
+      000000                        803 	.ds 4
+                                    804 ;--------------------------------------------------------
+                                    805 ; overlayable items in internal ram 
+                                    806 ;--------------------------------------------------------
+                                    807 ;--------------------------------------------------------
+                                    808 ; indirectly addressable internal ram data
+                                    809 ;--------------------------------------------------------
+                                    810 	.area ISEG    (DATA)
+                                    811 ;--------------------------------------------------------
+                                    812 ; absolute internal ram data
+                                    813 ;--------------------------------------------------------
+                                    814 	.area IABS    (ABS,DATA)
+                                    815 	.area IABS    (ABS,DATA)
+                                    816 ;--------------------------------------------------------
+                                    817 ; bit data
+                                    818 ;--------------------------------------------------------
+                                    819 	.area BSEG    (BIT)
+                                    820 ;--------------------------------------------------------
+                                    821 ; paged external ram data
+                                    822 ;--------------------------------------------------------
+                                    823 	.area PSEG    (PAG,XDATA)
+                                    824 ;--------------------------------------------------------
+                                    825 ; external ram data
+                                    826 ;--------------------------------------------------------
+                                    827 	.area XSEG    (XDATA)
+                           0061A6   828 _MONMUX	=	0x61a6
+                           0061A6   829 _OPAMPMC	=	0x61a6
+                           006230   830 _I2CCFG	=	0x6230
+                           006231   831 _I2CSTAT	=	0x6231
+                           006232   832 _I2CDATA	=	0x6232
+                           006233   833 _I2CADDR	=	0x6233
+                           006234   834 _I2CWC	=	0x6234
+                           006235   835 _I2CIO	=	0x6235
+                           006243   836 _OBSSEL0	=	0x6243
+                           006244   837 _OBSSEL1	=	0x6244
+                           006245   838 _OBSSEL2	=	0x6245
+                           006246   839 _OBSSEL3	=	0x6246
+                           006247   840 _OBSSEL4	=	0x6247
+                           006248   841 _OBSSEL5	=	0x6248
+                           006249   842 _CHVER	=	0x6249
+                           00624A   843 _CHIPID	=	0x624a
+                           00624B   844 _TESTREG0	=	0x624b
+                           006260   845 _DBGDATA	=	0x6260
+                           006262   846 _SRCRC	=	0x6262
+                           006264   847 _BATTMON	=	0x6264
+                           006265   848 _IVCTRL	=	0x6265
+                           006270   849 _FCTL	=	0x6270
+                           006271   850 _FADDRL	=	0x6271
+                           006272   851 _FADDRH	=	0x6272
+                           006273   852 _FWDATA	=	0x6273
+                           006276   853 _CHIPINFO0	=	0x6276
+                           006277   854 _CHIPINFO1	=	0x6277
+                           006281   855 _IRCTL	=	0x6281
+                           006290   856 _CLD	=	0x6290
+                           0062A0   857 _XX_T1CCTL0	=	0x62a0
+                           0062A1   858 _XX_T1CCTL1	=	0x62a1
+                           0062A2   859 _XX_T1CCTL2	=	0x62a2
+                           0062A3   860 _T1CCTL3	=	0x62a3
+                           0062A4   861 _T1CCTL4	=	0x62a4
+                           0062A6   862 _XX_T1CC0L	=	0x62a6
+                           0062A7   863 _XX_T1CC0H	=	0x62a7
+                           0062A8   864 _XX_T1CC1L	=	0x62a8
+                           0062A9   865 _XX_T1CC1H	=	0x62a9
+                           0062AA   866 _XX_T1CC2L	=	0x62aa
+                           0062AB   867 _XX_T1CC2H	=	0x62ab
+                           0062AC   868 _T1CC3L	=	0x62ac
+                           0062AD   869 _T1CC3H	=	0x62ad
+                           0062AE   870 _T1CC4L	=	0x62ae
+                           0062AF   871 _T1CC4H	=	0x62af
+                           0062B0   872 _STCC	=	0x62b0
+                           0062B1   873 _STCS	=	0x62b1
+                           0062B2   874 _STCV0	=	0x62b2
+                           0062B3   875 _STCV1	=	0x62b3
+                           0062B4   876 _STCV2	=	0x62b4
+                           0062C0   877 _OPAMPC	=	0x62c0
+                           0062C1   878 _OPAMPS	=	0x62c1
+                           0062D0   879 _CMPCTL	=	0x62d0
+                           006000   880 _RFCORE_RAM	=	0x6000
+                           006000   881 _RXFIFO	=	0x6000
+                           006080   882 _TXFIFO	=	0x6080
+                           006100   883 _SRC_ADDR_TABLE	=	0x6100
+                           006160   884 _SRCRESMASK0	=	0x6160
+                           006161   885 _SRCRESMASK1	=	0x6161
+                           006162   886 _SRCRESMASK2	=	0x6162
+                           006163   887 _SRCRESINDEX	=	0x6163
+                           006164   888 _SRCEXTPENDEN0	=	0x6164
+                           006165   889 _SRCEXTPENDEN1	=	0x6165
+                           006166   890 _SRCEXTPENDEN2	=	0x6166
+                           006167   891 _SRCSHORTPENDEN0	=	0x6167
+                           006168   892 _SRCSHORTPENDEN1	=	0x6168
+                           006169   893 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   894 _EXT_ADDR0	=	0x616a
+                           00616B   895 _EXT_ADDR1	=	0x616b
+                           00616C   896 _EXT_ADDR2	=	0x616c
+                           00616D   897 _EXT_ADDR3	=	0x616d
+                           00616E   898 _EXT_ADDR4	=	0x616e
+                           00616F   899 _EXT_ADDR5	=	0x616f
+                           006170   900 _EXT_ADDR6	=	0x6170
+                           006171   901 _EXT_ADDR7	=	0x6171
+                           006172   902 _PAN_ID0	=	0x6172
+                           006173   903 _PAN_ID1	=	0x6173
+                           006174   904 _SHORT_ADDR0	=	0x6174
+                           006175   905 _SHORT_ADDR1	=	0x6175
+                           006180   906 _FRMFILT0	=	0x6180
+                           006181   907 _FRMFILT1	=	0x6181
+                           006182   908 _SRCMATCH	=	0x6182
+                           006183   909 _SRCSHORTEN0	=	0x6183
+                           006184   910 _SRCSHORTEN1	=	0x6184
+                           006185   911 _SRCSHORTEN2	=	0x6185
+                           006186   912 _SRCEXTEN0	=	0x6186
+                           006187   913 _SRCEXTEN1	=	0x6187
+                           006188   914 _SRCEXTEN2	=	0x6188
+                           006189   915 _FRMCTRL0	=	0x6189
+                           00618A   916 _FRMCTRL1	=	0x618a
+                           00618B   917 _RXENABLE	=	0x618b
+                           00618C   918 _RXMASKSET	=	0x618c
+                           00618D   919 _RXMASKCLR	=	0x618d
+                           00618E   920 _FREQTUNE	=	0x618e
+                           00618F   921 _FREQCTRL	=	0x618f
+                           006190   922 _TXPOWER	=	0x6190
+                           006191   923 _TXCTRL	=	0x6191
+                           006192   924 _FSMSTAT0	=	0x6192
+                           006193   925 _FSMSTAT1	=	0x6193
+                           006194   926 _FIFOPCTRL	=	0x6194
+                           006195   927 _FSMCTRL	=	0x6195
+                           006196   928 _CCACTRL0	=	0x6196
+                           006197   929 _CCACTRL1	=	0x6197
+                           006198   930 _RSSI	=	0x6198
+                           006199   931 _RSSISTAT	=	0x6199
+                           00619A   932 _RXFIRST	=	0x619a
+                           00619B   933 _RXFIFOCNT	=	0x619b
+                           00619C   934 _TXFIFOCNT	=	0x619c
+                           00619D   935 _RXFIRST_PTR	=	0x619d
+                           00619E   936 _RXLAST_PTR	=	0x619e
+                           00619F   937 _RXP1_PTR	=	0x619f
+                           0061A1   938 _TXFIRST_PTR	=	0x61a1
+                           0061A2   939 _TXLAST_PTR	=	0x61a2
+                           0061A3   940 _RFIRQM0	=	0x61a3
+                           0061A4   941 _RFIRQM1	=	0x61a4
+                           0061A5   942 _RFERRM	=	0x61a5
+                           0061A7   943 _RFRND	=	0x61a7
+                           0061A8   944 _MDMCTRL0	=	0x61a8
+                           0061A9   945 _MDMCTRL1	=	0x61a9
+                           0061AA   946 _FREQEST	=	0x61aa
+                           0061AB   947 _RXCTRL	=	0x61ab
+                           0061AC   948 _FSCTRL	=	0x61ac
+                           0061AD   949 _FSCAL0	=	0x61ad
+                           0061AE   950 _FSCAL1	=	0x61ae
+                           0061AF   951 _FSCAL2	=	0x61af
+                           0061B0   952 _FSCAL3	=	0x61b0
+                           0061B1   953 _AGCCTRL0	=	0x61b1
+                           0061B2   954 _AGCCTRL1	=	0x61b2
+                           0061B3   955 _AGCCTRL2	=	0x61b3
+                           0061B4   956 _AGCCTRL3	=	0x61b4
+                           0061B5   957 _ADCTEST0	=	0x61b5
+                           0061B6   958 _ADCTEST1	=	0x61b6
+                           0061B7   959 _ADCTEST2	=	0x61b7
+                           0061B8   960 _MDMTEST0	=	0x61b8
+                           0061B9   961 _MDMTEST1	=	0x61b9
+                           0061BA   962 _DACTEST0	=	0x61ba
+                           0061BB   963 _DACTEST1	=	0x61bb
+                           0061BC   964 _DACTEST2	=	0x61bc
+                           0061BD   965 _ATEST	=	0x61bd
+                           0061BE   966 _PTEST0	=	0x61be
+                           0061BF   967 _PTEST1	=	0x61bf
+                           0061FA   968 _TXFILTCFG	=	0x61fa
+                           0061EB   969 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   970 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   971 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   972 _CSPPROG0	=	0x61c0
+                           0061C1   973 _CSPPROG1	=	0x61c1
+                           0061C2   974 _CSPPROG2	=	0x61c2
+                           0061C3   975 _CSPPROG3	=	0x61c3
+                           0061C4   976 _CSPPROG4	=	0x61c4
+                           0061C5   977 _CSPPROG5	=	0x61c5
+                           0061C6   978 _CSPPROG6	=	0x61c6
+                           0061C7   979 _CSPPROG7	=	0x61c7
+                           0061C8   980 _CSPPROG8	=	0x61c8
+                           0061C9   981 _CSPPROG9	=	0x61c9
+                           0061CA   982 _CSPPROG10	=	0x61ca
+                           0061CB   983 _CSPPROG11	=	0x61cb
+                           0061CC   984 _CSPPROG12	=	0x61cc
+                           0061CD   985 _CSPPROG13	=	0x61cd
+                           0061CE   986 _CSPPROG14	=	0x61ce
+                           0061CF   987 _CSPPROG15	=	0x61cf
+                           0061D0   988 _CSPPROG16	=	0x61d0
+                           0061D1   989 _CSPPROG17	=	0x61d1
+                           0061D2   990 _CSPPROG18	=	0x61d2
+                           0061D3   991 _CSPPROG19	=	0x61d3
+                           0061D4   992 _CSPPROG20	=	0x61d4
+                           0061D5   993 _CSPPROG21	=	0x61d5
+                           0061D6   994 _CSPPROG22	=	0x61d6
+                           0061D7   995 _CSPPROG23	=	0x61d7
+                           0061E0   996 _CSPCTRL	=	0x61e0
+                           0061E1   997 _CSPSTAT	=	0x61e1
+                           0061E2   998 _CSPX	=	0x61e2
+                           0061E3   999 _CSPY	=	0x61e3
+                           0061E4  1000 _CSPZ	=	0x61e4
+                           0061E5  1001 _CSPT	=	0x61e5
+                           006200  1002 _USBADDR	=	0x6200
+                           006201  1003 _USBPOW	=	0x6201
+                           006202  1004 _USBIIF	=	0x6202
+                           006204  1005 _USBOIF	=	0x6204
+                           006206  1006 _USBCIF	=	0x6206
+                           006207  1007 _USBIIE	=	0x6207
+                           006209  1008 _USBOIE	=	0x6209
+                           00620B  1009 _USBCIE	=	0x620b
+                           00620C  1010 _USBFRML	=	0x620c
+                           00620D  1011 _USBFRMH	=	0x620d
+                           00620E  1012 _USBINDEX	=	0x620e
+                           00620F  1013 _USBCTRL	=	0x620f
+                           006210  1014 _USBMAXI	=	0x6210
+                           006211  1015 _USBCS0	=	0x6211
+                           006211  1016 _USBCSIL	=	0x6211
+                           006212  1017 _USBCSIH	=	0x6212
+                           006213  1018 _USBMAXO	=	0x6213
+                           006214  1019 _USBCSOL	=	0x6214
+                           006215  1020 _USBCSOH	=	0x6215
+                           006216  1021 _USBCNT0	=	0x6216
+                           006216  1022 _USBCNTL	=	0x6216
+                           006217  1023 _USBCNTH	=	0x6217
+                           006220  1024 _USBF0	=	0x6220
+                           006222  1025 _USBF1	=	0x6222
+                           006224  1026 _USBF2	=	0x6224
+                           006226  1027 _USBF3	=	0x6226
+                           006228  1028 _USBF4	=	0x6228
+                           00622A  1029 _USBF5	=	0x622a
+                           007080  1030 _X_P0	=	0x7080
+                           007086  1031 _X_U0CSR	=	0x7086
+                           007089  1032 _X_P0IFG	=	0x7089
+                           00708A  1033 _X_P1IFG	=	0x708a
+                           00708B  1034 _X_P2IFG	=	0x708b
+                           00708C  1035 _X_PICTL	=	0x708c
+                           00708D  1036 _X_P1IEN	=	0x708d
+                           00708F  1037 _X_P0INP	=	0x708f
+                           007090  1038 _X_P1	=	0x7090
+                           007091  1039 _X_RFIRQF1	=	0x7091
+                           007093  1040 _X_MPAGE	=	0x7093
+                           007093  1041 _X__XPAGE	=	0x7093
+                           007094  1042 _X_T2CTRL	=	0x7094
+                           007095  1043 _X_ST0	=	0x7095
+                           007096  1044 _X_ST1	=	0x7096
+                           007097  1045 _X_ST2	=	0x7097
+                           00709C  1046 _X_T2EVTCFG	=	0x709c
+                           00709D  1047 _X_SLEEPSTA	=	0x709d
+                           00709E  1048 _X_CLKCONSTA	=	0x709e
+                           00709F  1049 _X_FMAP	=	0x709f
+                           00709F  1050 _X_PSBANK	=	0x709f
+                           0070A0  1051 _X_P2	=	0x70a0
+                           0070A1  1052 _X_T2IRQF	=	0x70a1
+                           0070A2  1053 _X_T2M0	=	0x70a2
+                           0070A3  1054 _X_T2M1	=	0x70a3
+                           0070A4  1055 _X_T2MOVF0	=	0x70a4
+                           0070A5  1056 _X_T2MOVF1	=	0x70a5
+                           0070A6  1057 _X_T2MOVF2	=	0x70a6
+                           0070A7  1058 _X_T2IRQM	=	0x70a7
+                           0070AB  1059 _X_P0IEN	=	0x70ab
+                           0070AC  1060 _X_P2IEN	=	0x70ac
+                           0070AD  1061 _X_STLOAD	=	0x70ad
+                           0070AE  1062 _X_PMUX	=	0x70ae
+                           0070AF  1063 _X_T1STAT	=	0x70af
+                           0070B1  1064 _X_ENCDI	=	0x70b1
+                           0070B2  1065 _X_ENCDO	=	0x70b2
+                           0070B3  1066 _X_ENCCS	=	0x70b3
+                           0070B4  1067 _X_ADCCON1	=	0x70b4
+                           0070B5  1068 _X_ADCCON2	=	0x70b5
+                           0070B6  1069 _X_ADCCON3	=	0x70b6
+                           0070BA  1070 _X_ADCL	=	0x70ba
+                           0070BB  1071 _X_ADCH	=	0x70bb
+                           0070BC  1072 _X_RNDL	=	0x70bc
+                           0070BD  1073 _X_RNDH	=	0x70bd
+                           0070BE  1074 _X_SLEEPCMD	=	0x70be
+                           0070BF  1075 _X_RFERRF	=	0x70bf
+                           0070C1  1076 _X_U0DBUF	=	0x70c1
+                           0070C2  1077 _X_U0BAUD	=	0x70c2
+                           0070C3  1078 _X_T2MSEL	=	0x70c3
+                           0070C4  1079 _X_U0UCR	=	0x70c4
+                           0070C5  1080 _X_U0GCR	=	0x70c5
+                           0070C6  1081 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1082 _X_MEMCTR	=	0x70c7
+                           0070C9  1083 _X_WDCTL	=	0x70c9
+                           0070CA  1084 _X_T3CNT	=	0x70ca
+                           0070CB  1085 _X_T3CTL	=	0x70cb
+                           0070CC  1086 _X_T3CCTL0	=	0x70cc
+                           0070CD  1087 _X_T3CC0	=	0x70cd
+                           0070CE  1088 _X_T3CCTL1	=	0x70ce
+                           0070CF  1089 _X_T3CC1	=	0x70cf
+                           0070D1  1090 _X_DMAIRQ	=	0x70d1
+                           0070D2  1091 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1092 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1093 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1094 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1095 _X_DMAARM	=	0x70d6
+                           0070D7  1096 _X_DMAREQ	=	0x70d7
+                           0070D8  1097 _X_TIMIF	=	0x70d8
+                           0070D9  1098 _X_RFD	=	0x70d9
+                           0070DA  1099 _X_T1CC0L	=	0x70da
+                           0070DB  1100 _X_T1CC0H	=	0x70db
+                           0070DC  1101 _X_T1CC1L	=	0x70dc
+                           0070DD  1102 _X_T1CC1H	=	0x70dd
+                           0070DE  1103 _X_T1CC2L	=	0x70de
+                           0070DF  1104 _X_T1CC2H	=	0x70df
+                           0070E1  1105 _X_RFST	=	0x70e1
+                           0070E2  1106 _X_T1CNTL	=	0x70e2
+                           0070E3  1107 _X_T1CNTH	=	0x70e3
+                           0070E4  1108 _X_T1CTL	=	0x70e4
+                           0070E5  1109 _X_T1CCTL0	=	0x70e5
+                           0070E6  1110 _X_T1CCTL1	=	0x70e6
+                           0070E7  1111 _X_T1CCTL2	=	0x70e7
+                           0070E9  1112 _X_RFIRQF0	=	0x70e9
+                           0070EA  1113 _X_T4CNT	=	0x70ea
+                           0070EB  1114 _X_T4CTL	=	0x70eb
+                           0070EC  1115 _X_T4CCTL0	=	0x70ec
+                           0070ED  1116 _X_T4CC0	=	0x70ed
+                           0070EE  1117 _X_T4CCTL1	=	0x70ee
+                           0070EF  1118 _X_T4CC1	=	0x70ef
+                           0070F1  1119 _X_PERCFG	=	0x70f1
+                           0070F2  1120 _X_APCFG	=	0x70f2
+                           0070F3  1121 _X_P0SEL	=	0x70f3
+                           0070F4  1122 _X_P1SEL	=	0x70f4
+                           0070F5  1123 _X_P2SEL	=	0x70f5
+                           0070F6  1124 _X_P1INP	=	0x70f6
+                           0070F7  1125 _X_P2INP	=	0x70f7
+                           0070F8  1126 _X_U1CSR	=	0x70f8
+                           0070F9  1127 _X_U1DBUF	=	0x70f9
+                           0070FA  1128 _X_U1BAUD	=	0x70fa
+                           0070FB  1129 _X_U1UCR	=	0x70fb
+                           0070FC  1130 _X_U1GCR	=	0x70fc
+                           0070FD  1131 _X_P0DIR	=	0x70fd
+                           0070FE  1132 _X_P1DIR	=	0x70fe
+                           0070FF  1133 _X_P2DIR	=	0x70ff
+                           007800  1134 _X_INFOPAGE	=	0x7800
+                           00780C  1135 _X_IEEE_ADDR	=	0x780c
+                                   1136 ;--------------------------------------------------------
+                                   1137 ; absolute external ram data
+                                   1138 ;--------------------------------------------------------
+                                   1139 	.area XABS    (ABS,XDATA)
+                                   1140 ;--------------------------------------------------------
+                                   1141 ; external initialized ram data
+                                   1142 ;--------------------------------------------------------
+                                   1143 	.area XISEG   (XDATA)
+                                   1144 	.area HOME    (CODE)
+                                   1145 	.area GSINIT0 (CODE)
+                                   1146 	.area GSINIT1 (CODE)
+                                   1147 	.area GSINIT2 (CODE)
+                                   1148 	.area GSINIT3 (CODE)
+                                   1149 	.area GSINIT4 (CODE)
+                                   1150 	.area GSINIT5 (CODE)
+                                   1151 	.area GSINIT  (CODE)
+                                   1152 	.area GSFINAL (CODE)
+                                   1153 	.area CSEG    (CODE)
+                                   1154 ;--------------------------------------------------------
+                                   1155 ; global & static initialisations
+                                   1156 ;--------------------------------------------------------
+                                   1157 	.area HOME    (CODE)
+                                   1158 	.area GSINIT  (CODE)
+                                   1159 	.area GSFINAL (CODE)
+                                   1160 	.area GSINIT  (CODE)
+                                   1161 ;--------------------------------------------------------
+                                   1162 ; Home
+                                   1163 ;--------------------------------------------------------
+                                   1164 	.area HOME    (CODE)
+                                   1165 	.area HOME    (CODE)
+                                   1166 ;--------------------------------------------------------
+                                   1167 ; code
+                                   1168 ;--------------------------------------------------------
+                                   1169 	.area CSEG    (CODE)
+                                   1170 ;------------------------------------------------------------
+                                   1171 ;Allocation info for local variables in function 'value_b1'
+                                   1172 ;------------------------------------------------------------
+                                   1173 ;type                      Allocated to registers 
+                                   1174 ;------------------------------------------------------------
+                                   1175 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:49: value_b1(int type)
+                                   1176 ;	-----------------------------------------
+                                   1177 ;	 function value_b1
+                                   1178 ;	-----------------------------------------
+      000000                       1179 _value_b1:
+                           000007  1180 	ar7 = 0x07
+                           000006  1181 	ar6 = 0x06
+                           000005  1182 	ar5 = 0x05
+                           000004  1183 	ar4 = 0x04
+                           000003  1184 	ar3 = 0x03
+                           000002  1185 	ar2 = 0x02
+                           000001  1186 	ar1 = 0x01
+                           000000  1187 	ar0 = 0x00
+                                   1188 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:52: return BUTTON_READ(1) || !timer_expired(&debouncetimer);
+      000000 20 80 1A         [24] 1189 	jb	_P0_0,00104$
+      000003 90r00r00         [24] 1190 	mov	dptr,#_debouncetimer
+      000006 75 F0 40         [24] 1191 	mov	b,#0x40
+      000009 12r00r00         [24] 1192 	lcall	_timer_expired
+      00000C AE 82            [24] 1193 	mov	r6,dpl
+      00000E AF 83            [24] 1194 	mov	r7,dph
+      000010 EE               [12] 1195 	mov	a,r6
+      000011 4F               [12] 1196 	orl	a,r7
+      000012 B4 01 00         [24] 1197 	cjne	a,#0x01,00113$
+      000015                       1198 00113$:
+      000015 E4               [12] 1199 	clr	a
+      000016 33               [12] 1200 	rlc	a
+      000017 FE               [12] 1201 	mov	r6,a
+      000018 70 03            [24] 1202 	jnz	00104$
+      00001A FF               [12] 1203 	mov	r7,a
+      00001B 80 02            [24] 1204 	sjmp	00105$
+      00001D                       1205 00104$:
+      00001D 7F 01            [12] 1206 	mov	r7,#0x01
+      00001F                       1207 00105$:
+      00001F EF               [12] 1208 	mov	a,r7
+      000020 33               [12] 1209 	rlc	a
+      000021 95 E0            [12] 1210 	subb	a,acc
+      000023 8F 82            [24] 1211 	mov	dpl,r7
+      000025 F5 83            [12] 1212 	mov	dph,a
+      000027 22               [24] 1213 	ret
+                                   1214 ;------------------------------------------------------------
+                                   1215 ;Allocation info for local variables in function 'status_b1'
+                                   1216 ;------------------------------------------------------------
+                                   1217 ;type                      Allocated to registers r6 r7 
+                                   1218 ;------------------------------------------------------------
+                                   1219 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:56: status_b1(int type)
+                                   1220 ;	-----------------------------------------
+                                   1221 ;	 function status_b1
+                                   1222 ;	-----------------------------------------
+      000028                       1223 _status_b1:
+      000028 AE 82            [24] 1224 	mov	r6,dpl
+      00002A AF 83            [24] 1225 	mov	r7,dph
+                                   1226 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:58: switch(type) {
+      00002C BE 81 05         [24] 1227 	cjne	r6,#0x81,00109$
+      00002F BF 00 02         [24] 1228 	cjne	r7,#0x00,00109$
+      000032 80 06            [24] 1229 	sjmp	00102$
+      000034                       1230 00109$:
+      000034 BE 82 0F         [24] 1231 	cjne	r6,#0x82,00103$
+      000037 BF 00 0C         [24] 1232 	cjne	r7,#0x00,00103$
+                                   1233 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:60: case SENSORS_READY:
+      00003A                       1234 00102$:
+                                   1235 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:61: return BUTTON_IRQ_ENABLED(1);
+      00003A 74 01            [12] 1236 	mov	a,#0x01
+      00003C 55 AB            [12] 1237 	anl	a,_P0IEN
+      00003E FF               [12] 1238 	mov	r7,a
+      00003F 7E 00            [12] 1239 	mov	r6,#0x00
+      000041 8F 82            [24] 1240 	mov	dpl,r7
+      000043 8E 83            [24] 1241 	mov	dph,r6
+                                   1242 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:62: }
+      000045 22               [24] 1243 	ret
+      000046                       1244 00103$:
+                                   1245 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:63: return 0;
+      000046 90 00 00         [24] 1246 	mov	dptr,#0x0000
+      000049 22               [24] 1247 	ret
+                                   1248 ;------------------------------------------------------------
+                                   1249 ;Allocation info for local variables in function 'configure_b1'
+                                   1250 ;------------------------------------------------------------
+                                   1251 ;value                     Allocated to stack - sp -3
+                                   1252 ;type                      Allocated to registers r6 r7 
+                                   1253 ;------------------------------------------------------------
+                                   1254 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:67: configure_b1(int type, int value)
+                                   1255 ;	-----------------------------------------
+                                   1256 ;	 function configure_b1
+                                   1257 ;	-----------------------------------------
+      00004A                       1258 _configure_b1:
+      00004A AE 82            [24] 1259 	mov	r6,dpl
+      00004C AF 83            [24] 1260 	mov	r7,dph
+                                   1261 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:70: leds_toggle(1);
+      00004E 75 82 01         [24] 1262 	mov	dpl,#0x01
+      000051 C0 07            [24] 1263 	push	ar7
+      000053 C0 06            [24] 1264 	push	ar6
+      000055 12r00r00         [24] 1265 	lcall	_leds_toggle
+      000058 D0 06            [24] 1266 	pop	ar6
+      00005A D0 07            [24] 1267 	pop	ar7
+                                   1268 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:72: switch(type) {
+      00005C BE 80 05         [24] 1269 	cjne	r6,#0x80,00147$
+      00005F BF 00 02         [24] 1270 	cjne	r7,#0x00,00147$
+      000062 80 08            [24] 1271 	sjmp	00101$
+      000064                       1272 00147$:
+                                   1273 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:73: case SENSORS_HW_INIT:
+      000064 BE 81 60         [24] 1274 	cjne	r6,#0x81,00132$
+      000067 BF 00 5D         [24] 1275 	cjne	r7,#0x00,00132$
+      00006A 80 1C            [24] 1276 	sjmp	00111$
+      00006C                       1277 00101$:
+                                   1278 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:75: P0INP |= 1; /* Tri-state */
+      00006C 43 8F 01         [24] 1279 	orl	_P0INP,#0x01
+                                   1280 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:77: BUTTON_IRQ_ON_PRESS(1);
+      00006F AF 8C            [24] 1281 	mov	r7,_PICTL
+      000071 74 BF            [12] 1282 	mov	a,#0xBF
+      000073 5F               [12] 1283 	anl	a,r7
+      000074 F5 8C            [12] 1284 	mov	_PICTL,a
+                                   1285 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:78: BUTTON_FUNC_GPIO(1);
+      000076 AF F3            [24] 1286 	mov	r7,_P0SEL
+      000078 74 FE            [12] 1287 	mov	a,#0xFE
+      00007A 5F               [12] 1288 	anl	a,r7
+      00007B F5 F3            [12] 1289 	mov	_P0SEL,a
+                                   1290 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:79: BUTTON_DIR_INPUT(1);
+      00007D AF FD            [24] 1291 	mov	r7,_P0DIR
+      00007F 74 FE            [12] 1292 	mov	a,#0xFE
+      000081 5F               [12] 1293 	anl	a,r7
+      000082 F5 FD            [12] 1294 	mov	_P0DIR,a
+                                   1295 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:80: return 1;
+      000084 90 00 01         [24] 1296 	mov	dptr,#0x0001
+                                   1297 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:81: case SENSORS_ACTIVE:
+      000087 22               [24] 1298 	ret
+      000088                       1299 00111$:
+                                   1300 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:82: if(value) {
+      000088 E5 81            [12] 1301 	mov	a,sp
+      00008A 24 FD            [12] 1302 	add	a,#0xfd
+      00008C F8               [12] 1303 	mov	r0,a
+      00008D E6               [12] 1304 	mov	a,@r0
+      00008E 08               [12] 1305 	inc	r0
+      00008F 46               [12] 1306 	orl	a,@r0
+      000090 60 28            [24] 1307 	jz	00126$
+                                   1308 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:83: if(!BUTTON_IRQ_ENABLED(1)) {
+      000092 E5 AB            [12] 1309 	mov	a,_P0IEN
+      000094 FF               [12] 1310 	mov	r7,a
+      000095 20 E0 2B         [24] 1311 	jb	acc.0,00131$
+                                   1312 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:84: timer_set(&debouncetimer, 0);
+      000098 E4               [12] 1313 	clr	a
+      000099 C0 E0            [24] 1314 	push	acc
+      00009B C0 E0            [24] 1315 	push	acc
+      00009D 90r00r00         [24] 1316 	mov	dptr,#_debouncetimer
+      0000A0 75 F0 40         [24] 1317 	mov	b,#0x40
+      0000A3 12r00r00         [24] 1318 	lcall	_timer_set
+      0000A6 15 81            [12] 1319 	dec	sp
+      0000A8 15 81            [12] 1320 	dec	sp
+                                   1321 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:85: BUTTON_IRQ_FLAG_OFF(1);
+      0000AA AF 89            [24] 1322 	mov	r7,_P0IFG
+      0000AC 74 FE            [12] 1323 	mov	a,#0xFE
+      0000AE 5F               [12] 1324 	anl	a,r7
+      0000AF F5 89            [12] 1325 	mov	_P0IFG,a
+      0000B1 C2 C5            [12] 1326 	clr	_P0IF
+                                   1327 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:86: BUTTON_IRQ_ENABLE(1);
+      0000B3 43 AB 01         [24] 1328 	orl	_P0IEN,#0x01
+      0000B6 D2 BD            [12] 1329 	setb	_P0IE
+                                   1330 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:89: BUTTON_IRQ_DISABLE(1);
+      0000B8 80 09            [24] 1331 	sjmp	00131$
+      0000BA                       1332 00126$:
+      0000BA AF AB            [24] 1333 	mov	r7,_P0IEN
+      0000BC 74 FE            [12] 1334 	mov	a,#0xFE
+      0000BE 5F               [12] 1335 	anl	a,r7
+      0000BF F5 AB            [12] 1336 	mov	_P0IEN,a
+      0000C1 C2 BD            [12] 1337 	clr	_P0IE
+      0000C3                       1338 00131$:
+                                   1339 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:91: return 1;
+      0000C3 90 00 01         [24] 1340 	mov	dptr,#0x0001
+                                   1341 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:92: }
+      0000C6 22               [24] 1342 	ret
+      0000C7                       1343 00132$:
+                                   1344 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:93: return 0;
+      0000C7 90 00 00         [24] 1345 	mov	dptr,#0x0000
+      0000CA 22               [24] 1346 	ret
+                                   1347 ;------------------------------------------------------------
+                                   1348 ;Allocation info for local variables in function 'value_b2'
+                                   1349 ;------------------------------------------------------------
+                                   1350 ;type                      Allocated to registers 
+                                   1351 ;------------------------------------------------------------
+                                   1352 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:99: value_b2(int type)
+                                   1353 ;	-----------------------------------------
+                                   1354 ;	 function value_b2
+                                   1355 ;	-----------------------------------------
+      0000CB                       1356 _value_b2:
+                                   1357 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:102: return BUTTON_READ(2) || !timer_expired(&debouncetimer);
+      0000CB 20 81 1A         [24] 1358 	jb	_P0_1,00104$
+      0000CE 90r00r00         [24] 1359 	mov	dptr,#_debouncetimer
+      0000D1 75 F0 40         [24] 1360 	mov	b,#0x40
+      0000D4 12r00r00         [24] 1361 	lcall	_timer_expired
+      0000D7 AE 82            [24] 1362 	mov	r6,dpl
+      0000D9 AF 83            [24] 1363 	mov	r7,dph
+      0000DB EE               [12] 1364 	mov	a,r6
+      0000DC 4F               [12] 1365 	orl	a,r7
+      0000DD B4 01 00         [24] 1366 	cjne	a,#0x01,00113$
+      0000E0                       1367 00113$:
+      0000E0 E4               [12] 1368 	clr	a
+      0000E1 33               [12] 1369 	rlc	a
+      0000E2 FE               [12] 1370 	mov	r6,a
+      0000E3 70 03            [24] 1371 	jnz	00104$
+      0000E5 FF               [12] 1372 	mov	r7,a
+      0000E6 80 02            [24] 1373 	sjmp	00105$
+      0000E8                       1374 00104$:
+      0000E8 7F 01            [12] 1375 	mov	r7,#0x01
+      0000EA                       1376 00105$:
+      0000EA EF               [12] 1377 	mov	a,r7
+      0000EB 33               [12] 1378 	rlc	a
+      0000EC 95 E0            [12] 1379 	subb	a,acc
+      0000EE 8F 82            [24] 1380 	mov	dpl,r7
+      0000F0 F5 83            [12] 1381 	mov	dph,a
+      0000F2 22               [24] 1382 	ret
+                                   1383 ;------------------------------------------------------------
+                                   1384 ;Allocation info for local variables in function 'status_b2'
+                                   1385 ;------------------------------------------------------------
+                                   1386 ;type                      Allocated to registers r6 r7 
+                                   1387 ;------------------------------------------------------------
+                                   1388 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:106: status_b2(int type)
+                                   1389 ;	-----------------------------------------
+                                   1390 ;	 function status_b2
+                                   1391 ;	-----------------------------------------
+      0000F3                       1392 _status_b2:
+      0000F3 AE 82            [24] 1393 	mov	r6,dpl
+      0000F5 AF 83            [24] 1394 	mov	r7,dph
+                                   1395 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:108: switch(type) {
+      0000F7 BE 81 05         [24] 1396 	cjne	r6,#0x81,00109$
+      0000FA BF 00 02         [24] 1397 	cjne	r7,#0x00,00109$
+      0000FD 80 06            [24] 1398 	sjmp	00102$
+      0000FF                       1399 00109$:
+      0000FF BE 82 0F         [24] 1400 	cjne	r6,#0x82,00103$
+      000102 BF 00 0C         [24] 1401 	cjne	r7,#0x00,00103$
+                                   1402 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:110: case SENSORS_READY:
+      000105                       1403 00102$:
+                                   1404 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:111: return BUTTON_IRQ_ENABLED(2);
+      000105 74 02            [12] 1405 	mov	a,#0x02
+      000107 55 AB            [12] 1406 	anl	a,_P0IEN
+      000109 FF               [12] 1407 	mov	r7,a
+      00010A 7E 00            [12] 1408 	mov	r6,#0x00
+      00010C 8F 82            [24] 1409 	mov	dpl,r7
+      00010E 8E 83            [24] 1410 	mov	dph,r6
+                                   1411 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:112: }
+      000110 22               [24] 1412 	ret
+      000111                       1413 00103$:
+                                   1414 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:113: return 0;
+      000111 90 00 00         [24] 1415 	mov	dptr,#0x0000
+      000114 22               [24] 1416 	ret
+                                   1417 ;------------------------------------------------------------
+                                   1418 ;Allocation info for local variables in function 'configure_b2'
+                                   1419 ;------------------------------------------------------------
+                                   1420 ;value                     Allocated to stack - sp -3
+                                   1421 ;type                      Allocated to registers r6 r7 
+                                   1422 ;------------------------------------------------------------
+                                   1423 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:117: configure_b2(int type, int value)
+                                   1424 ;	-----------------------------------------
+                                   1425 ;	 function configure_b2
+                                   1426 ;	-----------------------------------------
+      000115                       1427 _configure_b2:
+      000115 AE 82            [24] 1428 	mov	r6,dpl
+      000117 AF 83            [24] 1429 	mov	r7,dph
+                                   1430 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:120: leds_toggle(2);
+      000119 75 82 02         [24] 1431 	mov	dpl,#0x02
+      00011C C0 07            [24] 1432 	push	ar7
+      00011E C0 06            [24] 1433 	push	ar6
+      000120 12r00r00         [24] 1434 	lcall	_leds_toggle
+      000123 D0 06            [24] 1435 	pop	ar6
+      000125 D0 07            [24] 1436 	pop	ar7
+                                   1437 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:122: switch(type) {
+      000127 BE 80 05         [24] 1438 	cjne	r6,#0x80,00147$
+      00012A BF 00 02         [24] 1439 	cjne	r7,#0x00,00147$
+      00012D 80 08            [24] 1440 	sjmp	00102$
+      00012F                       1441 00147$:
+                                   1442 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:124: BUTTON_IRQ_ON_PRESS(2);
+      00012F BE 81 5C         [24] 1443 	cjne	r6,#0x81,00132$
+      000132 BF 00 59         [24] 1444 	cjne	r7,#0x00,00132$
+      000135 80 19            [24] 1445 	sjmp	00111$
+      000137                       1446 00102$:
+      000137 AF 8C            [24] 1447 	mov	r7,_PICTL
+      000139 74 BF            [12] 1448 	mov	a,#0xBF
+      00013B 5F               [12] 1449 	anl	a,r7
+      00013C F5 8C            [12] 1450 	mov	_PICTL,a
+                                   1451 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:125: BUTTON_FUNC_GPIO(2);
+      00013E AF F3            [24] 1452 	mov	r7,_P0SEL
+      000140 74 FD            [12] 1453 	mov	a,#0xFD
+      000142 5F               [12] 1454 	anl	a,r7
+      000143 F5 F3            [12] 1455 	mov	_P0SEL,a
+                                   1456 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:126: BUTTON_DIR_INPUT(2);
+      000145 AF FD            [24] 1457 	mov	r7,_P0DIR
+      000147 74 FD            [12] 1458 	mov	a,#0xFD
+      000149 5F               [12] 1459 	anl	a,r7
+      00014A F5 FD            [12] 1460 	mov	_P0DIR,a
+                                   1461 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:127: return 1;
+      00014C 90 00 01         [24] 1462 	mov	dptr,#0x0001
+                                   1463 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:128: case SENSORS_ACTIVE:
+      00014F 22               [24] 1464 	ret
+      000150                       1465 00111$:
+                                   1466 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:129: if(value) {
+      000150 E5 81            [12] 1467 	mov	a,sp
+      000152 24 FD            [12] 1468 	add	a,#0xfd
+      000154 F8               [12] 1469 	mov	r0,a
+      000155 E6               [12] 1470 	mov	a,@r0
+      000156 08               [12] 1471 	inc	r0
+      000157 46               [12] 1472 	orl	a,@r0
+      000158 60 27            [24] 1473 	jz	00126$
+                                   1474 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:130: if(!BUTTON_IRQ_ENABLED(2)) {
+      00015A E5 AB            [12] 1475 	mov	a,_P0IEN
+      00015C 20 E1 2B         [24] 1476 	jb	acc.1,00131$
+                                   1477 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:131: timer_set(&debouncetimer, 0);
+      00015F E4               [12] 1478 	clr	a
+      000160 C0 E0            [24] 1479 	push	acc
+      000162 C0 E0            [24] 1480 	push	acc
+      000164 90r00r00         [24] 1481 	mov	dptr,#_debouncetimer
+      000167 75 F0 40         [24] 1482 	mov	b,#0x40
+      00016A 12r00r00         [24] 1483 	lcall	_timer_set
+      00016D 15 81            [12] 1484 	dec	sp
+      00016F 15 81            [12] 1485 	dec	sp
+                                   1486 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:132: BUTTON_IRQ_FLAG_OFF(2);
+      000171 AF 89            [24] 1487 	mov	r7,_P0IFG
+      000173 74 FD            [12] 1488 	mov	a,#0xFD
+      000175 5F               [12] 1489 	anl	a,r7
+      000176 F5 89            [12] 1490 	mov	_P0IFG,a
+      000178 C2 C5            [12] 1491 	clr	_P0IF
+                                   1492 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:133: BUTTON_IRQ_ENABLE(2);
+      00017A 43 AB 02         [24] 1493 	orl	_P0IEN,#0x02
+      00017D D2 BD            [12] 1494 	setb	_P0IE
+                                   1495 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:136: BUTTON_IRQ_DISABLE(2);
+      00017F 80 09            [24] 1496 	sjmp	00131$
+      000181                       1497 00126$:
+      000181 AF AB            [24] 1498 	mov	r7,_P0IEN
+      000183 74 FD            [12] 1499 	mov	a,#0xFD
+      000185 5F               [12] 1500 	anl	a,r7
+      000186 F5 AB            [12] 1501 	mov	_P0IEN,a
+      000188 C2 BD            [12] 1502 	clr	_P0IE
+      00018A                       1503 00131$:
+                                   1504 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:138: return 1;
+      00018A 90 00 01         [24] 1505 	mov	dptr,#0x0001
+                                   1506 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:139: }
+      00018D 22               [24] 1507 	ret
+      00018E                       1508 00132$:
+                                   1509 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:140: return 0;
+      00018E 90 00 00         [24] 1510 	mov	dptr,#0x0000
+      000191 22               [24] 1511 	ret
+                                   1512 ;------------------------------------------------------------
+                                   1513 ;Allocation info for local variables in function 'value_b3'
+                                   1514 ;------------------------------------------------------------
+                                   1515 ;type                      Allocated to registers 
+                                   1516 ;------------------------------------------------------------
+                                   1517 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:146: value_b3(int type)
+                                   1518 ;	-----------------------------------------
+                                   1519 ;	 function value_b3
+                                   1520 ;	-----------------------------------------
+      000192                       1521 _value_b3:
+                                   1522 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:149: return BUTTON_READ(3) || !timer_expired(&debouncetimer);
+      000192 20 82 1A         [24] 1523 	jb	_P0_2,00104$
+      000195 90r00r00         [24] 1524 	mov	dptr,#_debouncetimer
+      000198 75 F0 40         [24] 1525 	mov	b,#0x40
+      00019B 12r00r00         [24] 1526 	lcall	_timer_expired
+      00019E AE 82            [24] 1527 	mov	r6,dpl
+      0001A0 AF 83            [24] 1528 	mov	r7,dph
+      0001A2 EE               [12] 1529 	mov	a,r6
+      0001A3 4F               [12] 1530 	orl	a,r7
+      0001A4 B4 01 00         [24] 1531 	cjne	a,#0x01,00113$
+      0001A7                       1532 00113$:
+      0001A7 E4               [12] 1533 	clr	a
+      0001A8 33               [12] 1534 	rlc	a
+      0001A9 FE               [12] 1535 	mov	r6,a
+      0001AA 70 03            [24] 1536 	jnz	00104$
+      0001AC FF               [12] 1537 	mov	r7,a
+      0001AD 80 02            [24] 1538 	sjmp	00105$
+      0001AF                       1539 00104$:
+      0001AF 7F 01            [12] 1540 	mov	r7,#0x01
+      0001B1                       1541 00105$:
+      0001B1 EF               [12] 1542 	mov	a,r7
+      0001B2 33               [12] 1543 	rlc	a
+      0001B3 95 E0            [12] 1544 	subb	a,acc
+      0001B5 8F 82            [24] 1545 	mov	dpl,r7
+      0001B7 F5 83            [12] 1546 	mov	dph,a
+      0001B9 22               [24] 1547 	ret
+                                   1548 ;------------------------------------------------------------
+                                   1549 ;Allocation info for local variables in function 'status_b3'
+                                   1550 ;------------------------------------------------------------
+                                   1551 ;type                      Allocated to registers r6 r7 
+                                   1552 ;------------------------------------------------------------
+                                   1553 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:153: status_b3(int type)
+                                   1554 ;	-----------------------------------------
+                                   1555 ;	 function status_b3
+                                   1556 ;	-----------------------------------------
+      0001BA                       1557 _status_b3:
+      0001BA AE 82            [24] 1558 	mov	r6,dpl
+      0001BC AF 83            [24] 1559 	mov	r7,dph
+                                   1560 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:155: switch(type) {
+      0001BE BE 81 05         [24] 1561 	cjne	r6,#0x81,00109$
+      0001C1 BF 00 02         [24] 1562 	cjne	r7,#0x00,00109$
+      0001C4 80 06            [24] 1563 	sjmp	00102$
+      0001C6                       1564 00109$:
+      0001C6 BE 82 0F         [24] 1565 	cjne	r6,#0x82,00103$
+      0001C9 BF 00 0C         [24] 1566 	cjne	r7,#0x00,00103$
+                                   1567 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:157: case SENSORS_READY:
+      0001CC                       1568 00102$:
+                                   1569 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:158: return BUTTON_IRQ_ENABLED(3);
+      0001CC 74 04            [12] 1570 	mov	a,#0x04
+      0001CE 55 AB            [12] 1571 	anl	a,_P0IEN
+      0001D0 FF               [12] 1572 	mov	r7,a
+      0001D1 7E 00            [12] 1573 	mov	r6,#0x00
+      0001D3 8F 82            [24] 1574 	mov	dpl,r7
+      0001D5 8E 83            [24] 1575 	mov	dph,r6
+                                   1576 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:159: }
+      0001D7 22               [24] 1577 	ret
+      0001D8                       1578 00103$:
+                                   1579 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:160: return 0;
+      0001D8 90 00 00         [24] 1580 	mov	dptr,#0x0000
+      0001DB 22               [24] 1581 	ret
+                                   1582 ;------------------------------------------------------------
+                                   1583 ;Allocation info for local variables in function 'configure_b3'
+                                   1584 ;------------------------------------------------------------
+                                   1585 ;value                     Allocated to stack - sp -3
+                                   1586 ;type                      Allocated to registers r6 r7 
+                                   1587 ;------------------------------------------------------------
+                                   1588 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:164: configure_b3(int type, int value)
+                                   1589 ;	-----------------------------------------
+                                   1590 ;	 function configure_b3
+                                   1591 ;	-----------------------------------------
+      0001DC                       1592 _configure_b3:
+      0001DC AE 82            [24] 1593 	mov	r6,dpl
+      0001DE AF 83            [24] 1594 	mov	r7,dph
+                                   1595 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:167: leds_toggle(4);
+      0001E0 75 82 04         [24] 1596 	mov	dpl,#0x04
+      0001E3 C0 07            [24] 1597 	push	ar7
+      0001E5 C0 06            [24] 1598 	push	ar6
+      0001E7 12r00r00         [24] 1599 	lcall	_leds_toggle
+      0001EA D0 06            [24] 1600 	pop	ar6
+      0001EC D0 07            [24] 1601 	pop	ar7
+                                   1602 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:169: switch(type) {
+      0001EE BE 80 05         [24] 1603 	cjne	r6,#0x80,00147$
+      0001F1 BF 00 02         [24] 1604 	cjne	r7,#0x00,00147$
+      0001F4 80 08            [24] 1605 	sjmp	00102$
+      0001F6                       1606 00147$:
+                                   1607 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:171: BUTTON_IRQ_ON_PRESS(3);
+      0001F6 BE 81 5C         [24] 1608 	cjne	r6,#0x81,00132$
+      0001F9 BF 00 59         [24] 1609 	cjne	r7,#0x00,00132$
+      0001FC 80 19            [24] 1610 	sjmp	00111$
+      0001FE                       1611 00102$:
+      0001FE AF 8C            [24] 1612 	mov	r7,_PICTL
+      000200 74 BF            [12] 1613 	mov	a,#0xBF
+      000202 5F               [12] 1614 	anl	a,r7
+      000203 F5 8C            [12] 1615 	mov	_PICTL,a
+                                   1616 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:172: BUTTON_FUNC_GPIO(3);
+      000205 AF F3            [24] 1617 	mov	r7,_P0SEL
+      000207 74 FB            [12] 1618 	mov	a,#0xFB
+      000209 5F               [12] 1619 	anl	a,r7
+      00020A F5 F3            [12] 1620 	mov	_P0SEL,a
+                                   1621 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:173: BUTTON_DIR_INPUT(3);
+      00020C AF FD            [24] 1622 	mov	r7,_P0DIR
+      00020E 74 FB            [12] 1623 	mov	a,#0xFB
+      000210 5F               [12] 1624 	anl	a,r7
+      000211 F5 FD            [12] 1625 	mov	_P0DIR,a
+                                   1626 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:174: return 1;
+      000213 90 00 01         [24] 1627 	mov	dptr,#0x0001
+                                   1628 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:175: case SENSORS_ACTIVE:
+      000216 22               [24] 1629 	ret
+      000217                       1630 00111$:
+                                   1631 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:176: if(value) {
+      000217 E5 81            [12] 1632 	mov	a,sp
+      000219 24 FD            [12] 1633 	add	a,#0xfd
+      00021B F8               [12] 1634 	mov	r0,a
+      00021C E6               [12] 1635 	mov	a,@r0
+      00021D 08               [12] 1636 	inc	r0
+      00021E 46               [12] 1637 	orl	a,@r0
+      00021F 60 27            [24] 1638 	jz	00126$
+                                   1639 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:177: if(!BUTTON_IRQ_ENABLED(3)) {
+      000221 E5 AB            [12] 1640 	mov	a,_P0IEN
+      000223 20 E2 2B         [24] 1641 	jb	acc.2,00131$
+                                   1642 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:178: timer_set(&debouncetimer, 0);
+      000226 E4               [12] 1643 	clr	a
+      000227 C0 E0            [24] 1644 	push	acc
+      000229 C0 E0            [24] 1645 	push	acc
+      00022B 90r00r00         [24] 1646 	mov	dptr,#_debouncetimer
+      00022E 75 F0 40         [24] 1647 	mov	b,#0x40
+      000231 12r00r00         [24] 1648 	lcall	_timer_set
+      000234 15 81            [12] 1649 	dec	sp
+      000236 15 81            [12] 1650 	dec	sp
+                                   1651 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:179: BUTTON_IRQ_FLAG_OFF(3);
+      000238 AF 89            [24] 1652 	mov	r7,_P0IFG
+      00023A 74 FB            [12] 1653 	mov	a,#0xFB
+      00023C 5F               [12] 1654 	anl	a,r7
+      00023D F5 89            [12] 1655 	mov	_P0IFG,a
+      00023F C2 C5            [12] 1656 	clr	_P0IF
+                                   1657 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:180: BUTTON_IRQ_ENABLE(3);
+      000241 43 AB 04         [24] 1658 	orl	_P0IEN,#0x04
+      000244 D2 BD            [12] 1659 	setb	_P0IE
+                                   1660 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:183: BUTTON_IRQ_DISABLE(3);
+      000246 80 09            [24] 1661 	sjmp	00131$
+      000248                       1662 00126$:
+      000248 AF AB            [24] 1663 	mov	r7,_P0IEN
+      00024A 74 FB            [12] 1664 	mov	a,#0xFB
+      00024C 5F               [12] 1665 	anl	a,r7
+      00024D F5 AB            [12] 1666 	mov	_P0IEN,a
+      00024F C2 BD            [12] 1667 	clr	_P0IE
+      000251                       1668 00131$:
+                                   1669 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:185: return 1;
+      000251 90 00 01         [24] 1670 	mov	dptr,#0x0001
+                                   1671 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:186: }
+      000254 22               [24] 1672 	ret
+      000255                       1673 00132$:
+                                   1674 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:187: return 0;
+      000255 90 00 00         [24] 1675 	mov	dptr,#0x0000
+      000258 22               [24] 1676 	ret
+                                   1677 ;------------------------------------------------------------
+                                   1678 ;Allocation info for local variables in function 'value_b4'
+                                   1679 ;------------------------------------------------------------
+                                   1680 ;type                      Allocated to registers 
+                                   1681 ;------------------------------------------------------------
+                                   1682 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:193: value_b4(int type)
+                                   1683 ;	-----------------------------------------
+                                   1684 ;	 function value_b4
+                                   1685 ;	-----------------------------------------
+      000259                       1686 _value_b4:
+                                   1687 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:196: return BUTTON_READ(4) || !timer_expired(&debouncetimer);
+      000259 20 83 1A         [24] 1688 	jb	_P0_3,00104$
+      00025C 90r00r00         [24] 1689 	mov	dptr,#_debouncetimer
+      00025F 75 F0 40         [24] 1690 	mov	b,#0x40
+      000262 12r00r00         [24] 1691 	lcall	_timer_expired
+      000265 AE 82            [24] 1692 	mov	r6,dpl
+      000267 AF 83            [24] 1693 	mov	r7,dph
+      000269 EE               [12] 1694 	mov	a,r6
+      00026A 4F               [12] 1695 	orl	a,r7
+      00026B B4 01 00         [24] 1696 	cjne	a,#0x01,00113$
+      00026E                       1697 00113$:
+      00026E E4               [12] 1698 	clr	a
+      00026F 33               [12] 1699 	rlc	a
+      000270 FE               [12] 1700 	mov	r6,a
+      000271 70 03            [24] 1701 	jnz	00104$
+      000273 FF               [12] 1702 	mov	r7,a
+      000274 80 02            [24] 1703 	sjmp	00105$
+      000276                       1704 00104$:
+      000276 7F 01            [12] 1705 	mov	r7,#0x01
+      000278                       1706 00105$:
+      000278 EF               [12] 1707 	mov	a,r7
+      000279 33               [12] 1708 	rlc	a
+      00027A 95 E0            [12] 1709 	subb	a,acc
+      00027C 8F 82            [24] 1710 	mov	dpl,r7
+      00027E F5 83            [12] 1711 	mov	dph,a
+      000280 22               [24] 1712 	ret
+                                   1713 ;------------------------------------------------------------
+                                   1714 ;Allocation info for local variables in function 'status_b4'
+                                   1715 ;------------------------------------------------------------
+                                   1716 ;type                      Allocated to registers r6 r7 
+                                   1717 ;------------------------------------------------------------
+                                   1718 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:200: status_b4(int type)
+                                   1719 ;	-----------------------------------------
+                                   1720 ;	 function status_b4
+                                   1721 ;	-----------------------------------------
+      000281                       1722 _status_b4:
+      000281 AE 82            [24] 1723 	mov	r6,dpl
+      000283 AF 83            [24] 1724 	mov	r7,dph
+                                   1725 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:202: switch(type) {
+      000285 BE 81 05         [24] 1726 	cjne	r6,#0x81,00109$
+      000288 BF 00 02         [24] 1727 	cjne	r7,#0x00,00109$
+      00028B 80 06            [24] 1728 	sjmp	00102$
+      00028D                       1729 00109$:
+      00028D BE 82 0F         [24] 1730 	cjne	r6,#0x82,00103$
+      000290 BF 00 0C         [24] 1731 	cjne	r7,#0x00,00103$
+                                   1732 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:204: case SENSORS_READY:
+      000293                       1733 00102$:
+                                   1734 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:205: return BUTTON_IRQ_ENABLED(4);
+      000293 74 08            [12] 1735 	mov	a,#0x08
+      000295 55 AB            [12] 1736 	anl	a,_P0IEN
+      000297 FF               [12] 1737 	mov	r7,a
+      000298 7E 00            [12] 1738 	mov	r6,#0x00
+      00029A 8F 82            [24] 1739 	mov	dpl,r7
+      00029C 8E 83            [24] 1740 	mov	dph,r6
+                                   1741 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:206: }
+      00029E 22               [24] 1742 	ret
+      00029F                       1743 00103$:
+                                   1744 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:207: return 0;
+      00029F 90 00 00         [24] 1745 	mov	dptr,#0x0000
+      0002A2 22               [24] 1746 	ret
+                                   1747 ;------------------------------------------------------------
+                                   1748 ;Allocation info for local variables in function 'configure_b4'
+                                   1749 ;------------------------------------------------------------
+                                   1750 ;value                     Allocated to stack - sp -3
+                                   1751 ;type                      Allocated to registers r6 r7 
+                                   1752 ;------------------------------------------------------------
+                                   1753 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:211: configure_b4(int type, int value)
+                                   1754 ;	-----------------------------------------
+                                   1755 ;	 function configure_b4
+                                   1756 ;	-----------------------------------------
+      0002A3                       1757 _configure_b4:
+      0002A3 AE 82            [24] 1758 	mov	r6,dpl
+      0002A5 AF 83            [24] 1759 	mov	r7,dph
+                                   1760 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:214: leds_toggle(4);
+      0002A7 75 82 04         [24] 1761 	mov	dpl,#0x04
+      0002AA C0 07            [24] 1762 	push	ar7
+      0002AC C0 06            [24] 1763 	push	ar6
+      0002AE 12r00r00         [24] 1764 	lcall	_leds_toggle
+      0002B1 D0 06            [24] 1765 	pop	ar6
+      0002B3 D0 07            [24] 1766 	pop	ar7
+                                   1767 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:216: switch(type) {
+      0002B5 BE 80 05         [24] 1768 	cjne	r6,#0x80,00147$
+      0002B8 BF 00 02         [24] 1769 	cjne	r7,#0x00,00147$
+      0002BB 80 08            [24] 1770 	sjmp	00102$
+      0002BD                       1771 00147$:
+                                   1772 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:218: BUTTON_IRQ_ON_PRESS(4);
+      0002BD BE 81 5C         [24] 1773 	cjne	r6,#0x81,00132$
+      0002C0 BF 00 59         [24] 1774 	cjne	r7,#0x00,00132$
+      0002C3 80 19            [24] 1775 	sjmp	00111$
+      0002C5                       1776 00102$:
+      0002C5 AF 8C            [24] 1777 	mov	r7,_PICTL
+      0002C7 74 BF            [12] 1778 	mov	a,#0xBF
+      0002C9 5F               [12] 1779 	anl	a,r7
+      0002CA F5 8C            [12] 1780 	mov	_PICTL,a
+                                   1781 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:219: BUTTON_FUNC_GPIO(4);
+      0002CC AF F3            [24] 1782 	mov	r7,_P0SEL
+      0002CE 74 F7            [12] 1783 	mov	a,#0xF7
+      0002D0 5F               [12] 1784 	anl	a,r7
+      0002D1 F5 F3            [12] 1785 	mov	_P0SEL,a
+                                   1786 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:220: BUTTON_DIR_INPUT(4);
+      0002D3 AF FD            [24] 1787 	mov	r7,_P0DIR
+      0002D5 74 F7            [12] 1788 	mov	a,#0xF7
+      0002D7 5F               [12] 1789 	anl	a,r7
+      0002D8 F5 FD            [12] 1790 	mov	_P0DIR,a
+                                   1791 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:221: return 1;
+      0002DA 90 00 01         [24] 1792 	mov	dptr,#0x0001
+                                   1793 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:222: case SENSORS_ACTIVE:
+      0002DD 22               [24] 1794 	ret
+      0002DE                       1795 00111$:
+                                   1796 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:223: if(value) {
+      0002DE E5 81            [12] 1797 	mov	a,sp
+      0002E0 24 FD            [12] 1798 	add	a,#0xfd
+      0002E2 F8               [12] 1799 	mov	r0,a
+      0002E3 E6               [12] 1800 	mov	a,@r0
+      0002E4 08               [12] 1801 	inc	r0
+      0002E5 46               [12] 1802 	orl	a,@r0
+      0002E6 60 27            [24] 1803 	jz	00126$
+                                   1804 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:224: if(!BUTTON_IRQ_ENABLED(4)) {
+      0002E8 E5 AB            [12] 1805 	mov	a,_P0IEN
+      0002EA 20 E3 2B         [24] 1806 	jb	acc.3,00131$
+                                   1807 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:225: timer_set(&debouncetimer, 0);
+      0002ED E4               [12] 1808 	clr	a
+      0002EE C0 E0            [24] 1809 	push	acc
+      0002F0 C0 E0            [24] 1810 	push	acc
+      0002F2 90r00r00         [24] 1811 	mov	dptr,#_debouncetimer
+      0002F5 75 F0 40         [24] 1812 	mov	b,#0x40
+      0002F8 12r00r00         [24] 1813 	lcall	_timer_set
+      0002FB 15 81            [12] 1814 	dec	sp
+      0002FD 15 81            [12] 1815 	dec	sp
+                                   1816 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:226: BUTTON_IRQ_FLAG_OFF(4);
+      0002FF AF 89            [24] 1817 	mov	r7,_P0IFG
+      000301 74 F7            [12] 1818 	mov	a,#0xF7
+      000303 5F               [12] 1819 	anl	a,r7
+      000304 F5 89            [12] 1820 	mov	_P0IFG,a
+      000306 C2 C5            [12] 1821 	clr	_P0IF
+                                   1822 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:227: BUTTON_IRQ_ENABLE(4);
+      000308 43 AB 08         [24] 1823 	orl	_P0IEN,#0x08
+      00030B D2 BD            [12] 1824 	setb	_P0IE
+                                   1825 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:230: BUTTON_IRQ_DISABLE(4);
+      00030D 80 09            [24] 1826 	sjmp	00131$
+      00030F                       1827 00126$:
+      00030F AF AB            [24] 1828 	mov	r7,_P0IEN
+      000311 74 F7            [12] 1829 	mov	a,#0xF7
+      000313 5F               [12] 1830 	anl	a,r7
+      000314 F5 AB            [12] 1831 	mov	_P0IEN,a
+      000316 C2 BD            [12] 1832 	clr	_P0IE
+      000318                       1833 00131$:
+                                   1834 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:232: return 1;
+      000318 90 00 01         [24] 1835 	mov	dptr,#0x0001
+                                   1836 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:233: }
+      00031B 22               [24] 1837 	ret
+      00031C                       1838 00132$:
+                                   1839 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:234: return 0;
+      00031C 90 00 00         [24] 1840 	mov	dptr,#0x0000
+      00031F 22               [24] 1841 	ret
+                                   1842 ;------------------------------------------------------------
+                                   1843 ;Allocation info for local variables in function 'port_0_isr'
+                                   1844 ;------------------------------------------------------------
+                                   1845 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:279: port_0_isr(void) __interrupt(P0INT_VECTOR)
+                                   1846 ;	-----------------------------------------
+                                   1847 ;	 function port_0_isr
+                                   1848 ;	-----------------------------------------
+      000320                       1849 _port_0_isr:
+      000320 C0*00            [24] 1850 	push	bits
+      000322 C0 E0            [24] 1851 	push	acc
+      000324 C0 F0            [24] 1852 	push	b
+      000326 C0 82            [24] 1853 	push	dpl
+      000328 C0 83            [24] 1854 	push	dph
+      00032A C0 07            [24] 1855 	push	(0+7)
+      00032C C0 06            [24] 1856 	push	(0+6)
+      00032E C0 05            [24] 1857 	push	(0+5)
+      000330 C0 04            [24] 1858 	push	(0+4)
+      000332 C0 03            [24] 1859 	push	(0+3)
+      000334 C0 02            [24] 1860 	push	(0+2)
+      000336 C0 01            [24] 1861 	push	(0+1)
+      000338 C0 00            [24] 1862 	push	(0+0)
+      00033A C0 D0            [24] 1863 	push	psw
+      00033C 75 D0 00         [24] 1864 	mov	psw,#0x00
+                                   1865 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:281: EA = 0;
+      00033F C2 AF            [12] 1866 	clr	_EA
+                                   1867 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:289: if(BUTTON_IRQ_CHECK(1)) {
+      000341 E5 89            [12] 1868 	mov	a,_P0IFG
+      000343 FF               [12] 1869 	mov	r7,a
+      000344 30 E0 2F         [24] 1870 	jnb	acc.0,00106$
+                                   1871 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:290: if(timer_expired(&debouncetimer)) {
+      000347 90r00r00         [24] 1872 	mov	dptr,#_debouncetimer
+      00034A 75 F0 40         [24] 1873 	mov	b,#0x40
+      00034D 12r00r00         [24] 1874 	lcall	_timer_expired
+      000350 E5 82            [12] 1875 	mov	a,dpl
+      000352 85 83 F0         [24] 1876 	mov	b,dph
+      000355 45 F0            [12] 1877 	orl	a,b
+      000357 60 1D            [24] 1878 	jz	00106$
+                                   1879 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:291: timer_set(&debouncetimer, CLOCK_SECOND / 8);
+      000359 74 10            [12] 1880 	mov	a,#0x10
+      00035B C0 E0            [24] 1881 	push	acc
+      00035D E4               [12] 1882 	clr	a
+      00035E C0 E0            [24] 1883 	push	acc
+      000360 90r00r00         [24] 1884 	mov	dptr,#_debouncetimer
+      000363 75 F0 40         [24] 1885 	mov	b,#0x40
+      000366 12r00r00         [24] 1886 	lcall	_timer_set
+      000369 15 81            [12] 1887 	dec	sp
+      00036B 15 81            [12] 1888 	dec	sp
+                                   1889 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:292: sensors_changed(&button_1_sensor);
+      00036D 90r00r00         [24] 1890 	mov	dptr,#_button_1_sensor
+      000370 75 F0 80         [24] 1891 	mov	b,#0x80
+      000373 12r00r00         [24] 1892 	lcall	_sensors_changed
+      000376                       1893 00106$:
+                                   1894 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:296: if(BUTTON_IRQ_CHECK(2)) {
+      000376 E5 89            [12] 1895 	mov	a,_P0IFG
+      000378 30 E1 2F         [24] 1896 	jnb	acc.1,00110$
+                                   1897 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:297: if(timer_expired(&debouncetimer)) {
+      00037B 90r00r00         [24] 1898 	mov	dptr,#_debouncetimer
+      00037E 75 F0 40         [24] 1899 	mov	b,#0x40
+      000381 12r00r00         [24] 1900 	lcall	_timer_expired
+      000384 E5 82            [12] 1901 	mov	a,dpl
+      000386 85 83 F0         [24] 1902 	mov	b,dph
+      000389 45 F0            [12] 1903 	orl	a,b
+      00038B 60 1D            [24] 1904 	jz	00110$
+                                   1905 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:298: timer_set(&debouncetimer, CLOCK_SECOND / 8);
+      00038D 74 10            [12] 1906 	mov	a,#0x10
+      00038F C0 E0            [24] 1907 	push	acc
+      000391 E4               [12] 1908 	clr	a
+      000392 C0 E0            [24] 1909 	push	acc
+      000394 90r00r00         [24] 1910 	mov	dptr,#_debouncetimer
+      000397 75 F0 40         [24] 1911 	mov	b,#0x40
+      00039A 12r00r00         [24] 1912 	lcall	_timer_set
+      00039D 15 81            [12] 1913 	dec	sp
+      00039F 15 81            [12] 1914 	dec	sp
+                                   1915 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:299: sensors_changed(&button_2_sensor);
+      0003A1 90r00r09         [24] 1916 	mov	dptr,#_button_2_sensor
+      0003A4 75 F0 80         [24] 1917 	mov	b,#0x80
+      0003A7 12r00r00         [24] 1918 	lcall	_sensors_changed
+      0003AA                       1919 00110$:
+                                   1920 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:302: if(BUTTON_IRQ_CHECK(3)) {
+      0003AA E5 89            [12] 1921 	mov	a,_P0IFG
+      0003AC 30 E2 2F         [24] 1922 	jnb	acc.2,00114$
+                                   1923 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:303: if(timer_expired(&debouncetimer)) {
+      0003AF 90r00r00         [24] 1924 	mov	dptr,#_debouncetimer
+      0003B2 75 F0 40         [24] 1925 	mov	b,#0x40
+      0003B5 12r00r00         [24] 1926 	lcall	_timer_expired
+      0003B8 E5 82            [12] 1927 	mov	a,dpl
+      0003BA 85 83 F0         [24] 1928 	mov	b,dph
+      0003BD 45 F0            [12] 1929 	orl	a,b
+      0003BF 60 1D            [24] 1930 	jz	00114$
+                                   1931 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:304: timer_set(&debouncetimer, CLOCK_SECOND / 8);
+      0003C1 74 10            [12] 1932 	mov	a,#0x10
+      0003C3 C0 E0            [24] 1933 	push	acc
+      0003C5 E4               [12] 1934 	clr	a
+      0003C6 C0 E0            [24] 1935 	push	acc
+      0003C8 90r00r00         [24] 1936 	mov	dptr,#_debouncetimer
+      0003CB 75 F0 40         [24] 1937 	mov	b,#0x40
+      0003CE 12r00r00         [24] 1938 	lcall	_timer_set
+      0003D1 15 81            [12] 1939 	dec	sp
+      0003D3 15 81            [12] 1940 	dec	sp
+                                   1941 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:305: sensors_changed(&button_3_sensor);
+      0003D5 90r00r12         [24] 1942 	mov	dptr,#_button_3_sensor
+      0003D8 75 F0 80         [24] 1943 	mov	b,#0x80
+      0003DB 12r00r00         [24] 1944 	lcall	_sensors_changed
+      0003DE                       1945 00114$:
+                                   1946 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:308: if(BUTTON_IRQ_CHECK(4)) {
+      0003DE E5 89            [12] 1947 	mov	a,_P0IFG
+      0003E0 30 E3 2F         [24] 1948 	jnb	acc.3,00118$
+                                   1949 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:309: if(timer_expired(&debouncetimer)) {
+      0003E3 90r00r00         [24] 1950 	mov	dptr,#_debouncetimer
+      0003E6 75 F0 40         [24] 1951 	mov	b,#0x40
+      0003E9 12r00r00         [24] 1952 	lcall	_timer_expired
+      0003EC E5 82            [12] 1953 	mov	a,dpl
+      0003EE 85 83 F0         [24] 1954 	mov	b,dph
+      0003F1 45 F0            [12] 1955 	orl	a,b
+      0003F3 60 1D            [24] 1956 	jz	00118$
+                                   1957 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:310: timer_set(&debouncetimer, CLOCK_SECOND / 8);
+      0003F5 74 10            [12] 1958 	mov	a,#0x10
+      0003F7 C0 E0            [24] 1959 	push	acc
+      0003F9 E4               [12] 1960 	clr	a
+      0003FA C0 E0            [24] 1961 	push	acc
+      0003FC 90r00r00         [24] 1962 	mov	dptr,#_debouncetimer
+      0003FF 75 F0 40         [24] 1963 	mov	b,#0x40
+      000402 12r00r00         [24] 1964 	lcall	_timer_set
+      000405 15 81            [12] 1965 	dec	sp
+      000407 15 81            [12] 1966 	dec	sp
+                                   1967 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:311: sensors_changed(&button_4_sensor);
+      000409 90r00r1B         [24] 1968 	mov	dptr,#_button_4_sensor
+      00040C 75 F0 80         [24] 1969 	mov	b,#0x80
+      00040F 12r00r00         [24] 1970 	lcall	_sensors_changed
+      000412                       1971 00118$:
+                                   1972 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:316: sensors_changed(&button_1_sensor);
+      000412 90r00r00         [24] 1973 	mov	dptr,#_button_1_sensor
+      000415 75 F0 80         [24] 1974 	mov	b,#0x80
+      000418 12r00r00         [24] 1975 	lcall	_sensors_changed
+                                   1976 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:317: sensors_changed(&button_2_sensor);
+      00041B 90r00r09         [24] 1977 	mov	dptr,#_button_2_sensor
+      00041E 75 F0 80         [24] 1978 	mov	b,#0x80
+      000421 12r00r00         [24] 1979 	lcall	_sensors_changed
+                                   1980 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:318: sensors_changed(&button_3_sensor);
+      000424 90r00r12         [24] 1981 	mov	dptr,#_button_3_sensor
+      000427 75 F0 80         [24] 1982 	mov	b,#0x80
+      00042A 12r00r00         [24] 1983 	lcall	_sensors_changed
+                                   1984 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:319: sensors_changed(&button_4_sensor);
+      00042D 90r00r1B         [24] 1985 	mov	dptr,#_button_4_sensor
+      000430 75 F0 80         [24] 1986 	mov	b,#0x80
+      000433 12r00r00         [24] 1987 	lcall	_sensors_changed
+                                   1988 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:320: BUTTON_IRQ_FLAG_OFF(1);
+      000436 AF 89            [24] 1989 	mov	r7,_P0IFG
+      000438 74 FE            [12] 1990 	mov	a,#0xFE
+      00043A 5F               [12] 1991 	anl	a,r7
+      00043B F5 89            [12] 1992 	mov	_P0IFG,a
+      00043D C2 C5            [12] 1993 	clr	_P0IF
+                                   1994 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:321: BUTTON_IRQ_FLAG_OFF(2);
+      00043F AF 89            [24] 1995 	mov	r7,_P0IFG
+      000441 74 FD            [12] 1996 	mov	a,#0xFD
+      000443 5F               [12] 1997 	anl	a,r7
+      000444 F5 89            [12] 1998 	mov	_P0IFG,a
+      000446 C2 C5            [12] 1999 	clr	_P0IF
+                                   2000 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:322: BUTTON_IRQ_FLAG_OFF(3);
+      000448 AF 89            [24] 2001 	mov	r7,_P0IFG
+      00044A 74 FB            [12] 2002 	mov	a,#0xFB
+      00044C 5F               [12] 2003 	anl	a,r7
+      00044D F5 89            [12] 2004 	mov	_P0IFG,a
+      00044F C2 C5            [12] 2005 	clr	_P0IF
+                                   2006 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:323: BUTTON_IRQ_FLAG_OFF(4);
+      000451 AF 89            [24] 2007 	mov	r7,_P0IFG
+      000453 74 F7            [12] 2008 	mov	a,#0xF7
+      000455 5F               [12] 2009 	anl	a,r7
+      000456 F5 89            [12] 2010 	mov	_P0IFG,a
+      000458 C2 C5            [12] 2011 	clr	_P0IF
+                                   2012 ;	/home/user/contiki/platform/cc2530edm_aman/dev/button-sensor.c:325: EA = 1;
+      00045A D2 AF            [12] 2013 	setb	_EA
+      00045C D0 D0            [24] 2014 	pop	psw
+      00045E D0 00            [24] 2015 	pop	(0+0)
+      000460 D0 01            [24] 2016 	pop	(0+1)
+      000462 D0 02            [24] 2017 	pop	(0+2)
+      000464 D0 03            [24] 2018 	pop	(0+3)
+      000466 D0 04            [24] 2019 	pop	(0+4)
+      000468 D0 05            [24] 2020 	pop	(0+5)
+      00046A D0 06            [24] 2021 	pop	(0+6)
+      00046C D0 07            [24] 2022 	pop	(0+7)
+      00046E D0 83            [24] 2023 	pop	dph
+      000470 D0 82            [24] 2024 	pop	dpl
+      000472 D0 F0            [24] 2025 	pop	b
+      000474 D0 E0            [24] 2026 	pop	acc
+      000476 D0*00            [24] 2027 	pop	bits
+      000478 32               [24] 2028 	reti
+                                   2029 	.area CSEG    (CODE)
+                                   2030 	.area CONST   (CODE)
+      000000                       2031 _button_1_sensor:
+      000000r24s00 80              2032 	.byte _str_0,(_str_0 >> 8),#0x80
+      000003r00s00                 2033 	.byte _value_b1,(_value_b1 >> 8)
+      000005r4As00                 2034 	.byte _configure_b1,(_configure_b1 >> 8)
+      000007r28s00                 2035 	.byte _status_b1,(_status_b1 >> 8)
+      000009                       2036 _button_2_sensor:
+      000009r24s00 80              2037 	.byte _str_0,(_str_0 >> 8),#0x80
+      00000CrCBs00                 2038 	.byte _value_b2,(_value_b2 >> 8)
+      00000Er15s01                 2039 	.byte _configure_b2,(_configure_b2 >> 8)
+      000010rF3s00                 2040 	.byte _status_b2,(_status_b2 >> 8)
+      000012                       2041 _button_3_sensor:
+      000012r24s00 80              2042 	.byte _str_0,(_str_0 >> 8),#0x80
+      000015r92s01                 2043 	.byte _value_b3,(_value_b3 >> 8)
+      000017rDCs01                 2044 	.byte _configure_b3,(_configure_b3 >> 8)
+      000019rBAs01                 2045 	.byte _status_b3,(_status_b3 >> 8)
+      00001B                       2046 _button_4_sensor:
+      00001Br24s00 80              2047 	.byte _str_0,(_str_0 >> 8),#0x80
+      00001Er59s02                 2048 	.byte _value_b4,(_value_b4 >> 8)
+      000020rA3s02                 2049 	.byte _configure_b4,(_configure_b4 >> 8)
+      000022r81s02                 2050 	.byte _status_b4,(_status_b4 >> 8)
+      000024                       2051 _str_0:
+      000024 42 75 74 74 6F 6E     2052 	.ascii "Button"
+      00002A 00                    2053 	.db 0x00
+                                   2054 	.area XINIT   (CODE)
+                                   2055 	.area CABS    (ABS,CODE)

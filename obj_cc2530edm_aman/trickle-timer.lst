@@ -1,0 +1,1728 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:41 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module trickle_timer
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _random_rand
+                                     13 	.globl _ctimer_set
+                                     14 	.globl _clock_time
+                                     15 	.globl _trickle_timer_consistency
+                                     16 	.globl _trickle_timer_inconsistency
+                                     17 	.globl _trickle_timer_config
+                                     18 	.globl _trickle_timer_set
+                                     19 ;--------------------------------------------------------
+                                     20 ; special function registers
+                                     21 ;--------------------------------------------------------
+                                     22 	.area RSEG    (ABS,DATA)
+      000000                         23 	.org 0x0000
+                                     24 ;--------------------------------------------------------
+                                     25 ; special function bits
+                                     26 ;--------------------------------------------------------
+                                     27 	.area RSEG    (ABS,DATA)
+      000000                         28 	.org 0x0000
+                                     29 ;--------------------------------------------------------
+                                     30 ; overlayable register banks
+                                     31 ;--------------------------------------------------------
+                                     32 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         33 	.ds 8
+                                     34 ;--------------------------------------------------------
+                                     35 ; internal ram data
+                                     36 ;--------------------------------------------------------
+                                     37 	.area DSEG    (DATA)
+                                     38 ;--------------------------------------------------------
+                                     39 ; overlayable items in internal ram 
+                                     40 ;--------------------------------------------------------
+                                     41 ;--------------------------------------------------------
+                                     42 ; indirectly addressable internal ram data
+                                     43 ;--------------------------------------------------------
+                                     44 	.area ISEG    (DATA)
+                                     45 ;--------------------------------------------------------
+                                     46 ; absolute internal ram data
+                                     47 ;--------------------------------------------------------
+                                     48 	.area IABS    (ABS,DATA)
+                                     49 	.area IABS    (ABS,DATA)
+                                     50 ;--------------------------------------------------------
+                                     51 ; bit data
+                                     52 ;--------------------------------------------------------
+                                     53 	.area BSEG    (BIT)
+                                     54 ;--------------------------------------------------------
+                                     55 ; paged external ram data
+                                     56 ;--------------------------------------------------------
+                                     57 	.area PSEG    (PAG,XDATA)
+                                     58 ;--------------------------------------------------------
+                                     59 ; external ram data
+                                     60 ;--------------------------------------------------------
+                                     61 	.area XSEG    (XDATA)
+      000000                         62 _loctt:
+      000000                         63 	.ds 3
+      000003                         64 _loc_clock:
+      000003                         65 	.ds 2
+                                     66 ;--------------------------------------------------------
+                                     67 ; absolute external ram data
+                                     68 ;--------------------------------------------------------
+                                     69 	.area XABS    (ABS,XDATA)
+                                     70 ;--------------------------------------------------------
+                                     71 ; external initialized ram data
+                                     72 ;--------------------------------------------------------
+                                     73 	.area XISEG   (XDATA)
+                                     74 	.area HOME    (CODE)
+                                     75 	.area GSINIT0 (CODE)
+                                     76 	.area GSINIT1 (CODE)
+                                     77 	.area GSINIT2 (CODE)
+                                     78 	.area GSINIT3 (CODE)
+                                     79 	.area GSINIT4 (CODE)
+                                     80 	.area GSINIT5 (CODE)
+                                     81 	.area GSINIT  (CODE)
+                                     82 	.area GSFINAL (CODE)
+                                     83 	.area CSEG    (CODE)
+                                     84 ;--------------------------------------------------------
+                                     85 ; global & static initialisations
+                                     86 ;--------------------------------------------------------
+                                     87 	.area HOME    (CODE)
+                                     88 	.area GSINIT  (CODE)
+                                     89 	.area GSFINAL (CODE)
+                                     90 	.area GSINIT  (CODE)
+                                     91 ;--------------------------------------------------------
+                                     92 ; Home
+                                     93 ;--------------------------------------------------------
+                                     94 	.area HOME    (CODE)
+                                     95 	.area HOME    (CODE)
+                                     96 ;--------------------------------------------------------
+                                     97 ; code
+                                     98 ;--------------------------------------------------------
+                                     99 	.area CSEG    (CODE)
+                                    100 ;------------------------------------------------------------
+                                    101 ;Allocation info for local variables in function 'wide_rand'
+                                    102 ;------------------------------------------------------------
+                                    103 ;	/home/user/contiki/core/lib/trickle-timer.c:81: wide_rand()
+                                    104 ;	-----------------------------------------
+                                    105 ;	 function wide_rand
+                                    106 ;	-----------------------------------------
+      000000                        107 _wide_rand:
+                           000007   108 	ar7 = 0x07
+                           000006   109 	ar6 = 0x06
+                           000005   110 	ar5 = 0x05
+                           000004   111 	ar4 = 0x04
+                           000003   112 	ar3 = 0x03
+                           000002   113 	ar2 = 0x02
+                           000001   114 	ar1 = 0x01
+                           000000   115 	ar0 = 0x00
+                                    116 ;	/home/user/contiki/core/lib/trickle-timer.c:83: return ((uint32_t)random_rand() << 16 | random_rand());
+      000000 12r00r00         [24]  117 	lcall	_random_rand
+      000003 AE 82            [24]  118 	mov	r6,dpl
+      000005 AF 83            [24]  119 	mov	r7,dph
+      000007 8F 04            [24]  120 	mov	ar4,r7
+      000009 8E 05            [24]  121 	mov	ar5,r6
+      00000B 7F 00            [12]  122 	mov	r7,#0x00
+      00000D 7E 00            [12]  123 	mov	r6,#0x00
+      00000F C0 07            [24]  124 	push	ar7
+      000011 C0 06            [24]  125 	push	ar6
+      000013 C0 05            [24]  126 	push	ar5
+      000015 C0 04            [24]  127 	push	ar4
+      000017 12r00r00         [24]  128 	lcall	_random_rand
+      00001A AA 82            [24]  129 	mov	r2,dpl
+      00001C AB 83            [24]  130 	mov	r3,dph
+      00001E D0 04            [24]  131 	pop	ar4
+      000020 D0 05            [24]  132 	pop	ar5
+      000022 D0 06            [24]  133 	pop	ar6
+      000024 D0 07            [24]  134 	pop	ar7
+      000026 8A 00            [24]  135 	mov	ar0,r2
+      000028 8B 01            [24]  136 	mov	ar1,r3
+      00002A E4               [12]  137 	clr	a
+      00002B FA               [12]  138 	mov	r2,a
+      00002C FB               [12]  139 	mov	r3,a
+      00002D E8               [12]  140 	mov	a,r0
+      00002E 42 06            [12]  141 	orl	ar6,a
+      000030 E9               [12]  142 	mov	a,r1
+      000031 42 07            [12]  143 	orl	ar7,a
+      000033 EA               [12]  144 	mov	a,r2
+      000034 42 05            [12]  145 	orl	ar5,a
+      000036 EB               [12]  146 	mov	a,r3
+      000037 42 04            [12]  147 	orl	ar4,a
+      000039 8E 82            [24]  148 	mov	dpl,r6
+      00003B 8F 83            [24]  149 	mov	dph,r7
+      00003D 8D F0            [24]  150 	mov	b,r5
+      00003F EC               [12]  151 	mov	a,r4
+      000040 22               [24]  152 	ret
+                                    153 ;------------------------------------------------------------
+                                    154 ;Allocation info for local variables in function 'max_imax'
+                                    155 ;------------------------------------------------------------
+                                    156 ;value                     Allocated to registers r6 r7 
+                                    157 ;zeros                     Allocated to registers r5 
+                                    158 ;i                         Allocated to registers r2 
+                                    159 ;mask                      Allocated to stack - sp -1
+                                    160 ;------------------------------------------------------------
+                                    161 ;	/home/user/contiki/core/lib/trickle-timer.c:97: max_imax(clock_time_t value)
+                                    162 ;	-----------------------------------------
+                                    163 ;	 function max_imax
+                                    164 ;	-----------------------------------------
+      000041                        165 _max_imax:
+      000041 05 81            [12]  166 	inc	sp
+      000043 05 81            [12]  167 	inc	sp
+      000045 AE 82            [24]  168 	mov	r6,dpl
+      000047 AF 83            [24]  169 	mov	r7,dph
+                                    170 ;	/home/user/contiki/core/lib/trickle-timer.c:99: uint8_t zeros = 0;
+      000049 7D 00            [12]  171 	mov	r5,#0x00
+                                    172 ;	/home/user/contiki/core/lib/trickle-timer.c:102: clock_time_t mask = 0xFFFF;
+      00004B A8 81            [24]  173 	mov	r0,sp
+      00004D 18               [12]  174 	dec	r0
+      00004E 76 FF            [12]  175 	mov	@r0,#0xFF
+      000050 08               [12]  176 	inc	r0
+      000051 76 FF            [12]  177 	mov	@r0,#0xFF
+                                    178 ;	/home/user/contiki/core/lib/trickle-timer.c:104: value--;
+      000053 1E               [12]  179 	dec	r6
+      000054 BE FF 01         [24]  180 	cjne	r6,#0xFF,00119$
+      000057 1F               [12]  181 	dec	r7
+      000058                        182 00119$:
+                                    183 ;	/home/user/contiki/core/lib/trickle-timer.c:106: for(i = sizeof(clock_time_t) << 2; i > 0; i >>= 1) {
+      000058 7A 08            [12]  184 	mov	r2,#0x08
+      00005A                        185 00104$:
+                                    186 ;	/home/user/contiki/core/lib/trickle-timer.c:107: if((value & (mask <<= i)) == 0) {
+      00005A C0 05            [24]  187 	push	ar5
+      00005C 8A F0            [24]  188 	mov	b,r2
+      00005E 05 F0            [12]  189 	inc	b
+      000060 A8 81            [24]  190 	mov	r0,sp
+      000062 18               [12]  191 	dec	r0
+      000063 18               [12]  192 	dec	r0
+      000064 86 04            [24]  193 	mov	ar4,@r0
+      000066 08               [12]  194 	inc	r0
+      000067 86 05            [24]  195 	mov	ar5,@r0
+      000069 80 06            [24]  196 	sjmp	00121$
+      00006B                        197 00120$:
+      00006B EC               [12]  198 	mov	a,r4
+      00006C 2C               [12]  199 	add	a,r4
+      00006D FC               [12]  200 	mov	r4,a
+      00006E ED               [12]  201 	mov	a,r5
+      00006F 33               [12]  202 	rlc	a
+      000070 FD               [12]  203 	mov	r5,a
+      000071                        204 00121$:
+      000071 D5 F0 F7         [24]  205 	djnz	b,00120$
+      000074 A8 81            [24]  206 	mov	r0,sp
+      000076 18               [12]  207 	dec	r0
+      000077 18               [12]  208 	dec	r0
+      000078 A6 04            [24]  209 	mov	@r0,ar4
+      00007A 08               [12]  210 	inc	r0
+      00007B A6 05            [24]  211 	mov	@r0,ar5
+      00007D EE               [12]  212 	mov	a,r6
+      00007E 52 04            [12]  213 	anl	ar4,a
+      000080 EF               [12]  214 	mov	a,r7
+      000081 52 05            [12]  215 	anl	ar5,a
+      000083 EC               [12]  216 	mov	a,r4
+      000084 4D               [12]  217 	orl	a,r5
+      000085 D0 05            [24]  218 	pop	ar5
+      000087 70 12            [24]  219 	jnz	00105$
+                                    220 ;	/home/user/contiki/core/lib/trickle-timer.c:108: zeros += i;
+      000089 EA               [12]  221 	mov	a,r2
+      00008A 2D               [12]  222 	add	a,r5
+      00008B FD               [12]  223 	mov	r5,a
+                                    224 ;	/home/user/contiki/core/lib/trickle-timer.c:109: value <<= i;
+      00008C 8A F0            [24]  225 	mov	b,r2
+      00008E 05 F0            [12]  226 	inc	b
+      000090 80 06            [24]  227 	sjmp	00124$
+      000092                        228 00123$:
+      000092 EE               [12]  229 	mov	a,r6
+      000093 2E               [12]  230 	add	a,r6
+      000094 FE               [12]  231 	mov	r6,a
+      000095 EF               [12]  232 	mov	a,r7
+      000096 33               [12]  233 	rlc	a
+      000097 FF               [12]  234 	mov	r7,a
+      000098                        235 00124$:
+      000098 D5 F0 F7         [24]  236 	djnz	b,00123$
+      00009B                        237 00105$:
+                                    238 ;	/home/user/contiki/core/lib/trickle-timer.c:106: for(i = sizeof(clock_time_t) << 2; i > 0; i >>= 1) {
+      00009B EA               [12]  239 	mov	a,r2
+      00009C C3               [12]  240 	clr	c
+      00009D 13               [12]  241 	rrc	a
+      00009E FA               [12]  242 	mov	r2,a
+      00009F 70 B9            [24]  243 	jnz	00104$
+                                    244 ;	/home/user/contiki/core/lib/trickle-timer.c:151: return zeros - 1; /* Always non-negative due to the range of 'value' */
+      0000A1 1D               [12]  245 	dec	r5
+      0000A2 8D 82            [24]  246 	mov	dpl,r5
+      0000A4 15 81            [12]  247 	dec	sp
+      0000A6 15 81            [12]  248 	dec	sp
+      0000A8 22               [24]  249 	ret
+                                    250 ;------------------------------------------------------------
+                                    251 ;Allocation info for local variables in function 'get_t'
+                                    252 ;------------------------------------------------------------
+                                    253 ;i_cur                     Allocated to registers r6 r7 
+                                    254 ;------------------------------------------------------------
+                                    255 ;	/home/user/contiki/core/lib/trickle-timer.c:157: get_t(clock_time_t i_cur)
+                                    256 ;	-----------------------------------------
+                                    257 ;	 function get_t
+                                    258 ;	-----------------------------------------
+      0000A9                        259 _get_t:
+      0000A9 AE 82            [24]  260 	mov	r6,dpl
+                                    261 ;	/home/user/contiki/core/lib/trickle-timer.c:159: i_cur >>= 1;
+      0000AB E5 83            [12]  262 	mov	a,dph
+      0000AD C3               [12]  263 	clr	c
+      0000AE 13               [12]  264 	rrc	a
+      0000AF CE               [12]  265 	xch	a,r6
+      0000B0 13               [12]  266 	rrc	a
+      0000B1 CE               [12]  267 	xch	a,r6
+      0000B2 FF               [12]  268 	mov	r7,a
+                                    269 ;	/home/user/contiki/core/lib/trickle-timer.c:164: return i_cur + (tt_rand() % i_cur);
+      0000B3 C0 07            [24]  270 	push	ar7
+      0000B5 C0 06            [24]  271 	push	ar6
+      0000B7 12r00r00         [24]  272 	lcall	_wide_rand
+      0000BA AA 82            [24]  273 	mov	r2,dpl
+      0000BC AB 83            [24]  274 	mov	r3,dph
+      0000BE AC F0            [24]  275 	mov	r4,b
+      0000C0 FD               [12]  276 	mov	r5,a
+      0000C1 D0 06            [24]  277 	pop	ar6
+      0000C3 D0 07            [24]  278 	pop	ar7
+      0000C5 8E 00            [24]  279 	mov	ar0,r6
+      0000C7 8F 01            [24]  280 	mov	ar1,r7
+      0000C9 7E 00            [12]  281 	mov	r6,#0x00
+      0000CB 7F 00            [12]  282 	mov	r7,#0x00
+      0000CD C0 07            [24]  283 	push	ar7
+      0000CF C0 06            [24]  284 	push	ar6
+      0000D1 C0 01            [24]  285 	push	ar1
+      0000D3 C0 00            [24]  286 	push	ar0
+      0000D5 C0 00            [24]  287 	push	ar0
+      0000D7 C0 01            [24]  288 	push	ar1
+      0000D9 C0 06            [24]  289 	push	ar6
+      0000DB C0 07            [24]  290 	push	ar7
+      0000DD 8A 82            [24]  291 	mov	dpl,r2
+      0000DF 8B 83            [24]  292 	mov	dph,r3
+      0000E1 8C F0            [24]  293 	mov	b,r4
+      0000E3 ED               [12]  294 	mov	a,r5
+      0000E4 12r00r00         [24]  295 	lcall	__modulong
+      0000E7 AA 82            [24]  296 	mov	r2,dpl
+      0000E9 AB 83            [24]  297 	mov	r3,dph
+      0000EB AC F0            [24]  298 	mov	r4,b
+      0000ED FD               [12]  299 	mov	r5,a
+      0000EE E5 81            [12]  300 	mov	a,sp
+      0000F0 24 FC            [12]  301 	add	a,#0xfc
+      0000F2 F5 81            [12]  302 	mov	sp,a
+      0000F4 D0 00            [24]  303 	pop	ar0
+      0000F6 D0 01            [24]  304 	pop	ar1
+      0000F8 D0 06            [24]  305 	pop	ar6
+      0000FA D0 07            [24]  306 	pop	ar7
+      0000FC EA               [12]  307 	mov	a,r2
+      0000FD 28               [12]  308 	add	a,r0
+      0000FE F8               [12]  309 	mov	r0,a
+      0000FF EB               [12]  310 	mov	a,r3
+      000100 39               [12]  311 	addc	a,r1
+      000101 F9               [12]  312 	mov	r1,a
+      000102 EC               [12]  313 	mov	a,r4
+      000103 3E               [12]  314 	addc	a,r6
+      000104 ED               [12]  315 	mov	a,r5
+      000105 3F               [12]  316 	addc	a,r7
+      000106 88 82            [24]  317 	mov	dpl,r0
+      000108 89 83            [24]  318 	mov	dph,r1
+      00010A 22               [24]  319 	ret
+                                    320 ;------------------------------------------------------------
+                                    321 ;Allocation info for local variables in function 'schedule_for_end'
+                                    322 ;------------------------------------------------------------
+                                    323 ;tt                        Allocated to stack - sp -4
+                                    324 ;now                       Allocated to stack - sp -1
+                                    325 ;------------------------------------------------------------
+                                    326 ;	/home/user/contiki/core/lib/trickle-timer.c:168: schedule_for_end(struct trickle_timer *tt)
+                                    327 ;	-----------------------------------------
+                                    328 ;	 function schedule_for_end
+                                    329 ;	-----------------------------------------
+      00010B                        330 _schedule_for_end:
+      00010B C0 82            [24]  331 	push	dpl
+      00010D C0 83            [24]  332 	push	dph
+      00010F C0 F0            [24]  333 	push	b
+      000111 05 81            [12]  334 	inc	sp
+      000113 05 81            [12]  335 	inc	sp
+                                    336 ;	/home/user/contiki/core/lib/trickle-timer.c:171: clock_time_t now = clock_time();
+      000115 12r00r00         [24]  337 	lcall	_clock_time
+      000118 A8 81            [24]  338 	mov	r0,sp
+      00011A 18               [12]  339 	dec	r0
+      00011B A6 82            [24]  340 	mov	@r0,dpl
+      00011D 08               [12]  341 	inc	r0
+      00011E A6 83            [24]  342 	mov	@r0,dph
+                                    343 ;	/home/user/contiki/core/lib/trickle-timer.c:173: loc_clock = TRICKLE_TIMER_INTERVAL_END(tt) - now;
+      000120 E5 81            [12]  344 	mov	a,sp
+      000122 24 FC            [12]  345 	add	a,#0xfc
+      000124 F8               [12]  346 	mov	r0,a
+      000125 74 04            [12]  347 	mov	a,#0x04
+      000127 26               [12]  348 	add	a,@r0
+      000128 FA               [12]  349 	mov	r2,a
+      000129 E4               [12]  350 	clr	a
+      00012A 08               [12]  351 	inc	r0
+      00012B 36               [12]  352 	addc	a,@r0
+      00012C FB               [12]  353 	mov	r3,a
+      00012D 08               [12]  354 	inc	r0
+      00012E 86 04            [24]  355 	mov	ar4,@r0
+      000130 8A 82            [24]  356 	mov	dpl,r2
+      000132 8B 83            [24]  357 	mov	dph,r3
+      000134 8C F0            [24]  358 	mov	b,r4
+      000136 12r00r00         [24]  359 	lcall	__gptrget
+      000139 FA               [12]  360 	mov	r2,a
+      00013A A3               [24]  361 	inc	dptr
+      00013B 12r00r00         [24]  362 	lcall	__gptrget
+      00013E FB               [12]  363 	mov	r3,a
+      00013F E5 81            [12]  364 	mov	a,sp
+      000141 24 FC            [12]  365 	add	a,#0xfc
+      000143 F8               [12]  366 	mov	r0,a
+      000144 74 02            [12]  367 	mov	a,#0x02
+      000146 26               [12]  368 	add	a,@r0
+      000147 FC               [12]  369 	mov	r4,a
+      000148 E4               [12]  370 	clr	a
+      000149 08               [12]  371 	inc	r0
+      00014A 36               [12]  372 	addc	a,@r0
+      00014B FE               [12]  373 	mov	r6,a
+      00014C 08               [12]  374 	inc	r0
+      00014D 86 07            [24]  375 	mov	ar7,@r0
+      00014F 8C 82            [24]  376 	mov	dpl,r4
+      000151 8E 83            [24]  377 	mov	dph,r6
+      000153 8F F0            [24]  378 	mov	b,r7
+      000155 12r00r00         [24]  379 	lcall	__gptrget
+      000158 FC               [12]  380 	mov	r4,a
+      000159 A3               [24]  381 	inc	dptr
+      00015A 12r00r00         [24]  382 	lcall	__gptrget
+      00015D FE               [12]  383 	mov	r6,a
+      00015E EC               [12]  384 	mov	a,r4
+      00015F 2A               [12]  385 	add	a,r2
+      000160 FA               [12]  386 	mov	r2,a
+      000161 EE               [12]  387 	mov	a,r6
+      000162 3B               [12]  388 	addc	a,r3
+      000163 FB               [12]  389 	mov	r3,a
+      000164 A8 81            [24]  390 	mov	r0,sp
+      000166 18               [12]  391 	dec	r0
+      000167 EA               [12]  392 	mov	a,r2
+      000168 C3               [12]  393 	clr	c
+      000169 96               [12]  394 	subb	a,@r0
+      00016A FA               [12]  395 	mov	r2,a
+      00016B EB               [12]  396 	mov	a,r3
+      00016C 08               [12]  397 	inc	r0
+      00016D 96               [12]  398 	subb	a,@r0
+      00016E FB               [12]  399 	mov	r3,a
+      00016F 90r00r03         [24]  400 	mov	dptr,#_loc_clock
+      000172 EA               [12]  401 	mov	a,r2
+      000173 F0               [24]  402 	movx	@dptr,a
+      000174 EB               [12]  403 	mov	a,r3
+      000175 A3               [24]  404 	inc	dptr
+      000176 F0               [24]  405 	movx	@dptr,a
+                                    406 ;	/home/user/contiki/core/lib/trickle-timer.c:180: if(loc_clock > (TRICKLE_TIMER_CLOCK_MAX >> 1)) {
+      000177 C3               [12]  407 	clr	c
+      000178 74 FF            [12]  408 	mov	a,#0xFF
+      00017A 9A               [12]  409 	subb	a,r2
+      00017B 74 7F            [12]  410 	mov	a,#0x7F
+      00017D 9B               [12]  411 	subb	a,r3
+      00017E 50 08            [24]  412 	jnc	00102$
+                                    413 ;	/home/user/contiki/core/lib/trickle-timer.c:181: loc_clock = 0; /* Interval ended in the past, schedule for in 0 */
+      000180 90r00r03         [24]  414 	mov	dptr,#_loc_clock
+      000183 E4               [12]  415 	clr	a
+      000184 F0               [24]  416 	movx	@dptr,a
+      000185 E4               [12]  417 	clr	a
+      000186 A3               [24]  418 	inc	dptr
+      000187 F0               [24]  419 	movx	@dptr,a
+      000188                        420 00102$:
+                                    421 ;	/home/user/contiki/core/lib/trickle-timer.c:185: ctimer_set(&tt->ct, loc_clock, double_interval, tt);
+      000188 E5 81            [12]  422 	mov	a,sp
+      00018A 24 FC            [12]  423 	add	a,#0xfc
+      00018C F8               [12]  424 	mov	r0,a
+      00018D 86 05            [24]  425 	mov	ar5,@r0
+      00018F 08               [12]  426 	inc	r0
+      000190 86 06            [24]  427 	mov	ar6,@r0
+      000192 08               [12]  428 	inc	r0
+      000193 86 07            [24]  429 	mov	ar7,@r0
+      000195 E5 81            [12]  430 	mov	a,sp
+      000197 24 FC            [12]  431 	add	a,#0xfc
+      000199 F8               [12]  432 	mov	r0,a
+      00019A 74 08            [12]  433 	mov	a,#0x08
+      00019C 26               [12]  434 	add	a,@r0
+      00019D FA               [12]  435 	mov	r2,a
+      00019E E4               [12]  436 	clr	a
+      00019F 08               [12]  437 	inc	r0
+      0001A0 36               [12]  438 	addc	a,@r0
+      0001A1 FB               [12]  439 	mov	r3,a
+      0001A2 08               [12]  440 	inc	r0
+      0001A3 86 04            [24]  441 	mov	ar4,@r0
+      0001A5 C0 05            [24]  442 	push	ar5
+      0001A7 C0 06            [24]  443 	push	ar6
+      0001A9 C0 07            [24]  444 	push	ar7
+      0001AB 74rD3            [12]  445 	mov	a,#_double_interval
+      0001AD C0 E0            [24]  446 	push	acc
+      0001AF 74s01            [12]  447 	mov	a,#(_double_interval >> 8)
+      0001B1 C0 E0            [24]  448 	push	acc
+      0001B3 90r00r03         [24]  449 	mov	dptr,#_loc_clock
+      0001B6 E0               [24]  450 	movx	a,@dptr
+      0001B7 C0 E0            [24]  451 	push	acc
+      0001B9 A3               [24]  452 	inc	dptr
+      0001BA E0               [24]  453 	movx	a,@dptr
+      0001BB C0 E0            [24]  454 	push	acc
+      0001BD 8A 82            [24]  455 	mov	dpl,r2
+      0001BF 8B 83            [24]  456 	mov	dph,r3
+      0001C1 8C F0            [24]  457 	mov	b,r4
+      0001C3 12r00r00         [24]  458 	lcall	_ctimer_set
+      0001C6 E5 81            [12]  459 	mov	a,sp
+      0001C8 24 F9            [12]  460 	add	a,#0xf9
+      0001CA F5 81            [12]  461 	mov	sp,a
+      0001CC E5 81            [12]  462 	mov	a,sp
+      0001CE 24 FB            [12]  463 	add	a,#0xFB
+      0001D0 F5 81            [12]  464 	mov	sp,a
+      0001D2 22               [24]  465 	ret
+                                    466 ;------------------------------------------------------------
+                                    467 ;Allocation info for local variables in function 'double_interval'
+                                    468 ;------------------------------------------------------------
+                                    469 ;ptr                       Allocated to registers r5 r6 r7 
+                                    470 ;last_end                  Allocated to stack - sp -1
+                                    471 ;sloc0                     Allocated to stack - sp -6
+                                    472 ;sloc1                     Allocated to stack - sp -3
+                                    473 ;------------------------------------------------------------
+                                    474 ;	/home/user/contiki/core/lib/trickle-timer.c:191: double_interval(void *ptr)
+                                    475 ;	-----------------------------------------
+                                    476 ;	 function double_interval
+                                    477 ;	-----------------------------------------
+      0001D3                        478 _double_interval:
+      0001D3 E5 81            [12]  479 	mov	a,sp
+      0001D5 24 07            [12]  480 	add	a,#0x07
+      0001D7 F5 81            [12]  481 	mov	sp,a
+      0001D9 AD 82            [24]  482 	mov	r5,dpl
+      0001DB AE 83            [24]  483 	mov	r6,dph
+      0001DD AF F0            [24]  484 	mov	r7,b
+                                    485 ;	/home/user/contiki/core/lib/trickle-timer.c:196: loctt = (struct trickle_timer *)ptr;
+      0001DF 90r00r00         [24]  486 	mov	dptr,#_loctt
+      0001E2 ED               [12]  487 	mov	a,r5
+      0001E3 F0               [24]  488 	movx	@dptr,a
+      0001E4 EE               [12]  489 	mov	a,r6
+      0001E5 A3               [24]  490 	inc	dptr
+      0001E6 F0               [24]  491 	movx	@dptr,a
+      0001E7 EF               [12]  492 	mov	a,r7
+      0001E8 A3               [24]  493 	inc	dptr
+      0001E9 F0               [24]  494 	movx	@dptr,a
+                                    495 ;	/home/user/contiki/core/lib/trickle-timer.c:198: loctt->c = 0;
+      0001EA 74 24            [12]  496 	mov	a,#0x24
+      0001EC 2D               [12]  497 	add	a,r5
+      0001ED FA               [12]  498 	mov	r2,a
+      0001EE E4               [12]  499 	clr	a
+      0001EF 3E               [12]  500 	addc	a,r6
+      0001F0 FB               [12]  501 	mov	r3,a
+      0001F1 8F 04            [24]  502 	mov	ar4,r7
+      0001F3 8A 82            [24]  503 	mov	dpl,r2
+      0001F5 8B 83            [24]  504 	mov	dph,r3
+      0001F7 8C F0            [24]  505 	mov	b,r4
+      0001F9 E4               [12]  506 	clr	a
+      0001FA 12r00r00         [24]  507 	lcall	__gptrput
+                                    508 ;	/home/user/contiki/core/lib/trickle-timer.c:205: last_end = TRICKLE_TIMER_INTERVAL_END(loctt);
+      0001FD 74 04            [12]  509 	mov	a,#0x04
+      0001FF 2D               [12]  510 	add	a,r5
+      000200 FA               [12]  511 	mov	r2,a
+      000201 E4               [12]  512 	clr	a
+      000202 3E               [12]  513 	addc	a,r6
+      000203 FB               [12]  514 	mov	r3,a
+      000204 8F 04            [24]  515 	mov	ar4,r7
+      000206 8A 82            [24]  516 	mov	dpl,r2
+      000208 8B 83            [24]  517 	mov	dph,r3
+      00020A 8C F0            [24]  518 	mov	b,r4
+      00020C 12r00r00         [24]  519 	lcall	__gptrget
+      00020F FA               [12]  520 	mov	r2,a
+      000210 A3               [24]  521 	inc	dptr
+      000211 12r00r00         [24]  522 	lcall	__gptrget
+      000214 FB               [12]  523 	mov	r3,a
+      000215 E5 81            [12]  524 	mov	a,sp
+      000217 24 FA            [12]  525 	add	a,#0xfa
+      000219 F8               [12]  526 	mov	r0,a
+      00021A 74 02            [12]  527 	mov	a,#0x02
+      00021C 2D               [12]  528 	add	a,r5
+      00021D F6               [12]  529 	mov	@r0,a
+      00021E E4               [12]  530 	clr	a
+      00021F 3E               [12]  531 	addc	a,r6
+      000220 08               [12]  532 	inc	r0
+      000221 F6               [12]  533 	mov	@r0,a
+      000222 08               [12]  534 	inc	r0
+      000223 A6 07            [24]  535 	mov	@r0,ar7
+      000225 E5 81            [12]  536 	mov	a,sp
+      000227 24 FA            [12]  537 	add	a,#0xfa
+      000229 F8               [12]  538 	mov	r0,a
+      00022A 86 82            [24]  539 	mov	dpl,@r0
+      00022C 08               [12]  540 	inc	r0
+      00022D 86 83            [24]  541 	mov	dph,@r0
+      00022F 08               [12]  542 	inc	r0
+      000230 86 F0            [24]  543 	mov	b,@r0
+      000232 E5 81            [12]  544 	mov	a,sp
+      000234 24 FD            [12]  545 	add	a,#0xfd
+      000236 F9               [12]  546 	mov	r1,a
+      000237 12r00r00         [24]  547 	lcall	__gptrget
+      00023A F7               [12]  548 	mov	@r1,a
+      00023B A3               [24]  549 	inc	dptr
+      00023C 12r00r00         [24]  550 	lcall	__gptrget
+      00023F 09               [12]  551 	inc	r1
+      000240 F7               [12]  552 	mov	@r1,a
+      000241 E5 81            [12]  553 	mov	a,sp
+      000243 24 FD            [12]  554 	add	a,#0xfd
+      000245 F8               [12]  555 	mov	r0,a
+      000246 E6               [12]  556 	mov	a,@r0
+      000247 2A               [12]  557 	add	a,r2
+      000248 FA               [12]  558 	mov	r2,a
+      000249 08               [12]  559 	inc	r0
+      00024A E6               [12]  560 	mov	a,@r0
+      00024B 3B               [12]  561 	addc	a,r3
+      00024C FB               [12]  562 	mov	r3,a
+      00024D A8 81            [24]  563 	mov	r0,sp
+      00024F 18               [12]  564 	dec	r0
+      000250 A6 02            [24]  565 	mov	@r0,ar2
+      000252 08               [12]  566 	inc	r0
+      000253 A6 03            [24]  567 	mov	@r0,ar3
+                                    568 ;	/home/user/contiki/core/lib/trickle-timer.c:208: if(loctt->i_cur <= TRICKLE_TIMER_INTERVAL_MAX(loctt) >> 1) {
+      000255 74 06            [12]  569 	mov	a,#0x06
+      000257 2D               [12]  570 	add	a,r5
+      000258 FD               [12]  571 	mov	r5,a
+      000259 E4               [12]  572 	clr	a
+      00025A 3E               [12]  573 	addc	a,r6
+      00025B FE               [12]  574 	mov	r6,a
+      00025C 8D 82            [24]  575 	mov	dpl,r5
+      00025E 8E 83            [24]  576 	mov	dph,r6
+      000260 8F F0            [24]  577 	mov	b,r7
+      000262 12r00r00         [24]  578 	lcall	__gptrget
+      000265 FE               [12]  579 	mov	r6,a
+      000266 A3               [24]  580 	inc	dptr
+      000267 12r00r00         [24]  581 	lcall	__gptrget
+      00026A FF               [12]  582 	mov	r7,a
+      00026B 8E 02            [24]  583 	mov	ar2,r6
+      00026D C3               [12]  584 	clr	c
+      00026E 13               [12]  585 	rrc	a
+      00026F CA               [12]  586 	xch	a,r2
+      000270 13               [12]  587 	rrc	a
+      000271 CA               [12]  588 	xch	a,r2
+      000272 FD               [12]  589 	mov	r5,a
+      000273 E5 81            [12]  590 	mov	a,sp
+      000275 24 FD            [12]  591 	add	a,#0xfd
+      000277 F8               [12]  592 	mov	r0,a
+      000278 C3               [12]  593 	clr	c
+      000279 EA               [12]  594 	mov	a,r2
+      00027A 96               [12]  595 	subb	a,@r0
+      00027B ED               [12]  596 	mov	a,r5
+      00027C 08               [12]  597 	inc	r0
+      00027D 96               [12]  598 	subb	a,@r0
+      00027E 40 27            [24]  599 	jc	00102$
+                                    600 ;	/home/user/contiki/core/lib/trickle-timer.c:210: loctt->i_cur <<= 1;
+      000280 E5 81            [12]  601 	mov	a,sp
+      000282 24 FD            [12]  602 	add	a,#0xfd
+      000284 F8               [12]  603 	mov	r0,a
+      000285 86 02            [24]  604 	mov	ar2,@r0
+      000287 08               [12]  605 	inc	r0
+      000288 E6               [12]  606 	mov	a,@r0
+      000289 CA               [12]  607 	xch	a,r2
+      00028A 25 E0            [12]  608 	add	a,acc
+      00028C CA               [12]  609 	xch	a,r2
+      00028D 33               [12]  610 	rlc	a
+      00028E FD               [12]  611 	mov	r5,a
+      00028F E5 81            [12]  612 	mov	a,sp
+      000291 24 FA            [12]  613 	add	a,#0xfa
+      000293 F8               [12]  614 	mov	r0,a
+      000294 86 82            [24]  615 	mov	dpl,@r0
+      000296 08               [12]  616 	inc	r0
+      000297 86 83            [24]  617 	mov	dph,@r0
+      000299 08               [12]  618 	inc	r0
+      00029A 86 F0            [24]  619 	mov	b,@r0
+      00029C EA               [12]  620 	mov	a,r2
+      00029D 12r00r00         [24]  621 	lcall	__gptrput
+      0002A0 A3               [24]  622 	inc	dptr
+      0002A1 ED               [12]  623 	mov	a,r5
+      0002A2 12r00r00         [24]  624 	lcall	__gptrput
+      0002A5 80 16            [24]  625 	sjmp	00103$
+      0002A7                        626 00102$:
+                                    627 ;	/home/user/contiki/core/lib/trickle-timer.c:215: loctt->i_cur = TRICKLE_TIMER_INTERVAL_MAX(loctt);
+      0002A7 E5 81            [12]  628 	mov	a,sp
+      0002A9 24 FA            [12]  629 	add	a,#0xfa
+      0002AB F8               [12]  630 	mov	r0,a
+      0002AC 86 82            [24]  631 	mov	dpl,@r0
+      0002AE 08               [12]  632 	inc	r0
+      0002AF 86 83            [24]  633 	mov	dph,@r0
+      0002B1 08               [12]  634 	inc	r0
+      0002B2 86 F0            [24]  635 	mov	b,@r0
+      0002B4 EE               [12]  636 	mov	a,r6
+      0002B5 12r00r00         [24]  637 	lcall	__gptrput
+      0002B8 A3               [24]  638 	inc	dptr
+      0002B9 EF               [12]  639 	mov	a,r7
+      0002BA 12r00r00         [24]  640 	lcall	__gptrput
+      0002BD                        641 00103$:
+                                    642 ;	/home/user/contiki/core/lib/trickle-timer.c:220: loc_clock = get_t(loctt->i_cur);
+      0002BD E5 81            [12]  643 	mov	a,sp
+      0002BF 24 FA            [12]  644 	add	a,#0xfa
+      0002C1 F8               [12]  645 	mov	r0,a
+      0002C2 86 82            [24]  646 	mov	dpl,@r0
+      0002C4 08               [12]  647 	inc	r0
+      0002C5 86 83            [24]  648 	mov	dph,@r0
+      0002C7 08               [12]  649 	inc	r0
+      0002C8 86 F0            [24]  650 	mov	b,@r0
+      0002CA 12r00r00         [24]  651 	lcall	__gptrget
+      0002CD FE               [12]  652 	mov	r6,a
+      0002CE A3               [24]  653 	inc	dptr
+      0002CF 12r00r00         [24]  654 	lcall	__gptrget
+      0002D2 FF               [12]  655 	mov	r7,a
+      0002D3 8E 82            [24]  656 	mov	dpl,r6
+      0002D5 8F 83            [24]  657 	mov	dph,r7
+      0002D7 12r00rA9         [24]  658 	lcall	_get_t
+      0002DA AE 82            [24]  659 	mov	r6,dpl
+      0002DC AF 83            [24]  660 	mov	r7,dph
+      0002DE 90r00r03         [24]  661 	mov	dptr,#_loc_clock
+      0002E1 EE               [12]  662 	mov	a,r6
+      0002E2 F0               [24]  663 	movx	@dptr,a
+      0002E3 EF               [12]  664 	mov	a,r7
+      0002E4 A3               [24]  665 	inc	dptr
+      0002E5 F0               [24]  666 	movx	@dptr,a
+                                    667 ;	/home/user/contiki/core/lib/trickle-timer.c:227: loc_clock = (last_end + loc_clock) - clock_time();
+      0002E6 A8 81            [24]  668 	mov	r0,sp
+      0002E8 18               [12]  669 	dec	r0
+      0002E9 EE               [12]  670 	mov	a,r6
+      0002EA 26               [12]  671 	add	a,@r0
+      0002EB FE               [12]  672 	mov	r6,a
+      0002EC EF               [12]  673 	mov	a,r7
+      0002ED 08               [12]  674 	inc	r0
+      0002EE 36               [12]  675 	addc	a,@r0
+      0002EF FF               [12]  676 	mov	r7,a
+      0002F0 C0 07            [24]  677 	push	ar7
+      0002F2 C0 06            [24]  678 	push	ar6
+      0002F4 12r00r00         [24]  679 	lcall	_clock_time
+      0002F7 AA 82            [24]  680 	mov	r2,dpl
+      0002F9 AD 83            [24]  681 	mov	r5,dph
+      0002FB D0 06            [24]  682 	pop	ar6
+      0002FD D0 07            [24]  683 	pop	ar7
+      0002FF EE               [12]  684 	mov	a,r6
+      000300 C3               [12]  685 	clr	c
+      000301 9A               [12]  686 	subb	a,r2
+      000302 FE               [12]  687 	mov	r6,a
+      000303 EF               [12]  688 	mov	a,r7
+      000304 9D               [12]  689 	subb	a,r5
+      000305 FF               [12]  690 	mov	r7,a
+      000306 90r00r03         [24]  691 	mov	dptr,#_loc_clock
+      000309 EE               [12]  692 	mov	a,r6
+      00030A F0               [24]  693 	movx	@dptr,a
+      00030B EF               [12]  694 	mov	a,r7
+      00030C A3               [24]  695 	inc	dptr
+      00030D F0               [24]  696 	movx	@dptr,a
+                                    697 ;	/home/user/contiki/core/lib/trickle-timer.c:230: if(loc_clock > (TRICKLE_TIMER_CLOCK_MAX >> 1)) {
+      00030E C3               [12]  698 	clr	c
+      00030F 74 FF            [12]  699 	mov	a,#0xFF
+      000311 9E               [12]  700 	subb	a,r6
+      000312 74 7F            [12]  701 	mov	a,#0x7F
+      000314 9F               [12]  702 	subb	a,r7
+      000315 50 08            [24]  703 	jnc	00105$
+                                    704 ;	/home/user/contiki/core/lib/trickle-timer.c:232: loc_clock = 0;
+      000317 90r00r03         [24]  705 	mov	dptr,#_loc_clock
+      00031A E4               [12]  706 	clr	a
+      00031B F0               [24]  707 	movx	@dptr,a
+      00031C E4               [12]  708 	clr	a
+      00031D A3               [24]  709 	inc	dptr
+      00031E F0               [24]  710 	movx	@dptr,a
+      00031F                        711 00105$:
+                                    712 ;	/home/user/contiki/core/lib/trickle-timer.c:235: ctimer_set(&loctt->ct, loc_clock, fire, loctt);
+      00031F 90r00r00         [24]  713 	mov	dptr,#_loctt
+      000322 E0               [24]  714 	movx	a,@dptr
+      000323 FD               [12]  715 	mov	r5,a
+      000324 A3               [24]  716 	inc	dptr
+      000325 E0               [24]  717 	movx	a,@dptr
+      000326 FE               [12]  718 	mov	r6,a
+      000327 A3               [24]  719 	inc	dptr
+      000328 E0               [24]  720 	movx	a,@dptr
+      000329 FF               [12]  721 	mov	r7,a
+      00032A 8D 02            [24]  722 	mov	ar2,r5
+      00032C 8E 03            [24]  723 	mov	ar3,r6
+      00032E 8F 04            [24]  724 	mov	ar4,r7
+      000330 74 08            [12]  725 	mov	a,#0x08
+      000332 2D               [12]  726 	add	a,r5
+      000333 FD               [12]  727 	mov	r5,a
+      000334 E4               [12]  728 	clr	a
+      000335 3E               [12]  729 	addc	a,r6
+      000336 FE               [12]  730 	mov	r6,a
+      000337 C0 02            [24]  731 	push	ar2
+      000339 C0 03            [24]  732 	push	ar3
+      00033B C0 04            [24]  733 	push	ar4
+      00033D 74r8A            [12]  734 	mov	a,#_fire
+      00033F C0 E0            [24]  735 	push	acc
+      000341 74s03            [12]  736 	mov	a,#(_fire >> 8)
+      000343 C0 E0            [24]  737 	push	acc
+      000345 90r00r03         [24]  738 	mov	dptr,#_loc_clock
+      000348 E0               [24]  739 	movx	a,@dptr
+      000349 C0 E0            [24]  740 	push	acc
+      00034B A3               [24]  741 	inc	dptr
+      00034C E0               [24]  742 	movx	a,@dptr
+      00034D C0 E0            [24]  743 	push	acc
+      00034F 8D 82            [24]  744 	mov	dpl,r5
+      000351 8E 83            [24]  745 	mov	dph,r6
+      000353 8F F0            [24]  746 	mov	b,r7
+      000355 12r00r00         [24]  747 	lcall	_ctimer_set
+      000358 E5 81            [12]  748 	mov	a,sp
+      00035A 24 F9            [12]  749 	add	a,#0xf9
+      00035C F5 81            [12]  750 	mov	sp,a
+                                    751 ;	/home/user/contiki/core/lib/trickle-timer.c:239: loctt->i_start = last_end;
+      00035E 90r00r00         [24]  752 	mov	dptr,#_loctt
+      000361 E0               [24]  753 	movx	a,@dptr
+      000362 FD               [12]  754 	mov	r5,a
+      000363 A3               [24]  755 	inc	dptr
+      000364 E0               [24]  756 	movx	a,@dptr
+      000365 FE               [12]  757 	mov	r6,a
+      000366 A3               [24]  758 	inc	dptr
+      000367 E0               [24]  759 	movx	a,@dptr
+      000368 FF               [12]  760 	mov	r7,a
+      000369 74 04            [12]  761 	mov	a,#0x04
+      00036B 2D               [12]  762 	add	a,r5
+      00036C FD               [12]  763 	mov	r5,a
+      00036D E4               [12]  764 	clr	a
+      00036E 3E               [12]  765 	addc	a,r6
+      00036F FE               [12]  766 	mov	r6,a
+      000370 8D 82            [24]  767 	mov	dpl,r5
+      000372 8E 83            [24]  768 	mov	dph,r6
+      000374 8F F0            [24]  769 	mov	b,r7
+      000376 A8 81            [24]  770 	mov	r0,sp
+      000378 18               [12]  771 	dec	r0
+      000379 E6               [12]  772 	mov	a,@r0
+      00037A 12r00r00         [24]  773 	lcall	__gptrput
+      00037D A3               [24]  774 	inc	dptr
+      00037E 08               [12]  775 	inc	r0
+      00037F E6               [12]  776 	mov	a,@r0
+      000380 12r00r00         [24]  777 	lcall	__gptrput
+      000383 E5 81            [12]  778 	mov	a,sp
+      000385 24 F9            [12]  779 	add	a,#0xF9
+      000387 F5 81            [12]  780 	mov	sp,a
+      000389 22               [24]  781 	ret
+                                    782 ;------------------------------------------------------------
+                                    783 ;Allocation info for local variables in function 'fire'
+                                    784 ;------------------------------------------------------------
+                                    785 ;ptr                       Allocated to registers r5 r6 r7 
+                                    786 ;------------------------------------------------------------
+                                    787 ;	/home/user/contiki/core/lib/trickle-timer.c:259: fire(void *ptr)
+                                    788 ;	-----------------------------------------
+                                    789 ;	 function fire
+                                    790 ;	-----------------------------------------
+      00038A                        791 _fire:
+      00038A AD 82            [24]  792 	mov	r5,dpl
+      00038C AE 83            [24]  793 	mov	r6,dph
+      00038E AF F0            [24]  794 	mov	r7,b
+                                    795 ;	/home/user/contiki/core/lib/trickle-timer.c:262: loctt = (struct trickle_timer *)ptr;
+      000390 90r00r00         [24]  796 	mov	dptr,#_loctt
+      000393 ED               [12]  797 	mov	a,r5
+      000394 F0               [24]  798 	movx	@dptr,a
+      000395 EE               [12]  799 	mov	a,r6
+      000396 A3               [24]  800 	inc	dptr
+      000397 F0               [24]  801 	movx	@dptr,a
+      000398 EF               [12]  802 	mov	a,r7
+      000399 A3               [24]  803 	inc	dptr
+      00039A F0               [24]  804 	movx	@dptr,a
+                                    805 ;	/home/user/contiki/core/lib/trickle-timer.c:269: if(loctt->cb) {
+      00039B 74 1D            [12]  806 	mov	a,#0x1D
+      00039D 2D               [12]  807 	add	a,r5
+      00039E FA               [12]  808 	mov	r2,a
+      00039F E4               [12]  809 	clr	a
+      0003A0 3E               [12]  810 	addc	a,r6
+      0003A1 FB               [12]  811 	mov	r3,a
+      0003A2 8F 04            [24]  812 	mov	ar4,r7
+      0003A4 8A 82            [24]  813 	mov	dpl,r2
+      0003A6 8B 83            [24]  814 	mov	dph,r3
+      0003A8 8C F0            [24]  815 	mov	b,r4
+      0003AA 12r00r00         [24]  816 	lcall	__gptrget
+      0003AD FB               [12]  817 	mov	r3,a
+      0003AE A3               [24]  818 	inc	dptr
+      0003AF 12r00r00         [24]  819 	lcall	__gptrget
+      0003B2 FC               [12]  820 	mov	r4,a
+      0003B3 4B               [12]  821 	orl	a,r3
+      0003B4 60 71            [24]  822 	jz	00102$
+                                    823 ;	/home/user/contiki/core/lib/trickle-timer.c:276: loctt->cb(loctt->cb_arg, TRICKLE_TIMER_PROTO_TX_ALLOW(loctt));
+      0003B6 74 23            [12]  824 	mov	a,#0x23
+      0003B8 2D               [12]  825 	add	a,r5
+      0003B9 F8               [12]  826 	mov	r0,a
+      0003BA E4               [12]  827 	clr	a
+      0003BB 3E               [12]  828 	addc	a,r6
+      0003BC F9               [12]  829 	mov	r1,a
+      0003BD 8F 02            [24]  830 	mov	ar2,r7
+      0003BF 88 82            [24]  831 	mov	dpl,r0
+      0003C1 89 83            [24]  832 	mov	dph,r1
+      0003C3 8A F0            [24]  833 	mov	b,r2
+      0003C5 12r00r00         [24]  834 	lcall	__gptrget
+      0003C8 FA               [12]  835 	mov	r2,a
+      0003C9 60 23            [24]  836 	jz	00108$
+      0003CB C0 03            [24]  837 	push	ar3
+      0003CD C0 04            [24]  838 	push	ar4
+      0003CF 74 24            [12]  839 	mov	a,#0x24
+      0003D1 2D               [12]  840 	add	a,r5
+      0003D2 F8               [12]  841 	mov	r0,a
+      0003D3 E4               [12]  842 	clr	a
+      0003D4 3E               [12]  843 	addc	a,r6
+      0003D5 F9               [12]  844 	mov	r1,a
+      0003D6 8F 04            [24]  845 	mov	ar4,r7
+      0003D8 88 82            [24]  846 	mov	dpl,r0
+      0003DA 89 83            [24]  847 	mov	dph,r1
+      0003DC 8C F0            [24]  848 	mov	b,r4
+      0003DE 12r00r00         [24]  849 	lcall	__gptrget
+      0003E1 F8               [12]  850 	mov	r0,a
+      0003E2 C3               [12]  851 	clr	c
+      0003E3 9A               [12]  852 	subb	a,r2
+      0003E4 D0 04            [24]  853 	pop	ar4
+      0003E6 D0 03            [24]  854 	pop	ar3
+      0003E8 40 04            [24]  855 	jc	00108$
+      0003EA 7A 00            [12]  856 	mov	r2,#0x00
+      0003EC 80 02            [24]  857 	sjmp	00109$
+      0003EE                        858 00108$:
+      0003EE 7A 01            [12]  859 	mov	r2,#0x01
+      0003F0                        860 00109$:
+      0003F0 74 1F            [12]  861 	mov	a,#0x1F
+      0003F2 2D               [12]  862 	add	a,r5
+      0003F3 FD               [12]  863 	mov	r5,a
+      0003F4 E4               [12]  864 	clr	a
+      0003F5 3E               [12]  865 	addc	a,r6
+      0003F6 FE               [12]  866 	mov	r6,a
+      0003F7 8D 82            [24]  867 	mov	dpl,r5
+      0003F9 8E 83            [24]  868 	mov	dph,r6
+      0003FB 8F F0            [24]  869 	mov	b,r7
+      0003FD 12r00r00         [24]  870 	lcall	__gptrget
+      000400 FD               [12]  871 	mov	r5,a
+      000401 A3               [24]  872 	inc	dptr
+      000402 12r00r00         [24]  873 	lcall	__gptrget
+      000405 FE               [12]  874 	mov	r6,a
+      000406 A3               [24]  875 	inc	dptr
+      000407 12r00r00         [24]  876 	lcall	__gptrget
+      00040A FF               [12]  877 	mov	r7,a
+      00040B C0 04            [24]  878 	push	ar4
+      00040D C0 03            [24]  879 	push	ar3
+      00040F C0 02            [24]  880 	push	ar2
+      000411 12r04r16         [24]  881 	lcall	00125$
+      000414 80 0B            [24]  882 	sjmp	00126$
+      000416                        883 00125$:
+      000416 C0 03            [24]  884 	push	ar3
+      000418 C0 04            [24]  885 	push	ar4
+      00041A 8D 82            [24]  886 	mov	dpl,r5
+      00041C 8E 83            [24]  887 	mov	dph,r6
+      00041E 8F F0            [24]  888 	mov	b,r7
+      000420 22               [24]  889 	ret
+      000421                        890 00126$:
+      000421 15 81            [12]  891 	dec	sp
+      000423 D0 03            [24]  892 	pop	ar3
+      000425 D0 04            [24]  893 	pop	ar4
+      000427                        894 00102$:
+                                    895 ;	/home/user/contiki/core/lib/trickle-timer.c:279: if(trickle_timer_is_running(loctt)) {
+      000427 90r00r00         [24]  896 	mov	dptr,#_loctt
+      00042A E0               [24]  897 	movx	a,@dptr
+      00042B FD               [12]  898 	mov	r5,a
+      00042C A3               [24]  899 	inc	dptr
+      00042D E0               [24]  900 	movx	a,@dptr
+      00042E FE               [12]  901 	mov	r6,a
+      00042F A3               [24]  902 	inc	dptr
+      000430 E0               [24]  903 	movx	a,@dptr
+      000431 FF               [12]  904 	mov	r7,a
+      000432 74 02            [12]  905 	mov	a,#0x02
+      000434 2D               [12]  906 	add	a,r5
+      000435 FA               [12]  907 	mov	r2,a
+      000436 E4               [12]  908 	clr	a
+      000437 3E               [12]  909 	addc	a,r6
+      000438 FB               [12]  910 	mov	r3,a
+      000439 8F 04            [24]  911 	mov	ar4,r7
+      00043B 8A 82            [24]  912 	mov	dpl,r2
+      00043D 8B 83            [24]  913 	mov	dph,r3
+      00043F 8C F0            [24]  914 	mov	b,r4
+      000441 12r00r00         [24]  915 	lcall	__gptrget
+      000444 FA               [12]  916 	mov	r2,a
+      000445 A3               [24]  917 	inc	dptr
+      000446 12r00r00         [24]  918 	lcall	__gptrget
+      000449 FB               [12]  919 	mov	r3,a
+      00044A 4A               [12]  920 	orl	a,r2
+      00044B 60 09            [24]  921 	jz	00105$
+                                    922 ;	/home/user/contiki/core/lib/trickle-timer.c:280: schedule_for_end(loctt);
+      00044D 8D 82            [24]  923 	mov	dpl,r5
+      00044F 8E 83            [24]  924 	mov	dph,r6
+      000451 8F F0            [24]  925 	mov	b,r7
+      000453 02r01r0B         [24]  926 	ljmp	_schedule_for_end
+      000456                        927 00105$:
+      000456 22               [24]  928 	ret
+                                    929 ;------------------------------------------------------------
+                                    930 ;Allocation info for local variables in function 'new_interval'
+                                    931 ;------------------------------------------------------------
+                                    932 ;tt                        Allocated to stack - sp -5
+                                    933 ;sloc0                     Allocated to stack - sp -2
+                                    934 ;------------------------------------------------------------
+                                    935 ;	/home/user/contiki/core/lib/trickle-timer.c:287: new_interval(struct trickle_timer *tt)
+                                    936 ;	-----------------------------------------
+                                    937 ;	 function new_interval
+                                    938 ;	-----------------------------------------
+      000457                        939 _new_interval:
+      000457 C0 82            [24]  940 	push	dpl
+      000459 C0 83            [24]  941 	push	dph
+      00045B C0 F0            [24]  942 	push	b
+      00045D 05 81            [12]  943 	inc	sp
+      00045F 05 81            [12]  944 	inc	sp
+      000461 05 81            [12]  945 	inc	sp
+                                    946 ;	/home/user/contiki/core/lib/trickle-timer.c:289: tt->c = 0;
+      000463 E5 81            [12]  947 	mov	a,sp
+      000465 24 FB            [12]  948 	add	a,#0xfb
+      000467 F8               [12]  949 	mov	r0,a
+      000468 74 24            [12]  950 	mov	a,#0x24
+      00046A 26               [12]  951 	add	a,@r0
+      00046B FA               [12]  952 	mov	r2,a
+      00046C E4               [12]  953 	clr	a
+      00046D 08               [12]  954 	inc	r0
+      00046E 36               [12]  955 	addc	a,@r0
+      00046F FB               [12]  956 	mov	r3,a
+      000470 08               [12]  957 	inc	r0
+      000471 86 04            [24]  958 	mov	ar4,@r0
+      000473 8A 82            [24]  959 	mov	dpl,r2
+      000475 8B 83            [24]  960 	mov	dph,r3
+      000477 8C F0            [24]  961 	mov	b,r4
+      000479 E4               [12]  962 	clr	a
+      00047A 12r00r00         [24]  963 	lcall	__gptrput
+                                    964 ;	/home/user/contiki/core/lib/trickle-timer.c:292: loc_clock = get_t(tt->i_cur);
+      00047D E5 81            [12]  965 	mov	a,sp
+      00047F 24 FB            [12]  966 	add	a,#0xfb
+      000481 F8               [12]  967 	mov	r0,a
+      000482 74 02            [12]  968 	mov	a,#0x02
+      000484 26               [12]  969 	add	a,@r0
+      000485 FA               [12]  970 	mov	r2,a
+      000486 E4               [12]  971 	clr	a
+      000487 08               [12]  972 	inc	r0
+      000488 36               [12]  973 	addc	a,@r0
+      000489 FB               [12]  974 	mov	r3,a
+      00048A 08               [12]  975 	inc	r0
+      00048B 86 04            [24]  976 	mov	ar4,@r0
+      00048D 8A 82            [24]  977 	mov	dpl,r2
+      00048F 8B 83            [24]  978 	mov	dph,r3
+      000491 8C F0            [24]  979 	mov	b,r4
+      000493 12r00r00         [24]  980 	lcall	__gptrget
+      000496 FA               [12]  981 	mov	r2,a
+      000497 A3               [24]  982 	inc	dptr
+      000498 12r00r00         [24]  983 	lcall	__gptrget
+      00049B FB               [12]  984 	mov	r3,a
+      00049C 8A 82            [24]  985 	mov	dpl,r2
+      00049E 8B 83            [24]  986 	mov	dph,r3
+      0004A0 12r00rA9         [24]  987 	lcall	_get_t
+      0004A3 AB 82            [24]  988 	mov	r3,dpl
+      0004A5 AC 83            [24]  989 	mov	r4,dph
+      0004A7 90r00r03         [24]  990 	mov	dptr,#_loc_clock
+      0004AA EB               [12]  991 	mov	a,r3
+      0004AB F0               [24]  992 	movx	@dptr,a
+      0004AC EC               [12]  993 	mov	a,r4
+      0004AD A3               [24]  994 	inc	dptr
+      0004AE F0               [24]  995 	movx	@dptr,a
+                                    996 ;	/home/user/contiki/core/lib/trickle-timer.c:294: ctimer_set(&tt->ct, loc_clock, fire, tt);
+      0004AF E5 81            [12]  997 	mov	a,sp
+      0004B1 24 FB            [12]  998 	add	a,#0xfb
+      0004B3 F8               [12]  999 	mov	r0,a
+      0004B4 A9 81            [24] 1000 	mov	r1,sp
+      0004B6 19               [12] 1001 	dec	r1
+      0004B7 19               [12] 1002 	dec	r1
+      0004B8 E6               [12] 1003 	mov	a,@r0
+      0004B9 F7               [12] 1004 	mov	@r1,a
+      0004BA 08               [12] 1005 	inc	r0
+      0004BB 09               [12] 1006 	inc	r1
+      0004BC E6               [12] 1007 	mov	a,@r0
+      0004BD F7               [12] 1008 	mov	@r1,a
+      0004BE 08               [12] 1009 	inc	r0
+      0004BF 09               [12] 1010 	inc	r1
+      0004C0 E6               [12] 1011 	mov	a,@r0
+      0004C1 F7               [12] 1012 	mov	@r1,a
+      0004C2 E5 81            [12] 1013 	mov	a,sp
+      0004C4 24 FB            [12] 1014 	add	a,#0xfb
+      0004C6 F8               [12] 1015 	mov	r0,a
+      0004C7 74 08            [12] 1016 	mov	a,#0x08
+      0004C9 26               [12] 1017 	add	a,@r0
+      0004CA FD               [12] 1018 	mov	r5,a
+      0004CB E4               [12] 1019 	clr	a
+      0004CC 08               [12] 1020 	inc	r0
+      0004CD 36               [12] 1021 	addc	a,@r0
+      0004CE FE               [12] 1022 	mov	r6,a
+      0004CF 08               [12] 1023 	inc	r0
+      0004D0 86 07            [24] 1024 	mov	ar7,@r0
+      0004D2 A8 81            [24] 1025 	mov	r0,sp
+      0004D4 18               [12] 1026 	dec	r0
+      0004D5 18               [12] 1027 	dec	r0
+      0004D6 E6               [12] 1028 	mov	a,@r0
+      0004D7 C0 E0            [24] 1029 	push	acc
+      0004D9 08               [12] 1030 	inc	r0
+      0004DA E6               [12] 1031 	mov	a,@r0
+      0004DB C0 E0            [24] 1032 	push	acc
+      0004DD 08               [12] 1033 	inc	r0
+      0004DE E6               [12] 1034 	mov	a,@r0
+      0004DF C0 E0            [24] 1035 	push	acc
+      0004E1 74r8A            [12] 1036 	mov	a,#_fire
+      0004E3 C0 E0            [24] 1037 	push	acc
+      0004E5 74s03            [12] 1038 	mov	a,#(_fire >> 8)
+      0004E7 C0 E0            [24] 1039 	push	acc
+      0004E9 C0 03            [24] 1040 	push	ar3
+      0004EB C0 04            [24] 1041 	push	ar4
+      0004ED 8D 82            [24] 1042 	mov	dpl,r5
+      0004EF 8E 83            [24] 1043 	mov	dph,r6
+      0004F1 8F F0            [24] 1044 	mov	b,r7
+      0004F3 12r00r00         [24] 1045 	lcall	_ctimer_set
+      0004F6 E5 81            [12] 1046 	mov	a,sp
+      0004F8 24 F9            [12] 1047 	add	a,#0xf9
+                                   1048 ;	/home/user/contiki/core/lib/trickle-timer.c:297: tt->i_start = tt->ct.etimer.timer.start;
+      0004FA F5 81            [12] 1049 	mov	sp,a
+      0004FC 24 FB            [12] 1050 	add	a,#0xfb
+      0004FE F8               [12] 1051 	mov	r0,a
+      0004FF 74 04            [12] 1052 	mov	a,#0x04
+      000501 26               [12] 1053 	add	a,@r0
+      000502 FD               [12] 1054 	mov	r5,a
+      000503 E4               [12] 1055 	clr	a
+      000504 08               [12] 1056 	inc	r0
+      000505 36               [12] 1057 	addc	a,@r0
+      000506 FE               [12] 1058 	mov	r6,a
+      000507 08               [12] 1059 	inc	r0
+      000508 86 07            [24] 1060 	mov	ar7,@r0
+      00050A E5 81            [12] 1061 	mov	a,sp
+      00050C 24 FB            [12] 1062 	add	a,#0xfb
+      00050E F8               [12] 1063 	mov	r0,a
+      00050F 74 08            [12] 1064 	mov	a,#0x08
+      000511 26               [12] 1065 	add	a,@r0
+      000512 FA               [12] 1066 	mov	r2,a
+      000513 E4               [12] 1067 	clr	a
+      000514 08               [12] 1068 	inc	r0
+      000515 36               [12] 1069 	addc	a,@r0
+      000516 FB               [12] 1070 	mov	r3,a
+      000517 08               [12] 1071 	inc	r0
+      000518 86 04            [24] 1072 	mov	ar4,@r0
+      00051A 74 03            [12] 1073 	mov	a,#0x03
+      00051C 2A               [12] 1074 	add	a,r2
+      00051D FA               [12] 1075 	mov	r2,a
+      00051E E4               [12] 1076 	clr	a
+      00051F 3B               [12] 1077 	addc	a,r3
+      000520 FB               [12] 1078 	mov	r3,a
+      000521 8A 82            [24] 1079 	mov	dpl,r2
+      000523 8B 83            [24] 1080 	mov	dph,r3
+      000525 8C F0            [24] 1081 	mov	b,r4
+      000527 12r00r00         [24] 1082 	lcall	__gptrget
+      00052A FA               [12] 1083 	mov	r2,a
+      00052B A3               [24] 1084 	inc	dptr
+      00052C 12r00r00         [24] 1085 	lcall	__gptrget
+      00052F FB               [12] 1086 	mov	r3,a
+      000530 8D 82            [24] 1087 	mov	dpl,r5
+      000532 8E 83            [24] 1088 	mov	dph,r6
+      000534 8F F0            [24] 1089 	mov	b,r7
+      000536 EA               [12] 1090 	mov	a,r2
+      000537 12r00r00         [24] 1091 	lcall	__gptrput
+      00053A A3               [24] 1092 	inc	dptr
+      00053B EB               [12] 1093 	mov	a,r3
+      00053C 12r00r00         [24] 1094 	lcall	__gptrput
+      00053F E5 81            [12] 1095 	mov	a,sp
+      000541 24 FA            [12] 1096 	add	a,#0xFA
+      000543 F5 81            [12] 1097 	mov	sp,a
+      000545 22               [24] 1098 	ret
+                                   1099 ;------------------------------------------------------------
+                                   1100 ;Allocation info for local variables in function 'trickle_timer_consistency'
+                                   1101 ;------------------------------------------------------------
+                                   1102 ;tt                        Allocated to registers r5 r6 r7 
+                                   1103 ;------------------------------------------------------------
+                                   1104 ;	/home/user/contiki/core/lib/trickle-timer.c:307: trickle_timer_consistency(struct trickle_timer *tt)
+                                   1105 ;	-----------------------------------------
+                                   1106 ;	 function trickle_timer_consistency
+                                   1107 ;	-----------------------------------------
+      000546                       1108 _trickle_timer_consistency:
+      000546 AD 82            [24] 1109 	mov	r5,dpl
+      000548 AE 83            [24] 1110 	mov	r6,dph
+      00054A AF F0            [24] 1111 	mov	r7,b
+                                   1112 ;	/home/user/contiki/core/lib/trickle-timer.c:309: if(tt->c < 0xFF) {
+      00054C 74 24            [12] 1113 	mov	a,#0x24
+      00054E 2D               [12] 1114 	add	a,r5
+      00054F FD               [12] 1115 	mov	r5,a
+      000550 E4               [12] 1116 	clr	a
+      000551 3E               [12] 1117 	addc	a,r6
+      000552 FE               [12] 1118 	mov	r6,a
+      000553 8D 82            [24] 1119 	mov	dpl,r5
+      000555 8E 83            [24] 1120 	mov	dph,r6
+      000557 8F F0            [24] 1121 	mov	b,r7
+      000559 12r00r00         [24] 1122 	lcall	__gptrget
+      00055C FC               [12] 1123 	mov	r4,a
+      00055D BC FF 00         [24] 1124 	cjne	r4,#0xFF,00108$
+      000560                       1125 00108$:
+      000560 50 0B            [24] 1126 	jnc	00103$
+                                   1127 ;	/home/user/contiki/core/lib/trickle-timer.c:310: tt->c++;
+      000562 0C               [12] 1128 	inc	r4
+      000563 8D 82            [24] 1129 	mov	dpl,r5
+      000565 8E 83            [24] 1130 	mov	dph,r6
+      000567 8F F0            [24] 1131 	mov	b,r7
+      000569 EC               [12] 1132 	mov	a,r4
+      00056A 02r00r00         [24] 1133 	ljmp	__gptrput
+      00056D                       1134 00103$:
+      00056D 22               [24] 1135 	ret
+                                   1136 ;------------------------------------------------------------
+                                   1137 ;Allocation info for local variables in function 'trickle_timer_inconsistency'
+                                   1138 ;------------------------------------------------------------
+                                   1139 ;tt                        Allocated to registers r5 r6 r7 
+                                   1140 ;sloc0                     Allocated to stack - sp -3
+                                   1141 ;sloc1                     Allocated to stack - sp -1
+                                   1142 ;------------------------------------------------------------
+                                   1143 ;	/home/user/contiki/core/lib/trickle-timer.c:316: trickle_timer_inconsistency(struct trickle_timer *tt)
+                                   1144 ;	-----------------------------------------
+                                   1145 ;	 function trickle_timer_inconsistency
+                                   1146 ;	-----------------------------------------
+      00056E                       1147 _trickle_timer_inconsistency:
+      00056E E5 81            [12] 1148 	mov	a,sp
+      000570 24 04            [12] 1149 	add	a,#0x04
+      000572 F5 81            [12] 1150 	mov	sp,a
+      000574 AD 82            [24] 1151 	mov	r5,dpl
+      000576 AE 83            [24] 1152 	mov	r6,dph
+      000578 AF F0            [24] 1153 	mov	r7,b
+                                   1154 ;	/home/user/contiki/core/lib/trickle-timer.c:320: if(tt->i_cur != tt->i_min) {
+      00057A 74 02            [12] 1155 	mov	a,#0x02
+      00057C 2D               [12] 1156 	add	a,r5
+      00057D FA               [12] 1157 	mov	r2,a
+      00057E E4               [12] 1158 	clr	a
+      00057F 3E               [12] 1159 	addc	a,r6
+      000580 FB               [12] 1160 	mov	r3,a
+      000581 8F 04            [24] 1161 	mov	ar4,r7
+      000583 8A 82            [24] 1162 	mov	dpl,r2
+      000585 8B 83            [24] 1163 	mov	dph,r3
+      000587 8C F0            [24] 1164 	mov	b,r4
+      000589 A8 81            [24] 1165 	mov	r0,sp
+      00058B 18               [12] 1166 	dec	r0
+      00058C 12r00r00         [24] 1167 	lcall	__gptrget
+      00058F F6               [12] 1168 	mov	@r0,a
+      000590 A3               [24] 1169 	inc	dptr
+      000591 12r00r00         [24] 1170 	lcall	__gptrget
+      000594 08               [12] 1171 	inc	r0
+      000595 F6               [12] 1172 	mov	@r0,a
+      000596 8D 82            [24] 1173 	mov	dpl,r5
+      000598 8E 83            [24] 1174 	mov	dph,r6
+      00059A 8F F0            [24] 1175 	mov	b,r7
+      00059C E5 81            [12] 1176 	mov	a,sp
+      00059E 24 FD            [12] 1177 	add	a,#0xfd
+      0005A0 F8               [12] 1178 	mov	r0,a
+      0005A1 12r00r00         [24] 1179 	lcall	__gptrget
+      0005A4 F6               [12] 1180 	mov	@r0,a
+      0005A5 A3               [24] 1181 	inc	dptr
+      0005A6 12r00r00         [24] 1182 	lcall	__gptrget
+      0005A9 08               [12] 1183 	inc	r0
+      0005AA F6               [12] 1184 	mov	@r0,a
+      0005AB A8 81            [24] 1185 	mov	r0,sp
+      0005AD 18               [12] 1186 	dec	r0
+      0005AE E5 81            [12] 1187 	mov	a,sp
+      0005B0 24 FD            [12] 1188 	add	a,#0xfd
+      0005B2 F9               [12] 1189 	mov	r1,a
+      0005B3 86 F0            [24] 1190 	mov	b,@r0
+      0005B5 E7               [12] 1191 	mov	a,@r1
+      0005B6 B5 F0 0A         [24] 1192 	cjne	a,b,00108$
+      0005B9 08               [12] 1193 	inc	r0
+      0005BA 86 F0            [24] 1194 	mov	b,@r0
+      0005BC 09               [12] 1195 	inc	r1
+      0005BD E7               [12] 1196 	mov	a,@r1
+      0005BE B5 F0 02         [24] 1197 	cjne	a,b,00108$
+      0005C1 80 1E            [24] 1198 	sjmp	00103$
+      0005C3                       1199 00108$:
+                                   1200 ;	/home/user/contiki/core/lib/trickle-timer.c:322: tt->i_cur = tt->i_min;
+      0005C3 8A 82            [24] 1201 	mov	dpl,r2
+      0005C5 8B 83            [24] 1202 	mov	dph,r3
+      0005C7 8C F0            [24] 1203 	mov	b,r4
+      0005C9 E5 81            [12] 1204 	mov	a,sp
+      0005CB 24 FD            [12] 1205 	add	a,#0xfd
+      0005CD F8               [12] 1206 	mov	r0,a
+      0005CE E6               [12] 1207 	mov	a,@r0
+      0005CF 12r00r00         [24] 1208 	lcall	__gptrput
+      0005D2 A3               [24] 1209 	inc	dptr
+      0005D3 08               [12] 1210 	inc	r0
+      0005D4 E6               [12] 1211 	mov	a,@r0
+      0005D5 12r00r00         [24] 1212 	lcall	__gptrput
+                                   1213 ;	/home/user/contiki/core/lib/trickle-timer.c:324: new_interval(tt);
+      0005D8 8D 82            [24] 1214 	mov	dpl,r5
+      0005DA 8E 83            [24] 1215 	mov	dph,r6
+      0005DC 8F F0            [24] 1216 	mov	b,r7
+      0005DE 12r04r57         [24] 1217 	lcall	_new_interval
+      0005E1                       1218 00103$:
+      0005E1 E5 81            [12] 1219 	mov	a,sp
+      0005E3 24 FC            [12] 1220 	add	a,#0xFC
+      0005E5 F5 81            [12] 1221 	mov	sp,a
+      0005E7 22               [24] 1222 	ret
+                                   1223 ;------------------------------------------------------------
+                                   1224 ;Allocation info for local variables in function 'trickle_timer_config'
+                                   1225 ;------------------------------------------------------------
+                                   1226 ;i_min                     Allocated to stack - sp -6
+                                   1227 ;i_max                     Allocated to stack - sp -7
+                                   1228 ;k                         Allocated to stack - sp -8
+                                   1229 ;tt                        Allocated to stack - sp -2
+                                   1230 ;------------------------------------------------------------
+                                   1231 ;	/home/user/contiki/core/lib/trickle-timer.c:329: trickle_timer_config(struct trickle_timer *tt, clock_time_t i_min,
+                                   1232 ;	-----------------------------------------
+                                   1233 ;	 function trickle_timer_config
+                                   1234 ;	-----------------------------------------
+      0005E8                       1235 _trickle_timer_config:
+      0005E8 C0 82            [24] 1236 	push	dpl
+      0005EA C0 83            [24] 1237 	push	dph
+      0005EC C0 F0            [24] 1238 	push	b
+                                   1239 ;	/home/user/contiki/core/lib/trickle-timer.c:338: if(TRICKLE_TIMER_IMIN_IS_BAD(i_min)) {
+      0005EE E5 81            [12] 1240 	mov	a,sp
+      0005F0 24 FA            [12] 1241 	add	a,#0xfa
+      0005F2 F8               [12] 1242 	mov	r0,a
+      0005F3 C3               [12] 1243 	clr	c
+      0005F4 E6               [12] 1244 	mov	a,@r0
+      0005F5 94 02            [12] 1245 	subb	a,#0x02
+      0005F7 08               [12] 1246 	inc	r0
+      0005F8 E6               [12] 1247 	mov	a,@r0
+      0005F9 94 00            [12] 1248 	subb	a,#0x00
+      0005FB 40 0F            [24] 1249 	jc	00101$
+      0005FD E5 81            [12] 1250 	mov	a,sp
+      0005FF 24 FA            [12] 1251 	add	a,#0xfa
+      000601 F8               [12] 1252 	mov	r0,a
+      000602 C3               [12] 1253 	clr	c
+      000603 74 FF            [12] 1254 	mov	a,#0xFF
+      000605 96               [12] 1255 	subb	a,@r0
+      000606 74 7F            [12] 1256 	mov	a,#0x7F
+      000608 08               [12] 1257 	inc	r0
+      000609 96               [12] 1258 	subb	a,@r0
+      00060A 50 06            [24] 1259 	jnc	00102$
+      00060C                       1260 00101$:
+                                   1261 ;	/home/user/contiki/core/lib/trickle-timer.c:340: return TRICKLE_TIMER_ERROR;
+      00060C 75 82 00         [24] 1262 	mov	dpl,#0x00
+      00060F 02r07r14         [24] 1263 	ljmp	00110$
+      000612                       1264 00102$:
+                                   1265 ;	/home/user/contiki/core/lib/trickle-timer.c:343: if(tt == NULL || i_max == 0 || k == 0) {
+      000612 A8 81            [24] 1266 	mov	r0,sp
+      000614 18               [12] 1267 	dec	r0
+      000615 18               [12] 1268 	dec	r0
+      000616 E6               [12] 1269 	mov	a,@r0
+      000617 08               [12] 1270 	inc	r0
+      000618 46               [12] 1271 	orl	a,@r0
+      000619 60 10            [24] 1272 	jz	00104$
+      00061B E5 81            [12] 1273 	mov	a,sp
+      00061D 24 F9            [12] 1274 	add	a,#0xf9
+      00061F F8               [12] 1275 	mov	r0,a
+      000620 E6               [12] 1276 	mov	a,@r0
+      000621 60 08            [24] 1277 	jz	00104$
+      000623 E5 81            [12] 1278 	mov	a,sp
+      000625 24 F8            [12] 1279 	add	a,#0xf8
+      000627 F8               [12] 1280 	mov	r0,a
+      000628 E6               [12] 1281 	mov	a,@r0
+      000629 70 06            [24] 1282 	jnz	00105$
+      00062B                       1283 00104$:
+                                   1284 ;	/home/user/contiki/core/lib/trickle-timer.c:345: return TRICKLE_TIMER_ERROR;
+      00062B 75 82 00         [24] 1285 	mov	dpl,#0x00
+      00062E 02r07r14         [24] 1286 	ljmp	00110$
+      000631                       1287 00105$:
+                                   1288 ;	/home/user/contiki/core/lib/trickle-timer.c:354: if(TRICKLE_TIMER_IPAIR_IS_BAD(i_min, i_max)) {
+      000631 E5 81            [12] 1289 	mov	a,sp
+      000633 24 F9            [12] 1290 	add	a,#0xf9
+      000635 F8               [12] 1291 	mov	r0,a
+      000636 86 03            [24] 1292 	mov	ar3,@r0
+      000638 7C 00            [12] 1293 	mov	r4,#0x00
+      00063A 0B               [12] 1294 	inc	r3
+      00063B BB 00 01         [24] 1295 	cjne	r3,#0x00,00129$
+      00063E 0C               [12] 1296 	inc	r4
+      00063F                       1297 00129$:
+      00063F 8B F0            [24] 1298 	mov	b,r3
+      000641 05 F0            [12] 1299 	inc	b
+      000643 7B FF            [12] 1300 	mov	r3,#0xFF
+      000645 7C FF            [12] 1301 	mov	r4,#0xFF
+      000647 80 07            [24] 1302 	sjmp	00131$
+      000649                       1303 00130$:
+      000649 C3               [12] 1304 	clr	c
+      00064A EC               [12] 1305 	mov	a,r4
+      00064B 13               [12] 1306 	rrc	a
+      00064C FC               [12] 1307 	mov	r4,a
+      00064D EB               [12] 1308 	mov	a,r3
+      00064E 13               [12] 1309 	rrc	a
+      00064F FB               [12] 1310 	mov	r3,a
+      000650                       1311 00131$:
+      000650 D5 F0 F6         [24] 1312 	djnz	b,00130$
+      000653 E5 81            [12] 1313 	mov	a,sp
+      000655 24 FA            [12] 1314 	add	a,#0xfa
+      000657 F8               [12] 1315 	mov	r0,a
+      000658 E6               [12] 1316 	mov	a,@r0
+      000659 24 FF            [12] 1317 	add	a,#0xFF
+      00065B FA               [12] 1318 	mov	r2,a
+      00065C 08               [12] 1319 	inc	r0
+      00065D E6               [12] 1320 	mov	a,@r0
+      00065E 34 FF            [12] 1321 	addc	a,#0xFF
+      000660 FF               [12] 1322 	mov	r7,a
+      000661 C3               [12] 1323 	clr	c
+      000662 EB               [12] 1324 	mov	a,r3
+      000663 9A               [12] 1325 	subb	a,r2
+      000664 EC               [12] 1326 	mov	a,r4
+      000665 9F               [12] 1327 	subb	a,r7
+      000666 50 16            [24] 1328 	jnc	00109$
+                                   1329 ;	/home/user/contiki/core/lib/trickle-timer.c:359: i_max = max_imax(i_min);
+      000668 E5 81            [12] 1330 	mov	a,sp
+      00066A 24 FA            [12] 1331 	add	a,#0xfa
+      00066C F8               [12] 1332 	mov	r0,a
+      00066D 86 82            [24] 1333 	mov	dpl,@r0
+      00066F 08               [12] 1334 	inc	r0
+      000670 86 83            [24] 1335 	mov	dph,@r0
+      000672 12r00r41         [24] 1336 	lcall	_max_imax
+      000675 AC 82            [24] 1337 	mov	r4,dpl
+      000677 E5 81            [12] 1338 	mov	a,sp
+      000679 24 F9            [12] 1339 	add	a,#0xf9
+      00067B F8               [12] 1340 	mov	r0,a
+      00067C A6 04            [24] 1341 	mov	@r0,ar4
+      00067E                       1342 00109$:
+                                   1343 ;	/home/user/contiki/core/lib/trickle-timer.c:364: tt->i_min = i_min;
+      00067E A8 81            [24] 1344 	mov	r0,sp
+      000680 18               [12] 1345 	dec	r0
+      000681 18               [12] 1346 	dec	r0
+      000682 86 82            [24] 1347 	mov	dpl,@r0
+      000684 08               [12] 1348 	inc	r0
+      000685 86 83            [24] 1349 	mov	dph,@r0
+      000687 08               [12] 1350 	inc	r0
+      000688 86 F0            [24] 1351 	mov	b,@r0
+      00068A E5 81            [12] 1352 	mov	a,sp
+      00068C 24 FA            [12] 1353 	add	a,#0xfa
+      00068E F9               [12] 1354 	mov	r1,a
+      00068F E7               [12] 1355 	mov	a,@r1
+      000690 12r00r00         [24] 1356 	lcall	__gptrput
+      000693 A3               [24] 1357 	inc	dptr
+      000694 09               [12] 1358 	inc	r1
+      000695 E7               [12] 1359 	mov	a,@r1
+      000696 12r00r00         [24] 1360 	lcall	__gptrput
+                                   1361 ;	/home/user/contiki/core/lib/trickle-timer.c:365: tt->i_max = i_max;
+      000699 A8 81            [24] 1362 	mov	r0,sp
+      00069B 18               [12] 1363 	dec	r0
+      00069C 18               [12] 1364 	dec	r0
+      00069D 74 22            [12] 1365 	mov	a,#0x22
+      00069F 26               [12] 1366 	add	a,@r0
+      0006A0 FA               [12] 1367 	mov	r2,a
+      0006A1 E4               [12] 1368 	clr	a
+      0006A2 08               [12] 1369 	inc	r0
+      0006A3 36               [12] 1370 	addc	a,@r0
+      0006A4 FB               [12] 1371 	mov	r3,a
+      0006A5 08               [12] 1372 	inc	r0
+      0006A6 86 04            [24] 1373 	mov	ar4,@r0
+      0006A8 8A 82            [24] 1374 	mov	dpl,r2
+      0006AA 8B 83            [24] 1375 	mov	dph,r3
+      0006AC 8C F0            [24] 1376 	mov	b,r4
+      0006AE E5 81            [12] 1377 	mov	a,sp
+      0006B0 24 F9            [12] 1378 	add	a,#0xf9
+      0006B2 F8               [12] 1379 	mov	r0,a
+      0006B3 E6               [12] 1380 	mov	a,@r0
+      0006B4 12r00r00         [24] 1381 	lcall	__gptrput
+                                   1382 ;	/home/user/contiki/core/lib/trickle-timer.c:366: tt->i_max_abs = i_min << i_max;
+      0006B7 A8 81            [24] 1383 	mov	r0,sp
+      0006B9 18               [12] 1384 	dec	r0
+      0006BA 18               [12] 1385 	dec	r0
+      0006BB 74 06            [12] 1386 	mov	a,#0x06
+      0006BD 26               [12] 1387 	add	a,@r0
+      0006BE FA               [12] 1388 	mov	r2,a
+      0006BF E4               [12] 1389 	clr	a
+      0006C0 08               [12] 1390 	inc	r0
+      0006C1 36               [12] 1391 	addc	a,@r0
+      0006C2 FB               [12] 1392 	mov	r3,a
+      0006C3 08               [12] 1393 	inc	r0
+      0006C4 86 04            [24] 1394 	mov	ar4,@r0
+      0006C6 E5 81            [12] 1395 	mov	a,sp
+      0006C8 24 F9            [12] 1396 	add	a,#0xf9
+      0006CA F8               [12] 1397 	mov	r0,a
+      0006CB 86 F0            [24] 1398 	mov	b,@r0
+      0006CD 05 F0            [12] 1399 	inc	b
+      0006CF E5 81            [12] 1400 	mov	a,sp
+      0006D1 24 FA            [12] 1401 	add	a,#0xfa
+      0006D3 F8               [12] 1402 	mov	r0,a
+      0006D4 86 06            [24] 1403 	mov	ar6,@r0
+      0006D6 08               [12] 1404 	inc	r0
+      0006D7 86 07            [24] 1405 	mov	ar7,@r0
+      0006D9 80 06            [24] 1406 	sjmp	00134$
+      0006DB                       1407 00133$:
+      0006DB EE               [12] 1408 	mov	a,r6
+      0006DC 2E               [12] 1409 	add	a,r6
+      0006DD FE               [12] 1410 	mov	r6,a
+      0006DE EF               [12] 1411 	mov	a,r7
+      0006DF 33               [12] 1412 	rlc	a
+      0006E0 FF               [12] 1413 	mov	r7,a
+      0006E1                       1414 00134$:
+      0006E1 D5 F0 F7         [24] 1415 	djnz	b,00133$
+      0006E4 8A 82            [24] 1416 	mov	dpl,r2
+      0006E6 8B 83            [24] 1417 	mov	dph,r3
+      0006E8 8C F0            [24] 1418 	mov	b,r4
+      0006EA EE               [12] 1419 	mov	a,r6
+      0006EB 12r00r00         [24] 1420 	lcall	__gptrput
+      0006EE A3               [24] 1421 	inc	dptr
+      0006EF EF               [12] 1422 	mov	a,r7
+      0006F0 12r00r00         [24] 1423 	lcall	__gptrput
+                                   1424 ;	/home/user/contiki/core/lib/trickle-timer.c:367: tt->k = k;
+      0006F3 A8 81            [24] 1425 	mov	r0,sp
+      0006F5 18               [12] 1426 	dec	r0
+      0006F6 18               [12] 1427 	dec	r0
+      0006F7 74 23            [12] 1428 	mov	a,#0x23
+      0006F9 26               [12] 1429 	add	a,@r0
+      0006FA FD               [12] 1430 	mov	r5,a
+      0006FB E4               [12] 1431 	clr	a
+      0006FC 08               [12] 1432 	inc	r0
+      0006FD 36               [12] 1433 	addc	a,@r0
+      0006FE FE               [12] 1434 	mov	r6,a
+      0006FF 08               [12] 1435 	inc	r0
+      000700 86 07            [24] 1436 	mov	ar7,@r0
+      000702 8D 82            [24] 1437 	mov	dpl,r5
+      000704 8E 83            [24] 1438 	mov	dph,r6
+      000706 8F F0            [24] 1439 	mov	b,r7
+      000708 E5 81            [12] 1440 	mov	a,sp
+      00070A 24 F8            [12] 1441 	add	a,#0xf8
+      00070C F8               [12] 1442 	mov	r0,a
+      00070D E6               [12] 1443 	mov	a,@r0
+      00070E 12r00r00         [24] 1444 	lcall	__gptrput
+                                   1445 ;	/home/user/contiki/core/lib/trickle-timer.c:372: return TRICKLE_TIMER_SUCCESS;
+      000711 75 82 01         [24] 1446 	mov	dpl,#0x01
+      000714                       1447 00110$:
+      000714 15 81            [12] 1448 	dec	sp
+      000716 15 81            [12] 1449 	dec	sp
+      000718 15 81            [12] 1450 	dec	sp
+      00071A 22               [24] 1451 	ret
+                                   1452 ;------------------------------------------------------------
+                                   1453 ;Allocation info for local variables in function 'trickle_timer_set'
+                                   1454 ;------------------------------------------------------------
+                                   1455 ;proto_cb                  Allocated to stack - sp -13
+                                   1456 ;ptr                       Allocated to stack - sp -16
+                                   1457 ;tt                        Allocated to stack - sp -9
+                                   1458 ;sloc0                     Allocated to stack - sp -6
+                                   1459 ;sloc1                     Allocated to stack - sp -6
+                                   1460 ;sloc2                     Allocated to stack - sp -3
+                                   1461 ;------------------------------------------------------------
+                                   1462 ;	/home/user/contiki/core/lib/trickle-timer.c:376: trickle_timer_set(struct trickle_timer *tt, trickle_timer_cb_t proto_cb,
+                                   1463 ;	-----------------------------------------
+                                   1464 ;	 function trickle_timer_set
+                                   1465 ;	-----------------------------------------
+      00071B                       1466 _trickle_timer_set:
+      00071B C0 82            [24] 1467 	push	dpl
+      00071D C0 83            [24] 1468 	push	dph
+      00071F C0 F0            [24] 1469 	push	b
+      000721 E5 81            [12] 1470 	mov	a,sp
+      000723 24 07            [12] 1471 	add	a,#0x07
+                                   1472 ;	/home/user/contiki/core/lib/trickle-timer.c:381: if(tt == NULL || proto_cb == NULL) {
+      000725 F5 81            [12] 1473 	mov	sp,a
+      000727 24 F7            [12] 1474 	add	a,#0xf7
+      000729 F8               [12] 1475 	mov	r0,a
+      00072A E6               [12] 1476 	mov	a,@r0
+      00072B 08               [12] 1477 	inc	r0
+      00072C 46               [12] 1478 	orl	a,@r0
+      00072D 60 0A            [24] 1479 	jz	00101$
+      00072F E5 81            [12] 1480 	mov	a,sp
+      000731 24 F3            [12] 1481 	add	a,#0xf3
+      000733 F8               [12] 1482 	mov	r0,a
+      000734 E6               [12] 1483 	mov	a,@r0
+      000735 08               [12] 1484 	inc	r0
+      000736 46               [12] 1485 	orl	a,@r0
+      000737 70 06            [24] 1486 	jnz	00102$
+      000739                       1487 00101$:
+                                   1488 ;	/home/user/contiki/core/lib/trickle-timer.c:383: return TRICKLE_TIMER_ERROR;
+      000739 75 82 00         [24] 1489 	mov	dpl,#0x00
+      00073C 02r08r96         [24] 1490 	ljmp	00104$
+      00073F                       1491 00102$:
+                                   1492 ;	/home/user/contiki/core/lib/trickle-timer.c:387: tt->cb = proto_cb;
+      00073F E5 81            [12] 1493 	mov	a,sp
+      000741 24 F7            [12] 1494 	add	a,#0xf7
+      000743 F8               [12] 1495 	mov	r0,a
+      000744 74 1D            [12] 1496 	mov	a,#0x1D
+      000746 26               [12] 1497 	add	a,@r0
+      000747 FA               [12] 1498 	mov	r2,a
+      000748 E4               [12] 1499 	clr	a
+      000749 08               [12] 1500 	inc	r0
+      00074A 36               [12] 1501 	addc	a,@r0
+      00074B FB               [12] 1502 	mov	r3,a
+      00074C 08               [12] 1503 	inc	r0
+      00074D 86 04            [24] 1504 	mov	ar4,@r0
+      00074F 8A 82            [24] 1505 	mov	dpl,r2
+      000751 8B 83            [24] 1506 	mov	dph,r3
+      000753 8C F0            [24] 1507 	mov	b,r4
+      000755 E5 81            [12] 1508 	mov	a,sp
+      000757 24 F3            [12] 1509 	add	a,#0xf3
+      000759 F8               [12] 1510 	mov	r0,a
+      00075A E6               [12] 1511 	mov	a,@r0
+      00075B 12r00r00         [24] 1512 	lcall	__gptrput
+      00075E A3               [24] 1513 	inc	dptr
+      00075F 08               [12] 1514 	inc	r0
+      000760 E6               [12] 1515 	mov	a,@r0
+      000761 12r00r00         [24] 1516 	lcall	__gptrput
+                                   1517 ;	/home/user/contiki/core/lib/trickle-timer.c:388: tt->cb_arg = ptr;
+      000764 E5 81            [12] 1518 	mov	a,sp
+      000766 24 F7            [12] 1519 	add	a,#0xf7
+      000768 F8               [12] 1520 	mov	r0,a
+      000769 74 1F            [12] 1521 	mov	a,#0x1F
+      00076B 26               [12] 1522 	add	a,@r0
+      00076C FA               [12] 1523 	mov	r2,a
+      00076D E4               [12] 1524 	clr	a
+      00076E 08               [12] 1525 	inc	r0
+      00076F 36               [12] 1526 	addc	a,@r0
+      000770 FB               [12] 1527 	mov	r3,a
+      000771 08               [12] 1528 	inc	r0
+      000772 86 04            [24] 1529 	mov	ar4,@r0
+      000774 8A 82            [24] 1530 	mov	dpl,r2
+      000776 8B 83            [24] 1531 	mov	dph,r3
+      000778 8C F0            [24] 1532 	mov	b,r4
+      00077A E5 81            [12] 1533 	mov	a,sp
+      00077C 24 F0            [12] 1534 	add	a,#0xf0
+      00077E F8               [12] 1535 	mov	r0,a
+      00077F E6               [12] 1536 	mov	a,@r0
+      000780 12r00r00         [24] 1537 	lcall	__gptrput
+      000783 A3               [24] 1538 	inc	dptr
+      000784 08               [12] 1539 	inc	r0
+      000785 E6               [12] 1540 	mov	a,@r0
+      000786 12r00r00         [24] 1541 	lcall	__gptrput
+      000789 A3               [24] 1542 	inc	dptr
+      00078A 08               [12] 1543 	inc	r0
+      00078B E6               [12] 1544 	mov	a,@r0
+      00078C 12r00r00         [24] 1545 	lcall	__gptrput
+                                   1546 ;	/home/user/contiki/core/lib/trickle-timer.c:391: tt->i_cur = tt->i_min +
+      00078F E5 81            [12] 1547 	mov	a,sp
+      000791 24 F7            [12] 1548 	add	a,#0xf7
+      000793 F8               [12] 1549 	mov	r0,a
+      000794 E5 81            [12] 1550 	mov	a,sp
+      000796 24 FA            [12] 1551 	add	a,#0xfa
+      000798 F9               [12] 1552 	mov	r1,a
+      000799 74 02            [12] 1553 	mov	a,#0x02
+      00079B 26               [12] 1554 	add	a,@r0
+      00079C F7               [12] 1555 	mov	@r1,a
+      00079D E4               [12] 1556 	clr	a
+      00079E 08               [12] 1557 	inc	r0
+      00079F 36               [12] 1558 	addc	a,@r0
+      0007A0 09               [12] 1559 	inc	r1
+      0007A1 F7               [12] 1560 	mov	@r1,a
+      0007A2 08               [12] 1561 	inc	r0
+      0007A3 09               [12] 1562 	inc	r1
+      0007A4 E6               [12] 1563 	mov	a,@r0
+      0007A5 F7               [12] 1564 	mov	@r1,a
+      0007A6 E5 81            [12] 1565 	mov	a,sp
+      0007A8 24 F7            [12] 1566 	add	a,#0xf7
+      0007AA F8               [12] 1567 	mov	r0,a
+      0007AB 86 82            [24] 1568 	mov	dpl,@r0
+      0007AD 08               [12] 1569 	inc	r0
+      0007AE 86 83            [24] 1570 	mov	dph,@r0
+      0007B0 08               [12] 1571 	inc	r0
+      0007B1 86 F0            [24] 1572 	mov	b,@r0
+      0007B3 12r00r00         [24] 1573 	lcall	__gptrget
+      0007B6 FD               [12] 1574 	mov	r5,a
+      0007B7 A3               [24] 1575 	inc	dptr
+      0007B8 12r00r00         [24] 1576 	lcall	__gptrget
+      0007BB FC               [12] 1577 	mov	r4,a
+                                   1578 ;	/home/user/contiki/core/lib/trickle-timer.c:392: (tt_rand() % (TRICKLE_TIMER_INTERVAL_MAX(tt) - tt->i_min + 1));
+      0007BC C0 05            [24] 1579 	push	ar5
+      0007BE C0 04            [24] 1580 	push	ar4
+      0007C0 12r00r00         [24] 1581 	lcall	_wide_rand
+      0007C3 C8               [12] 1582 	xch	a,r0
+      0007C4 E5 81            [12] 1583 	mov	a,sp
+      0007C6 24 FB            [12] 1584 	add	a,#0xfb
+      0007C8 C8               [12] 1585 	xch	a,r0
+      0007C9 A6 82            [24] 1586 	mov	@r0,dpl
+      0007CB 08               [12] 1587 	inc	r0
+      0007CC A6 83            [24] 1588 	mov	@r0,dph
+      0007CE 08               [12] 1589 	inc	r0
+      0007CF A6 F0            [24] 1590 	mov	@r0,b
+      0007D1 08               [12] 1591 	inc	r0
+      0007D2 F6               [12] 1592 	mov	@r0,a
+      0007D3 D0 04            [24] 1593 	pop	ar4
+      0007D5 D0 05            [24] 1594 	pop	ar5
+      0007D7 E5 81            [12] 1595 	mov	a,sp
+      0007D9 24 F7            [12] 1596 	add	a,#0xf7
+      0007DB F8               [12] 1597 	mov	r0,a
+      0007DC 74 06            [12] 1598 	mov	a,#0x06
+      0007DE 26               [12] 1599 	add	a,@r0
+      0007DF FA               [12] 1600 	mov	r2,a
+      0007E0 E4               [12] 1601 	clr	a
+      0007E1 08               [12] 1602 	inc	r0
+      0007E2 36               [12] 1603 	addc	a,@r0
+      0007E3 FB               [12] 1604 	mov	r3,a
+      0007E4 08               [12] 1605 	inc	r0
+      0007E5 86 07            [24] 1606 	mov	ar7,@r0
+      0007E7 8A 82            [24] 1607 	mov	dpl,r2
+      0007E9 8B 83            [24] 1608 	mov	dph,r3
+      0007EB 8F F0            [24] 1609 	mov	b,r7
+      0007ED 12r00r00         [24] 1610 	lcall	__gptrget
+      0007F0 FA               [12] 1611 	mov	r2,a
+      0007F1 A3               [24] 1612 	inc	dptr
+      0007F2 12r00r00         [24] 1613 	lcall	__gptrget
+      0007F5 FB               [12] 1614 	mov	r3,a
+      0007F6 E5 81            [12] 1615 	mov	a,sp
+      0007F8 24 F7            [12] 1616 	add	a,#0xf7
+      0007FA F8               [12] 1617 	mov	r0,a
+      0007FB 86 82            [24] 1618 	mov	dpl,@r0
+      0007FD 08               [12] 1619 	inc	r0
+      0007FE 86 83            [24] 1620 	mov	dph,@r0
+      000800 08               [12] 1621 	inc	r0
+      000801 86 F0            [24] 1622 	mov	b,@r0
+      000803 12r00r00         [24] 1623 	lcall	__gptrget
+      000806 FE               [12] 1624 	mov	r6,a
+      000807 A3               [24] 1625 	inc	dptr
+      000808 12r00r00         [24] 1626 	lcall	__gptrget
+      00080B FF               [12] 1627 	mov	r7,a
+      00080C EA               [12] 1628 	mov	a,r2
+      00080D C3               [12] 1629 	clr	c
+      00080E 9E               [12] 1630 	subb	a,r6
+      00080F FA               [12] 1631 	mov	r2,a
+      000810 EB               [12] 1632 	mov	a,r3
+      000811 9F               [12] 1633 	subb	a,r7
+      000812 FB               [12] 1634 	mov	r3,a
+      000813 0A               [12] 1635 	inc	r2
+      000814 BA 00 01         [24] 1636 	cjne	r2,#0x00,00111$
+      000817 0B               [12] 1637 	inc	r3
+      000818                       1638 00111$:
+      000818 7F 00            [12] 1639 	mov	r7,#0x00
+      00081A 7E 00            [12] 1640 	mov	r6,#0x00
+      00081C C0 05            [24] 1641 	push	ar5
+      00081E C0 04            [24] 1642 	push	ar4
+      000820 C0 02            [24] 1643 	push	ar2
+      000822 C0 03            [24] 1644 	push	ar3
+      000824 C0 07            [24] 1645 	push	ar7
+      000826 C0 06            [24] 1646 	push	ar6
+      000828 E5 81            [12] 1647 	mov	a,sp
+      00082A 24 F7            [12] 1648 	add	a,#0xf7
+      00082C F8               [12] 1649 	mov	r0,a
+      00082D 86 82            [24] 1650 	mov	dpl,@r0
+      00082F 08               [12] 1651 	inc	r0
+      000830 86 83            [24] 1652 	mov	dph,@r0
+      000832 08               [12] 1653 	inc	r0
+      000833 86 F0            [24] 1654 	mov	b,@r0
+      000835 08               [12] 1655 	inc	r0
+      000836 E6               [12] 1656 	mov	a,@r0
+      000837 12r00r00         [24] 1657 	lcall	__modulong
+      00083A C8               [12] 1658 	xch	a,r0
+      00083B E5 81            [12] 1659 	mov	a,sp
+      00083D 24 F7            [12] 1660 	add	a,#0xf7
+      00083F C8               [12] 1661 	xch	a,r0
+      000840 A6 82            [24] 1662 	mov	@r0,dpl
+      000842 08               [12] 1663 	inc	r0
+      000843 A6 83            [24] 1664 	mov	@r0,dph
+      000845 08               [12] 1665 	inc	r0
+      000846 A6 F0            [24] 1666 	mov	@r0,b
+      000848 08               [12] 1667 	inc	r0
+      000849 F6               [12] 1668 	mov	@r0,a
+      00084A E5 81            [12] 1669 	mov	a,sp
+      00084C 24 FC            [12] 1670 	add	a,#0xfc
+      00084E F5 81            [12] 1671 	mov	sp,a
+      000850 D0 04            [24] 1672 	pop	ar4
+      000852 D0 05            [24] 1673 	pop	ar5
+      000854 8D 02            [24] 1674 	mov	ar2,r5
+      000856 8C 03            [24] 1675 	mov	ar3,r4
+      000858 E4               [12] 1676 	clr	a
+      000859 FE               [12] 1677 	mov	r6,a
+      00085A FF               [12] 1678 	mov	r7,a
+      00085B E5 81            [12] 1679 	mov	a,sp
+      00085D 24 FD            [12] 1680 	add	a,#0xfd
+      00085F F8               [12] 1681 	mov	r0,a
+      000860 E6               [12] 1682 	mov	a,@r0
+      000861 2A               [12] 1683 	add	a,r2
+      000862 FA               [12] 1684 	mov	r2,a
+      000863 08               [12] 1685 	inc	r0
+      000864 E6               [12] 1686 	mov	a,@r0
+      000865 3B               [12] 1687 	addc	a,r3
+      000866 FB               [12] 1688 	mov	r3,a
+      000867 08               [12] 1689 	inc	r0
+      000868 E6               [12] 1690 	mov	a,@r0
+      000869 3E               [12] 1691 	addc	a,r6
+      00086A 08               [12] 1692 	inc	r0
+      00086B E6               [12] 1693 	mov	a,@r0
+      00086C 3F               [12] 1694 	addc	a,r7
+      00086D E5 81            [12] 1695 	mov	a,sp
+      00086F 24 FA            [12] 1696 	add	a,#0xfa
+      000871 F8               [12] 1697 	mov	r0,a
+      000872 86 82            [24] 1698 	mov	dpl,@r0
+      000874 08               [12] 1699 	inc	r0
+      000875 86 83            [24] 1700 	mov	dph,@r0
+      000877 08               [12] 1701 	inc	r0
+      000878 86 F0            [24] 1702 	mov	b,@r0
+      00087A EA               [12] 1703 	mov	a,r2
+      00087B 12r00r00         [24] 1704 	lcall	__gptrput
+      00087E A3               [24] 1705 	inc	dptr
+      00087F EB               [12] 1706 	mov	a,r3
+      000880 12r00r00         [24] 1707 	lcall	__gptrput
+                                   1708 ;	/home/user/contiki/core/lib/trickle-timer.c:398: new_interval(tt);
+      000883 E5 81            [12] 1709 	mov	a,sp
+      000885 24 F7            [12] 1710 	add	a,#0xf7
+      000887 F8               [12] 1711 	mov	r0,a
+      000888 86 82            [24] 1712 	mov	dpl,@r0
+      00088A 08               [12] 1713 	inc	r0
+      00088B 86 83            [24] 1714 	mov	dph,@r0
+      00088D 08               [12] 1715 	inc	r0
+      00088E 86 F0            [24] 1716 	mov	b,@r0
+      000890 12r04r57         [24] 1717 	lcall	_new_interval
+                                   1718 ;	/home/user/contiki/core/lib/trickle-timer.c:406: return TRICKLE_TIMER_SUCCESS;
+      000893 75 82 01         [24] 1719 	mov	dpl,#0x01
+      000896                       1720 00104$:
+      000896 E5 81            [12] 1721 	mov	a,sp
+      000898 24 F6            [12] 1722 	add	a,#0xF6
+      00089A F5 81            [12] 1723 	mov	sp,a
+      00089C 22               [24] 1724 	ret
+                                   1725 	.area CSEG    (CODE)
+                                   1726 	.area CONST   (CODE)
+                                   1727 	.area XINIT   (CODE)
+                                   1728 	.area CABS    (ABS,CODE)

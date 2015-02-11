@@ -1,0 +1,1058 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:43 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module packetqueue
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _queuebuf_free
+                                     13 	.globl _queuebuf_new_from_packetbuf
+                                     14 	.globl _memb_free
+                                     15 	.globl _memb_alloc
+                                     16 	.globl _memb_init
+                                     17 	.globl _list_length
+                                     18 	.globl _list_remove
+                                     19 	.globl _list_add
+                                     20 	.globl _list_head
+                                     21 	.globl _list_init
+                                     22 	.globl _ctimer_stop
+                                     23 	.globl _ctimer_set
+                                     24 	.globl _packetqueue_init
+                                     25 	.globl _packetqueue_enqueue_packetbuf
+                                     26 	.globl _packetqueue_first
+                                     27 	.globl _packetqueue_dequeue
+                                     28 	.globl _packetqueue_len
+                                     29 	.globl _packetqueue_queuebuf
+                                     30 	.globl _packetqueue_ptr
+                                     31 ;--------------------------------------------------------
+                                     32 ; special function registers
+                                     33 ;--------------------------------------------------------
+                                     34 	.area RSEG    (ABS,DATA)
+      000000                         35 	.org 0x0000
+                                     36 ;--------------------------------------------------------
+                                     37 ; special function bits
+                                     38 ;--------------------------------------------------------
+                                     39 	.area RSEG    (ABS,DATA)
+      000000                         40 	.org 0x0000
+                                     41 ;--------------------------------------------------------
+                                     42 ; overlayable register banks
+                                     43 ;--------------------------------------------------------
+                                     44 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         45 	.ds 8
+                                     46 ;--------------------------------------------------------
+                                     47 ; internal ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area DSEG    (DATA)
+                                     50 ;--------------------------------------------------------
+                                     51 ; overlayable items in internal ram 
+                                     52 ;--------------------------------------------------------
+                                     53 ;--------------------------------------------------------
+                                     54 ; indirectly addressable internal ram data
+                                     55 ;--------------------------------------------------------
+                                     56 	.area ISEG    (DATA)
+                                     57 ;--------------------------------------------------------
+                                     58 ; absolute internal ram data
+                                     59 ;--------------------------------------------------------
+                                     60 	.area IABS    (ABS,DATA)
+                                     61 	.area IABS    (ABS,DATA)
+                                     62 ;--------------------------------------------------------
+                                     63 ; bit data
+                                     64 ;--------------------------------------------------------
+                                     65 	.area BSEG    (BIT)
+                                     66 ;--------------------------------------------------------
+                                     67 ; paged external ram data
+                                     68 ;--------------------------------------------------------
+                                     69 	.area PSEG    (PAG,XDATA)
+                                     70 ;--------------------------------------------------------
+                                     71 ; external ram data
+                                     72 ;--------------------------------------------------------
+                                     73 	.area XSEG    (XDATA)
+                                     74 ;--------------------------------------------------------
+                                     75 ; absolute external ram data
+                                     76 ;--------------------------------------------------------
+                                     77 	.area XABS    (ABS,XDATA)
+                                     78 ;--------------------------------------------------------
+                                     79 ; external initialized ram data
+                                     80 ;--------------------------------------------------------
+                                     81 	.area XISEG   (XDATA)
+                                     82 	.area HOME    (CODE)
+                                     83 	.area GSINIT0 (CODE)
+                                     84 	.area GSINIT1 (CODE)
+                                     85 	.area GSINIT2 (CODE)
+                                     86 	.area GSINIT3 (CODE)
+                                     87 	.area GSINIT4 (CODE)
+                                     88 	.area GSINIT5 (CODE)
+                                     89 	.area GSINIT  (CODE)
+                                     90 	.area GSFINAL (CODE)
+                                     91 	.area CSEG    (CODE)
+                                     92 ;--------------------------------------------------------
+                                     93 ; global & static initialisations
+                                     94 ;--------------------------------------------------------
+                                     95 	.area HOME    (CODE)
+                                     96 	.area GSINIT  (CODE)
+                                     97 	.area GSFINAL (CODE)
+                                     98 	.area GSINIT  (CODE)
+                                     99 ;--------------------------------------------------------
+                                    100 ; Home
+                                    101 ;--------------------------------------------------------
+                                    102 	.area HOME    (CODE)
+                                    103 	.area HOME    (CODE)
+                                    104 ;--------------------------------------------------------
+                                    105 ; code
+                                    106 ;--------------------------------------------------------
+                                    107 	.area CSEG    (CODE)
+                                    108 ;------------------------------------------------------------
+                                    109 ;Allocation info for local variables in function 'packetqueue_init'
+                                    110 ;------------------------------------------------------------
+                                    111 ;q                         Allocated to registers r5 r6 r7 
+                                    112 ;------------------------------------------------------------
+                                    113 ;	/home/user/contiki/core/net/packetqueue.c:49: packetqueue_init(struct packetqueue *q)
+                                    114 ;	-----------------------------------------
+                                    115 ;	 function packetqueue_init
+                                    116 ;	-----------------------------------------
+      000000                        117 _packetqueue_init:
+                           000007   118 	ar7 = 0x07
+                           000006   119 	ar6 = 0x06
+                           000005   120 	ar5 = 0x05
+                           000004   121 	ar4 = 0x04
+                           000003   122 	ar3 = 0x03
+                           000002   123 	ar2 = 0x02
+                           000001   124 	ar1 = 0x01
+                           000000   125 	ar0 = 0x00
+                                    126 ;	/home/user/contiki/core/net/packetqueue.c:51: list_init(*q->list);
+      000000 AD 82            [24]  127 	mov	r5,dpl
+      000002 AE 83            [24]  128 	mov	r6,dph
+      000004 AF F0            [24]  129 	mov	r7,b
+      000006 12r00r00         [24]  130 	lcall	__gptrget
+      000009 FA               [12]  131 	mov	r2,a
+      00000A A3               [24]  132 	inc	dptr
+      00000B 12r00r00         [24]  133 	lcall	__gptrget
+      00000E FB               [12]  134 	mov	r3,a
+      00000F A3               [24]  135 	inc	dptr
+      000010 12r00r00         [24]  136 	lcall	__gptrget
+      000013 FC               [12]  137 	mov	r4,a
+      000014 8A 82            [24]  138 	mov	dpl,r2
+      000016 8B 83            [24]  139 	mov	dph,r3
+      000018 8C F0            [24]  140 	mov	b,r4
+      00001A 12r00r00         [24]  141 	lcall	__gptrget
+      00001D FA               [12]  142 	mov	r2,a
+      00001E A3               [24]  143 	inc	dptr
+      00001F 12r00r00         [24]  144 	lcall	__gptrget
+      000022 FB               [12]  145 	mov	r3,a
+      000023 A3               [24]  146 	inc	dptr
+      000024 12r00r00         [24]  147 	lcall	__gptrget
+      000027 FC               [12]  148 	mov	r4,a
+      000028 8A 82            [24]  149 	mov	dpl,r2
+      00002A 8B 83            [24]  150 	mov	dph,r3
+      00002C 8C F0            [24]  151 	mov	b,r4
+      00002E C0 07            [24]  152 	push	ar7
+      000030 C0 06            [24]  153 	push	ar6
+      000032 C0 05            [24]  154 	push	ar5
+      000034 12r00r00         [24]  155 	lcall	_list_init
+      000037 D0 05            [24]  156 	pop	ar5
+      000039 D0 06            [24]  157 	pop	ar6
+      00003B D0 07            [24]  158 	pop	ar7
+                                    159 ;	/home/user/contiki/core/net/packetqueue.c:52: memb_init(q->memb);
+      00003D 74 03            [12]  160 	mov	a,#0x03
+      00003F 2D               [12]  161 	add	a,r5
+      000040 FD               [12]  162 	mov	r5,a
+      000041 E4               [12]  163 	clr	a
+      000042 3E               [12]  164 	addc	a,r6
+      000043 FE               [12]  165 	mov	r6,a
+      000044 8D 82            [24]  166 	mov	dpl,r5
+      000046 8E 83            [24]  167 	mov	dph,r6
+      000048 8F F0            [24]  168 	mov	b,r7
+      00004A 12r00r00         [24]  169 	lcall	__gptrget
+      00004D FD               [12]  170 	mov	r5,a
+      00004E A3               [24]  171 	inc	dptr
+      00004F 12r00r00         [24]  172 	lcall	__gptrget
+      000052 FE               [12]  173 	mov	r6,a
+      000053 A3               [24]  174 	inc	dptr
+      000054 12r00r00         [24]  175 	lcall	__gptrget
+      000057 FF               [12]  176 	mov	r7,a
+      000058 8D 82            [24]  177 	mov	dpl,r5
+      00005A 8E 83            [24]  178 	mov	dph,r6
+      00005C 8F F0            [24]  179 	mov	b,r7
+      00005E 02r00r00         [24]  180 	ljmp	_memb_init
+                                    181 ;------------------------------------------------------------
+                                    182 ;Allocation info for local variables in function 'remove_queued_packet'
+                                    183 ;------------------------------------------------------------
+                                    184 ;item                      Allocated to registers r5 r6 r7 
+                                    185 ;i                         Allocated to stack - sp -5
+                                    186 ;q                         Allocated to stack - sp -2
+                                    187 ;------------------------------------------------------------
+                                    188 ;	/home/user/contiki/core/net/packetqueue.c:56: remove_queued_packet(void *item)
+                                    189 ;	-----------------------------------------
+                                    190 ;	 function remove_queued_packet
+                                    191 ;	-----------------------------------------
+      000061                        192 _remove_queued_packet:
+      000061 E5 81            [12]  193 	mov	a,sp
+      000063 24 06            [12]  194 	add	a,#0x06
+      000065 F5 81            [12]  195 	mov	sp,a
+      000067 AD 82            [24]  196 	mov	r5,dpl
+      000069 AE 83            [24]  197 	mov	r6,dph
+      00006B AF F0            [24]  198 	mov	r7,b
+                                    199 ;	/home/user/contiki/core/net/packetqueue.c:58: struct packetqueue_item *i = item;
+      00006D E5 81            [12]  200 	mov	a,sp
+      00006F 24 FB            [12]  201 	add	a,#0xfb
+      000071 F8               [12]  202 	mov	r0,a
+      000072 A6 05            [24]  203 	mov	@r0,ar5
+      000074 08               [12]  204 	inc	r0
+      000075 A6 06            [24]  205 	mov	@r0,ar6
+      000077 08               [12]  206 	inc	r0
+      000078 A6 07            [24]  207 	mov	@r0,ar7
+                                    208 ;	/home/user/contiki/core/net/packetqueue.c:59: struct packetqueue *q = i->queue;
+      00007A E5 81            [12]  209 	mov	a,sp
+      00007C 24 FB            [12]  210 	add	a,#0xfb
+      00007E F8               [12]  211 	mov	r0,a
+      00007F 74 06            [12]  212 	mov	a,#0x06
+      000081 26               [12]  213 	add	a,@r0
+      000082 FA               [12]  214 	mov	r2,a
+      000083 E4               [12]  215 	clr	a
+      000084 08               [12]  216 	inc	r0
+      000085 36               [12]  217 	addc	a,@r0
+      000086 FB               [12]  218 	mov	r3,a
+      000087 08               [12]  219 	inc	r0
+      000088 86 04            [24]  220 	mov	ar4,@r0
+      00008A 8A 82            [24]  221 	mov	dpl,r2
+      00008C 8B 83            [24]  222 	mov	dph,r3
+      00008E 8C F0            [24]  223 	mov	b,r4
+      000090 A8 81            [24]  224 	mov	r0,sp
+      000092 18               [12]  225 	dec	r0
+      000093 18               [12]  226 	dec	r0
+      000094 12r00r00         [24]  227 	lcall	__gptrget
+      000097 F6               [12]  228 	mov	@r0,a
+      000098 A3               [24]  229 	inc	dptr
+      000099 12r00r00         [24]  230 	lcall	__gptrget
+      00009C 08               [12]  231 	inc	r0
+      00009D F6               [12]  232 	mov	@r0,a
+      00009E A3               [24]  233 	inc	dptr
+      00009F 12r00r00         [24]  234 	lcall	__gptrget
+      0000A2 08               [12]  235 	inc	r0
+      0000A3 F6               [12]  236 	mov	@r0,a
+                                    237 ;	/home/user/contiki/core/net/packetqueue.c:61: list_remove(*q->list, i);
+      0000A4 E5 81            [12]  238 	mov	a,sp
+      0000A6 24 FB            [12]  239 	add	a,#0xfb
+      0000A8 F8               [12]  240 	mov	r0,a
+      0000A9 86 05            [24]  241 	mov	ar5,@r0
+      0000AB 08               [12]  242 	inc	r0
+      0000AC 86 06            [24]  243 	mov	ar6,@r0
+      0000AE 08               [12]  244 	inc	r0
+      0000AF 86 07            [24]  245 	mov	ar7,@r0
+      0000B1 A8 81            [24]  246 	mov	r0,sp
+      0000B3 18               [12]  247 	dec	r0
+      0000B4 18               [12]  248 	dec	r0
+      0000B5 86 82            [24]  249 	mov	dpl,@r0
+      0000B7 08               [12]  250 	inc	r0
+      0000B8 86 83            [24]  251 	mov	dph,@r0
+      0000BA 08               [12]  252 	inc	r0
+      0000BB 86 F0            [24]  253 	mov	b,@r0
+      0000BD 12r00r00         [24]  254 	lcall	__gptrget
+      0000C0 FA               [12]  255 	mov	r2,a
+      0000C1 A3               [24]  256 	inc	dptr
+      0000C2 12r00r00         [24]  257 	lcall	__gptrget
+      0000C5 FB               [12]  258 	mov	r3,a
+      0000C6 A3               [24]  259 	inc	dptr
+      0000C7 12r00r00         [24]  260 	lcall	__gptrget
+      0000CA FC               [12]  261 	mov	r4,a
+      0000CB 8A 82            [24]  262 	mov	dpl,r2
+      0000CD 8B 83            [24]  263 	mov	dph,r3
+      0000CF 8C F0            [24]  264 	mov	b,r4
+      0000D1 12r00r00         [24]  265 	lcall	__gptrget
+      0000D4 FA               [12]  266 	mov	r2,a
+      0000D5 A3               [24]  267 	inc	dptr
+      0000D6 12r00r00         [24]  268 	lcall	__gptrget
+      0000D9 FB               [12]  269 	mov	r3,a
+      0000DA A3               [24]  270 	inc	dptr
+      0000DB 12r00r00         [24]  271 	lcall	__gptrget
+      0000DE FC               [12]  272 	mov	r4,a
+      0000DF C0 05            [24]  273 	push	ar5
+      0000E1 C0 06            [24]  274 	push	ar6
+      0000E3 C0 07            [24]  275 	push	ar7
+      0000E5 8A 82            [24]  276 	mov	dpl,r2
+      0000E7 8B 83            [24]  277 	mov	dph,r3
+      0000E9 8C F0            [24]  278 	mov	b,r4
+      0000EB 12r00r00         [24]  279 	lcall	_list_remove
+      0000EE 15 81            [12]  280 	dec	sp
+      0000F0 15 81            [12]  281 	dec	sp
+      0000F2 15 81            [12]  282 	dec	sp
+                                    283 ;	/home/user/contiki/core/net/packetqueue.c:62: queuebuf_free(i->buf);
+      0000F4 E5 81            [12]  284 	mov	a,sp
+      0000F6 24 FB            [12]  285 	add	a,#0xfb
+      0000F8 F8               [12]  286 	mov	r0,a
+      0000F9 74 03            [12]  287 	mov	a,#0x03
+      0000FB 26               [12]  288 	add	a,@r0
+      0000FC FD               [12]  289 	mov	r5,a
+      0000FD E4               [12]  290 	clr	a
+      0000FE 08               [12]  291 	inc	r0
+      0000FF 36               [12]  292 	addc	a,@r0
+      000100 FE               [12]  293 	mov	r6,a
+      000101 08               [12]  294 	inc	r0
+      000102 86 07            [24]  295 	mov	ar7,@r0
+      000104 8D 82            [24]  296 	mov	dpl,r5
+      000106 8E 83            [24]  297 	mov	dph,r6
+      000108 8F F0            [24]  298 	mov	b,r7
+      00010A 12r00r00         [24]  299 	lcall	__gptrget
+      00010D FD               [12]  300 	mov	r5,a
+      00010E A3               [24]  301 	inc	dptr
+      00010F 12r00r00         [24]  302 	lcall	__gptrget
+      000112 FE               [12]  303 	mov	r6,a
+      000113 A3               [24]  304 	inc	dptr
+      000114 12r00r00         [24]  305 	lcall	__gptrget
+      000117 FF               [12]  306 	mov	r7,a
+      000118 8D 82            [24]  307 	mov	dpl,r5
+      00011A 8E 83            [24]  308 	mov	dph,r6
+      00011C 8F F0            [24]  309 	mov	b,r7
+      00011E 12r00r00         [24]  310 	lcall	_queuebuf_free
+                                    311 ;	/home/user/contiki/core/net/packetqueue.c:63: ctimer_stop(&i->lifetimer);
+      000121 E5 81            [12]  312 	mov	a,sp
+      000123 24 FB            [12]  313 	add	a,#0xfb
+      000125 F8               [12]  314 	mov	r0,a
+      000126 74 09            [12]  315 	mov	a,#0x09
+      000128 26               [12]  316 	add	a,@r0
+      000129 FD               [12]  317 	mov	r5,a
+      00012A E4               [12]  318 	clr	a
+      00012B 08               [12]  319 	inc	r0
+      00012C 36               [12]  320 	addc	a,@r0
+      00012D FE               [12]  321 	mov	r6,a
+      00012E 08               [12]  322 	inc	r0
+      00012F 86 07            [24]  323 	mov	ar7,@r0
+      000131 8D 82            [24]  324 	mov	dpl,r5
+      000133 8E 83            [24]  325 	mov	dph,r6
+      000135 8F F0            [24]  326 	mov	b,r7
+      000137 12r00r00         [24]  327 	lcall	_ctimer_stop
+                                    328 ;	/home/user/contiki/core/net/packetqueue.c:64: memb_free(q->memb, i);
+      00013A E5 81            [12]  329 	mov	a,sp
+      00013C 24 FB            [12]  330 	add	a,#0xfb
+      00013E F8               [12]  331 	mov	r0,a
+      00013F 86 05            [24]  332 	mov	ar5,@r0
+      000141 08               [12]  333 	inc	r0
+      000142 86 06            [24]  334 	mov	ar6,@r0
+      000144 08               [12]  335 	inc	r0
+      000145 86 07            [24]  336 	mov	ar7,@r0
+      000147 A8 81            [24]  337 	mov	r0,sp
+      000149 18               [12]  338 	dec	r0
+      00014A 18               [12]  339 	dec	r0
+      00014B 74 03            [12]  340 	mov	a,#0x03
+      00014D 26               [12]  341 	add	a,@r0
+      00014E FA               [12]  342 	mov	r2,a
+      00014F E4               [12]  343 	clr	a
+      000150 08               [12]  344 	inc	r0
+      000151 36               [12]  345 	addc	a,@r0
+      000152 FB               [12]  346 	mov	r3,a
+      000153 08               [12]  347 	inc	r0
+      000154 86 04            [24]  348 	mov	ar4,@r0
+      000156 8A 82            [24]  349 	mov	dpl,r2
+      000158 8B 83            [24]  350 	mov	dph,r3
+      00015A 8C F0            [24]  351 	mov	b,r4
+      00015C 12r00r00         [24]  352 	lcall	__gptrget
+      00015F FA               [12]  353 	mov	r2,a
+      000160 A3               [24]  354 	inc	dptr
+      000161 12r00r00         [24]  355 	lcall	__gptrget
+      000164 FB               [12]  356 	mov	r3,a
+      000165 A3               [24]  357 	inc	dptr
+      000166 12r00r00         [24]  358 	lcall	__gptrget
+      000169 FC               [12]  359 	mov	r4,a
+      00016A C0 05            [24]  360 	push	ar5
+      00016C C0 06            [24]  361 	push	ar6
+      00016E C0 07            [24]  362 	push	ar7
+      000170 8A 82            [24]  363 	mov	dpl,r2
+      000172 8B 83            [24]  364 	mov	dph,r3
+      000174 8C F0            [24]  365 	mov	b,r4
+      000176 12r00r00         [24]  366 	lcall	_memb_free
+      000179 15 81            [12]  367 	dec	sp
+      00017B 15 81            [12]  368 	dec	sp
+      00017D 15 81            [12]  369 	dec	sp
+      00017F E5 81            [12]  370 	mov	a,sp
+      000181 24 FA            [12]  371 	add	a,#0xFA
+      000183 F5 81            [12]  372 	mov	sp,a
+      000185 22               [24]  373 	ret
+                                    374 ;------------------------------------------------------------
+                                    375 ;Allocation info for local variables in function 'packetqueue_enqueue_packetbuf'
+                                    376 ;------------------------------------------------------------
+                                    377 ;lifetime                  Allocated to stack - sp -9
+                                    378 ;ptr                       Allocated to stack - sp -12
+                                    379 ;q                         Allocated to stack - sp -5
+                                    380 ;i                         Allocated to stack - sp -2
+                                    381 ;------------------------------------------------------------
+                                    382 ;	/home/user/contiki/core/net/packetqueue.c:69: packetqueue_enqueue_packetbuf(struct packetqueue *q, clock_time_t lifetime,
+                                    383 ;	-----------------------------------------
+                                    384 ;	 function packetqueue_enqueue_packetbuf
+                                    385 ;	-----------------------------------------
+      000186                        386 _packetqueue_enqueue_packetbuf:
+      000186 C0 82            [24]  387 	push	dpl
+      000188 C0 83            [24]  388 	push	dph
+      00018A C0 F0            [24]  389 	push	b
+      00018C 05 81            [12]  390 	inc	sp
+      00018E 05 81            [12]  391 	inc	sp
+      000190 05 81            [12]  392 	inc	sp
+                                    393 ;	/home/user/contiki/core/net/packetqueue.c:75: i = memb_alloc(q->memb);
+      000192 E5 81            [12]  394 	mov	a,sp
+      000194 24 FB            [12]  395 	add	a,#0xfb
+      000196 F8               [12]  396 	mov	r0,a
+      000197 74 03            [12]  397 	mov	a,#0x03
+      000199 26               [12]  398 	add	a,@r0
+      00019A FA               [12]  399 	mov	r2,a
+      00019B E4               [12]  400 	clr	a
+      00019C 08               [12]  401 	inc	r0
+      00019D 36               [12]  402 	addc	a,@r0
+      00019E FB               [12]  403 	mov	r3,a
+      00019F 08               [12]  404 	inc	r0
+      0001A0 86 04            [24]  405 	mov	ar4,@r0
+      0001A2 8A 82            [24]  406 	mov	dpl,r2
+      0001A4 8B 83            [24]  407 	mov	dph,r3
+      0001A6 8C F0            [24]  408 	mov	b,r4
+      0001A8 12r00r00         [24]  409 	lcall	__gptrget
+      0001AB FD               [12]  410 	mov	r5,a
+      0001AC A3               [24]  411 	inc	dptr
+      0001AD 12r00r00         [24]  412 	lcall	__gptrget
+      0001B0 FE               [12]  413 	mov	r6,a
+      0001B1 A3               [24]  414 	inc	dptr
+      0001B2 12r00r00         [24]  415 	lcall	__gptrget
+      0001B5 FF               [12]  416 	mov	r7,a
+      0001B6 8D 82            [24]  417 	mov	dpl,r5
+      0001B8 8E 83            [24]  418 	mov	dph,r6
+      0001BA 8F F0            [24]  419 	mov	b,r7
+      0001BC C0 04            [24]  420 	push	ar4
+      0001BE C0 03            [24]  421 	push	ar3
+      0001C0 C0 02            [24]  422 	push	ar2
+      0001C2 12r00r00         [24]  423 	lcall	_memb_alloc
+      0001C5 AD 82            [24]  424 	mov	r5,dpl
+      0001C7 AE 83            [24]  425 	mov	r6,dph
+      0001C9 AF F0            [24]  426 	mov	r7,b
+      0001CB D0 02            [24]  427 	pop	ar2
+      0001CD D0 03            [24]  428 	pop	ar3
+      0001CF D0 04            [24]  429 	pop	ar4
+      0001D1 A8 81            [24]  430 	mov	r0,sp
+      0001D3 18               [12]  431 	dec	r0
+      0001D4 18               [12]  432 	dec	r0
+      0001D5 A6 05            [24]  433 	mov	@r0,ar5
+      0001D7 08               [12]  434 	inc	r0
+      0001D8 A6 06            [24]  435 	mov	@r0,ar6
+      0001DA 08               [12]  436 	inc	r0
+      0001DB A6 07            [24]  437 	mov	@r0,ar7
+                                    438 ;	/home/user/contiki/core/net/packetqueue.c:77: if(i == NULL) {
+      0001DD A8 81            [24]  439 	mov	r0,sp
+      0001DF 18               [12]  440 	dec	r0
+      0001E0 18               [12]  441 	dec	r0
+      0001E1 E6               [12]  442 	mov	a,@r0
+      0001E2 08               [12]  443 	inc	r0
+      0001E3 46               [12]  444 	orl	a,@r0
+      0001E4 70 06            [24]  445 	jnz	00102$
+                                    446 ;	/home/user/contiki/core/net/packetqueue.c:78: return 0;
+      0001E6 90 00 00         [24]  447 	mov	dptr,#0x0000
+      0001E9 02r03r65         [24]  448 	ljmp	00107$
+      0001EC                        449 00102$:
+                                    450 ;	/home/user/contiki/core/net/packetqueue.c:82: i->buf = queuebuf_new_from_packetbuf();
+      0001EC C0 02            [24]  451 	push	ar2
+      0001EE C0 03            [24]  452 	push	ar3
+      0001F0 C0 04            [24]  453 	push	ar4
+      0001F2 E5 81            [12]  454 	mov	a,sp
+      0001F4 24 FB            [12]  455 	add	a,#0xfb
+      0001F6 F8               [12]  456 	mov	r0,a
+      0001F7 74 03            [12]  457 	mov	a,#0x03
+      0001F9 26               [12]  458 	add	a,@r0
+      0001FA FA               [12]  459 	mov	r2,a
+      0001FB E4               [12]  460 	clr	a
+      0001FC 08               [12]  461 	inc	r0
+      0001FD 36               [12]  462 	addc	a,@r0
+      0001FE FB               [12]  463 	mov	r3,a
+      0001FF 08               [12]  464 	inc	r0
+      000200 86 04            [24]  465 	mov	ar4,@r0
+      000202 C0 04            [24]  466 	push	ar4
+      000204 C0 03            [24]  467 	push	ar3
+      000206 C0 02            [24]  468 	push	ar2
+      000208 12r00r00         [24]  469 	lcall	_queuebuf_new_from_packetbuf
+      00020B AD 82            [24]  470 	mov	r5,dpl
+      00020D AE 83            [24]  471 	mov	r6,dph
+      00020F AF F0            [24]  472 	mov	r7,b
+      000211 D0 02            [24]  473 	pop	ar2
+      000213 D0 03            [24]  474 	pop	ar3
+      000215 D0 04            [24]  475 	pop	ar4
+      000217 8A 82            [24]  476 	mov	dpl,r2
+      000219 8B 83            [24]  477 	mov	dph,r3
+      00021B 8C F0            [24]  478 	mov	b,r4
+      00021D ED               [12]  479 	mov	a,r5
+      00021E 12r00r00         [24]  480 	lcall	__gptrput
+      000221 A3               [24]  481 	inc	dptr
+      000222 EE               [12]  482 	mov	a,r6
+      000223 12r00r00         [24]  483 	lcall	__gptrput
+      000226 A3               [24]  484 	inc	dptr
+      000227 EF               [12]  485 	mov	a,r7
+      000228 12r00r00         [24]  486 	lcall	__gptrput
+                                    487 ;	/home/user/contiki/core/net/packetqueue.c:84: if(i->buf == NULL) {
+      00022B D0 04            [24]  488 	pop	ar4
+      00022D D0 03            [24]  489 	pop	ar3
+      00022F D0 02            [24]  490 	pop	ar2
+      000231 ED               [12]  491 	mov	a,r5
+      000232 4E               [12]  492 	orl	a,r6
+      000233 70 3B            [24]  493 	jnz	00104$
+                                    494 ;	/home/user/contiki/core/net/packetqueue.c:85: memb_free(q->memb, i);
+      000235 A8 81            [24]  495 	mov	r0,sp
+      000237 18               [12]  496 	dec	r0
+      000238 18               [12]  497 	dec	r0
+      000239 86 05            [24]  498 	mov	ar5,@r0
+      00023B 08               [12]  499 	inc	r0
+      00023C 86 06            [24]  500 	mov	ar6,@r0
+      00023E 08               [12]  501 	inc	r0
+      00023F 86 07            [24]  502 	mov	ar7,@r0
+      000241 8A 82            [24]  503 	mov	dpl,r2
+      000243 8B 83            [24]  504 	mov	dph,r3
+      000245 8C F0            [24]  505 	mov	b,r4
+      000247 12r00r00         [24]  506 	lcall	__gptrget
+      00024A FA               [12]  507 	mov	r2,a
+      00024B A3               [24]  508 	inc	dptr
+      00024C 12r00r00         [24]  509 	lcall	__gptrget
+      00024F FB               [12]  510 	mov	r3,a
+      000250 A3               [24]  511 	inc	dptr
+      000251 12r00r00         [24]  512 	lcall	__gptrget
+      000254 FC               [12]  513 	mov	r4,a
+      000255 C0 05            [24]  514 	push	ar5
+      000257 C0 06            [24]  515 	push	ar6
+      000259 C0 07            [24]  516 	push	ar7
+      00025B 8A 82            [24]  517 	mov	dpl,r2
+      00025D 8B 83            [24]  518 	mov	dph,r3
+      00025F 8C F0            [24]  519 	mov	b,r4
+      000261 12r00r00         [24]  520 	lcall	_memb_free
+      000264 15 81            [12]  521 	dec	sp
+      000266 15 81            [12]  522 	dec	sp
+      000268 15 81            [12]  523 	dec	sp
+                                    524 ;	/home/user/contiki/core/net/packetqueue.c:86: return 0;
+      00026A 90 00 00         [24]  525 	mov	dptr,#0x0000
+      00026D 02r03r65         [24]  526 	ljmp	00107$
+      000270                        527 00104$:
+                                    528 ;	/home/user/contiki/core/net/packetqueue.c:89: i->queue = q;
+      000270 A8 81            [24]  529 	mov	r0,sp
+      000272 18               [12]  530 	dec	r0
+      000273 18               [12]  531 	dec	r0
+      000274 74 06            [12]  532 	mov	a,#0x06
+      000276 26               [12]  533 	add	a,@r0
+      000277 FD               [12]  534 	mov	r5,a
+      000278 E4               [12]  535 	clr	a
+      000279 08               [12]  536 	inc	r0
+      00027A 36               [12]  537 	addc	a,@r0
+      00027B FE               [12]  538 	mov	r6,a
+      00027C 08               [12]  539 	inc	r0
+      00027D 86 07            [24]  540 	mov	ar7,@r0
+      00027F 8D 82            [24]  541 	mov	dpl,r5
+      000281 8E 83            [24]  542 	mov	dph,r6
+      000283 8F F0            [24]  543 	mov	b,r7
+      000285 E5 81            [12]  544 	mov	a,sp
+      000287 24 FB            [12]  545 	add	a,#0xfb
+      000289 F8               [12]  546 	mov	r0,a
+      00028A E6               [12]  547 	mov	a,@r0
+      00028B 12r00r00         [24]  548 	lcall	__gptrput
+      00028E A3               [24]  549 	inc	dptr
+      00028F 08               [12]  550 	inc	r0
+      000290 E6               [12]  551 	mov	a,@r0
+      000291 12r00r00         [24]  552 	lcall	__gptrput
+      000294 A3               [24]  553 	inc	dptr
+      000295 08               [12]  554 	inc	r0
+      000296 E6               [12]  555 	mov	a,@r0
+      000297 12r00r00         [24]  556 	lcall	__gptrput
+                                    557 ;	/home/user/contiki/core/net/packetqueue.c:90: i->ptr = ptr;
+      00029A A8 81            [24]  558 	mov	r0,sp
+      00029C 18               [12]  559 	dec	r0
+      00029D 18               [12]  560 	dec	r0
+      00029E 74 1E            [12]  561 	mov	a,#0x1E
+      0002A0 26               [12]  562 	add	a,@r0
+      0002A1 FD               [12]  563 	mov	r5,a
+      0002A2 E4               [12]  564 	clr	a
+      0002A3 08               [12]  565 	inc	r0
+      0002A4 36               [12]  566 	addc	a,@r0
+      0002A5 FE               [12]  567 	mov	r6,a
+      0002A6 08               [12]  568 	inc	r0
+      0002A7 86 07            [24]  569 	mov	ar7,@r0
+      0002A9 8D 82            [24]  570 	mov	dpl,r5
+      0002AB 8E 83            [24]  571 	mov	dph,r6
+      0002AD 8F F0            [24]  572 	mov	b,r7
+      0002AF E5 81            [12]  573 	mov	a,sp
+      0002B1 24 F4            [12]  574 	add	a,#0xf4
+      0002B3 F8               [12]  575 	mov	r0,a
+      0002B4 E6               [12]  576 	mov	a,@r0
+      0002B5 12r00r00         [24]  577 	lcall	__gptrput
+      0002B8 A3               [24]  578 	inc	dptr
+      0002B9 08               [12]  579 	inc	r0
+      0002BA E6               [12]  580 	mov	a,@r0
+      0002BB 12r00r00         [24]  581 	lcall	__gptrput
+      0002BE A3               [24]  582 	inc	dptr
+      0002BF 08               [12]  583 	inc	r0
+      0002C0 E6               [12]  584 	mov	a,@r0
+      0002C1 12r00r00         [24]  585 	lcall	__gptrput
+                                    586 ;	/home/user/contiki/core/net/packetqueue.c:95: if(lifetime > 0) {
+      0002C4 E5 81            [12]  587 	mov	a,sp
+      0002C6 24 F7            [12]  588 	add	a,#0xf7
+      0002C8 F8               [12]  589 	mov	r0,a
+      0002C9 E6               [12]  590 	mov	a,@r0
+      0002CA 08               [12]  591 	inc	r0
+      0002CB 46               [12]  592 	orl	a,@r0
+      0002CC 60 44            [24]  593 	jz	00106$
+                                    594 ;	/home/user/contiki/core/net/packetqueue.c:96: ctimer_set(&i->lifetimer, lifetime, remove_queued_packet, i);
+      0002CE A8 81            [24]  595 	mov	r0,sp
+      0002D0 18               [12]  596 	dec	r0
+      0002D1 18               [12]  597 	dec	r0
+      0002D2 86 05            [24]  598 	mov	ar5,@r0
+      0002D4 08               [12]  599 	inc	r0
+      0002D5 86 06            [24]  600 	mov	ar6,@r0
+      0002D7 08               [12]  601 	inc	r0
+      0002D8 86 07            [24]  602 	mov	ar7,@r0
+      0002DA A8 81            [24]  603 	mov	r0,sp
+      0002DC 18               [12]  604 	dec	r0
+      0002DD 18               [12]  605 	dec	r0
+      0002DE 74 09            [12]  606 	mov	a,#0x09
+      0002E0 26               [12]  607 	add	a,@r0
+      0002E1 FA               [12]  608 	mov	r2,a
+      0002E2 E4               [12]  609 	clr	a
+      0002E3 08               [12]  610 	inc	r0
+      0002E4 36               [12]  611 	addc	a,@r0
+      0002E5 FB               [12]  612 	mov	r3,a
+      0002E6 08               [12]  613 	inc	r0
+      0002E7 86 04            [24]  614 	mov	ar4,@r0
+      0002E9 C0 05            [24]  615 	push	ar5
+      0002EB C0 06            [24]  616 	push	ar6
+      0002ED C0 07            [24]  617 	push	ar7
+      0002EF 74r61            [12]  618 	mov	a,#_remove_queued_packet
+      0002F1 C0 E0            [24]  619 	push	acc
+      0002F3 74s00            [12]  620 	mov	a,#(_remove_queued_packet >> 8)
+      0002F5 C0 E0            [24]  621 	push	acc
+      0002F7 E5 81            [12]  622 	mov	a,sp
+      0002F9 24 F2            [12]  623 	add	a,#0xf2
+      0002FB F8               [12]  624 	mov	r0,a
+      0002FC E6               [12]  625 	mov	a,@r0
+      0002FD C0 E0            [24]  626 	push	acc
+      0002FF 08               [12]  627 	inc	r0
+      000300 E6               [12]  628 	mov	a,@r0
+      000301 C0 E0            [24]  629 	push	acc
+      000303 8A 82            [24]  630 	mov	dpl,r2
+      000305 8B 83            [24]  631 	mov	dph,r3
+      000307 8C F0            [24]  632 	mov	b,r4
+      000309 12r00r00         [24]  633 	lcall	_ctimer_set
+      00030C E5 81            [12]  634 	mov	a,sp
+      00030E 24 F9            [12]  635 	add	a,#0xf9
+      000310 F5 81            [12]  636 	mov	sp,a
+      000312                        637 00106$:
+                                    638 ;	/home/user/contiki/core/net/packetqueue.c:100: list_add(*q->list, i);
+      000312 A8 81            [24]  639 	mov	r0,sp
+      000314 18               [12]  640 	dec	r0
+      000315 18               [12]  641 	dec	r0
+      000316 86 05            [24]  642 	mov	ar5,@r0
+      000318 08               [12]  643 	inc	r0
+      000319 86 06            [24]  644 	mov	ar6,@r0
+      00031B 08               [12]  645 	inc	r0
+      00031C 86 07            [24]  646 	mov	ar7,@r0
+      00031E E5 81            [12]  647 	mov	a,sp
+      000320 24 FB            [12]  648 	add	a,#0xfb
+      000322 F8               [12]  649 	mov	r0,a
+      000323 86 82            [24]  650 	mov	dpl,@r0
+      000325 08               [12]  651 	inc	r0
+      000326 86 83            [24]  652 	mov	dph,@r0
+      000328 08               [12]  653 	inc	r0
+      000329 86 F0            [24]  654 	mov	b,@r0
+      00032B 12r00r00         [24]  655 	lcall	__gptrget
+      00032E FA               [12]  656 	mov	r2,a
+      00032F A3               [24]  657 	inc	dptr
+      000330 12r00r00         [24]  658 	lcall	__gptrget
+      000333 FB               [12]  659 	mov	r3,a
+      000334 A3               [24]  660 	inc	dptr
+      000335 12r00r00         [24]  661 	lcall	__gptrget
+      000338 FC               [12]  662 	mov	r4,a
+      000339 8A 82            [24]  663 	mov	dpl,r2
+      00033B 8B 83            [24]  664 	mov	dph,r3
+      00033D 8C F0            [24]  665 	mov	b,r4
+      00033F 12r00r00         [24]  666 	lcall	__gptrget
+      000342 FA               [12]  667 	mov	r2,a
+      000343 A3               [24]  668 	inc	dptr
+      000344 12r00r00         [24]  669 	lcall	__gptrget
+      000347 FB               [12]  670 	mov	r3,a
+      000348 A3               [24]  671 	inc	dptr
+      000349 12r00r00         [24]  672 	lcall	__gptrget
+      00034C FC               [12]  673 	mov	r4,a
+      00034D C0 05            [24]  674 	push	ar5
+      00034F C0 06            [24]  675 	push	ar6
+      000351 C0 07            [24]  676 	push	ar7
+      000353 8A 82            [24]  677 	mov	dpl,r2
+      000355 8B 83            [24]  678 	mov	dph,r3
+      000357 8C F0            [24]  679 	mov	b,r4
+      000359 12r00r00         [24]  680 	lcall	_list_add
+      00035C 15 81            [12]  681 	dec	sp
+      00035E 15 81            [12]  682 	dec	sp
+      000360 15 81            [12]  683 	dec	sp
+                                    684 ;	/home/user/contiki/core/net/packetqueue.c:102: return 1;
+      000362 90 00 01         [24]  685 	mov	dptr,#0x0001
+      000365                        686 00107$:
+      000365 E5 81            [12]  687 	mov	a,sp
+      000367 24 FA            [12]  688 	add	a,#0xFA
+      000369 F5 81            [12]  689 	mov	sp,a
+      00036B 22               [24]  690 	ret
+                                    691 ;------------------------------------------------------------
+                                    692 ;Allocation info for local variables in function 'packetqueue_first'
+                                    693 ;------------------------------------------------------------
+                                    694 ;q                         Allocated to registers r5 r6 r7 
+                                    695 ;------------------------------------------------------------
+                                    696 ;	/home/user/contiki/core/net/packetqueue.c:106: packetqueue_first(struct packetqueue *q)
+                                    697 ;	-----------------------------------------
+                                    698 ;	 function packetqueue_first
+                                    699 ;	-----------------------------------------
+      00036C                        700 _packetqueue_first:
+                                    701 ;	/home/user/contiki/core/net/packetqueue.c:108: return list_head(*q->list);
+      00036C 12r00r00         [24]  702 	lcall	__gptrget
+      00036F FD               [12]  703 	mov	r5,a
+      000370 A3               [24]  704 	inc	dptr
+      000371 12r00r00         [24]  705 	lcall	__gptrget
+      000374 FE               [12]  706 	mov	r6,a
+      000375 A3               [24]  707 	inc	dptr
+      000376 12r00r00         [24]  708 	lcall	__gptrget
+      000379 FF               [12]  709 	mov	r7,a
+      00037A 8D 82            [24]  710 	mov	dpl,r5
+      00037C 8E 83            [24]  711 	mov	dph,r6
+      00037E 8F F0            [24]  712 	mov	b,r7
+      000380 12r00r00         [24]  713 	lcall	__gptrget
+      000383 FD               [12]  714 	mov	r5,a
+      000384 A3               [24]  715 	inc	dptr
+      000385 12r00r00         [24]  716 	lcall	__gptrget
+      000388 FE               [12]  717 	mov	r6,a
+      000389 A3               [24]  718 	inc	dptr
+      00038A 12r00r00         [24]  719 	lcall	__gptrget
+      00038D FF               [12]  720 	mov	r7,a
+      00038E 8D 82            [24]  721 	mov	dpl,r5
+      000390 8E 83            [24]  722 	mov	dph,r6
+      000392 8F F0            [24]  723 	mov	b,r7
+      000394 02r00r00         [24]  724 	ljmp	_list_head
+                                    725 ;------------------------------------------------------------
+                                    726 ;Allocation info for local variables in function 'packetqueue_dequeue'
+                                    727 ;------------------------------------------------------------
+                                    728 ;q                         Allocated to stack - sp -5
+                                    729 ;i                         Allocated to stack - sp -2
+                                    730 ;------------------------------------------------------------
+                                    731 ;	/home/user/contiki/core/net/packetqueue.c:112: packetqueue_dequeue(struct packetqueue *q)
+                                    732 ;	-----------------------------------------
+                                    733 ;	 function packetqueue_dequeue
+                                    734 ;	-----------------------------------------
+      000397                        735 _packetqueue_dequeue:
+      000397 C0 82            [24]  736 	push	dpl
+      000399 C0 83            [24]  737 	push	dph
+      00039B C0 F0            [24]  738 	push	b
+      00039D 05 81            [12]  739 	inc	sp
+      00039F 05 81            [12]  740 	inc	sp
+      0003A1 05 81            [12]  741 	inc	sp
+                                    742 ;	/home/user/contiki/core/net/packetqueue.c:116: i = list_head(*q->list);
+      0003A3 E5 81            [12]  743 	mov	a,sp
+      0003A5 24 FB            [12]  744 	add	a,#0xfb
+      0003A7 F8               [12]  745 	mov	r0,a
+      0003A8 86 82            [24]  746 	mov	dpl,@r0
+      0003AA 08               [12]  747 	inc	r0
+      0003AB 86 83            [24]  748 	mov	dph,@r0
+      0003AD 08               [12]  749 	inc	r0
+      0003AE 86 F0            [24]  750 	mov	b,@r0
+      0003B0 12r00r00         [24]  751 	lcall	__gptrget
+      0003B3 FA               [12]  752 	mov	r2,a
+      0003B4 A3               [24]  753 	inc	dptr
+      0003B5 12r00r00         [24]  754 	lcall	__gptrget
+      0003B8 FB               [12]  755 	mov	r3,a
+      0003B9 A3               [24]  756 	inc	dptr
+      0003BA 12r00r00         [24]  757 	lcall	__gptrget
+      0003BD FC               [12]  758 	mov	r4,a
+      0003BE 8A 82            [24]  759 	mov	dpl,r2
+      0003C0 8B 83            [24]  760 	mov	dph,r3
+      0003C2 8C F0            [24]  761 	mov	b,r4
+      0003C4 12r00r00         [24]  762 	lcall	__gptrget
+      0003C7 FA               [12]  763 	mov	r2,a
+      0003C8 A3               [24]  764 	inc	dptr
+      0003C9 12r00r00         [24]  765 	lcall	__gptrget
+      0003CC FB               [12]  766 	mov	r3,a
+      0003CD A3               [24]  767 	inc	dptr
+      0003CE 12r00r00         [24]  768 	lcall	__gptrget
+      0003D1 FC               [12]  769 	mov	r4,a
+      0003D2 8A 82            [24]  770 	mov	dpl,r2
+      0003D4 8B 83            [24]  771 	mov	dph,r3
+      0003D6 8C F0            [24]  772 	mov	b,r4
+      0003D8 12r00r00         [24]  773 	lcall	_list_head
+      0003DB AA 82            [24]  774 	mov	r2,dpl
+      0003DD AB 83            [24]  775 	mov	r3,dph
+      0003DF AC F0            [24]  776 	mov	r4,b
+      0003E1 A8 81            [24]  777 	mov	r0,sp
+      0003E3 18               [12]  778 	dec	r0
+      0003E4 18               [12]  779 	dec	r0
+      0003E5 A6 02            [24]  780 	mov	@r0,ar2
+      0003E7 08               [12]  781 	inc	r0
+      0003E8 A6 03            [24]  782 	mov	@r0,ar3
+      0003EA 08               [12]  783 	inc	r0
+      0003EB A6 04            [24]  784 	mov	@r0,ar4
+                                    785 ;	/home/user/contiki/core/net/packetqueue.c:117: if(i != NULL) {
+      0003ED A8 81            [24]  786 	mov	r0,sp
+      0003EF 18               [12]  787 	dec	r0
+      0003F0 18               [12]  788 	dec	r0
+      0003F1 E6               [12]  789 	mov	a,@r0
+      0003F2 08               [12]  790 	inc	r0
+      0003F3 46               [12]  791 	orl	a,@r0
+      0003F4 70 03            [24]  792 	jnz	00108$
+      0003F6 02r04rD2         [24]  793 	ljmp	00103$
+      0003F9                        794 00108$:
+                                    795 ;	/home/user/contiki/core/net/packetqueue.c:118: list_remove(*q->list, i);
+      0003F9 A8 81            [24]  796 	mov	r0,sp
+      0003FB 18               [12]  797 	dec	r0
+      0003FC 18               [12]  798 	dec	r0
+      0003FD 86 02            [24]  799 	mov	ar2,@r0
+      0003FF 08               [12]  800 	inc	r0
+      000400 86 03            [24]  801 	mov	ar3,@r0
+      000402 08               [12]  802 	inc	r0
+      000403 86 04            [24]  803 	mov	ar4,@r0
+      000405 E5 81            [12]  804 	mov	a,sp
+      000407 24 FB            [12]  805 	add	a,#0xfb
+      000409 F8               [12]  806 	mov	r0,a
+      00040A 86 82            [24]  807 	mov	dpl,@r0
+      00040C 08               [12]  808 	inc	r0
+      00040D 86 83            [24]  809 	mov	dph,@r0
+      00040F 08               [12]  810 	inc	r0
+      000410 86 F0            [24]  811 	mov	b,@r0
+      000412 12r00r00         [24]  812 	lcall	__gptrget
+      000415 FD               [12]  813 	mov	r5,a
+      000416 A3               [24]  814 	inc	dptr
+      000417 12r00r00         [24]  815 	lcall	__gptrget
+      00041A FE               [12]  816 	mov	r6,a
+      00041B A3               [24]  817 	inc	dptr
+      00041C 12r00r00         [24]  818 	lcall	__gptrget
+      00041F FF               [12]  819 	mov	r7,a
+      000420 8D 82            [24]  820 	mov	dpl,r5
+      000422 8E 83            [24]  821 	mov	dph,r6
+      000424 8F F0            [24]  822 	mov	b,r7
+      000426 12r00r00         [24]  823 	lcall	__gptrget
+      000429 FD               [12]  824 	mov	r5,a
+      00042A A3               [24]  825 	inc	dptr
+      00042B 12r00r00         [24]  826 	lcall	__gptrget
+      00042E FE               [12]  827 	mov	r6,a
+      00042F A3               [24]  828 	inc	dptr
+      000430 12r00r00         [24]  829 	lcall	__gptrget
+      000433 FF               [12]  830 	mov	r7,a
+      000434 C0 02            [24]  831 	push	ar2
+      000436 C0 03            [24]  832 	push	ar3
+      000438 C0 04            [24]  833 	push	ar4
+      00043A 8D 82            [24]  834 	mov	dpl,r5
+      00043C 8E 83            [24]  835 	mov	dph,r6
+      00043E 8F F0            [24]  836 	mov	b,r7
+      000440 12r00r00         [24]  837 	lcall	_list_remove
+      000443 15 81            [12]  838 	dec	sp
+      000445 15 81            [12]  839 	dec	sp
+      000447 15 81            [12]  840 	dec	sp
+                                    841 ;	/home/user/contiki/core/net/packetqueue.c:119: queuebuf_free(i->buf);
+      000449 A8 81            [24]  842 	mov	r0,sp
+      00044B 18               [12]  843 	dec	r0
+      00044C 18               [12]  844 	dec	r0
+      00044D 74 03            [12]  845 	mov	a,#0x03
+      00044F 26               [12]  846 	add	a,@r0
+      000450 FD               [12]  847 	mov	r5,a
+      000451 E4               [12]  848 	clr	a
+      000452 08               [12]  849 	inc	r0
+      000453 36               [12]  850 	addc	a,@r0
+      000454 FE               [12]  851 	mov	r6,a
+      000455 08               [12]  852 	inc	r0
+      000456 86 07            [24]  853 	mov	ar7,@r0
+      000458 8D 82            [24]  854 	mov	dpl,r5
+      00045A 8E 83            [24]  855 	mov	dph,r6
+      00045C 8F F0            [24]  856 	mov	b,r7
+      00045E 12r00r00         [24]  857 	lcall	__gptrget
+      000461 FD               [12]  858 	mov	r5,a
+      000462 A3               [24]  859 	inc	dptr
+      000463 12r00r00         [24]  860 	lcall	__gptrget
+      000466 FE               [12]  861 	mov	r6,a
+      000467 A3               [24]  862 	inc	dptr
+      000468 12r00r00         [24]  863 	lcall	__gptrget
+      00046B FF               [12]  864 	mov	r7,a
+      00046C 8D 82            [24]  865 	mov	dpl,r5
+      00046E 8E 83            [24]  866 	mov	dph,r6
+      000470 8F F0            [24]  867 	mov	b,r7
+      000472 12r00r00         [24]  868 	lcall	_queuebuf_free
+                                    869 ;	/home/user/contiki/core/net/packetqueue.c:120: ctimer_stop(&i->lifetimer);
+      000475 A8 81            [24]  870 	mov	r0,sp
+      000477 18               [12]  871 	dec	r0
+      000478 18               [12]  872 	dec	r0
+      000479 74 09            [12]  873 	mov	a,#0x09
+      00047B 26               [12]  874 	add	a,@r0
+      00047C FD               [12]  875 	mov	r5,a
+      00047D E4               [12]  876 	clr	a
+      00047E 08               [12]  877 	inc	r0
+      00047F 36               [12]  878 	addc	a,@r0
+      000480 FE               [12]  879 	mov	r6,a
+      000481 08               [12]  880 	inc	r0
+      000482 86 07            [24]  881 	mov	ar7,@r0
+      000484 8D 82            [24]  882 	mov	dpl,r5
+      000486 8E 83            [24]  883 	mov	dph,r6
+      000488 8F F0            [24]  884 	mov	b,r7
+      00048A 12r00r00         [24]  885 	lcall	_ctimer_stop
+                                    886 ;	/home/user/contiki/core/net/packetqueue.c:121: memb_free(q->memb, i);
+      00048D A8 81            [24]  887 	mov	r0,sp
+      00048F 18               [12]  888 	dec	r0
+      000490 18               [12]  889 	dec	r0
+      000491 86 02            [24]  890 	mov	ar2,@r0
+      000493 08               [12]  891 	inc	r0
+      000494 86 03            [24]  892 	mov	ar3,@r0
+      000496 08               [12]  893 	inc	r0
+      000497 86 04            [24]  894 	mov	ar4,@r0
+      000499 E5 81            [12]  895 	mov	a,sp
+      00049B 24 FB            [12]  896 	add	a,#0xfb
+      00049D F8               [12]  897 	mov	r0,a
+      00049E 74 03            [12]  898 	mov	a,#0x03
+      0004A0 26               [12]  899 	add	a,@r0
+      0004A1 FD               [12]  900 	mov	r5,a
+      0004A2 E4               [12]  901 	clr	a
+      0004A3 08               [12]  902 	inc	r0
+      0004A4 36               [12]  903 	addc	a,@r0
+      0004A5 FE               [12]  904 	mov	r6,a
+      0004A6 08               [12]  905 	inc	r0
+      0004A7 86 07            [24]  906 	mov	ar7,@r0
+      0004A9 8D 82            [24]  907 	mov	dpl,r5
+      0004AB 8E 83            [24]  908 	mov	dph,r6
+      0004AD 8F F0            [24]  909 	mov	b,r7
+      0004AF 12r00r00         [24]  910 	lcall	__gptrget
+      0004B2 FD               [12]  911 	mov	r5,a
+      0004B3 A3               [24]  912 	inc	dptr
+      0004B4 12r00r00         [24]  913 	lcall	__gptrget
+      0004B7 FE               [12]  914 	mov	r6,a
+      0004B8 A3               [24]  915 	inc	dptr
+      0004B9 12r00r00         [24]  916 	lcall	__gptrget
+      0004BC FF               [12]  917 	mov	r7,a
+      0004BD C0 02            [24]  918 	push	ar2
+      0004BF C0 03            [24]  919 	push	ar3
+      0004C1 C0 04            [24]  920 	push	ar4
+      0004C3 8D 82            [24]  921 	mov	dpl,r5
+      0004C5 8E 83            [24]  922 	mov	dph,r6
+      0004C7 8F F0            [24]  923 	mov	b,r7
+      0004C9 12r00r00         [24]  924 	lcall	_memb_free
+      0004CC 15 81            [12]  925 	dec	sp
+      0004CE 15 81            [12]  926 	dec	sp
+      0004D0 15 81            [12]  927 	dec	sp
+      0004D2                        928 00103$:
+      0004D2 E5 81            [12]  929 	mov	a,sp
+      0004D4 24 FA            [12]  930 	add	a,#0xFA
+      0004D6 F5 81            [12]  931 	mov	sp,a
+      0004D8 22               [24]  932 	ret
+                                    933 ;------------------------------------------------------------
+                                    934 ;Allocation info for local variables in function 'packetqueue_len'
+                                    935 ;------------------------------------------------------------
+                                    936 ;q                         Allocated to registers r5 r6 r7 
+                                    937 ;------------------------------------------------------------
+                                    938 ;	/home/user/contiki/core/net/packetqueue.c:126: packetqueue_len(struct packetqueue *q)
+                                    939 ;	-----------------------------------------
+                                    940 ;	 function packetqueue_len
+                                    941 ;	-----------------------------------------
+      0004D9                        942 _packetqueue_len:
+                                    943 ;	/home/user/contiki/core/net/packetqueue.c:128: return list_length(*q->list);
+      0004D9 12r00r00         [24]  944 	lcall	__gptrget
+      0004DC FD               [12]  945 	mov	r5,a
+      0004DD A3               [24]  946 	inc	dptr
+      0004DE 12r00r00         [24]  947 	lcall	__gptrget
+      0004E1 FE               [12]  948 	mov	r6,a
+      0004E2 A3               [24]  949 	inc	dptr
+      0004E3 12r00r00         [24]  950 	lcall	__gptrget
+      0004E6 FF               [12]  951 	mov	r7,a
+      0004E7 8D 82            [24]  952 	mov	dpl,r5
+      0004E9 8E 83            [24]  953 	mov	dph,r6
+      0004EB 8F F0            [24]  954 	mov	b,r7
+      0004ED 12r00r00         [24]  955 	lcall	__gptrget
+      0004F0 FD               [12]  956 	mov	r5,a
+      0004F1 A3               [24]  957 	inc	dptr
+      0004F2 12r00r00         [24]  958 	lcall	__gptrget
+      0004F5 FE               [12]  959 	mov	r6,a
+      0004F6 A3               [24]  960 	inc	dptr
+      0004F7 12r00r00         [24]  961 	lcall	__gptrget
+      0004FA FF               [12]  962 	mov	r7,a
+      0004FB 8D 82            [24]  963 	mov	dpl,r5
+      0004FD 8E 83            [24]  964 	mov	dph,r6
+      0004FF 8F F0            [24]  965 	mov	b,r7
+      000501 02r00r00         [24]  966 	ljmp	_list_length
+                                    967 ;------------------------------------------------------------
+                                    968 ;Allocation info for local variables in function 'packetqueue_queuebuf'
+                                    969 ;------------------------------------------------------------
+                                    970 ;i                         Allocated to registers r5 r6 r7 
+                                    971 ;------------------------------------------------------------
+                                    972 ;	/home/user/contiki/core/net/packetqueue.c:132: packetqueue_queuebuf(struct packetqueue_item *i)
+                                    973 ;	-----------------------------------------
+                                    974 ;	 function packetqueue_queuebuf
+                                    975 ;	-----------------------------------------
+      000504                        976 _packetqueue_queuebuf:
+      000504 AD 82            [24]  977 	mov	r5,dpl
+      000506 AE 83            [24]  978 	mov	r6,dph
+      000508 AF F0            [24]  979 	mov	r7,b
+                                    980 ;	/home/user/contiki/core/net/packetqueue.c:134: if(i != NULL) {
+      00050A ED               [12]  981 	mov	a,r5
+      00050B 4E               [12]  982 	orl	a,r6
+      00050C 60 22            [24]  983 	jz	00102$
+                                    984 ;	/home/user/contiki/core/net/packetqueue.c:135: return i->buf;
+      00050E 74 03            [12]  985 	mov	a,#0x03
+      000510 2D               [12]  986 	add	a,r5
+      000511 FD               [12]  987 	mov	r5,a
+      000512 E4               [12]  988 	clr	a
+      000513 3E               [12]  989 	addc	a,r6
+      000514 FE               [12]  990 	mov	r6,a
+      000515 8D 82            [24]  991 	mov	dpl,r5
+      000517 8E 83            [24]  992 	mov	dph,r6
+      000519 8F F0            [24]  993 	mov	b,r7
+      00051B 12r00r00         [24]  994 	lcall	__gptrget
+      00051E FD               [12]  995 	mov	r5,a
+      00051F A3               [24]  996 	inc	dptr
+      000520 12r00r00         [24]  997 	lcall	__gptrget
+      000523 FE               [12]  998 	mov	r6,a
+      000524 A3               [24]  999 	inc	dptr
+      000525 12r00r00         [24] 1000 	lcall	__gptrget
+      000528 FF               [12] 1001 	mov	r7,a
+      000529 8D 82            [24] 1002 	mov	dpl,r5
+      00052B 8E 83            [24] 1003 	mov	dph,r6
+      00052D 8F F0            [24] 1004 	mov	b,r7
+      00052F 22               [24] 1005 	ret
+      000530                       1006 00102$:
+                                   1007 ;	/home/user/contiki/core/net/packetqueue.c:137: return NULL;
+      000530 90 00 00         [24] 1008 	mov	dptr,#0x0000
+      000533 75 F0 00         [24] 1009 	mov	b,#0x00
+      000536 22               [24] 1010 	ret
+                                   1011 ;------------------------------------------------------------
+                                   1012 ;Allocation info for local variables in function 'packetqueue_ptr'
+                                   1013 ;------------------------------------------------------------
+                                   1014 ;i                         Allocated to registers r5 r6 r7 
+                                   1015 ;------------------------------------------------------------
+                                   1016 ;	/home/user/contiki/core/net/packetqueue.c:142: packetqueue_ptr(struct packetqueue_item *i)
+                                   1017 ;	-----------------------------------------
+                                   1018 ;	 function packetqueue_ptr
+                                   1019 ;	-----------------------------------------
+      000537                       1020 _packetqueue_ptr:
+      000537 AD 82            [24] 1021 	mov	r5,dpl
+      000539 AE 83            [24] 1022 	mov	r6,dph
+      00053B AF F0            [24] 1023 	mov	r7,b
+                                   1024 ;	/home/user/contiki/core/net/packetqueue.c:144: if(i != NULL) {
+      00053D ED               [12] 1025 	mov	a,r5
+      00053E 4E               [12] 1026 	orl	a,r6
+      00053F 60 22            [24] 1027 	jz	00102$
+                                   1028 ;	/home/user/contiki/core/net/packetqueue.c:145: return i->ptr;
+      000541 74 1E            [12] 1029 	mov	a,#0x1E
+      000543 2D               [12] 1030 	add	a,r5
+      000544 FD               [12] 1031 	mov	r5,a
+      000545 E4               [12] 1032 	clr	a
+      000546 3E               [12] 1033 	addc	a,r6
+      000547 FE               [12] 1034 	mov	r6,a
+      000548 8D 82            [24] 1035 	mov	dpl,r5
+      00054A 8E 83            [24] 1036 	mov	dph,r6
+      00054C 8F F0            [24] 1037 	mov	b,r7
+      00054E 12r00r00         [24] 1038 	lcall	__gptrget
+      000551 FD               [12] 1039 	mov	r5,a
+      000552 A3               [24] 1040 	inc	dptr
+      000553 12r00r00         [24] 1041 	lcall	__gptrget
+      000556 FE               [12] 1042 	mov	r6,a
+      000557 A3               [24] 1043 	inc	dptr
+      000558 12r00r00         [24] 1044 	lcall	__gptrget
+      00055B FF               [12] 1045 	mov	r7,a
+      00055C 8D 82            [24] 1046 	mov	dpl,r5
+      00055E 8E 83            [24] 1047 	mov	dph,r6
+      000560 8F F0            [24] 1048 	mov	b,r7
+      000562 22               [24] 1049 	ret
+      000563                       1050 00102$:
+                                   1051 ;	/home/user/contiki/core/net/packetqueue.c:147: return NULL;
+      000563 90 00 00         [24] 1052 	mov	dptr,#0x0000
+      000566 75 F0 00         [24] 1053 	mov	b,#0x00
+      000569 22               [24] 1054 	ret
+                                   1055 	.area CSEG    (CODE)
+                                   1056 	.area CONST   (CODE)
+                                   1057 	.area XINIT   (CODE)
+                                   1058 	.area CABS    (ABS,CODE)

@@ -1,0 +1,407 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:36 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module nullrdc_noframer
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _nullrdc_noframer_driver
+                                     13 	.globl _queuebuf_to_packetbuf
+                                     14 	.globl _packetbuf_totlen
+                                     15 	.globl _packetbuf_hdrptr
+                                     16 	.globl _mac_call_sent_callback
+                                     17 ;--------------------------------------------------------
+                                     18 ; special function registers
+                                     19 ;--------------------------------------------------------
+                                     20 	.area RSEG    (ABS,DATA)
+      000000                         21 	.org 0x0000
+                                     22 ;--------------------------------------------------------
+                                     23 ; special function bits
+                                     24 ;--------------------------------------------------------
+                                     25 	.area RSEG    (ABS,DATA)
+      000000                         26 	.org 0x0000
+                                     27 ;--------------------------------------------------------
+                                     28 ; overlayable register banks
+                                     29 ;--------------------------------------------------------
+                                     30 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         31 	.ds 8
+                                     32 ;--------------------------------------------------------
+                                     33 ; internal ram data
+                                     34 ;--------------------------------------------------------
+                                     35 	.area DSEG    (DATA)
+                                     36 ;--------------------------------------------------------
+                                     37 ; overlayable items in internal ram 
+                                     38 ;--------------------------------------------------------
+                                     39 ;--------------------------------------------------------
+                                     40 ; indirectly addressable internal ram data
+                                     41 ;--------------------------------------------------------
+                                     42 	.area ISEG    (DATA)
+                                     43 ;--------------------------------------------------------
+                                     44 ; absolute internal ram data
+                                     45 ;--------------------------------------------------------
+                                     46 	.area IABS    (ABS,DATA)
+                                     47 	.area IABS    (ABS,DATA)
+                                     48 ;--------------------------------------------------------
+                                     49 ; bit data
+                                     50 ;--------------------------------------------------------
+                                     51 	.area BSEG    (BIT)
+                                     52 ;--------------------------------------------------------
+                                     53 ; paged external ram data
+                                     54 ;--------------------------------------------------------
+                                     55 	.area PSEG    (PAG,XDATA)
+                                     56 ;--------------------------------------------------------
+                                     57 ; external ram data
+                                     58 ;--------------------------------------------------------
+                                     59 	.area XSEG    (XDATA)
+                                     60 ;--------------------------------------------------------
+                                     61 ; absolute external ram data
+                                     62 ;--------------------------------------------------------
+                                     63 	.area XABS    (ABS,XDATA)
+                                     64 ;--------------------------------------------------------
+                                     65 ; external initialized ram data
+                                     66 ;--------------------------------------------------------
+                                     67 	.area XISEG   (XDATA)
+                                     68 	.area HOME    (CODE)
+                                     69 	.area GSINIT0 (CODE)
+                                     70 	.area GSINIT1 (CODE)
+                                     71 	.area GSINIT2 (CODE)
+                                     72 	.area GSINIT3 (CODE)
+                                     73 	.area GSINIT4 (CODE)
+                                     74 	.area GSINIT5 (CODE)
+                                     75 	.area GSINIT  (CODE)
+                                     76 	.area GSFINAL (CODE)
+                                     77 	.area CSEG    (CODE)
+                                     78 ;--------------------------------------------------------
+                                     79 ; global & static initialisations
+                                     80 ;--------------------------------------------------------
+                                     81 	.area HOME    (CODE)
+                                     82 	.area GSINIT  (CODE)
+                                     83 	.area GSFINAL (CODE)
+                                     84 	.area GSINIT  (CODE)
+                                     85 ;--------------------------------------------------------
+                                     86 ; Home
+                                     87 ;--------------------------------------------------------
+                                     88 	.area HOME    (CODE)
+                                     89 	.area HOME    (CODE)
+                                     90 ;--------------------------------------------------------
+                                     91 ; code
+                                     92 ;--------------------------------------------------------
+                                     93 	.area CSEG    (CODE)
+                                     94 ;------------------------------------------------------------
+                                     95 ;Allocation info for local variables in function 'send_packet'
+                                     96 ;------------------------------------------------------------
+                                     97 ;ptr                       Allocated to stack - sp -8
+                                     98 ;sent                      Allocated to stack - sp -3
+                                     99 ;ret                       Allocated to registers r6 r7 
+                                    100 ;sloc0                     Allocated to stack - sp -1
+                                    101 ;------------------------------------------------------------
+                                    102 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:48: send_packet(mac_callback_t sent, void *ptr)
+                                    103 ;	-----------------------------------------
+                                    104 ;	 function send_packet
+                                    105 ;	-----------------------------------------
+      000000                        106 _send_packet:
+                           000007   107 	ar7 = 0x07
+                           000006   108 	ar6 = 0x06
+                           000005   109 	ar5 = 0x05
+                           000004   110 	ar4 = 0x04
+                           000003   111 	ar3 = 0x03
+                           000002   112 	ar2 = 0x02
+                           000001   113 	ar1 = 0x01
+                           000000   114 	ar0 = 0x00
+      000000 C0 82            [24]  115 	push	dpl
+      000002 C0 83            [24]  116 	push	dph
+      000004 05 81            [12]  117 	inc	sp
+      000006 05 81            [12]  118 	inc	sp
+                                    119 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:51: if(NETSTACK_RADIO.send(packetbuf_hdrptr(), packetbuf_totlen()) == RADIO_TX_OK) {
+      000008 90r00r06         [24]  120 	mov	dptr,#(_cc2530_rf_driver + 0x0006)
+      00000B E4               [12]  121 	clr	a
+      00000C 93               [24]  122 	movc	a,@a+dptr
+      00000D FC               [12]  123 	mov	r4,a
+      00000E A3               [24]  124 	inc	dptr
+      00000F E4               [12]  125 	clr	a
+      000010 93               [24]  126 	movc	a,@a+dptr
+      000011 FD               [12]  127 	mov	r5,a
+      000012 C0 05            [24]  128 	push	ar5
+      000014 C0 04            [24]  129 	push	ar4
+      000016 12r00r00         [24]  130 	lcall	_packetbuf_totlen
+      000019 A8 81            [24]  131 	mov	r0,sp
+      00001B 18               [12]  132 	dec	r0
+      00001C 18               [12]  133 	dec	r0
+      00001D 18               [12]  134 	dec	r0
+      00001E A6 82            [24]  135 	mov	@r0,dpl
+      000020 08               [12]  136 	inc	r0
+      000021 A6 83            [24]  137 	mov	@r0,dph
+      000023 12r00r00         [24]  138 	lcall	_packetbuf_hdrptr
+      000026 AB 82            [24]  139 	mov	r3,dpl
+      000028 AE 83            [24]  140 	mov	r6,dph
+      00002A AF F0            [24]  141 	mov	r7,b
+      00002C D0 04            [24]  142 	pop	ar4
+      00002E D0 05            [24]  143 	pop	ar5
+      000030 A8 81            [24]  144 	mov	r0,sp
+      000032 18               [12]  145 	dec	r0
+      000033 E6               [12]  146 	mov	a,@r0
+      000034 C0 E0            [24]  147 	push	acc
+      000036 08               [12]  148 	inc	r0
+      000037 E6               [12]  149 	mov	a,@r0
+      000038 C0 E0            [24]  150 	push	acc
+      00003A 12r00r3F         [24]  151 	lcall	00109$
+      00003D 80 0B            [24]  152 	sjmp	00110$
+      00003F                        153 00109$:
+      00003F C0 04            [24]  154 	push	ar4
+      000041 C0 05            [24]  155 	push	ar5
+      000043 8B 82            [24]  156 	mov	dpl,r3
+      000045 8E 83            [24]  157 	mov	dph,r6
+      000047 8F F0            [24]  158 	mov	b,r7
+      000049 22               [24]  159 	ret
+      00004A                        160 00110$:
+      00004A AC 82            [24]  161 	mov	r4,dpl
+      00004C AD 83            [24]  162 	mov	r5,dph
+      00004E 15 81            [12]  163 	dec	sp
+      000050 15 81            [12]  164 	dec	sp
+      000052 EC               [12]  165 	mov	a,r4
+      000053 4D               [12]  166 	orl	a,r5
+                                    167 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:52: ret = MAC_TX_OK;
+      000054 70 04            [24]  168 	jnz	00102$
+      000056 FE               [12]  169 	mov	r6,a
+      000057 FF               [12]  170 	mov	r7,a
+      000058 80 04            [24]  171 	sjmp	00103$
+      00005A                        172 00102$:
+                                    173 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:54: ret =  MAC_TX_ERR;
+      00005A 7E 04            [12]  174 	mov	r6,#0x04
+      00005C 7F 00            [12]  175 	mov	r7,#0x00
+      00005E                        176 00103$:
+                                    177 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:56: mac_call_sent_callback(sent, ptr, ret, 1);
+      00005E 74 01            [12]  178 	mov	a,#0x01
+      000060 C0 E0            [24]  179 	push	acc
+      000062 E4               [12]  180 	clr	a
+      000063 C0 E0            [24]  181 	push	acc
+      000065 C0 06            [24]  182 	push	ar6
+      000067 C0 07            [24]  183 	push	ar7
+      000069 E5 81            [12]  184 	mov	a,sp
+      00006B 24 F4            [12]  185 	add	a,#0xf4
+      00006D F8               [12]  186 	mov	r0,a
+      00006E E6               [12]  187 	mov	a,@r0
+      00006F C0 E0            [24]  188 	push	acc
+      000071 08               [12]  189 	inc	r0
+      000072 E6               [12]  190 	mov	a,@r0
+      000073 C0 E0            [24]  191 	push	acc
+      000075 08               [12]  192 	inc	r0
+      000076 E6               [12]  193 	mov	a,@r0
+      000077 C0 E0            [24]  194 	push	acc
+      000079 E5 81            [12]  195 	mov	a,sp
+      00007B 24 F6            [12]  196 	add	a,#0xf6
+      00007D F8               [12]  197 	mov	r0,a
+      00007E 86 82            [24]  198 	mov	dpl,@r0
+      000080 08               [12]  199 	inc	r0
+      000081 86 83            [24]  200 	mov	dph,@r0
+      000083 12r00r00         [24]  201 	lcall	_mac_call_sent_callback
+      000086 E5 81            [12]  202 	mov	a,sp
+      000088 24 F9            [12]  203 	add	a,#0xf9
+      00008A 24 FC            [12]  204 	add	a,#0xFC
+      00008C F5 81            [12]  205 	mov	sp,a
+      00008E 22               [24]  206 	ret
+                                    207 ;------------------------------------------------------------
+                                    208 ;Allocation info for local variables in function 'send_list'
+                                    209 ;------------------------------------------------------------
+                                    210 ;ptr                       Allocated to stack - sp -4
+                                    211 ;buf_list                  Allocated to stack - sp -7
+                                    212 ;sent                      Allocated to registers r6 r7 
+                                    213 ;------------------------------------------------------------
+                                    214 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:60: send_list(mac_callback_t sent, void *ptr, struct rdc_buf_list *buf_list)
+                                    215 ;	-----------------------------------------
+                                    216 ;	 function send_list
+                                    217 ;	-----------------------------------------
+      00008F                        218 _send_list:
+      00008F AE 82            [24]  219 	mov	r6,dpl
+      000091 AF 83            [24]  220 	mov	r7,dph
+                                    221 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:62: if(buf_list != NULL) {
+      000093 E5 81            [12]  222 	mov	a,sp
+      000095 24 F9            [12]  223 	add	a,#0xf9
+      000097 F8               [12]  224 	mov	r0,a
+      000098 E6               [12]  225 	mov	a,@r0
+      000099 08               [12]  226 	inc	r0
+      00009A 46               [12]  227 	orl	a,@r0
+      00009B 60 56            [24]  228 	jz	00103$
+                                    229 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:63: queuebuf_to_packetbuf(buf_list->buf);
+      00009D E5 81            [12]  230 	mov	a,sp
+      00009F 24 F9            [12]  231 	add	a,#0xf9
+      0000A1 F8               [12]  232 	mov	r0,a
+      0000A2 86 03            [24]  233 	mov	ar3,@r0
+      0000A4 08               [12]  234 	inc	r0
+      0000A5 86 04            [24]  235 	mov	ar4,@r0
+      0000A7 08               [12]  236 	inc	r0
+      0000A8 86 05            [24]  237 	mov	ar5,@r0
+      0000AA 74 03            [12]  238 	mov	a,#0x03
+      0000AC 2B               [12]  239 	add	a,r3
+      0000AD FB               [12]  240 	mov	r3,a
+      0000AE E4               [12]  241 	clr	a
+      0000AF 3C               [12]  242 	addc	a,r4
+      0000B0 FC               [12]  243 	mov	r4,a
+      0000B1 8B 82            [24]  244 	mov	dpl,r3
+      0000B3 8C 83            [24]  245 	mov	dph,r4
+      0000B5 8D F0            [24]  246 	mov	b,r5
+      0000B7 12r00r00         [24]  247 	lcall	__gptrget
+      0000BA FB               [12]  248 	mov	r3,a
+      0000BB A3               [24]  249 	inc	dptr
+      0000BC 12r00r00         [24]  250 	lcall	__gptrget
+      0000BF FC               [12]  251 	mov	r4,a
+      0000C0 A3               [24]  252 	inc	dptr
+      0000C1 12r00r00         [24]  253 	lcall	__gptrget
+      0000C4 FD               [12]  254 	mov	r5,a
+      0000C5 8B 82            [24]  255 	mov	dpl,r3
+      0000C7 8C 83            [24]  256 	mov	dph,r4
+      0000C9 8D F0            [24]  257 	mov	b,r5
+      0000CB C0 07            [24]  258 	push	ar7
+      0000CD C0 06            [24]  259 	push	ar6
+      0000CF 12r00r00         [24]  260 	lcall	_queuebuf_to_packetbuf
+      0000D2 D0 06            [24]  261 	pop	ar6
+      0000D4 D0 07            [24]  262 	pop	ar7
+                                    263 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:64: send_packet(sent, ptr);
+      0000D6 E5 81            [12]  264 	mov	a,sp
+      0000D8 24 FC            [12]  265 	add	a,#0xfc
+      0000DA F8               [12]  266 	mov	r0,a
+      0000DB E6               [12]  267 	mov	a,@r0
+      0000DC C0 E0            [24]  268 	push	acc
+      0000DE 08               [12]  269 	inc	r0
+      0000DF E6               [12]  270 	mov	a,@r0
+      0000E0 C0 E0            [24]  271 	push	acc
+      0000E2 08               [12]  272 	inc	r0
+      0000E3 E6               [12]  273 	mov	a,@r0
+      0000E4 C0 E0            [24]  274 	push	acc
+      0000E6 8E 82            [24]  275 	mov	dpl,r6
+      0000E8 8F 83            [24]  276 	mov	dph,r7
+      0000EA 12r00r00         [24]  277 	lcall	_send_packet
+      0000ED 15 81            [12]  278 	dec	sp
+      0000EF 15 81            [12]  279 	dec	sp
+      0000F1 15 81            [12]  280 	dec	sp
+      0000F3                        281 00103$:
+      0000F3 22               [24]  282 	ret
+                                    283 ;------------------------------------------------------------
+                                    284 ;Allocation info for local variables in function 'packet_input'
+                                    285 ;------------------------------------------------------------
+                                    286 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:69: packet_input(void)
+                                    287 ;	-----------------------------------------
+                                    288 ;	 function packet_input
+                                    289 ;	-----------------------------------------
+      0000F4                        290 _packet_input:
+                                    291 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:71: NETSTACK_MAC.input();
+      0000F4 90r00r07         [24]  292 	mov	dptr,#(_csma_driver + 0x0007)
+      0000F7 E4               [12]  293 	clr	a
+      0000F8 93               [24]  294 	movc	a,@a+dptr
+      0000F9 FE               [12]  295 	mov	r6,a
+      0000FA A3               [24]  296 	inc	dptr
+      0000FB E4               [12]  297 	clr	a
+      0000FC 93               [24]  298 	movc	a,@a+dptr
+      0000FD FF               [12]  299 	mov	r7,a
+      0000FE C0 07            [24]  300 	push	ar7
+      000100 C0 06            [24]  301 	push	ar6
+      000102 8E 82            [24]  302 	mov	dpl,r6
+      000104 8F 83            [24]  303 	mov	dph,r7
+      000106 12r00r00         [24]  304 	lcall	__sdcc_call_dptr
+      000109 D0 06            [24]  305 	pop	ar6
+      00010B D0 07            [24]  306 	pop	ar7
+      00010D 22               [24]  307 	ret
+                                    308 ;------------------------------------------------------------
+                                    309 ;Allocation info for local variables in function 'on'
+                                    310 ;------------------------------------------------------------
+                                    311 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:75: on(void)
+                                    312 ;	-----------------------------------------
+                                    313 ;	 function on
+                                    314 ;	-----------------------------------------
+      00010E                        315 _on:
+                                    316 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:77: return NETSTACK_RADIO.on();
+      00010E 90r00r10         [24]  317 	mov	dptr,#(_cc2530_rf_driver + 0x0010)
+      000111 E4               [12]  318 	clr	a
+      000112 93               [24]  319 	movc	a,@a+dptr
+      000113 FE               [12]  320 	mov	r6,a
+      000114 A3               [24]  321 	inc	dptr
+      000115 E4               [12]  322 	clr	a
+      000116 93               [24]  323 	movc	a,@a+dptr
+      000117 FF               [12]  324 	mov	r7,a
+      000118 8E 82            [24]  325 	mov	dpl,r6
+      00011A 8F 83            [24]  326 	mov	dph,r7
+      00011C 02r00r00         [24]  327 	ljmp	__sdcc_call_dptr
+                                    328 ;------------------------------------------------------------
+                                    329 ;Allocation info for local variables in function 'off'
+                                    330 ;------------------------------------------------------------
+                                    331 ;keep_radio_on             Allocated to registers r6 r7 
+                                    332 ;------------------------------------------------------------
+                                    333 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:81: off(int keep_radio_on)
+                                    334 ;	-----------------------------------------
+                                    335 ;	 function off
+                                    336 ;	-----------------------------------------
+      00011F                        337 _off:
+      00011F AE 82            [24]  338 	mov	r6,dpl
+      000121 AF 83            [24]  339 	mov	r7,dph
+                                    340 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:83: if(keep_radio_on) {
+      000123 EE               [12]  341 	mov	a,r6
+      000124 4F               [12]  342 	orl	a,r7
+      000125 60 11            [24]  343 	jz	00102$
+                                    344 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:84: return NETSTACK_RADIO.on();
+      000127 90r00r10         [24]  345 	mov	dptr,#(_cc2530_rf_driver + 0x0010)
+      00012A E4               [12]  346 	clr	a
+      00012B 93               [24]  347 	movc	a,@a+dptr
+      00012C FE               [12]  348 	mov	r6,a
+      00012D A3               [24]  349 	inc	dptr
+      00012E E4               [12]  350 	clr	a
+      00012F 93               [24]  351 	movc	a,@a+dptr
+      000130 FF               [12]  352 	mov	r7,a
+      000131 8E 82            [24]  353 	mov	dpl,r6
+      000133 8F 83            [24]  354 	mov	dph,r7
+      000135 02r00r00         [24]  355 	ljmp	__sdcc_call_dptr
+      000138                        356 00102$:
+                                    357 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:86: return NETSTACK_RADIO.off();
+      000138 90r00r12         [24]  358 	mov	dptr,#(_cc2530_rf_driver + 0x0012)
+      00013B E4               [12]  359 	clr	a
+      00013C 93               [24]  360 	movc	a,@a+dptr
+      00013D FE               [12]  361 	mov	r6,a
+      00013E A3               [24]  362 	inc	dptr
+      00013F E4               [12]  363 	clr	a
+      000140 93               [24]  364 	movc	a,@a+dptr
+      000141 FF               [12]  365 	mov	r7,a
+      000142 8E 82            [24]  366 	mov	dpl,r6
+      000144 8F 83            [24]  367 	mov	dph,r7
+      000146 02r00r00         [24]  368 	ljmp	__sdcc_call_dptr
+                                    369 ;------------------------------------------------------------
+                                    370 ;Allocation info for local variables in function 'channel_check_interval'
+                                    371 ;------------------------------------------------------------
+                                    372 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:91: channel_check_interval(void)
+                                    373 ;	-----------------------------------------
+                                    374 ;	 function channel_check_interval
+                                    375 ;	-----------------------------------------
+      000149                        376 _channel_check_interval:
+                                    377 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:93: return 0;
+      000149 90 00 00         [24]  378 	mov	dptr,#0x0000
+      00014C 22               [24]  379 	ret
+                                    380 ;------------------------------------------------------------
+                                    381 ;Allocation info for local variables in function 'init'
+                                    382 ;------------------------------------------------------------
+                                    383 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:97: init(void)
+                                    384 ;	-----------------------------------------
+                                    385 ;	 function init
+                                    386 ;	-----------------------------------------
+      00014D                        387 _init:
+                                    388 ;	/home/user/contiki/core/net/mac/nullrdc-noframer.c:99: on();
+      00014D 02r01r0E         [24]  389 	ljmp	_on
+                                    390 	.area CSEG    (CODE)
+                                    391 	.area CONST   (CODE)
+      000000                        392 _nullrdc_noframer_driver:
+      000000r11s00 80               393 	.byte _str_0,(_str_0 >> 8),#0x80
+      000003r4Ds01                  394 	.byte _init,(_init >> 8)
+      000005r00s00                  395 	.byte _send_packet,(_send_packet >> 8)
+      000007r8Fs00                  396 	.byte _send_list,(_send_list >> 8)
+      000009rF4s00                  397 	.byte _packet_input,(_packet_input >> 8)
+      00000Br0Es01                  398 	.byte _on,(_on >> 8)
+      00000Dr1Fs01                  399 	.byte _off,(_off >> 8)
+      00000Fr49s01                  400 	.byte _channel_check_interval,(_channel_check_interval >> 8)
+      000011                        401 _str_0:
+      000011 6E 75 6C 6C 72 64 63   402 	.ascii "nullrdc-noframer"
+             2D 6E 6F 66 72 61 6D
+             65 72
+      000021 00                     403 	.db 0x00
+                                    404 	.area XINIT   (CODE)
+                                    405 	.area CABS    (ABS,CODE)

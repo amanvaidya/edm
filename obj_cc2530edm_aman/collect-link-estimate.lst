@@ -1,0 +1,556 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:33 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module collect_link_estimate
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _collect_link_estimate_new
+                                     13 	.globl _collect_link_estimate_update_tx
+                                     14 	.globl _collect_link_estimate_update_tx_fail
+                                     15 	.globl _collect_link_estimate_update_rx
+                                     16 	.globl _collect_link_estimate
+                                     17 	.globl _collect_link_estimate_num_estimates
+                                     18 ;--------------------------------------------------------
+                                     19 ; special function registers
+                                     20 ;--------------------------------------------------------
+                                     21 	.area RSEG    (ABS,DATA)
+      000000                         22 	.org 0x0000
+                                     23 ;--------------------------------------------------------
+                                     24 ; special function bits
+                                     25 ;--------------------------------------------------------
+                                     26 	.area RSEG    (ABS,DATA)
+      000000                         27 	.org 0x0000
+                                     28 ;--------------------------------------------------------
+                                     29 ; overlayable register banks
+                                     30 ;--------------------------------------------------------
+                                     31 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         32 	.ds 8
+                                     33 ;--------------------------------------------------------
+                                     34 ; internal ram data
+                                     35 ;--------------------------------------------------------
+                                     36 	.area DSEG    (DATA)
+                                     37 ;--------------------------------------------------------
+                                     38 ; overlayable items in internal ram 
+                                     39 ;--------------------------------------------------------
+                                     40 ;--------------------------------------------------------
+                                     41 ; indirectly addressable internal ram data
+                                     42 ;--------------------------------------------------------
+                                     43 	.area ISEG    (DATA)
+                                     44 ;--------------------------------------------------------
+                                     45 ; absolute internal ram data
+                                     46 ;--------------------------------------------------------
+                                     47 	.area IABS    (ABS,DATA)
+                                     48 	.area IABS    (ABS,DATA)
+                                     49 ;--------------------------------------------------------
+                                     50 ; bit data
+                                     51 ;--------------------------------------------------------
+                                     52 	.area BSEG    (BIT)
+                                     53 ;--------------------------------------------------------
+                                     54 ; paged external ram data
+                                     55 ;--------------------------------------------------------
+                                     56 	.area PSEG    (PAG,XDATA)
+                                     57 ;--------------------------------------------------------
+                                     58 ; external ram data
+                                     59 ;--------------------------------------------------------
+                                     60 	.area XSEG    (XDATA)
+                                     61 ;--------------------------------------------------------
+                                     62 ; absolute external ram data
+                                     63 ;--------------------------------------------------------
+                                     64 	.area XABS    (ABS,XDATA)
+                                     65 ;--------------------------------------------------------
+                                     66 ; external initialized ram data
+                                     67 ;--------------------------------------------------------
+                                     68 	.area XISEG   (XDATA)
+                                     69 	.area HOME    (CODE)
+                                     70 	.area GSINIT0 (CODE)
+                                     71 	.area GSINIT1 (CODE)
+                                     72 	.area GSINIT2 (CODE)
+                                     73 	.area GSINIT3 (CODE)
+                                     74 	.area GSINIT4 (CODE)
+                                     75 	.area GSINIT5 (CODE)
+                                     76 	.area GSINIT  (CODE)
+                                     77 	.area GSFINAL (CODE)
+                                     78 	.area CSEG    (CODE)
+                                     79 ;--------------------------------------------------------
+                                     80 ; global & static initialisations
+                                     81 ;--------------------------------------------------------
+                                     82 	.area HOME    (CODE)
+                                     83 	.area GSINIT  (CODE)
+                                     84 	.area GSFINAL (CODE)
+                                     85 	.area GSINIT  (CODE)
+                                     86 ;--------------------------------------------------------
+                                     87 ; Home
+                                     88 ;--------------------------------------------------------
+                                     89 	.area HOME    (CODE)
+                                     90 	.area HOME    (CODE)
+                                     91 ;--------------------------------------------------------
+                                     92 ; code
+                                     93 ;--------------------------------------------------------
+                                     94 	.area CSEG    (CODE)
+                                     95 ;------------------------------------------------------------
+                                     96 ;Allocation info for local variables in function 'collect_link_estimate_new'
+                                     97 ;------------------------------------------------------------
+                                     98 ;le                        Allocated to registers r5 r6 r7 
+                                     99 ;------------------------------------------------------------
+                                    100 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:63: collect_link_estimate_new(struct collect_link_estimate *le)
+                                    101 ;	-----------------------------------------
+                                    102 ;	 function collect_link_estimate_new
+                                    103 ;	-----------------------------------------
+      000000                        104 _collect_link_estimate_new:
+                           000007   105 	ar7 = 0x07
+                           000006   106 	ar6 = 0x06
+                           000005   107 	ar5 = 0x05
+                           000004   108 	ar4 = 0x04
+                           000003   109 	ar3 = 0x03
+                           000002   110 	ar2 = 0x02
+                           000001   111 	ar1 = 0x01
+                           000000   112 	ar0 = 0x00
+      000000 AD 82            [24]  113 	mov	r5,dpl
+      000002 AE 83            [24]  114 	mov	r6,dph
+      000004 AF F0            [24]  115 	mov	r7,b
+                                    116 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:65: if(le == NULL) {
+      000006 ED               [12]  117 	mov	a,r5
+      000007 4E               [12]  118 	orl	a,r6
+      000008 70 01            [24]  119 	jnz	00102$
+                                    120 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:66: return;
+      00000A 22               [24]  121 	ret
+      00000B                        122 00102$:
+                                    123 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:68: le->num_estimates = 0;
+      00000B 74 04            [12]  124 	mov	a,#0x04
+      00000D 2D               [12]  125 	add	a,r5
+      00000E FA               [12]  126 	mov	r2,a
+      00000F E4               [12]  127 	clr	a
+      000010 3E               [12]  128 	addc	a,r6
+      000011 FB               [12]  129 	mov	r3,a
+      000012 8F 04            [24]  130 	mov	ar4,r7
+      000014 8A 82            [24]  131 	mov	dpl,r2
+      000016 8B 83            [24]  132 	mov	dph,r3
+      000018 8C F0            [24]  133 	mov	b,r4
+      00001A E4               [12]  134 	clr	a
+      00001B 12r00r00         [24]  135 	lcall	__gptrput
+                                    136 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:69: le->etx_accumulator = COLLECT_LINK_ESTIMATE_UNIT;
+      00001E 8D 82            [24]  137 	mov	dpl,r5
+      000020 8E 83            [24]  138 	mov	dph,r6
+      000022 8F F0            [24]  139 	mov	b,r7
+      000024 74 08            [12]  140 	mov	a,#0x08
+      000026 12r00r00         [24]  141 	lcall	__gptrput
+      000029 A3               [24]  142 	inc	dptr
+      00002A E4               [12]  143 	clr	a
+      00002B 12r00r00         [24]  144 	lcall	__gptrput
+      00002E A3               [24]  145 	inc	dptr
+      00002F E4               [12]  146 	clr	a
+      000030 12r00r00         [24]  147 	lcall	__gptrput
+      000033 A3               [24]  148 	inc	dptr
+      000034 E4               [12]  149 	clr	a
+      000035 02r00r00         [24]  150 	ljmp	__gptrput
+                                    151 ;------------------------------------------------------------
+                                    152 ;Allocation info for local variables in function 'collect_link_estimate_update_tx'
+                                    153 ;------------------------------------------------------------
+                                    154 ;tx                        Allocated to stack - sp -9
+                                    155 ;le                        Allocated to stack - sp -6
+                                    156 ;sloc0                     Allocated to stack - sp -3
+                                    157 ;------------------------------------------------------------
+                                    158 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:73: collect_link_estimate_update_tx(struct collect_link_estimate *le, uint8_t tx)
+                                    159 ;	-----------------------------------------
+                                    160 ;	 function collect_link_estimate_update_tx
+                                    161 ;	-----------------------------------------
+      000038                        162 _collect_link_estimate_update_tx:
+      000038 C0 82            [24]  163 	push	dpl
+      00003A C0 83            [24]  164 	push	dph
+      00003C C0 F0            [24]  165 	push	b
+      00003E E5 81            [12]  166 	mov	a,sp
+      000040 24 04            [12]  167 	add	a,#0x04
+                                    168 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:75: if(le == NULL) {
+      000042 F5 81            [12]  169 	mov	sp,a
+      000044 24 FA            [12]  170 	add	a,#0xfa
+      000046 F8               [12]  171 	mov	r0,a
+      000047 E6               [12]  172 	mov	a,@r0
+      000048 08               [12]  173 	inc	r0
+      000049 46               [12]  174 	orl	a,@r0
+      00004A 70 03            [24]  175 	jnz	00102$
+                                    176 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:76: return;
+      00004C 02r01rA5         [24]  177 	ljmp	00111$
+      00004F                        178 00102$:
+                                    179 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:78: if(tx == 0) {
+      00004F E5 81            [12]  180 	mov	a,sp
+      000051 24 F7            [12]  181 	add	a,#0xf7
+      000053 F8               [12]  182 	mov	r0,a
+      000054 E6               [12]  183 	mov	a,@r0
+      000055 70 03            [24]  184 	jnz	00104$
+                                    185 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:80: return;
+      000057 02r01rA5         [24]  186 	ljmp	00111$
+      00005A                        187 00104$:
+                                    188 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:82: if(le != NULL) {
+      00005A E5 81            [12]  189 	mov	a,sp
+      00005C 24 FA            [12]  190 	add	a,#0xfa
+      00005E F8               [12]  191 	mov	r0,a
+      00005F E6               [12]  192 	mov	a,@r0
+      000060 08               [12]  193 	inc	r0
+      000061 46               [12]  194 	orl	a,@r0
+      000062 70 03            [24]  195 	jnz	00130$
+      000064 02r01rA5         [24]  196 	ljmp	00111$
+      000067                        197 00130$:
+                                    198 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:83: if(le->num_estimates == 0) {
+      000067 E5 81            [12]  199 	mov	a,sp
+      000069 24 FA            [12]  200 	add	a,#0xfa
+      00006B F8               [12]  201 	mov	r0,a
+      00006C 74 04            [12]  202 	mov	a,#0x04
+      00006E 26               [12]  203 	add	a,@r0
+      00006F FA               [12]  204 	mov	r2,a
+      000070 E4               [12]  205 	clr	a
+      000071 08               [12]  206 	inc	r0
+      000072 36               [12]  207 	addc	a,@r0
+      000073 FB               [12]  208 	mov	r3,a
+      000074 08               [12]  209 	inc	r0
+      000075 86 04            [24]  210 	mov	ar4,@r0
+      000077 8A 82            [24]  211 	mov	dpl,r2
+      000079 8B 83            [24]  212 	mov	dph,r3
+      00007B 8C F0            [24]  213 	mov	b,r4
+      00007D 12r00r00         [24]  214 	lcall	__gptrget
+      000080 70 40            [24]  215 	jnz	00106$
+                                    216 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:84: le->etx_accumulator = tx * COLLECT_LINK_ESTIMATE_UNIT;
+      000082 C0 02            [24]  217 	push	ar2
+      000084 C0 03            [24]  218 	push	ar3
+      000086 C0 04            [24]  219 	push	ar4
+      000088 E5 81            [12]  220 	mov	a,sp
+      00008A 24 F4            [12]  221 	add	a,#0xf4
+      00008C F8               [12]  222 	mov	r0,a
+      00008D E6               [12]  223 	mov	a,@r0
+      00008E 75 F0 08         [24]  224 	mov	b,#0x08
+      000091 A4               [48]  225 	mul	ab
+      000092 FB               [12]  226 	mov	r3,a
+      000093 AC F0            [24]  227 	mov	r4,b
+      000095 EC               [12]  228 	mov	a,r4
+      000096 FA               [12]  229 	mov	r2,a
+      000097 33               [12]  230 	rlc	a
+      000098 95 E0            [12]  231 	subb	a,acc
+      00009A FC               [12]  232 	mov	r4,a
+      00009B FF               [12]  233 	mov	r7,a
+      00009C E5 81            [12]  234 	mov	a,sp
+      00009E 24 F7            [12]  235 	add	a,#0xf7
+      0000A0 F8               [12]  236 	mov	r0,a
+      0000A1 86 82            [24]  237 	mov	dpl,@r0
+      0000A3 08               [12]  238 	inc	r0
+      0000A4 86 83            [24]  239 	mov	dph,@r0
+      0000A6 08               [12]  240 	inc	r0
+      0000A7 86 F0            [24]  241 	mov	b,@r0
+      0000A9 EB               [12]  242 	mov	a,r3
+      0000AA 12r00r00         [24]  243 	lcall	__gptrput
+      0000AD A3               [24]  244 	inc	dptr
+      0000AE EA               [12]  245 	mov	a,r2
+      0000AF 12r00r00         [24]  246 	lcall	__gptrput
+      0000B2 A3               [24]  247 	inc	dptr
+      0000B3 EC               [12]  248 	mov	a,r4
+      0000B4 12r00r00         [24]  249 	lcall	__gptrput
+      0000B7 A3               [24]  250 	inc	dptr
+      0000B8 EF               [12]  251 	mov	a,r7
+      0000B9 12r00r00         [24]  252 	lcall	__gptrput
+                                    253 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:93: le->etx_accumulator * (COLLECT_LINK_ESTIMATE_UNIT -
+      0000BC D0 04            [24]  254 	pop	ar4
+      0000BE D0 03            [24]  255 	pop	ar3
+      0000C0 D0 02            [24]  256 	pop	ar2
+                                    257 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:84: le->etx_accumulator = tx * COLLECT_LINK_ESTIMATE_UNIT;
+      0000C2                        258 00106$:
+                                    259 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:87: if(le->num_estimates < MAX_ESTIMATES) {
+      0000C2 8A 82            [24]  260 	mov	dpl,r2
+      0000C4 8B 83            [24]  261 	mov	dph,r3
+      0000C6 8C F0            [24]  262 	mov	b,r4
+      0000C8 12r00r00         [24]  263 	lcall	__gptrget
+      0000CB FF               [12]  264 	mov	r7,a
+      0000CC BF FF 00         [24]  265 	cjne	r7,#0xFF,00132$
+      0000CF                        266 00132$:
+      0000CF 50 0B            [24]  267 	jnc	00108$
+                                    268 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:88: le->num_estimates++;
+      0000D1 0F               [12]  269 	inc	r7
+      0000D2 8A 82            [24]  270 	mov	dpl,r2
+      0000D4 8B 83            [24]  271 	mov	dph,r3
+      0000D6 8C F0            [24]  272 	mov	b,r4
+      0000D8 EF               [12]  273 	mov	a,r7
+      0000D9 12r00r00         [24]  274 	lcall	__gptrput
+      0000DC                        275 00108$:
+                                    276 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:91: le->etx_accumulator = (((uint32_t)tx * COLLECT_LINK_ESTIMATE_UNIT) *
+      0000DC E5 81            [12]  277 	mov	a,sp
+      0000DE 24 F7            [12]  278 	add	a,#0xf7
+      0000E0 F8               [12]  279 	mov	r0,a
+      0000E1 86 04            [24]  280 	mov	ar4,@r0
+      0000E3 7D 00            [12]  281 	mov	r5,#0x00
+      0000E5 7E 00            [12]  282 	mov	r6,#0x00
+      0000E7 7F 00            [12]  283 	mov	r7,#0x00
+      0000E9 C0 04            [24]  284 	push	ar4
+      0000EB C0 05            [24]  285 	push	ar5
+      0000ED C0 06            [24]  286 	push	ar6
+      0000EF C0 07            [24]  287 	push	ar7
+                                    288 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:93: le->etx_accumulator * (COLLECT_LINK_ESTIMATE_UNIT -
+      0000F1 90 00 18         [24]  289 	mov	dptr,#(0x18&0x00ff)
+      0000F4 E4               [12]  290 	clr	a
+      0000F5 F5 F0            [12]  291 	mov	b,a
+      0000F7 12r00r00         [24]  292 	lcall	__mullong
+      0000FA C8               [12]  293 	xch	a,r0
+      0000FB E5 81            [12]  294 	mov	a,sp
+      0000FD 24 F9            [12]  295 	add	a,#0xf9
+      0000FF C8               [12]  296 	xch	a,r0
+      000100 A6 82            [24]  297 	mov	@r0,dpl
+      000102 08               [12]  298 	inc	r0
+      000103 A6 83            [24]  299 	mov	@r0,dph
+      000105 08               [12]  300 	inc	r0
+      000106 A6 F0            [24]  301 	mov	@r0,b
+      000108 08               [12]  302 	inc	r0
+      000109 F6               [12]  303 	mov	@r0,a
+      00010A E5 81            [12]  304 	mov	a,sp
+      00010C 24 FC            [12]  305 	add	a,#0xfc
+      00010E F5 81            [12]  306 	mov	sp,a
+      000110 24 FA            [12]  307 	add	a,#0xfa
+      000112 F8               [12]  308 	mov	r0,a
+      000113 86 82            [24]  309 	mov	dpl,@r0
+      000115 08               [12]  310 	inc	r0
+      000116 86 83            [24]  311 	mov	dph,@r0
+      000118 08               [12]  312 	inc	r0
+      000119 86 F0            [24]  313 	mov	b,@r0
+      00011B 12r00r00         [24]  314 	lcall	__gptrget
+      00011E FA               [12]  315 	mov	r2,a
+      00011F A3               [24]  316 	inc	dptr
+      000120 12r00r00         [24]  317 	lcall	__gptrget
+      000123 FB               [12]  318 	mov	r3,a
+      000124 A3               [24]  319 	inc	dptr
+      000125 12r00r00         [24]  320 	lcall	__gptrget
+      000128 FE               [12]  321 	mov	r6,a
+      000129 A3               [24]  322 	inc	dptr
+      00012A 12r00r00         [24]  323 	lcall	__gptrget
+      00012D FF               [12]  324 	mov	r7,a
+      00012E C0 02            [24]  325 	push	ar2
+      000130 C0 03            [24]  326 	push	ar3
+      000132 C0 06            [24]  327 	push	ar6
+      000134 C0 07            [24]  328 	push	ar7
+      000136 90 00 05         [24]  329 	mov	dptr,#(0x05&0x00ff)
+      000139 E4               [12]  330 	clr	a
+      00013A F5 F0            [12]  331 	mov	b,a
+      00013C 12r00r00         [24]  332 	lcall	__mullong
+      00013F AC 82            [24]  333 	mov	r4,dpl
+      000141 AD 83            [24]  334 	mov	r5,dph
+      000143 AE F0            [24]  335 	mov	r6,b
+      000145 FF               [12]  336 	mov	r7,a
+      000146 E5 81            [12]  337 	mov	a,sp
+      000148 24 FC            [12]  338 	add	a,#0xfc
+      00014A F5 81            [12]  339 	mov	sp,a
+      00014C 24 FD            [12]  340 	add	a,#0xfd
+      00014E F8               [12]  341 	mov	r0,a
+      00014F EC               [12]  342 	mov	a,r4
+      000150 26               [12]  343 	add	a,@r0
+      000151 FC               [12]  344 	mov	r4,a
+      000152 ED               [12]  345 	mov	a,r5
+      000153 08               [12]  346 	inc	r0
+      000154 36               [12]  347 	addc	a,@r0
+      000155 FD               [12]  348 	mov	r5,a
+      000156 EE               [12]  349 	mov	a,r6
+      000157 08               [12]  350 	inc	r0
+      000158 36               [12]  351 	addc	a,@r0
+      000159 FE               [12]  352 	mov	r6,a
+      00015A EF               [12]  353 	mov	a,r7
+      00015B 08               [12]  354 	inc	r0
+      00015C 36               [12]  355 	addc	a,@r0
+      00015D FF               [12]  356 	mov	r7,a
+      00015E ED               [12]  357 	mov	a,r5
+      00015F C4               [12]  358 	swap	a
+      000160 23               [12]  359 	rl	a
+      000161 CC               [12]  360 	xch	a,r4
+      000162 C4               [12]  361 	swap	a
+      000163 23               [12]  362 	rl	a
+      000164 54 1F            [12]  363 	anl	a,#0x1F
+      000166 6C               [12]  364 	xrl	a,r4
+      000167 CC               [12]  365 	xch	a,r4
+      000168 54 1F            [12]  366 	anl	a,#0x1F
+      00016A CC               [12]  367 	xch	a,r4
+      00016B 6C               [12]  368 	xrl	a,r4
+      00016C CC               [12]  369 	xch	a,r4
+      00016D FD               [12]  370 	mov	r5,a
+      00016E EE               [12]  371 	mov	a,r6
+      00016F C4               [12]  372 	swap	a
+      000170 23               [12]  373 	rl	a
+      000171 54 E0            [12]  374 	anl	a,#0xE0
+      000173 4D               [12]  375 	orl	a,r5
+      000174 FD               [12]  376 	mov	r5,a
+      000175 EF               [12]  377 	mov	a,r7
+      000176 C4               [12]  378 	swap	a
+      000177 23               [12]  379 	rl	a
+      000178 CE               [12]  380 	xch	a,r6
+      000179 C4               [12]  381 	swap	a
+      00017A 23               [12]  382 	rl	a
+      00017B 54 1F            [12]  383 	anl	a,#0x1F
+      00017D 6E               [12]  384 	xrl	a,r6
+      00017E CE               [12]  385 	xch	a,r6
+      00017F 54 1F            [12]  386 	anl	a,#0x1F
+      000181 CE               [12]  387 	xch	a,r6
+      000182 6E               [12]  388 	xrl	a,r6
+      000183 CE               [12]  389 	xch	a,r6
+      000184 FF               [12]  390 	mov	r7,a
+      000185 E5 81            [12]  391 	mov	a,sp
+      000187 24 FA            [12]  392 	add	a,#0xfa
+      000189 F8               [12]  393 	mov	r0,a
+      00018A 86 82            [24]  394 	mov	dpl,@r0
+      00018C 08               [12]  395 	inc	r0
+      00018D 86 83            [24]  396 	mov	dph,@r0
+      00018F 08               [12]  397 	inc	r0
+      000190 86 F0            [24]  398 	mov	b,@r0
+      000192 EC               [12]  399 	mov	a,r4
+      000193 12r00r00         [24]  400 	lcall	__gptrput
+      000196 A3               [24]  401 	inc	dptr
+      000197 ED               [12]  402 	mov	a,r5
+      000198 12r00r00         [24]  403 	lcall	__gptrput
+      00019B A3               [24]  404 	inc	dptr
+      00019C EE               [12]  405 	mov	a,r6
+      00019D 12r00r00         [24]  406 	lcall	__gptrput
+      0001A0 A3               [24]  407 	inc	dptr
+      0001A1 EF               [12]  408 	mov	a,r7
+      0001A2 12r00r00         [24]  409 	lcall	__gptrput
+      0001A5                        410 00111$:
+      0001A5 E5 81            [12]  411 	mov	a,sp
+      0001A7 24 F9            [12]  412 	add	a,#0xF9
+      0001A9 F5 81            [12]  413 	mov	sp,a
+      0001AB 22               [24]  414 	ret
+                                    415 ;------------------------------------------------------------
+                                    416 ;Allocation info for local variables in function 'collect_link_estimate_update_tx_fail'
+                                    417 ;------------------------------------------------------------
+                                    418 ;tx                        Allocated to stack - sp -2
+                                    419 ;le                        Allocated to registers r5 r6 r7 
+                                    420 ;------------------------------------------------------------
+                                    421 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:101: collect_link_estimate_update_tx_fail(struct collect_link_estimate *le,
+                                    422 ;	-----------------------------------------
+                                    423 ;	 function collect_link_estimate_update_tx_fail
+                                    424 ;	-----------------------------------------
+      0001AC                        425 _collect_link_estimate_update_tx_fail:
+      0001AC AD 82            [24]  426 	mov	r5,dpl
+      0001AE AE 83            [24]  427 	mov	r6,dph
+      0001B0 AF F0            [24]  428 	mov	r7,b
+                                    429 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:104: if(le == NULL) {
+      0001B2 ED               [12]  430 	mov	a,r5
+      0001B3 4E               [12]  431 	orl	a,r6
+      0001B4 70 01            [24]  432 	jnz	00102$
+                                    433 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:105: return;
+      0001B6 22               [24]  434 	ret
+      0001B7                        435 00102$:
+                                    436 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:107: collect_link_estimate_update_tx(le, tx * 2);
+      0001B7 A8 81            [24]  437 	mov	r0,sp
+      0001B9 18               [12]  438 	dec	r0
+      0001BA 18               [12]  439 	dec	r0
+      0001BB E6               [12]  440 	mov	a,@r0
+      0001BC 25 E0            [12]  441 	add	a,acc
+      0001BE FC               [12]  442 	mov	r4,a
+      0001BF C0 04            [24]  443 	push	ar4
+      0001C1 8D 82            [24]  444 	mov	dpl,r5
+      0001C3 8E 83            [24]  445 	mov	dph,r6
+      0001C5 8F F0            [24]  446 	mov	b,r7
+      0001C7 12r00r38         [24]  447 	lcall	_collect_link_estimate_update_tx
+      0001CA 15 81            [12]  448 	dec	sp
+      0001CC 22               [24]  449 	ret
+                                    450 ;------------------------------------------------------------
+                                    451 ;Allocation info for local variables in function 'collect_link_estimate_update_rx'
+                                    452 ;------------------------------------------------------------
+                                    453 ;n                         Allocated to registers 
+                                    454 ;------------------------------------------------------------
+                                    455 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:111: collect_link_estimate_update_rx(struct collect_link_estimate *n)
+                                    456 ;	-----------------------------------------
+                                    457 ;	 function collect_link_estimate_update_rx
+                                    458 ;	-----------------------------------------
+      0001CD                        459 _collect_link_estimate_update_rx:
+                                    460 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:114: }
+      0001CD 22               [24]  461 	ret
+                                    462 ;------------------------------------------------------------
+                                    463 ;Allocation info for local variables in function 'collect_link_estimate'
+                                    464 ;------------------------------------------------------------
+                                    465 ;le                        Allocated to registers r5 r6 r7 
+                                    466 ;------------------------------------------------------------
+                                    467 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:117: collect_link_estimate(struct collect_link_estimate *le)
+                                    468 ;	-----------------------------------------
+                                    469 ;	 function collect_link_estimate
+                                    470 ;	-----------------------------------------
+      0001CE                        471 _collect_link_estimate:
+      0001CE AD 82            [24]  472 	mov	r5,dpl
+      0001D0 AE 83            [24]  473 	mov	r6,dph
+      0001D2 AF F0            [24]  474 	mov	r7,b
+                                    475 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:119: if(le == NULL) {
+      0001D4 ED               [12]  476 	mov	a,r5
+      0001D5 4E               [12]  477 	orl	a,r6
+      0001D6 70 04            [24]  478 	jnz	00102$
+                                    479 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:120: return 0;
+      0001D8 90 00 00         [24]  480 	mov	dptr,#0x0000
+      0001DB 22               [24]  481 	ret
+      0001DC                        482 00102$:
+                                    483 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:122: if(le->num_estimates == 0) {
+      0001DC 74 04            [12]  484 	mov	a,#0x04
+      0001DE 2D               [12]  485 	add	a,r5
+      0001DF FA               [12]  486 	mov	r2,a
+      0001E0 E4               [12]  487 	clr	a
+      0001E1 3E               [12]  488 	addc	a,r6
+      0001E2 FB               [12]  489 	mov	r3,a
+      0001E3 8F 04            [24]  490 	mov	ar4,r7
+      0001E5 8A 82            [24]  491 	mov	dpl,r2
+      0001E7 8B 83            [24]  492 	mov	dph,r3
+      0001E9 8C F0            [24]  493 	mov	b,r4
+      0001EB 12r00r00         [24]  494 	lcall	__gptrget
+      0001EE 70 04            [24]  495 	jnz	00104$
+                                    496 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:123: return INITIAL_LINK_ESTIMATE * COLLECT_LINK_ESTIMATE_UNIT;
+      0001F0 90 00 80         [24]  497 	mov	dptr,#0x0080
+      0001F3 22               [24]  498 	ret
+      0001F4                        499 00104$:
+                                    500 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:126: return le->etx_accumulator;
+      0001F4 8D 82            [24]  501 	mov	dpl,r5
+      0001F6 8E 83            [24]  502 	mov	dph,r6
+      0001F8 8F F0            [24]  503 	mov	b,r7
+      0001FA 12r00r00         [24]  504 	lcall	__gptrget
+      0001FD FD               [12]  505 	mov	r5,a
+      0001FE A3               [24]  506 	inc	dptr
+      0001FF 12r00r00         [24]  507 	lcall	__gptrget
+      000202 FE               [12]  508 	mov	r6,a
+      000203 A3               [24]  509 	inc	dptr
+      000204 12r00r00         [24]  510 	lcall	__gptrget
+      000207 A3               [24]  511 	inc	dptr
+      000208 12r00r00         [24]  512 	lcall	__gptrget
+      00020B 8D 82            [24]  513 	mov	dpl,r5
+      00020D 8E 83            [24]  514 	mov	dph,r6
+      00020F 22               [24]  515 	ret
+                                    516 ;------------------------------------------------------------
+                                    517 ;Allocation info for local variables in function 'collect_link_estimate_num_estimates'
+                                    518 ;------------------------------------------------------------
+                                    519 ;le                        Allocated to registers r5 r6 r7 
+                                    520 ;------------------------------------------------------------
+                                    521 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:130: collect_link_estimate_num_estimates(struct collect_link_estimate *le)
+                                    522 ;	-----------------------------------------
+                                    523 ;	 function collect_link_estimate_num_estimates
+                                    524 ;	-----------------------------------------
+      000210                        525 _collect_link_estimate_num_estimates:
+      000210 AD 82            [24]  526 	mov	r5,dpl
+      000212 AE 83            [24]  527 	mov	r6,dph
+      000214 AF F0            [24]  528 	mov	r7,b
+                                    529 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:132: if(le != NULL) {
+      000216 ED               [12]  530 	mov	a,r5
+      000217 4E               [12]  531 	orl	a,r6
+      000218 60 18            [24]  532 	jz	00102$
+                                    533 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:133: return le->num_estimates;
+      00021A 74 04            [12]  534 	mov	a,#0x04
+      00021C 2D               [12]  535 	add	a,r5
+      00021D FD               [12]  536 	mov	r5,a
+      00021E E4               [12]  537 	clr	a
+      00021F 3E               [12]  538 	addc	a,r6
+      000220 FE               [12]  539 	mov	r6,a
+      000221 8D 82            [24]  540 	mov	dpl,r5
+      000223 8E 83            [24]  541 	mov	dph,r6
+      000225 8F F0            [24]  542 	mov	b,r7
+      000227 12r00r00         [24]  543 	lcall	__gptrget
+      00022A FD               [12]  544 	mov	r5,a
+      00022B 7F 00            [12]  545 	mov	r7,#0x00
+      00022D 8D 82            [24]  546 	mov	dpl,r5
+      00022F 8F 83            [24]  547 	mov	dph,r7
+      000231 22               [24]  548 	ret
+      000232                        549 00102$:
+                                    550 ;	/home/user/contiki/core/net/rime/collect-link-estimate.c:135: return 0;
+      000232 90 00 00         [24]  551 	mov	dptr,#0x0000
+      000235 22               [24]  552 	ret
+                                    553 	.area CSEG    (CODE)
+                                    554 	.area CONST   (CODE)
+                                    555 	.area XINIT   (CODE)
+                                    556 	.area CABS    (ABS,CODE)

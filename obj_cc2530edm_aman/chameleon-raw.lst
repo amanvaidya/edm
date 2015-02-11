@@ -1,0 +1,2265 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:34 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module chameleon_raw
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _chameleon_raw
+                                     13 	.globl _channel_lookup
+                                     14 	.globl _packetbuf_addr
+                                     15 	.globl _packetbuf_set_addr
+                                     16 	.globl _packetbuf_attr
+                                     17 	.globl _packetbuf_set_attr
+                                     18 	.globl _packetbuf_hdrreduce
+                                     19 	.globl _packetbuf_hdralloc
+                                     20 	.globl _packetbuf_hdrptr
+                                     21 	.globl _packetbuf_dataptr
+                                     22 	.globl _memcpy
+                                     23 	.globl _ACTIVE
+                                     24 	.globl _TX_BYTE
+                                     25 	.globl _RX_BYTE
+                                     26 	.globl _ERR
+                                     27 	.globl _FE
+                                     28 	.globl _SLAVE
+                                     29 	.globl _RE
+                                     30 	.globl _MODE
+                                     31 	.globl _T3OVFIF
+                                     32 	.globl _T3CH0IF
+                                     33 	.globl _T3CH1IF
+                                     34 	.globl _T4OVFIF
+                                     35 	.globl _T4CH0IF
+                                     36 	.globl _T4CH1IF
+                                     37 	.globl _OVFIM
+                                     38 	.globl _B_0
+                                     39 	.globl _B_1
+                                     40 	.globl _B_2
+                                     41 	.globl _B_3
+                                     42 	.globl _B_4
+                                     43 	.globl _B_5
+                                     44 	.globl _B_6
+                                     45 	.globl _B_7
+                                     46 	.globl _P2IF
+                                     47 	.globl _UTX0IF
+                                     48 	.globl _UTX1IF
+                                     49 	.globl _P1IF
+                                     50 	.globl _WDTIF
+                                     51 	.globl _ACC_0
+                                     52 	.globl _ACC_1
+                                     53 	.globl _ACC_2
+                                     54 	.globl _ACC_3
+                                     55 	.globl _ACC_4
+                                     56 	.globl _ACC_5
+                                     57 	.globl _ACC_6
+                                     58 	.globl _ACC_7
+                                     59 	.globl _P
+                                     60 	.globl _F1
+                                     61 	.globl _OV
+                                     62 	.globl _RS0
+                                     63 	.globl _RS1
+                                     64 	.globl _F0
+                                     65 	.globl _AC
+                                     66 	.globl _CY
+                                     67 	.globl _DMAIF
+                                     68 	.globl _T1IF
+                                     69 	.globl _T2IF
+                                     70 	.globl _T3IF
+                                     71 	.globl _T4IF
+                                     72 	.globl _P0IF
+                                     73 	.globl _STIF
+                                     74 	.globl _DMAIE
+                                     75 	.globl _T1IE
+                                     76 	.globl _T2IE
+                                     77 	.globl _T3IE
+                                     78 	.globl _T4IE
+                                     79 	.globl _P0IE
+                                     80 	.globl _RFERRIE
+                                     81 	.globl _ADCIE
+                                     82 	.globl _URX0IE
+                                     83 	.globl _URX1IE
+                                     84 	.globl _ENCIE
+                                     85 	.globl _STIE
+                                     86 	.globl _EA
+                                     87 	.globl _P2_0
+                                     88 	.globl _P2_1
+                                     89 	.globl _P2_2
+                                     90 	.globl _P2_3
+                                     91 	.globl _P2_4
+                                     92 	.globl _P2_5
+                                     93 	.globl _P2_6
+                                     94 	.globl _P2_7
+                                     95 	.globl _ENCIF_0
+                                     96 	.globl _ENCIF_1
+                                     97 	.globl _P1_0
+                                     98 	.globl _P1_1
+                                     99 	.globl _P1_2
+                                    100 	.globl _P1_3
+                                    101 	.globl _P1_4
+                                    102 	.globl _P1_5
+                                    103 	.globl _P1_6
+                                    104 	.globl _P1_7
+                                    105 	.globl _IT0
+                                    106 	.globl _RFERRIF
+                                    107 	.globl _IT1
+                                    108 	.globl _URX0IF
+                                    109 	.globl _ADCIF
+                                    110 	.globl _URX1IF
+                                    111 	.globl _P0_0
+                                    112 	.globl _P0_1
+                                    113 	.globl _P0_2
+                                    114 	.globl _P0_3
+                                    115 	.globl _P0_4
+                                    116 	.globl _P0_5
+                                    117 	.globl _P0_6
+                                    118 	.globl _P0_7
+                                    119 	.globl _WDCTL
+                                    120 	.globl _U1GCR
+                                    121 	.globl _U1UCR
+                                    122 	.globl _U1BAUD
+                                    123 	.globl _U1DBUF
+                                    124 	.globl _U1CSR
+                                    125 	.globl _U0GCR
+                                    126 	.globl _U0UCR
+                                    127 	.globl _U0BAUD
+                                    128 	.globl _U0DBUF
+                                    129 	.globl _U0CSR
+                                    130 	.globl _TIMIF
+                                    131 	.globl _T4CC1
+                                    132 	.globl _T4CCTL1
+                                    133 	.globl _T4CC0
+                                    134 	.globl _T4CCTL0
+                                    135 	.globl _T4CTL
+                                    136 	.globl _T4CNT
+                                    137 	.globl _T3CC1
+                                    138 	.globl _T3CCTL1
+                                    139 	.globl _T3CC0
+                                    140 	.globl _T3CCTL0
+                                    141 	.globl _T3CTL
+                                    142 	.globl _T3CNT
+                                    143 	.globl _T2MSEL
+                                    144 	.globl _T2IRQM
+                                    145 	.globl _T2MOVF2
+                                    146 	.globl _T2MOVF1
+                                    147 	.globl _T2MOVF0
+                                    148 	.globl _T2M1
+                                    149 	.globl _T2M0
+                                    150 	.globl _T2IRQF
+                                    151 	.globl _T2EVTCFG
+                                    152 	.globl _T2CTRL
+                                    153 	.globl _T1STAT
+                                    154 	.globl _T1CCTL2
+                                    155 	.globl _T1CCTL1
+                                    156 	.globl _T1CCTL0
+                                    157 	.globl _T1CTL
+                                    158 	.globl _T1CNTH
+                                    159 	.globl _T1CNTL
+                                    160 	.globl _T1CC2H
+                                    161 	.globl _T1CC2L
+                                    162 	.globl _T1CC1H
+                                    163 	.globl _T1CC1L
+                                    164 	.globl _T1CC0H
+                                    165 	.globl _T1CC0L
+                                    166 	.globl _CLKCONSTA
+                                    167 	.globl _CLKCONCMD
+                                    168 	.globl _SLEEPSTA
+                                    169 	.globl _SLEEPCMD
+                                    170 	.globl _STLOAD
+                                    171 	.globl _ST2
+                                    172 	.globl _ST1
+                                    173 	.globl _ST0
+                                    174 	.globl _RFERRF
+                                    175 	.globl _RFIRQF0
+                                    176 	.globl _RFST
+                                    177 	.globl _RFD
+                                    178 	.globl _RFIRQF1
+                                    179 	.globl _PSBANK
+                                    180 	.globl _FMAP
+                                    181 	.globl _MEMCTR
+                                    182 	.globl __XPAGE
+                                    183 	.globl _MPAGE
+                                    184 	.globl _PMUX
+                                    185 	.globl _P2DIR
+                                    186 	.globl _P1DIR
+                                    187 	.globl _P0DIR
+                                    188 	.globl _P2INP
+                                    189 	.globl _P1INP
+                                    190 	.globl _P2SEL
+                                    191 	.globl _P1SEL
+                                    192 	.globl _P0SEL
+                                    193 	.globl _APCFG
+                                    194 	.globl _PERCFG
+                                    195 	.globl _P0INP
+                                    196 	.globl _P2IEN
+                                    197 	.globl _P1IEN
+                                    198 	.globl _P0IEN
+                                    199 	.globl _PICTL
+                                    200 	.globl _P2IFG
+                                    201 	.globl _P1IFG
+                                    202 	.globl _P0IFG
+                                    203 	.globl _DMAREQ
+                                    204 	.globl _DMAARM
+                                    205 	.globl _DMA0CFGH
+                                    206 	.globl _DMA0CFGL
+                                    207 	.globl _DMA1CFGH
+                                    208 	.globl _DMA1CFGL
+                                    209 	.globl _DMAIRQ
+                                    210 	.globl _ENCCS
+                                    211 	.globl _ENCDO
+                                    212 	.globl _ENCDI
+                                    213 	.globl _RNDH
+                                    214 	.globl _RNDL
+                                    215 	.globl _ADCH
+                                    216 	.globl _ADCL
+                                    217 	.globl _ADCCON3
+                                    218 	.globl _ADCCON2
+                                    219 	.globl _ADCCON1
+                                    220 	.globl _B
+                                    221 	.globl _IRCON2
+                                    222 	.globl _ACC
+                                    223 	.globl _PSW
+                                    224 	.globl _IRCON
+                                    225 	.globl _IP1
+                                    226 	.globl _IEN1
+                                    227 	.globl _IP0
+                                    228 	.globl _IEN0
+                                    229 	.globl _P2
+                                    230 	.globl _S1CON
+                                    231 	.globl _IEN2
+                                    232 	.globl _S0CON
+                                    233 	.globl _DPS
+                                    234 	.globl _P1
+                                    235 	.globl _TCON
+                                    236 	.globl _PCON
+                                    237 	.globl _DPH1
+                                    238 	.globl _DPL1
+                                    239 	.globl _DPH0
+                                    240 	.globl _DPL0
+                                    241 	.globl _SP
+                                    242 	.globl _P0
+                                    243 	.globl _X_IEEE_ADDR
+                                    244 	.globl _X_INFOPAGE
+                                    245 	.globl _X_P2DIR
+                                    246 	.globl _X_P1DIR
+                                    247 	.globl _X_P0DIR
+                                    248 	.globl _X_U1GCR
+                                    249 	.globl _X_U1UCR
+                                    250 	.globl _X_U1BAUD
+                                    251 	.globl _X_U1DBUF
+                                    252 	.globl _X_U1CSR
+                                    253 	.globl _X_P2INP
+                                    254 	.globl _X_P1INP
+                                    255 	.globl _X_P2SEL
+                                    256 	.globl _X_P1SEL
+                                    257 	.globl _X_P0SEL
+                                    258 	.globl _X_APCFG
+                                    259 	.globl _X_PERCFG
+                                    260 	.globl _X_T4CC1
+                                    261 	.globl _X_T4CCTL1
+                                    262 	.globl _X_T4CC0
+                                    263 	.globl _X_T4CCTL0
+                                    264 	.globl _X_T4CTL
+                                    265 	.globl _X_T4CNT
+                                    266 	.globl _X_RFIRQF0
+                                    267 	.globl _X_T1CCTL2
+                                    268 	.globl _X_T1CCTL1
+                                    269 	.globl _X_T1CCTL0
+                                    270 	.globl _X_T1CTL
+                                    271 	.globl _X_T1CNTH
+                                    272 	.globl _X_T1CNTL
+                                    273 	.globl _X_RFST
+                                    274 	.globl _X_T1CC2H
+                                    275 	.globl _X_T1CC2L
+                                    276 	.globl _X_T1CC1H
+                                    277 	.globl _X_T1CC1L
+                                    278 	.globl _X_T1CC0H
+                                    279 	.globl _X_T1CC0L
+                                    280 	.globl _X_RFD
+                                    281 	.globl _X_TIMIF
+                                    282 	.globl _X_DMAREQ
+                                    283 	.globl _X_DMAARM
+                                    284 	.globl _X_DMA0CFGH
+                                    285 	.globl _X_DMA0CFGL
+                                    286 	.globl _X_DMA1CFGH
+                                    287 	.globl _X_DMA1CFGL
+                                    288 	.globl _X_DMAIRQ
+                                    289 	.globl _X_T3CC1
+                                    290 	.globl _X_T3CCTL1
+                                    291 	.globl _X_T3CC0
+                                    292 	.globl _X_T3CCTL0
+                                    293 	.globl _X_T3CTL
+                                    294 	.globl _X_T3CNT
+                                    295 	.globl _X_WDCTL
+                                    296 	.globl _X_MEMCTR
+                                    297 	.globl _X_CLKCONCMD
+                                    298 	.globl _X_U0GCR
+                                    299 	.globl _X_U0UCR
+                                    300 	.globl _X_T2MSEL
+                                    301 	.globl _X_U0BAUD
+                                    302 	.globl _X_U0DBUF
+                                    303 	.globl _X_RFERRF
+                                    304 	.globl _X_SLEEPCMD
+                                    305 	.globl _X_RNDH
+                                    306 	.globl _X_RNDL
+                                    307 	.globl _X_ADCH
+                                    308 	.globl _X_ADCL
+                                    309 	.globl _X_ADCCON3
+                                    310 	.globl _X_ADCCON2
+                                    311 	.globl _X_ADCCON1
+                                    312 	.globl _X_ENCCS
+                                    313 	.globl _X_ENCDO
+                                    314 	.globl _X_ENCDI
+                                    315 	.globl _X_T1STAT
+                                    316 	.globl _X_PMUX
+                                    317 	.globl _X_STLOAD
+                                    318 	.globl _X_P2IEN
+                                    319 	.globl _X_P0IEN
+                                    320 	.globl _X_T2IRQM
+                                    321 	.globl _X_T2MOVF2
+                                    322 	.globl _X_T2MOVF1
+                                    323 	.globl _X_T2MOVF0
+                                    324 	.globl _X_T2M1
+                                    325 	.globl _X_T2M0
+                                    326 	.globl _X_T2IRQF
+                                    327 	.globl _X_P2
+                                    328 	.globl _X_PSBANK
+                                    329 	.globl _X_FMAP
+                                    330 	.globl _X_CLKCONSTA
+                                    331 	.globl _X_SLEEPSTA
+                                    332 	.globl _X_T2EVTCFG
+                                    333 	.globl _X_ST2
+                                    334 	.globl _X_ST1
+                                    335 	.globl _X_ST0
+                                    336 	.globl _X_T2CTRL
+                                    337 	.globl _X__XPAGE
+                                    338 	.globl _X_MPAGE
+                                    339 	.globl _X_RFIRQF1
+                                    340 	.globl _X_P1
+                                    341 	.globl _X_P0INP
+                                    342 	.globl _X_P1IEN
+                                    343 	.globl _X_PICTL
+                                    344 	.globl _X_P2IFG
+                                    345 	.globl _X_P1IFG
+                                    346 	.globl _X_P0IFG
+                                    347 	.globl _X_U0CSR
+                                    348 	.globl _X_P0
+                                    349 	.globl _USBF5
+                                    350 	.globl _USBF4
+                                    351 	.globl _USBF3
+                                    352 	.globl _USBF2
+                                    353 	.globl _USBF1
+                                    354 	.globl _USBF0
+                                    355 	.globl _USBCNTH
+                                    356 	.globl _USBCNTL
+                                    357 	.globl _USBCNT0
+                                    358 	.globl _USBCSOH
+                                    359 	.globl _USBCSOL
+                                    360 	.globl _USBMAXO
+                                    361 	.globl _USBCSIH
+                                    362 	.globl _USBCSIL
+                                    363 	.globl _USBCS0
+                                    364 	.globl _USBMAXI
+                                    365 	.globl _USBCTRL
+                                    366 	.globl _USBINDEX
+                                    367 	.globl _USBFRMH
+                                    368 	.globl _USBFRML
+                                    369 	.globl _USBCIE
+                                    370 	.globl _USBOIE
+                                    371 	.globl _USBIIE
+                                    372 	.globl _USBCIF
+                                    373 	.globl _USBOIF
+                                    374 	.globl _USBIIF
+                                    375 	.globl _USBPOW
+                                    376 	.globl _USBADDR
+                                    377 	.globl _CSPT
+                                    378 	.globl _CSPZ
+                                    379 	.globl _CSPY
+                                    380 	.globl _CSPX
+                                    381 	.globl _CSPSTAT
+                                    382 	.globl _CSPCTRL
+                                    383 	.globl _CSPPROG23
+                                    384 	.globl _CSPPROG22
+                                    385 	.globl _CSPPROG21
+                                    386 	.globl _CSPPROG20
+                                    387 	.globl _CSPPROG19
+                                    388 	.globl _CSPPROG18
+                                    389 	.globl _CSPPROG17
+                                    390 	.globl _CSPPROG16
+                                    391 	.globl _CSPPROG15
+                                    392 	.globl _CSPPROG14
+                                    393 	.globl _CSPPROG13
+                                    394 	.globl _CSPPROG12
+                                    395 	.globl _CSPPROG11
+                                    396 	.globl _CSPPROG10
+                                    397 	.globl _CSPPROG9
+                                    398 	.globl _CSPPROG8
+                                    399 	.globl _CSPPROG7
+                                    400 	.globl _CSPPROG6
+                                    401 	.globl _CSPPROG5
+                                    402 	.globl _CSPPROG4
+                                    403 	.globl _CSPPROG3
+                                    404 	.globl _CSPPROG2
+                                    405 	.globl _CSPPROG1
+                                    406 	.globl _CSPPROG0
+                                    407 	.globl _RFC_OBS_CTRL2
+                                    408 	.globl _RFC_OBS_CTRL1
+                                    409 	.globl _RFC_OBS_CTRL0
+                                    410 	.globl _TXFILTCFG
+                                    411 	.globl _PTEST1
+                                    412 	.globl _PTEST0
+                                    413 	.globl _ATEST
+                                    414 	.globl _DACTEST2
+                                    415 	.globl _DACTEST1
+                                    416 	.globl _DACTEST0
+                                    417 	.globl _MDMTEST1
+                                    418 	.globl _MDMTEST0
+                                    419 	.globl _ADCTEST2
+                                    420 	.globl _ADCTEST1
+                                    421 	.globl _ADCTEST0
+                                    422 	.globl _AGCCTRL3
+                                    423 	.globl _AGCCTRL2
+                                    424 	.globl _AGCCTRL1
+                                    425 	.globl _AGCCTRL0
+                                    426 	.globl _FSCAL3
+                                    427 	.globl _FSCAL2
+                                    428 	.globl _FSCAL1
+                                    429 	.globl _FSCAL0
+                                    430 	.globl _FSCTRL
+                                    431 	.globl _RXCTRL
+                                    432 	.globl _FREQEST
+                                    433 	.globl _MDMCTRL1
+                                    434 	.globl _MDMCTRL0
+                                    435 	.globl _RFRND
+                                    436 	.globl _RFERRM
+                                    437 	.globl _RFIRQM1
+                                    438 	.globl _RFIRQM0
+                                    439 	.globl _TXLAST_PTR
+                                    440 	.globl _TXFIRST_PTR
+                                    441 	.globl _RXP1_PTR
+                                    442 	.globl _RXLAST_PTR
+                                    443 	.globl _RXFIRST_PTR
+                                    444 	.globl _TXFIFOCNT
+                                    445 	.globl _RXFIFOCNT
+                                    446 	.globl _RXFIRST
+                                    447 	.globl _RSSISTAT
+                                    448 	.globl _RSSI
+                                    449 	.globl _CCACTRL1
+                                    450 	.globl _CCACTRL0
+                                    451 	.globl _FSMCTRL
+                                    452 	.globl _FIFOPCTRL
+                                    453 	.globl _FSMSTAT1
+                                    454 	.globl _FSMSTAT0
+                                    455 	.globl _TXCTRL
+                                    456 	.globl _TXPOWER
+                                    457 	.globl _FREQCTRL
+                                    458 	.globl _FREQTUNE
+                                    459 	.globl _RXMASKCLR
+                                    460 	.globl _RXMASKSET
+                                    461 	.globl _RXENABLE
+                                    462 	.globl _FRMCTRL1
+                                    463 	.globl _FRMCTRL0
+                                    464 	.globl _SRCEXTEN2
+                                    465 	.globl _SRCEXTEN1
+                                    466 	.globl _SRCEXTEN0
+                                    467 	.globl _SRCSHORTEN2
+                                    468 	.globl _SRCSHORTEN1
+                                    469 	.globl _SRCSHORTEN0
+                                    470 	.globl _SRCMATCH
+                                    471 	.globl _FRMFILT1
+                                    472 	.globl _FRMFILT0
+                                    473 	.globl _SHORT_ADDR1
+                                    474 	.globl _SHORT_ADDR0
+                                    475 	.globl _PAN_ID1
+                                    476 	.globl _PAN_ID0
+                                    477 	.globl _EXT_ADDR7
+                                    478 	.globl _EXT_ADDR6
+                                    479 	.globl _EXT_ADDR5
+                                    480 	.globl _EXT_ADDR4
+                                    481 	.globl _EXT_ADDR3
+                                    482 	.globl _EXT_ADDR2
+                                    483 	.globl _EXT_ADDR1
+                                    484 	.globl _EXT_ADDR0
+                                    485 	.globl _SRCSHORTPENDEN2
+                                    486 	.globl _SRCSHORTPENDEN1
+                                    487 	.globl _SRCSHORTPENDEN0
+                                    488 	.globl _SRCEXTPENDEN2
+                                    489 	.globl _SRCEXTPENDEN1
+                                    490 	.globl _SRCEXTPENDEN0
+                                    491 	.globl _SRCRESINDEX
+                                    492 	.globl _SRCRESMASK2
+                                    493 	.globl _SRCRESMASK1
+                                    494 	.globl _SRCRESMASK0
+                                    495 	.globl _SRC_ADDR_TABLE
+                                    496 	.globl _TXFIFO
+                                    497 	.globl _RXFIFO
+                                    498 	.globl _RFCORE_RAM
+                                    499 	.globl _CMPCTL
+                                    500 	.globl _OPAMPS
+                                    501 	.globl _OPAMPC
+                                    502 	.globl _STCV2
+                                    503 	.globl _STCV1
+                                    504 	.globl _STCV0
+                                    505 	.globl _STCS
+                                    506 	.globl _STCC
+                                    507 	.globl _T1CC4H
+                                    508 	.globl _T1CC4L
+                                    509 	.globl _T1CC3H
+                                    510 	.globl _T1CC3L
+                                    511 	.globl _XX_T1CC2H
+                                    512 	.globl _XX_T1CC2L
+                                    513 	.globl _XX_T1CC1H
+                                    514 	.globl _XX_T1CC1L
+                                    515 	.globl _XX_T1CC0H
+                                    516 	.globl _XX_T1CC0L
+                                    517 	.globl _T1CCTL4
+                                    518 	.globl _T1CCTL3
+                                    519 	.globl _XX_T1CCTL2
+                                    520 	.globl _XX_T1CCTL1
+                                    521 	.globl _XX_T1CCTL0
+                                    522 	.globl _CLD
+                                    523 	.globl _IRCTL
+                                    524 	.globl _CHIPINFO1
+                                    525 	.globl _CHIPINFO0
+                                    526 	.globl _FWDATA
+                                    527 	.globl _FADDRH
+                                    528 	.globl _FADDRL
+                                    529 	.globl _FCTL
+                                    530 	.globl _IVCTRL
+                                    531 	.globl _BATTMON
+                                    532 	.globl _SRCRC
+                                    533 	.globl _DBGDATA
+                                    534 	.globl _TESTREG0
+                                    535 	.globl _CHIPID
+                                    536 	.globl _CHVER
+                                    537 	.globl _OBSSEL5
+                                    538 	.globl _OBSSEL4
+                                    539 	.globl _OBSSEL3
+                                    540 	.globl _OBSSEL2
+                                    541 	.globl _OBSSEL1
+                                    542 	.globl _OBSSEL0
+                                    543 	.globl _I2CIO
+                                    544 	.globl _I2CWC
+                                    545 	.globl _I2CADDR
+                                    546 	.globl _I2CDATA
+                                    547 	.globl _I2CSTAT
+                                    548 	.globl _I2CCFG
+                                    549 	.globl _OPAMPMC
+                                    550 	.globl _MONMUX
+                                    551 ;--------------------------------------------------------
+                                    552 ; special function registers
+                                    553 ;--------------------------------------------------------
+                                    554 	.area RSEG    (ABS,DATA)
+      000000                        555 	.org 0x0000
+                           000080   556 _P0	=	0x0080
+                           000081   557 _SP	=	0x0081
+                           000082   558 _DPL0	=	0x0082
+                           000083   559 _DPH0	=	0x0083
+                           000084   560 _DPL1	=	0x0084
+                           000085   561 _DPH1	=	0x0085
+                           000087   562 _PCON	=	0x0087
+                           000088   563 _TCON	=	0x0088
+                           000090   564 _P1	=	0x0090
+                           000092   565 _DPS	=	0x0092
+                           000098   566 _S0CON	=	0x0098
+                           00009A   567 _IEN2	=	0x009a
+                           00009B   568 _S1CON	=	0x009b
+                           0000A0   569 _P2	=	0x00a0
+                           0000A8   570 _IEN0	=	0x00a8
+                           0000A9   571 _IP0	=	0x00a9
+                           0000B8   572 _IEN1	=	0x00b8
+                           0000B9   573 _IP1	=	0x00b9
+                           0000C0   574 _IRCON	=	0x00c0
+                           0000D0   575 _PSW	=	0x00d0
+                           0000E0   576 _ACC	=	0x00e0
+                           0000E8   577 _IRCON2	=	0x00e8
+                           0000F0   578 _B	=	0x00f0
+                           0000B4   579 _ADCCON1	=	0x00b4
+                           0000B5   580 _ADCCON2	=	0x00b5
+                           0000B6   581 _ADCCON3	=	0x00b6
+                           0000BA   582 _ADCL	=	0x00ba
+                           0000BB   583 _ADCH	=	0x00bb
+                           0000BC   584 _RNDL	=	0x00bc
+                           0000BD   585 _RNDH	=	0x00bd
+                           0000B1   586 _ENCDI	=	0x00b1
+                           0000B2   587 _ENCDO	=	0x00b2
+                           0000B3   588 _ENCCS	=	0x00b3
+                           0000D1   589 _DMAIRQ	=	0x00d1
+                           0000D2   590 _DMA1CFGL	=	0x00d2
+                           0000D3   591 _DMA1CFGH	=	0x00d3
+                           0000D4   592 _DMA0CFGL	=	0x00d4
+                           0000D5   593 _DMA0CFGH	=	0x00d5
+                           0000D6   594 _DMAARM	=	0x00d6
+                           0000D7   595 _DMAREQ	=	0x00d7
+                           000089   596 _P0IFG	=	0x0089
+                           00008A   597 _P1IFG	=	0x008a
+                           00008B   598 _P2IFG	=	0x008b
+                           00008C   599 _PICTL	=	0x008c
+                           0000AB   600 _P0IEN	=	0x00ab
+                           00008D   601 _P1IEN	=	0x008d
+                           0000AC   602 _P2IEN	=	0x00ac
+                           00008F   603 _P0INP	=	0x008f
+                           0000F1   604 _PERCFG	=	0x00f1
+                           0000F2   605 _APCFG	=	0x00f2
+                           0000F3   606 _P0SEL	=	0x00f3
+                           0000F4   607 _P1SEL	=	0x00f4
+                           0000F5   608 _P2SEL	=	0x00f5
+                           0000F6   609 _P1INP	=	0x00f6
+                           0000F7   610 _P2INP	=	0x00f7
+                           0000FD   611 _P0DIR	=	0x00fd
+                           0000FE   612 _P1DIR	=	0x00fe
+                           0000FF   613 _P2DIR	=	0x00ff
+                           0000AE   614 _PMUX	=	0x00ae
+                           000093   615 _MPAGE	=	0x0093
+                           000093   616 __XPAGE	=	0x0093
+                           0000C7   617 _MEMCTR	=	0x00c7
+                           00009F   618 _FMAP	=	0x009f
+                           00009F   619 _PSBANK	=	0x009f
+                           000091   620 _RFIRQF1	=	0x0091
+                           0000D9   621 _RFD	=	0x00d9
+                           0000E1   622 _RFST	=	0x00e1
+                           0000E9   623 _RFIRQF0	=	0x00e9
+                           0000BF   624 _RFERRF	=	0x00bf
+                           000095   625 _ST0	=	0x0095
+                           000096   626 _ST1	=	0x0096
+                           000097   627 _ST2	=	0x0097
+                           0000AD   628 _STLOAD	=	0x00ad
+                           0000BE   629 _SLEEPCMD	=	0x00be
+                           00009D   630 _SLEEPSTA	=	0x009d
+                           0000C6   631 _CLKCONCMD	=	0x00c6
+                           00009E   632 _CLKCONSTA	=	0x009e
+                           0000DA   633 _T1CC0L	=	0x00da
+                           0000DB   634 _T1CC0H	=	0x00db
+                           0000DC   635 _T1CC1L	=	0x00dc
+                           0000DD   636 _T1CC1H	=	0x00dd
+                           0000DE   637 _T1CC2L	=	0x00de
+                           0000DF   638 _T1CC2H	=	0x00df
+                           0000E2   639 _T1CNTL	=	0x00e2
+                           0000E3   640 _T1CNTH	=	0x00e3
+                           0000E4   641 _T1CTL	=	0x00e4
+                           0000E5   642 _T1CCTL0	=	0x00e5
+                           0000E6   643 _T1CCTL1	=	0x00e6
+                           0000E7   644 _T1CCTL2	=	0x00e7
+                           0000AF   645 _T1STAT	=	0x00af
+                           000094   646 _T2CTRL	=	0x0094
+                           00009C   647 _T2EVTCFG	=	0x009c
+                           0000A1   648 _T2IRQF	=	0x00a1
+                           0000A2   649 _T2M0	=	0x00a2
+                           0000A3   650 _T2M1	=	0x00a3
+                           0000A4   651 _T2MOVF0	=	0x00a4
+                           0000A5   652 _T2MOVF1	=	0x00a5
+                           0000A6   653 _T2MOVF2	=	0x00a6
+                           0000A7   654 _T2IRQM	=	0x00a7
+                           0000C3   655 _T2MSEL	=	0x00c3
+                           0000CA   656 _T3CNT	=	0x00ca
+                           0000CB   657 _T3CTL	=	0x00cb
+                           0000CC   658 _T3CCTL0	=	0x00cc
+                           0000CD   659 _T3CC0	=	0x00cd
+                           0000CE   660 _T3CCTL1	=	0x00ce
+                           0000CF   661 _T3CC1	=	0x00cf
+                           0000EA   662 _T4CNT	=	0x00ea
+                           0000EB   663 _T4CTL	=	0x00eb
+                           0000EC   664 _T4CCTL0	=	0x00ec
+                           0000ED   665 _T4CC0	=	0x00ed
+                           0000EE   666 _T4CCTL1	=	0x00ee
+                           0000EF   667 _T4CC1	=	0x00ef
+                           0000D8   668 _TIMIF	=	0x00d8
+                           000086   669 _U0CSR	=	0x0086
+                           0000C1   670 _U0DBUF	=	0x00c1
+                           0000C2   671 _U0BAUD	=	0x00c2
+                           0000C4   672 _U0UCR	=	0x00c4
+                           0000C5   673 _U0GCR	=	0x00c5
+                           0000F8   674 _U1CSR	=	0x00f8
+                           0000F9   675 _U1DBUF	=	0x00f9
+                           0000FA   676 _U1BAUD	=	0x00fa
+                           0000FB   677 _U1UCR	=	0x00fb
+                           0000FC   678 _U1GCR	=	0x00fc
+                           0000C9   679 _WDCTL	=	0x00c9
+                                    680 ;--------------------------------------------------------
+                                    681 ; special function bits
+                                    682 ;--------------------------------------------------------
+                                    683 	.area RSEG    (ABS,DATA)
+      000000                        684 	.org 0x0000
+                           000087   685 _P0_7	=	0x0087
+                           000086   686 _P0_6	=	0x0086
+                           000085   687 _P0_5	=	0x0085
+                           000084   688 _P0_4	=	0x0084
+                           000083   689 _P0_3	=	0x0083
+                           000082   690 _P0_2	=	0x0082
+                           000081   691 _P0_1	=	0x0081
+                           000080   692 _P0_0	=	0x0080
+                           00008F   693 _URX1IF	=	0x008f
+                           00008D   694 _ADCIF	=	0x008d
+                           00008B   695 _URX0IF	=	0x008b
+                           00008A   696 _IT1	=	0x008a
+                           000089   697 _RFERRIF	=	0x0089
+                           000088   698 _IT0	=	0x0088
+                           000097   699 _P1_7	=	0x0097
+                           000096   700 _P1_6	=	0x0096
+                           000095   701 _P1_5	=	0x0095
+                           000094   702 _P1_4	=	0x0094
+                           000093   703 _P1_3	=	0x0093
+                           000092   704 _P1_2	=	0x0092
+                           000091   705 _P1_1	=	0x0091
+                           000090   706 _P1_0	=	0x0090
+                           000099   707 _ENCIF_1	=	0x0099
+                           000098   708 _ENCIF_0	=	0x0098
+                           0000A7   709 _P2_7	=	0x00a7
+                           0000A6   710 _P2_6	=	0x00a6
+                           0000A5   711 _P2_5	=	0x00a5
+                           0000A4   712 _P2_4	=	0x00a4
+                           0000A3   713 _P2_3	=	0x00a3
+                           0000A2   714 _P2_2	=	0x00a2
+                           0000A1   715 _P2_1	=	0x00a1
+                           0000A0   716 _P2_0	=	0x00a0
+                           0000AF   717 _EA	=	0x00af
+                           0000AD   718 _STIE	=	0x00ad
+                           0000AC   719 _ENCIE	=	0x00ac
+                           0000AB   720 _URX1IE	=	0x00ab
+                           0000AA   721 _URX0IE	=	0x00aa
+                           0000A9   722 _ADCIE	=	0x00a9
+                           0000A8   723 _RFERRIE	=	0x00a8
+                           0000BD   724 _P0IE	=	0x00bd
+                           0000BC   725 _T4IE	=	0x00bc
+                           0000BB   726 _T3IE	=	0x00bb
+                           0000BA   727 _T2IE	=	0x00ba
+                           0000B9   728 _T1IE	=	0x00b9
+                           0000B8   729 _DMAIE	=	0x00b8
+                           0000C7   730 _STIF	=	0x00c7
+                           0000C5   731 _P0IF	=	0x00c5
+                           0000C4   732 _T4IF	=	0x00c4
+                           0000C3   733 _T3IF	=	0x00c3
+                           0000C2   734 _T2IF	=	0x00c2
+                           0000C1   735 _T1IF	=	0x00c1
+                           0000C0   736 _DMAIF	=	0x00c0
+                           0000D7   737 _CY	=	0x00d7
+                           0000D6   738 _AC	=	0x00d6
+                           0000D5   739 _F0	=	0x00d5
+                           0000D4   740 _RS1	=	0x00d4
+                           0000D3   741 _RS0	=	0x00d3
+                           0000D2   742 _OV	=	0x00d2
+                           0000D1   743 _F1	=	0x00d1
+                           0000D0   744 _P	=	0x00d0
+                           0000E7   745 _ACC_7	=	0x00e7
+                           0000E6   746 _ACC_6	=	0x00e6
+                           0000E5   747 _ACC_5	=	0x00e5
+                           0000E4   748 _ACC_4	=	0x00e4
+                           0000E3   749 _ACC_3	=	0x00e3
+                           0000E2   750 _ACC_2	=	0x00e2
+                           0000E1   751 _ACC_1	=	0x00e1
+                           0000E0   752 _ACC_0	=	0x00e0
+                           0000EC   753 _WDTIF	=	0x00ec
+                           0000EB   754 _P1IF	=	0x00eb
+                           0000EA   755 _UTX1IF	=	0x00ea
+                           0000E9   756 _UTX0IF	=	0x00e9
+                           0000E8   757 _P2IF	=	0x00e8
+                           0000F7   758 _B_7	=	0x00f7
+                           0000F6   759 _B_6	=	0x00f6
+                           0000F5   760 _B_5	=	0x00f5
+                           0000F4   761 _B_4	=	0x00f4
+                           0000F3   762 _B_3	=	0x00f3
+                           0000F2   763 _B_2	=	0x00f2
+                           0000F1   764 _B_1	=	0x00f1
+                           0000F0   765 _B_0	=	0x00f0
+                           0000DE   766 _OVFIM	=	0x00de
+                           0000DD   767 _T4CH1IF	=	0x00dd
+                           0000DC   768 _T4CH0IF	=	0x00dc
+                           0000DB   769 _T4OVFIF	=	0x00db
+                           0000DA   770 _T3CH1IF	=	0x00da
+                           0000D9   771 _T3CH0IF	=	0x00d9
+                           0000D8   772 _T3OVFIF	=	0x00d8
+                           0000FF   773 _MODE	=	0x00ff
+                           0000FE   774 _RE	=	0x00fe
+                           0000FD   775 _SLAVE	=	0x00fd
+                           0000FC   776 _FE	=	0x00fc
+                           0000FB   777 _ERR	=	0x00fb
+                           0000FA   778 _RX_BYTE	=	0x00fa
+                           0000F9   779 _TX_BYTE	=	0x00f9
+                           0000F8   780 _ACTIVE	=	0x00f8
+                                    781 ;--------------------------------------------------------
+                                    782 ; overlayable register banks
+                                    783 ;--------------------------------------------------------
+                                    784 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        785 	.ds 8
+                                    786 ;--------------------------------------------------------
+                                    787 ; internal ram data
+                                    788 ;--------------------------------------------------------
+                                    789 	.area DSEG    (DATA)
+                                    790 ;--------------------------------------------------------
+                                    791 ; overlayable items in internal ram 
+                                    792 ;--------------------------------------------------------
+                                    793 ;--------------------------------------------------------
+                                    794 ; indirectly addressable internal ram data
+                                    795 ;--------------------------------------------------------
+                                    796 	.area ISEG    (DATA)
+                                    797 ;--------------------------------------------------------
+                                    798 ; absolute internal ram data
+                                    799 ;--------------------------------------------------------
+                                    800 	.area IABS    (ABS,DATA)
+                                    801 	.area IABS    (ABS,DATA)
+                                    802 ;--------------------------------------------------------
+                                    803 ; bit data
+                                    804 ;--------------------------------------------------------
+                                    805 	.area BSEG    (BIT)
+                                    806 ;--------------------------------------------------------
+                                    807 ; paged external ram data
+                                    808 ;--------------------------------------------------------
+                                    809 	.area PSEG    (PAG,XDATA)
+                                    810 ;--------------------------------------------------------
+                                    811 ; external ram data
+                                    812 ;--------------------------------------------------------
+                                    813 	.area XSEG    (XDATA)
+                           0061A6   814 _MONMUX	=	0x61a6
+                           0061A6   815 _OPAMPMC	=	0x61a6
+                           006230   816 _I2CCFG	=	0x6230
+                           006231   817 _I2CSTAT	=	0x6231
+                           006232   818 _I2CDATA	=	0x6232
+                           006233   819 _I2CADDR	=	0x6233
+                           006234   820 _I2CWC	=	0x6234
+                           006235   821 _I2CIO	=	0x6235
+                           006243   822 _OBSSEL0	=	0x6243
+                           006244   823 _OBSSEL1	=	0x6244
+                           006245   824 _OBSSEL2	=	0x6245
+                           006246   825 _OBSSEL3	=	0x6246
+                           006247   826 _OBSSEL4	=	0x6247
+                           006248   827 _OBSSEL5	=	0x6248
+                           006249   828 _CHVER	=	0x6249
+                           00624A   829 _CHIPID	=	0x624a
+                           00624B   830 _TESTREG0	=	0x624b
+                           006260   831 _DBGDATA	=	0x6260
+                           006262   832 _SRCRC	=	0x6262
+                           006264   833 _BATTMON	=	0x6264
+                           006265   834 _IVCTRL	=	0x6265
+                           006270   835 _FCTL	=	0x6270
+                           006271   836 _FADDRL	=	0x6271
+                           006272   837 _FADDRH	=	0x6272
+                           006273   838 _FWDATA	=	0x6273
+                           006276   839 _CHIPINFO0	=	0x6276
+                           006277   840 _CHIPINFO1	=	0x6277
+                           006281   841 _IRCTL	=	0x6281
+                           006290   842 _CLD	=	0x6290
+                           0062A0   843 _XX_T1CCTL0	=	0x62a0
+                           0062A1   844 _XX_T1CCTL1	=	0x62a1
+                           0062A2   845 _XX_T1CCTL2	=	0x62a2
+                           0062A3   846 _T1CCTL3	=	0x62a3
+                           0062A4   847 _T1CCTL4	=	0x62a4
+                           0062A6   848 _XX_T1CC0L	=	0x62a6
+                           0062A7   849 _XX_T1CC0H	=	0x62a7
+                           0062A8   850 _XX_T1CC1L	=	0x62a8
+                           0062A9   851 _XX_T1CC1H	=	0x62a9
+                           0062AA   852 _XX_T1CC2L	=	0x62aa
+                           0062AB   853 _XX_T1CC2H	=	0x62ab
+                           0062AC   854 _T1CC3L	=	0x62ac
+                           0062AD   855 _T1CC3H	=	0x62ad
+                           0062AE   856 _T1CC4L	=	0x62ae
+                           0062AF   857 _T1CC4H	=	0x62af
+                           0062B0   858 _STCC	=	0x62b0
+                           0062B1   859 _STCS	=	0x62b1
+                           0062B2   860 _STCV0	=	0x62b2
+                           0062B3   861 _STCV1	=	0x62b3
+                           0062B4   862 _STCV2	=	0x62b4
+                           0062C0   863 _OPAMPC	=	0x62c0
+                           0062C1   864 _OPAMPS	=	0x62c1
+                           0062D0   865 _CMPCTL	=	0x62d0
+                           006000   866 _RFCORE_RAM	=	0x6000
+                           006000   867 _RXFIFO	=	0x6000
+                           006080   868 _TXFIFO	=	0x6080
+                           006100   869 _SRC_ADDR_TABLE	=	0x6100
+                           006160   870 _SRCRESMASK0	=	0x6160
+                           006161   871 _SRCRESMASK1	=	0x6161
+                           006162   872 _SRCRESMASK2	=	0x6162
+                           006163   873 _SRCRESINDEX	=	0x6163
+                           006164   874 _SRCEXTPENDEN0	=	0x6164
+                           006165   875 _SRCEXTPENDEN1	=	0x6165
+                           006166   876 _SRCEXTPENDEN2	=	0x6166
+                           006167   877 _SRCSHORTPENDEN0	=	0x6167
+                           006168   878 _SRCSHORTPENDEN1	=	0x6168
+                           006169   879 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   880 _EXT_ADDR0	=	0x616a
+                           00616B   881 _EXT_ADDR1	=	0x616b
+                           00616C   882 _EXT_ADDR2	=	0x616c
+                           00616D   883 _EXT_ADDR3	=	0x616d
+                           00616E   884 _EXT_ADDR4	=	0x616e
+                           00616F   885 _EXT_ADDR5	=	0x616f
+                           006170   886 _EXT_ADDR6	=	0x6170
+                           006171   887 _EXT_ADDR7	=	0x6171
+                           006172   888 _PAN_ID0	=	0x6172
+                           006173   889 _PAN_ID1	=	0x6173
+                           006174   890 _SHORT_ADDR0	=	0x6174
+                           006175   891 _SHORT_ADDR1	=	0x6175
+                           006180   892 _FRMFILT0	=	0x6180
+                           006181   893 _FRMFILT1	=	0x6181
+                           006182   894 _SRCMATCH	=	0x6182
+                           006183   895 _SRCSHORTEN0	=	0x6183
+                           006184   896 _SRCSHORTEN1	=	0x6184
+                           006185   897 _SRCSHORTEN2	=	0x6185
+                           006186   898 _SRCEXTEN0	=	0x6186
+                           006187   899 _SRCEXTEN1	=	0x6187
+                           006188   900 _SRCEXTEN2	=	0x6188
+                           006189   901 _FRMCTRL0	=	0x6189
+                           00618A   902 _FRMCTRL1	=	0x618a
+                           00618B   903 _RXENABLE	=	0x618b
+                           00618C   904 _RXMASKSET	=	0x618c
+                           00618D   905 _RXMASKCLR	=	0x618d
+                           00618E   906 _FREQTUNE	=	0x618e
+                           00618F   907 _FREQCTRL	=	0x618f
+                           006190   908 _TXPOWER	=	0x6190
+                           006191   909 _TXCTRL	=	0x6191
+                           006192   910 _FSMSTAT0	=	0x6192
+                           006193   911 _FSMSTAT1	=	0x6193
+                           006194   912 _FIFOPCTRL	=	0x6194
+                           006195   913 _FSMCTRL	=	0x6195
+                           006196   914 _CCACTRL0	=	0x6196
+                           006197   915 _CCACTRL1	=	0x6197
+                           006198   916 _RSSI	=	0x6198
+                           006199   917 _RSSISTAT	=	0x6199
+                           00619A   918 _RXFIRST	=	0x619a
+                           00619B   919 _RXFIFOCNT	=	0x619b
+                           00619C   920 _TXFIFOCNT	=	0x619c
+                           00619D   921 _RXFIRST_PTR	=	0x619d
+                           00619E   922 _RXLAST_PTR	=	0x619e
+                           00619F   923 _RXP1_PTR	=	0x619f
+                           0061A1   924 _TXFIRST_PTR	=	0x61a1
+                           0061A2   925 _TXLAST_PTR	=	0x61a2
+                           0061A3   926 _RFIRQM0	=	0x61a3
+                           0061A4   927 _RFIRQM1	=	0x61a4
+                           0061A5   928 _RFERRM	=	0x61a5
+                           0061A7   929 _RFRND	=	0x61a7
+                           0061A8   930 _MDMCTRL0	=	0x61a8
+                           0061A9   931 _MDMCTRL1	=	0x61a9
+                           0061AA   932 _FREQEST	=	0x61aa
+                           0061AB   933 _RXCTRL	=	0x61ab
+                           0061AC   934 _FSCTRL	=	0x61ac
+                           0061AD   935 _FSCAL0	=	0x61ad
+                           0061AE   936 _FSCAL1	=	0x61ae
+                           0061AF   937 _FSCAL2	=	0x61af
+                           0061B0   938 _FSCAL3	=	0x61b0
+                           0061B1   939 _AGCCTRL0	=	0x61b1
+                           0061B2   940 _AGCCTRL1	=	0x61b2
+                           0061B3   941 _AGCCTRL2	=	0x61b3
+                           0061B4   942 _AGCCTRL3	=	0x61b4
+                           0061B5   943 _ADCTEST0	=	0x61b5
+                           0061B6   944 _ADCTEST1	=	0x61b6
+                           0061B7   945 _ADCTEST2	=	0x61b7
+                           0061B8   946 _MDMTEST0	=	0x61b8
+                           0061B9   947 _MDMTEST1	=	0x61b9
+                           0061BA   948 _DACTEST0	=	0x61ba
+                           0061BB   949 _DACTEST1	=	0x61bb
+                           0061BC   950 _DACTEST2	=	0x61bc
+                           0061BD   951 _ATEST	=	0x61bd
+                           0061BE   952 _PTEST0	=	0x61be
+                           0061BF   953 _PTEST1	=	0x61bf
+                           0061FA   954 _TXFILTCFG	=	0x61fa
+                           0061EB   955 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   956 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   957 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   958 _CSPPROG0	=	0x61c0
+                           0061C1   959 _CSPPROG1	=	0x61c1
+                           0061C2   960 _CSPPROG2	=	0x61c2
+                           0061C3   961 _CSPPROG3	=	0x61c3
+                           0061C4   962 _CSPPROG4	=	0x61c4
+                           0061C5   963 _CSPPROG5	=	0x61c5
+                           0061C6   964 _CSPPROG6	=	0x61c6
+                           0061C7   965 _CSPPROG7	=	0x61c7
+                           0061C8   966 _CSPPROG8	=	0x61c8
+                           0061C9   967 _CSPPROG9	=	0x61c9
+                           0061CA   968 _CSPPROG10	=	0x61ca
+                           0061CB   969 _CSPPROG11	=	0x61cb
+                           0061CC   970 _CSPPROG12	=	0x61cc
+                           0061CD   971 _CSPPROG13	=	0x61cd
+                           0061CE   972 _CSPPROG14	=	0x61ce
+                           0061CF   973 _CSPPROG15	=	0x61cf
+                           0061D0   974 _CSPPROG16	=	0x61d0
+                           0061D1   975 _CSPPROG17	=	0x61d1
+                           0061D2   976 _CSPPROG18	=	0x61d2
+                           0061D3   977 _CSPPROG19	=	0x61d3
+                           0061D4   978 _CSPPROG20	=	0x61d4
+                           0061D5   979 _CSPPROG21	=	0x61d5
+                           0061D6   980 _CSPPROG22	=	0x61d6
+                           0061D7   981 _CSPPROG23	=	0x61d7
+                           0061E0   982 _CSPCTRL	=	0x61e0
+                           0061E1   983 _CSPSTAT	=	0x61e1
+                           0061E2   984 _CSPX	=	0x61e2
+                           0061E3   985 _CSPY	=	0x61e3
+                           0061E4   986 _CSPZ	=	0x61e4
+                           0061E5   987 _CSPT	=	0x61e5
+                           006200   988 _USBADDR	=	0x6200
+                           006201   989 _USBPOW	=	0x6201
+                           006202   990 _USBIIF	=	0x6202
+                           006204   991 _USBOIF	=	0x6204
+                           006206   992 _USBCIF	=	0x6206
+                           006207   993 _USBIIE	=	0x6207
+                           006209   994 _USBOIE	=	0x6209
+                           00620B   995 _USBCIE	=	0x620b
+                           00620C   996 _USBFRML	=	0x620c
+                           00620D   997 _USBFRMH	=	0x620d
+                           00620E   998 _USBINDEX	=	0x620e
+                           00620F   999 _USBCTRL	=	0x620f
+                           006210  1000 _USBMAXI	=	0x6210
+                           006211  1001 _USBCS0	=	0x6211
+                           006211  1002 _USBCSIL	=	0x6211
+                           006212  1003 _USBCSIH	=	0x6212
+                           006213  1004 _USBMAXO	=	0x6213
+                           006214  1005 _USBCSOL	=	0x6214
+                           006215  1006 _USBCSOH	=	0x6215
+                           006216  1007 _USBCNT0	=	0x6216
+                           006216  1008 _USBCNTL	=	0x6216
+                           006217  1009 _USBCNTH	=	0x6217
+                           006220  1010 _USBF0	=	0x6220
+                           006222  1011 _USBF1	=	0x6222
+                           006224  1012 _USBF2	=	0x6224
+                           006226  1013 _USBF3	=	0x6226
+                           006228  1014 _USBF4	=	0x6228
+                           00622A  1015 _USBF5	=	0x622a
+                           007080  1016 _X_P0	=	0x7080
+                           007086  1017 _X_U0CSR	=	0x7086
+                           007089  1018 _X_P0IFG	=	0x7089
+                           00708A  1019 _X_P1IFG	=	0x708a
+                           00708B  1020 _X_P2IFG	=	0x708b
+                           00708C  1021 _X_PICTL	=	0x708c
+                           00708D  1022 _X_P1IEN	=	0x708d
+                           00708F  1023 _X_P0INP	=	0x708f
+                           007090  1024 _X_P1	=	0x7090
+                           007091  1025 _X_RFIRQF1	=	0x7091
+                           007093  1026 _X_MPAGE	=	0x7093
+                           007093  1027 _X__XPAGE	=	0x7093
+                           007094  1028 _X_T2CTRL	=	0x7094
+                           007095  1029 _X_ST0	=	0x7095
+                           007096  1030 _X_ST1	=	0x7096
+                           007097  1031 _X_ST2	=	0x7097
+                           00709C  1032 _X_T2EVTCFG	=	0x709c
+                           00709D  1033 _X_SLEEPSTA	=	0x709d
+                           00709E  1034 _X_CLKCONSTA	=	0x709e
+                           00709F  1035 _X_FMAP	=	0x709f
+                           00709F  1036 _X_PSBANK	=	0x709f
+                           0070A0  1037 _X_P2	=	0x70a0
+                           0070A1  1038 _X_T2IRQF	=	0x70a1
+                           0070A2  1039 _X_T2M0	=	0x70a2
+                           0070A3  1040 _X_T2M1	=	0x70a3
+                           0070A4  1041 _X_T2MOVF0	=	0x70a4
+                           0070A5  1042 _X_T2MOVF1	=	0x70a5
+                           0070A6  1043 _X_T2MOVF2	=	0x70a6
+                           0070A7  1044 _X_T2IRQM	=	0x70a7
+                           0070AB  1045 _X_P0IEN	=	0x70ab
+                           0070AC  1046 _X_P2IEN	=	0x70ac
+                           0070AD  1047 _X_STLOAD	=	0x70ad
+                           0070AE  1048 _X_PMUX	=	0x70ae
+                           0070AF  1049 _X_T1STAT	=	0x70af
+                           0070B1  1050 _X_ENCDI	=	0x70b1
+                           0070B2  1051 _X_ENCDO	=	0x70b2
+                           0070B3  1052 _X_ENCCS	=	0x70b3
+                           0070B4  1053 _X_ADCCON1	=	0x70b4
+                           0070B5  1054 _X_ADCCON2	=	0x70b5
+                           0070B6  1055 _X_ADCCON3	=	0x70b6
+                           0070BA  1056 _X_ADCL	=	0x70ba
+                           0070BB  1057 _X_ADCH	=	0x70bb
+                           0070BC  1058 _X_RNDL	=	0x70bc
+                           0070BD  1059 _X_RNDH	=	0x70bd
+                           0070BE  1060 _X_SLEEPCMD	=	0x70be
+                           0070BF  1061 _X_RFERRF	=	0x70bf
+                           0070C1  1062 _X_U0DBUF	=	0x70c1
+                           0070C2  1063 _X_U0BAUD	=	0x70c2
+                           0070C3  1064 _X_T2MSEL	=	0x70c3
+                           0070C4  1065 _X_U0UCR	=	0x70c4
+                           0070C5  1066 _X_U0GCR	=	0x70c5
+                           0070C6  1067 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1068 _X_MEMCTR	=	0x70c7
+                           0070C9  1069 _X_WDCTL	=	0x70c9
+                           0070CA  1070 _X_T3CNT	=	0x70ca
+                           0070CB  1071 _X_T3CTL	=	0x70cb
+                           0070CC  1072 _X_T3CCTL0	=	0x70cc
+                           0070CD  1073 _X_T3CC0	=	0x70cd
+                           0070CE  1074 _X_T3CCTL1	=	0x70ce
+                           0070CF  1075 _X_T3CC1	=	0x70cf
+                           0070D1  1076 _X_DMAIRQ	=	0x70d1
+                           0070D2  1077 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1078 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1079 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1080 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1081 _X_DMAARM	=	0x70d6
+                           0070D7  1082 _X_DMAREQ	=	0x70d7
+                           0070D8  1083 _X_TIMIF	=	0x70d8
+                           0070D9  1084 _X_RFD	=	0x70d9
+                           0070DA  1085 _X_T1CC0L	=	0x70da
+                           0070DB  1086 _X_T1CC0H	=	0x70db
+                           0070DC  1087 _X_T1CC1L	=	0x70dc
+                           0070DD  1088 _X_T1CC1H	=	0x70dd
+                           0070DE  1089 _X_T1CC2L	=	0x70de
+                           0070DF  1090 _X_T1CC2H	=	0x70df
+                           0070E1  1091 _X_RFST	=	0x70e1
+                           0070E2  1092 _X_T1CNTL	=	0x70e2
+                           0070E3  1093 _X_T1CNTH	=	0x70e3
+                           0070E4  1094 _X_T1CTL	=	0x70e4
+                           0070E5  1095 _X_T1CCTL0	=	0x70e5
+                           0070E6  1096 _X_T1CCTL1	=	0x70e6
+                           0070E7  1097 _X_T1CCTL2	=	0x70e7
+                           0070E9  1098 _X_RFIRQF0	=	0x70e9
+                           0070EA  1099 _X_T4CNT	=	0x70ea
+                           0070EB  1100 _X_T4CTL	=	0x70eb
+                           0070EC  1101 _X_T4CCTL0	=	0x70ec
+                           0070ED  1102 _X_T4CC0	=	0x70ed
+                           0070EE  1103 _X_T4CCTL1	=	0x70ee
+                           0070EF  1104 _X_T4CC1	=	0x70ef
+                           0070F1  1105 _X_PERCFG	=	0x70f1
+                           0070F2  1106 _X_APCFG	=	0x70f2
+                           0070F3  1107 _X_P0SEL	=	0x70f3
+                           0070F4  1108 _X_P1SEL	=	0x70f4
+                           0070F5  1109 _X_P2SEL	=	0x70f5
+                           0070F6  1110 _X_P1INP	=	0x70f6
+                           0070F7  1111 _X_P2INP	=	0x70f7
+                           0070F8  1112 _X_U1CSR	=	0x70f8
+                           0070F9  1113 _X_U1DBUF	=	0x70f9
+                           0070FA  1114 _X_U1BAUD	=	0x70fa
+                           0070FB  1115 _X_U1UCR	=	0x70fb
+                           0070FC  1116 _X_U1GCR	=	0x70fc
+                           0070FD  1117 _X_P0DIR	=	0x70fd
+                           0070FE  1118 _X_P1DIR	=	0x70fe
+                           0070FF  1119 _X_P2DIR	=	0x70ff
+                           007800  1120 _X_INFOPAGE	=	0x7800
+                           00780C  1121 _X_IEEE_ADDR	=	0x780c
+                                   1122 ;--------------------------------------------------------
+                                   1123 ; absolute external ram data
+                                   1124 ;--------------------------------------------------------
+                                   1125 	.area XABS    (ABS,XDATA)
+                                   1126 ;--------------------------------------------------------
+                                   1127 ; external initialized ram data
+                                   1128 ;--------------------------------------------------------
+                                   1129 	.area XISEG   (XDATA)
+                                   1130 	.area HOME    (CODE)
+                                   1131 	.area GSINIT0 (CODE)
+                                   1132 	.area GSINIT1 (CODE)
+                                   1133 	.area GSINIT2 (CODE)
+                                   1134 	.area GSINIT3 (CODE)
+                                   1135 	.area GSINIT4 (CODE)
+                                   1136 	.area GSINIT5 (CODE)
+                                   1137 	.area GSINIT  (CODE)
+                                   1138 	.area GSFINAL (CODE)
+                                   1139 	.area CSEG    (CODE)
+                                   1140 ;--------------------------------------------------------
+                                   1141 ; global & static initialisations
+                                   1142 ;--------------------------------------------------------
+                                   1143 	.area HOME    (CODE)
+                                   1144 	.area GSINIT  (CODE)
+                                   1145 	.area GSFINAL (CODE)
+                                   1146 	.area GSINIT  (CODE)
+                                   1147 ;--------------------------------------------------------
+                                   1148 ; Home
+                                   1149 ;--------------------------------------------------------
+                                   1150 	.area HOME    (CODE)
+                                   1151 	.area HOME    (CODE)
+                                   1152 ;--------------------------------------------------------
+                                   1153 ; code
+                                   1154 ;--------------------------------------------------------
+                                   1155 	.area CSEG    (CODE)
+                                   1156 ;------------------------------------------------------------
+                                   1157 ;Allocation info for local variables in function 'input'
+                                   1158 ;------------------------------------------------------------
+                                   1159 ;a                         Allocated to registers 
+                                   1160 ;byteptr                   Allocated to stack - sp -11
+                                   1161 ;bitptr                    Allocated to registers 
+                                   1162 ;len                       Allocated to stack - sp -9
+                                   1163 ;hdrptr                    Allocated to stack - sp -7
+                                   1164 ;hdr                       Allocated to registers r5 r6 r7 
+                                   1165 ;c                         Allocated to stack - sp -4
+                                   1166 ;addr                      Allocated to stack - sp -1
+                                   1167 ;val                       Allocated to stack - sp -1
+                                   1168 ;sloc0                     Allocated to stack - sp -18
+                                   1169 ;sloc1                     Allocated to stack - sp -15
+                                   1170 ;sloc2                     Allocated to stack - sp -14
+                                   1171 ;sloc3                     Allocated to stack - sp -13
+                                   1172 ;------------------------------------------------------------
+                                   1173 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:70: input(void)
+                                   1174 ;	-----------------------------------------
+                                   1175 ;	 function input
+                                   1176 ;	-----------------------------------------
+      000000                       1177 _input:
+                           000007  1178 	ar7 = 0x07
+                           000006  1179 	ar6 = 0x06
+                           000005  1180 	ar5 = 0x05
+                           000004  1181 	ar4 = 0x04
+                           000003  1182 	ar3 = 0x03
+                           000002  1183 	ar2 = 0x02
+                           000001  1184 	ar1 = 0x01
+                           000000  1185 	ar0 = 0x00
+      000000 E5 81            [12] 1186 	mov	a,sp
+      000002 24 13            [12] 1187 	add	a,#0x13
+      000004 F5 81            [12] 1188 	mov	sp,a
+                                   1189 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:80: hdr = (struct raw_hdr *)packetbuf_dataptr();
+      000006 12r00r00         [24] 1190 	lcall	_packetbuf_dataptr
+      000009 AD 82            [24] 1191 	mov	r5,dpl
+      00000B AE 83            [24] 1192 	mov	r6,dph
+      00000D AF F0            [24] 1193 	mov	r7,b
+                                   1194 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:81: if(packetbuf_hdrreduce(sizeof(struct raw_hdr)) == 0) {
+      00000F 90 00 02         [24] 1195 	mov	dptr,#0x0002
+      000012 C0 07            [24] 1196 	push	ar7
+      000014 C0 06            [24] 1197 	push	ar6
+      000016 C0 05            [24] 1198 	push	ar5
+      000018 12r00r00         [24] 1199 	lcall	_packetbuf_hdrreduce
+      00001B E5 82            [12] 1200 	mov	a,dpl
+      00001D 85 83 F0         [24] 1201 	mov	b,dph
+      000020 D0 05            [24] 1202 	pop	ar5
+      000022 D0 06            [24] 1203 	pop	ar6
+      000024 D0 07            [24] 1204 	pop	ar7
+      000026 45 F0            [12] 1205 	orl	a,b
+                                   1206 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:83: return NULL;
+      000028 70 08            [24] 1207 	jnz	00102$
+      00002A 90 00 00         [24] 1208 	mov	dptr,#0x0000
+      00002D F5 F0            [12] 1209 	mov	b,a
+      00002F 02r02rE4         [24] 1210 	ljmp	00114$
+      000032                       1211 00102$:
+                                   1212 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:85: c = channel_lookup((hdr->channel[1] << 8) + hdr->channel[0]);
+      000032 74 01            [12] 1213 	mov	a,#0x01
+      000034 2D               [12] 1214 	add	a,r5
+      000035 FA               [12] 1215 	mov	r2,a
+      000036 E4               [12] 1216 	clr	a
+      000037 3E               [12] 1217 	addc	a,r6
+      000038 FB               [12] 1218 	mov	r3,a
+      000039 8F 04            [24] 1219 	mov	ar4,r7
+      00003B 8A 82            [24] 1220 	mov	dpl,r2
+      00003D 8B 83            [24] 1221 	mov	dph,r3
+      00003F 8C F0            [24] 1222 	mov	b,r4
+      000041 12r00r00         [24] 1223 	lcall	__gptrget
+      000044 FC               [12] 1224 	mov	r4,a
+      000045 7A 00            [12] 1225 	mov	r2,#0x00
+      000047 8D 82            [24] 1226 	mov	dpl,r5
+      000049 8E 83            [24] 1227 	mov	dph,r6
+      00004B 8F F0            [24] 1228 	mov	b,r7
+      00004D 12r00r00         [24] 1229 	lcall	__gptrget
+      000050 7F 00            [12] 1230 	mov	r7,#0x00
+      000052 2A               [12] 1231 	add	a,r2
+      000053 FA               [12] 1232 	mov	r2,a
+      000054 EF               [12] 1233 	mov	a,r7
+      000055 3C               [12] 1234 	addc	a,r4
+      000056 FC               [12] 1235 	mov	r4,a
+      000057 8A 82            [24] 1236 	mov	dpl,r2
+      000059 8C 83            [24] 1237 	mov	dph,r4
+      00005B 12r00r00         [24] 1238 	lcall	_channel_lookup
+      00005E AD 82            [24] 1239 	mov	r5,dpl
+      000060 AE 83            [24] 1240 	mov	r6,dph
+      000062 AF F0            [24] 1241 	mov	r7,b
+      000064 E5 81            [12] 1242 	mov	a,sp
+      000066 24 FC            [12] 1243 	add	a,#0xfc
+      000068 F8               [12] 1244 	mov	r0,a
+      000069 A6 05            [24] 1245 	mov	@r0,ar5
+      00006B 08               [12] 1246 	inc	r0
+      00006C A6 06            [24] 1247 	mov	@r0,ar6
+      00006E 08               [12] 1248 	inc	r0
+      00006F A6 07            [24] 1249 	mov	@r0,ar7
+                                   1250 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:86: if(c == NULL) {
+      000071 E5 81            [12] 1251 	mov	a,sp
+      000073 24 FC            [12] 1252 	add	a,#0xfc
+      000075 F8               [12] 1253 	mov	r0,a
+      000076 E6               [12] 1254 	mov	a,@r0
+      000077 08               [12] 1255 	inc	r0
+      000078 46               [12] 1256 	orl	a,@r0
+                                   1257 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:89: return NULL;
+      000079 70 08            [24] 1258 	jnz	00104$
+      00007B 90 00 00         [24] 1259 	mov	dptr,#0x0000
+      00007E F5 F0            [12] 1260 	mov	b,a
+      000080 02r02rE4         [24] 1261 	ljmp	00114$
+      000083                       1262 00104$:
+                                   1263 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:92: hdrptr = packetbuf_dataptr();
+      000083 12r00r00         [24] 1264 	lcall	_packetbuf_dataptr
+      000086 AA 82            [24] 1265 	mov	r2,dpl
+      000088 AB 83            [24] 1266 	mov	r3,dph
+      00008A AC F0            [24] 1267 	mov	r4,b
+      00008C E5 81            [12] 1268 	mov	a,sp
+      00008E 24 F9            [12] 1269 	add	a,#0xf9
+      000090 F8               [12] 1270 	mov	r0,a
+      000091 A6 02            [24] 1271 	mov	@r0,ar2
+      000093 08               [12] 1272 	inc	r0
+      000094 A6 03            [24] 1273 	mov	@r0,ar3
+      000096 08               [12] 1274 	inc	r0
+      000097 A6 04            [24] 1275 	mov	@r0,ar4
+                                   1276 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:93: if(packetbuf_hdrreduce(c->hdrsize) == 0) {
+      000099 E5 81            [12] 1277 	mov	a,sp
+      00009B 24 FC            [12] 1278 	add	a,#0xfc
+      00009D F8               [12] 1279 	mov	r0,a
+      00009E 74 08            [12] 1280 	mov	a,#0x08
+      0000A0 26               [12] 1281 	add	a,@r0
+      0000A1 FD               [12] 1282 	mov	r5,a
+      0000A2 E4               [12] 1283 	clr	a
+      0000A3 08               [12] 1284 	inc	r0
+      0000A4 36               [12] 1285 	addc	a,@r0
+      0000A5 FE               [12] 1286 	mov	r6,a
+      0000A6 08               [12] 1287 	inc	r0
+      0000A7 86 07            [24] 1288 	mov	ar7,@r0
+      0000A9 8D 82            [24] 1289 	mov	dpl,r5
+      0000AB 8E 83            [24] 1290 	mov	dph,r6
+      0000AD 8F F0            [24] 1291 	mov	b,r7
+      0000AF 12r00r00         [24] 1292 	lcall	__gptrget
+      0000B2 FD               [12] 1293 	mov	r5,a
+      0000B3 7F 00            [12] 1294 	mov	r7,#0x00
+      0000B5 8D 82            [24] 1295 	mov	dpl,r5
+      0000B7 8F 83            [24] 1296 	mov	dph,r7
+      0000B9 12r00r00         [24] 1297 	lcall	_packetbuf_hdrreduce
+      0000BC E5 82            [12] 1298 	mov	a,dpl
+      0000BE 85 83 F0         [24] 1299 	mov	b,dph
+      0000C1 45 F0            [12] 1300 	orl	a,b
+                                   1301 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:95: return NULL;
+      0000C3 70 08            [24] 1302 	jnz	00106$
+      0000C5 90 00 00         [24] 1303 	mov	dptr,#0x0000
+      0000C8 F5 F0            [12] 1304 	mov	b,a
+      0000CA 02r02rE4         [24] 1305 	ljmp	00114$
+      0000CD                       1306 00106$:
+                                   1307 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:97: byteptr = bitptr = 0;
+      0000CD E5 81            [12] 1308 	mov	a,sp
+      0000CF 24 F5            [12] 1309 	add	a,#0xf5
+      0000D1 F8               [12] 1310 	mov	r0,a
+      0000D2 E4               [12] 1311 	clr	a
+      0000D3 F6               [12] 1312 	mov	@r0,a
+      0000D4 08               [12] 1313 	inc	r0
+      0000D5 F6               [12] 1314 	mov	@r0,a
+                                   1315 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:98: for(a = c->attrlist; a->type != PACKETBUF_ATTR_NONE; ++a) {
+      0000D6 E5 81            [12] 1316 	mov	a,sp
+      0000D8 24 FC            [12] 1317 	add	a,#0xfc
+      0000DA F8               [12] 1318 	mov	r0,a
+      0000DB 74 05            [12] 1319 	mov	a,#0x05
+      0000DD 26               [12] 1320 	add	a,@r0
+      0000DE FB               [12] 1321 	mov	r3,a
+      0000DF E4               [12] 1322 	clr	a
+      0000E0 08               [12] 1323 	inc	r0
+      0000E1 36               [12] 1324 	addc	a,@r0
+      0000E2 FC               [12] 1325 	mov	r4,a
+      0000E3 08               [12] 1326 	inc	r0
+      0000E4 86 05            [24] 1327 	mov	ar5,@r0
+      0000E6 8B 82            [24] 1328 	mov	dpl,r3
+      0000E8 8C 83            [24] 1329 	mov	dph,r4
+      0000EA 8D F0            [24] 1330 	mov	b,r5
+      0000EC E5 81            [12] 1331 	mov	a,sp
+      0000EE 24 EE            [12] 1332 	add	a,#0xee
+      0000F0 F8               [12] 1333 	mov	r0,a
+      0000F1 12r00r00         [24] 1334 	lcall	__gptrget
+      0000F4 F6               [12] 1335 	mov	@r0,a
+      0000F5 A3               [24] 1336 	inc	dptr
+      0000F6 12r00r00         [24] 1337 	lcall	__gptrget
+      0000F9 08               [12] 1338 	inc	r0
+      0000FA F6               [12] 1339 	mov	@r0,a
+      0000FB A3               [24] 1340 	inc	dptr
+      0000FC 12r00r00         [24] 1341 	lcall	__gptrget
+      0000FF 08               [12] 1342 	inc	r0
+      000100 F6               [12] 1343 	mov	@r0,a
+      000101 E5 81            [12] 1344 	mov	a,sp
+      000103 24 F1            [12] 1345 	add	a,#0xf1
+      000105 F8               [12] 1346 	mov	r0,a
+      000106 A6 81            [24] 1347 	mov	@r0,sp
+      000108 16               [12] 1348 	dec	@r0
+      000109 E5 81            [12] 1349 	mov	a,sp
+      00010B 24 F1            [12] 1350 	add	a,#0xf1
+      00010D F8               [12] 1351 	mov	r0,a
+      00010E E5 81            [12] 1352 	mov	a,sp
+      000110 24 F2            [12] 1353 	add	a,#0xf2
+      000112 F9               [12] 1354 	mov	r1,a
+      000113 E6               [12] 1355 	mov	a,@r0
+      000114 F7               [12] 1356 	mov	@r1,a
+                                   1357 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:128: return c;
+                                   1358 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:98: for(a = c->attrlist; a->type != PACKETBUF_ATTR_NONE; ++a) {
+      000115                       1359 00112$:
+      000115 E5 81            [12] 1360 	mov	a,sp
+      000117 24 EE            [12] 1361 	add	a,#0xee
+      000119 F8               [12] 1362 	mov	r0,a
+      00011A 86 82            [24] 1363 	mov	dpl,@r0
+      00011C 08               [12] 1364 	inc	r0
+      00011D 86 83            [24] 1365 	mov	dph,@r0
+      00011F 08               [12] 1366 	inc	r0
+      000120 86 F0            [24] 1367 	mov	b,@r0
+      000122 12r00r00         [24] 1368 	lcall	__gptrget
+      000125 FD               [12] 1369 	mov	r5,a
+      000126 BD 00 03         [24] 1370 	cjne	r5,#0x00,00143$
+      000129 02r02rD7         [24] 1371 	ljmp	00110$
+      00012C                       1372 00143$:
+                                   1373 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:109: len = (a->len & 0xf8) + ((a->len & 7) ? 8: 0);
+      00012C E5 81            [12] 1374 	mov	a,sp
+      00012E 24 EE            [12] 1375 	add	a,#0xee
+      000130 F8               [12] 1376 	mov	r0,a
+      000131 74 01            [12] 1377 	mov	a,#0x01
+      000133 26               [12] 1378 	add	a,@r0
+      000134 FB               [12] 1379 	mov	r3,a
+      000135 E4               [12] 1380 	clr	a
+      000136 08               [12] 1381 	inc	r0
+      000137 36               [12] 1382 	addc	a,@r0
+      000138 FC               [12] 1383 	mov	r4,a
+      000139 08               [12] 1384 	inc	r0
+      00013A 86 05            [24] 1385 	mov	ar5,@r0
+      00013C 8B 82            [24] 1386 	mov	dpl,r3
+      00013E 8C 83            [24] 1387 	mov	dph,r4
+      000140 8D F0            [24] 1388 	mov	b,r5
+      000142 12r00r00         [24] 1389 	lcall	__gptrget
+      000145 FB               [12] 1390 	mov	r3,a
+      000146 74 F8            [12] 1391 	mov	a,#0xF8
+      000148 5B               [12] 1392 	anl	a,r3
+      000149 FD               [12] 1393 	mov	r5,a
+      00014A FF               [12] 1394 	mov	r7,a
+      00014B 7E 00            [12] 1395 	mov	r6,#0x00
+      00014D EB               [12] 1396 	mov	a,r3
+      00014E 54 07            [12] 1397 	anl	a,#0x07
+      000150 60 02            [24] 1398 	jz	00116$
+      000152 74 08            [12] 1399 	mov	a,#0x08
+      000154                       1400 00116$:
+      000154 FD               [12] 1401 	mov	r5,a
+      000155 8D 04            [24] 1402 	mov	ar4,r5
+      000157 7D 00            [12] 1403 	mov	r5,#0x00
+      000159 EC               [12] 1404 	mov	a,r4
+      00015A 2F               [12] 1405 	add	a,r7
+      00015B FC               [12] 1406 	mov	r4,a
+      00015C ED               [12] 1407 	mov	a,r5
+      00015D 3E               [12] 1408 	addc	a,r6
+      00015E FD               [12] 1409 	mov	r5,a
+      00015F E5 81            [12] 1410 	mov	a,sp
+      000161 24 F7            [12] 1411 	add	a,#0xf7
+      000163 F8               [12] 1412 	mov	r0,a
+      000164 A6 04            [24] 1413 	mov	@r0,ar4
+      000166 08               [12] 1414 	inc	r0
+      000167 A6 05            [24] 1415 	mov	@r0,ar5
+                                   1416 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:110: if(PACKETBUF_IS_ADDR(a->type)) {
+      000169 E5 81            [12] 1417 	mov	a,sp
+      00016B 24 EE            [12] 1418 	add	a,#0xee
+      00016D F8               [12] 1419 	mov	r0,a
+      00016E 86 82            [24] 1420 	mov	dpl,@r0
+      000170 08               [12] 1421 	inc	r0
+      000171 86 83            [24] 1422 	mov	dph,@r0
+      000173 08               [12] 1423 	inc	r0
+      000174 86 F0            [24] 1424 	mov	b,@r0
+      000176 12r00r00         [24] 1425 	lcall	__gptrget
+      000179 FD               [12] 1426 	mov	r5,a
+      00017A BD 18 00         [24] 1427 	cjne	r5,#0x18,00145$
+      00017D                       1428 00145$:
+      00017D 50 03            [24] 1429 	jnc	00146$
+      00017F 02r02r16         [24] 1430 	ljmp	00108$
+      000182                       1431 00146$:
+                                   1432 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:112: memcpy((uint8_t *)&addr, &hdrptr[byteptr], len / 8);
+      000182 74 08            [12] 1433 	mov	a,#0x08
+      000184 C0 E0            [24] 1434 	push	acc
+      000186 E4               [12] 1435 	clr	a
+      000187 C0 E0            [24] 1436 	push	acc
+      000189 E5 81            [12] 1437 	mov	a,sp
+      00018B 24 F5            [12] 1438 	add	a,#0xf5
+      00018D F8               [12] 1439 	mov	r0,a
+      00018E 86 82            [24] 1440 	mov	dpl,@r0
+      000190 08               [12] 1441 	inc	r0
+      000191 86 83            [24] 1442 	mov	dph,@r0
+      000193 12r00r00         [24] 1443 	lcall	__divsint
+      000196 C8               [12] 1444 	xch	a,r0
+      000197 E5 81            [12] 1445 	mov	a,sp
+      000199 24 F1            [12] 1446 	add	a,#0xf1
+      00019B C8               [12] 1447 	xch	a,r0
+      00019C A6 82            [24] 1448 	mov	@r0,dpl
+      00019E 08               [12] 1449 	inc	r0
+      00019F A6 83            [24] 1450 	mov	@r0,dph
+      0001A1 15 81            [12] 1451 	dec	sp
+      0001A3 15 81            [12] 1452 	dec	sp
+      0001A5 E5 81            [12] 1453 	mov	a,sp
+      0001A7 24 F9            [12] 1454 	add	a,#0xf9
+      0001A9 F8               [12] 1455 	mov	r0,a
+      0001AA E5 81            [12] 1456 	mov	a,sp
+      0001AC 24 F5            [12] 1457 	add	a,#0xf5
+      0001AE F9               [12] 1458 	mov	r1,a
+      0001AF E7               [12] 1459 	mov	a,@r1
+      0001B0 26               [12] 1460 	add	a,@r0
+      0001B1 FA               [12] 1461 	mov	r2,a
+      0001B2 09               [12] 1462 	inc	r1
+      0001B3 E7               [12] 1463 	mov	a,@r1
+      0001B4 08               [12] 1464 	inc	r0
+      0001B5 36               [12] 1465 	addc	a,@r0
+      0001B6 FB               [12] 1466 	mov	r3,a
+      0001B7 08               [12] 1467 	inc	r0
+      0001B8 86 07            [24] 1468 	mov	ar7,@r0
+      0001BA E5 81            [12] 1469 	mov	a,sp
+      0001BC 24 F1            [12] 1470 	add	a,#0xf1
+      0001BE F8               [12] 1471 	mov	r0,a
+      0001BF 86 06            [24] 1472 	mov	ar6,@r0
+      0001C1 8E 04            [24] 1473 	mov	ar4,r6
+      0001C3 7D 00            [12] 1474 	mov	r5,#0x00
+      0001C5 7E 40            [12] 1475 	mov	r6,#0x40
+      0001C7 E5 81            [12] 1476 	mov	a,sp
+      0001C9 24 F3            [12] 1477 	add	a,#0xf3
+      0001CB F8               [12] 1478 	mov	r0,a
+      0001CC E6               [12] 1479 	mov	a,@r0
+      0001CD C0 E0            [24] 1480 	push	acc
+      0001CF 08               [12] 1481 	inc	r0
+      0001D0 E6               [12] 1482 	mov	a,@r0
+      0001D1 C0 E0            [24] 1483 	push	acc
+      0001D3 C0 02            [24] 1484 	push	ar2
+      0001D5 C0 03            [24] 1485 	push	ar3
+      0001D7 C0 07            [24] 1486 	push	ar7
+      0001D9 8C 82            [24] 1487 	mov	dpl,r4
+      0001DB 8D 83            [24] 1488 	mov	dph,r5
+      0001DD 8E F0            [24] 1489 	mov	b,r6
+      0001DF 12r00r00         [24] 1490 	lcall	_memcpy
+      0001E2 E5 81            [12] 1491 	mov	a,sp
+      0001E4 24 FB            [12] 1492 	add	a,#0xfb
+                                   1493 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:116: packetbuf_set_addr(a->type, &addr);
+      0001E6 F5 81            [12] 1494 	mov	sp,a
+      0001E8 24 F2            [12] 1495 	add	a,#0xf2
+      0001EA F8               [12] 1496 	mov	r0,a
+      0001EB 86 05            [24] 1497 	mov	ar5,@r0
+      0001ED 7E 00            [12] 1498 	mov	r6,#0x00
+      0001EF 7F 40            [12] 1499 	mov	r7,#0x40
+      0001F1 E5 81            [12] 1500 	mov	a,sp
+      0001F3 24 EE            [12] 1501 	add	a,#0xee
+      0001F5 F8               [12] 1502 	mov	r0,a
+      0001F6 86 82            [24] 1503 	mov	dpl,@r0
+      0001F8 08               [12] 1504 	inc	r0
+      0001F9 86 83            [24] 1505 	mov	dph,@r0
+      0001FB 08               [12] 1506 	inc	r0
+      0001FC 86 F0            [24] 1507 	mov	b,@r0
+      0001FE 12r00r00         [24] 1508 	lcall	__gptrget
+      000201 FC               [12] 1509 	mov	r4,a
+      000202 C0 05            [24] 1510 	push	ar5
+      000204 C0 06            [24] 1511 	push	ar6
+      000206 C0 07            [24] 1512 	push	ar7
+      000208 8C 82            [24] 1513 	mov	dpl,r4
+      00020A 12r00r00         [24] 1514 	lcall	_packetbuf_set_addr
+      00020D 15 81            [12] 1515 	dec	sp
+      00020F 15 81            [12] 1516 	dec	sp
+      000211 15 81            [12] 1517 	dec	sp
+      000213 02r02r9F         [24] 1518 	ljmp	00109$
+      000216                       1519 00108$:
+                                   1520 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:118: packetbuf_attr_t val = 0;
+      000216 A8 81            [24] 1521 	mov	r0,sp
+      000218 18               [12] 1522 	dec	r0
+      000219 E4               [12] 1523 	clr	a
+      00021A F6               [12] 1524 	mov	@r0,a
+      00021B 08               [12] 1525 	inc	r0
+      00021C F6               [12] 1526 	mov	@r0,a
+                                   1527 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:119: memcpy((uint8_t *)&val, &hdrptr[byteptr], len / 8);
+      00021D 74 08            [12] 1528 	mov	a,#0x08
+      00021F C0 E0            [24] 1529 	push	acc
+      000221 E4               [12] 1530 	clr	a
+      000222 C0 E0            [24] 1531 	push	acc
+      000224 E5 81            [12] 1532 	mov	a,sp
+      000226 24 F5            [12] 1533 	add	a,#0xf5
+      000228 F8               [12] 1534 	mov	r0,a
+      000229 86 82            [24] 1535 	mov	dpl,@r0
+      00022B 08               [12] 1536 	inc	r0
+      00022C 86 83            [24] 1537 	mov	dph,@r0
+      00022E 12r00r00         [24] 1538 	lcall	__divsint
+      000231 C8               [12] 1539 	xch	a,r0
+      000232 E5 81            [12] 1540 	mov	a,sp
+      000234 24 F1            [12] 1541 	add	a,#0xf1
+      000236 C8               [12] 1542 	xch	a,r0
+      000237 A6 82            [24] 1543 	mov	@r0,dpl
+      000239 08               [12] 1544 	inc	r0
+      00023A A6 83            [24] 1545 	mov	@r0,dph
+      00023C 15 81            [12] 1546 	dec	sp
+      00023E 15 81            [12] 1547 	dec	sp
+      000240 E5 81            [12] 1548 	mov	a,sp
+      000242 24 F9            [12] 1549 	add	a,#0xf9
+      000244 F8               [12] 1550 	mov	r0,a
+      000245 E5 81            [12] 1551 	mov	a,sp
+      000247 24 F5            [12] 1552 	add	a,#0xf5
+      000249 F9               [12] 1553 	mov	r1,a
+      00024A E7               [12] 1554 	mov	a,@r1
+      00024B 26               [12] 1555 	add	a,@r0
+      00024C FB               [12] 1556 	mov	r3,a
+      00024D 09               [12] 1557 	inc	r1
+      00024E E7               [12] 1558 	mov	a,@r1
+      00024F 08               [12] 1559 	inc	r0
+      000250 36               [12] 1560 	addc	a,@r0
+      000251 FC               [12] 1561 	mov	r4,a
+      000252 08               [12] 1562 	inc	r0
+      000253 86 05            [24] 1563 	mov	ar5,@r0
+      000255 AA 81            [24] 1564 	mov	r2,sp
+      000257 1A               [12] 1565 	dec	r2
+      000258 7E 00            [12] 1566 	mov	r6,#0x00
+      00025A 7F 40            [12] 1567 	mov	r7,#0x40
+      00025C E5 81            [12] 1568 	mov	a,sp
+      00025E 24 F3            [12] 1569 	add	a,#0xf3
+      000260 F8               [12] 1570 	mov	r0,a
+      000261 E6               [12] 1571 	mov	a,@r0
+      000262 C0 E0            [24] 1572 	push	acc
+      000264 08               [12] 1573 	inc	r0
+      000265 E6               [12] 1574 	mov	a,@r0
+      000266 C0 E0            [24] 1575 	push	acc
+      000268 C0 03            [24] 1576 	push	ar3
+      00026A C0 04            [24] 1577 	push	ar4
+      00026C C0 05            [24] 1578 	push	ar5
+      00026E 8A 82            [24] 1579 	mov	dpl,r2
+      000270 8E 83            [24] 1580 	mov	dph,r6
+      000272 8F F0            [24] 1581 	mov	b,r7
+      000274 12r00r00         [24] 1582 	lcall	_memcpy
+      000277 E5 81            [12] 1583 	mov	a,sp
+      000279 24 FB            [12] 1584 	add	a,#0xfb
+                                   1585 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:121: packetbuf_set_attr(a->type, val);
+      00027B F5 81            [12] 1586 	mov	sp,a
+      00027D 24 EE            [12] 1587 	add	a,#0xee
+      00027F F8               [12] 1588 	mov	r0,a
+      000280 86 82            [24] 1589 	mov	dpl,@r0
+      000282 08               [12] 1590 	inc	r0
+      000283 86 83            [24] 1591 	mov	dph,@r0
+      000285 08               [12] 1592 	inc	r0
+      000286 86 F0            [24] 1593 	mov	b,@r0
+      000288 12r00r00         [24] 1594 	lcall	__gptrget
+      00028B FF               [12] 1595 	mov	r7,a
+      00028C A8 81            [24] 1596 	mov	r0,sp
+      00028E 18               [12] 1597 	dec	r0
+      00028F E6               [12] 1598 	mov	a,@r0
+      000290 C0 E0            [24] 1599 	push	acc
+      000292 08               [12] 1600 	inc	r0
+      000293 E6               [12] 1601 	mov	a,@r0
+      000294 C0 E0            [24] 1602 	push	acc
+      000296 8F 82            [24] 1603 	mov	dpl,r7
+      000298 12r00r00         [24] 1604 	lcall	_packetbuf_set_attr
+      00029B 15 81            [12] 1605 	dec	sp
+      00029D 15 81            [12] 1606 	dec	sp
+      00029F                       1607 00109$:
+                                   1608 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:126: byteptr += len / 8;
+      00029F 74 08            [12] 1609 	mov	a,#0x08
+      0002A1 C0 E0            [24] 1610 	push	acc
+      0002A3 E4               [12] 1611 	clr	a
+      0002A4 C0 E0            [24] 1612 	push	acc
+      0002A6 E5 81            [12] 1613 	mov	a,sp
+      0002A8 24 F5            [12] 1614 	add	a,#0xf5
+      0002AA F8               [12] 1615 	mov	r0,a
+      0002AB 86 82            [24] 1616 	mov	dpl,@r0
+      0002AD 08               [12] 1617 	inc	r0
+      0002AE 86 83            [24] 1618 	mov	dph,@r0
+      0002B0 12r00r00         [24] 1619 	lcall	__divsint
+      0002B3 AE 82            [24] 1620 	mov	r6,dpl
+      0002B5 AF 83            [24] 1621 	mov	r7,dph
+      0002B7 15 81            [12] 1622 	dec	sp
+      0002B9 15 81            [12] 1623 	dec	sp
+      0002BB E5 81            [12] 1624 	mov	a,sp
+      0002BD 24 F5            [12] 1625 	add	a,#0xf5
+      0002BF F8               [12] 1626 	mov	r0,a
+      0002C0 EE               [12] 1627 	mov	a,r6
+      0002C1 26               [12] 1628 	add	a,@r0
+      0002C2 F6               [12] 1629 	mov	@r0,a
+      0002C3 EF               [12] 1630 	mov	a,r7
+      0002C4 08               [12] 1631 	inc	r0
+      0002C5 36               [12] 1632 	addc	a,@r0
+      0002C6 F6               [12] 1633 	mov	@r0,a
+                                   1634 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:98: for(a = c->attrlist; a->type != PACKETBUF_ATTR_NONE; ++a) {
+      0002C7 E5 81            [12] 1635 	mov	a,sp
+      0002C9 24 EE            [12] 1636 	add	a,#0xee
+      0002CB F8               [12] 1637 	mov	r0,a
+      0002CC 74 02            [12] 1638 	mov	a,#0x02
+      0002CE 26               [12] 1639 	add	a,@r0
+      0002CF F6               [12] 1640 	mov	@r0,a
+      0002D0 E4               [12] 1641 	clr	a
+      0002D1 08               [12] 1642 	inc	r0
+      0002D2 36               [12] 1643 	addc	a,@r0
+      0002D3 F6               [12] 1644 	mov	@r0,a
+      0002D4 02r01r15         [24] 1645 	ljmp	00112$
+      0002D7                       1646 00110$:
+                                   1647 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:128: return c;
+      0002D7 E5 81            [12] 1648 	mov	a,sp
+      0002D9 24 FC            [12] 1649 	add	a,#0xfc
+      0002DB F8               [12] 1650 	mov	r0,a
+      0002DC 86 82            [24] 1651 	mov	dpl,@r0
+      0002DE 08               [12] 1652 	inc	r0
+      0002DF 86 83            [24] 1653 	mov	dph,@r0
+      0002E1 08               [12] 1654 	inc	r0
+      0002E2 86 F0            [24] 1655 	mov	b,@r0
+      0002E4                       1656 00114$:
+      0002E4 C8               [12] 1657 	xch	a,r0
+      0002E5 E5 81            [12] 1658 	mov	a,sp
+      0002E7 24 ED            [12] 1659 	add	a,#0xED
+      0002E9 F5 81            [12] 1660 	mov	sp,a
+      0002EB C8               [12] 1661 	xch	a,r0
+      0002EC 22               [24] 1662 	ret
+                                   1663 ;------------------------------------------------------------
+                                   1664 ;Allocation info for local variables in function 'output'
+                                   1665 ;------------------------------------------------------------
+                                   1666 ;c                         Allocated to stack - sp -17
+                                   1667 ;a                         Allocated to registers 
+                                   1668 ;byteptr                   Allocated to stack - sp -12
+                                   1669 ;len                       Allocated to stack - sp -10
+                                   1670 ;hdrptr                    Allocated to stack - sp -8
+                                   1671 ;hdr                       Allocated to stack - sp -5
+                                   1672 ;rimeaddr                  Allocated to stack - sp -2
+                                   1673 ;val                       Allocated to stack - sp -2
+                                   1674 ;sloc0                     Allocated to stack - sp -14
+                                   1675 ;------------------------------------------------------------
+                                   1676 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:132: output(struct channel *c)
+                                   1677 ;	-----------------------------------------
+                                   1678 ;	 function output
+                                   1679 ;	-----------------------------------------
+      0002ED                       1680 _output:
+      0002ED C0 82            [24] 1681 	push	dpl
+      0002EF C0 83            [24] 1682 	push	dph
+      0002F1 C0 F0            [24] 1683 	push	b
+      0002F3 E5 81            [12] 1684 	mov	a,sp
+      0002F5 24 0F            [12] 1685 	add	a,#0x0F
+                                   1686 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:141: if(packetbuf_hdralloc(c->hdrsize + sizeof(struct raw_hdr)) == 0) {
+      0002F7 F5 81            [12] 1687 	mov	sp,a
+      0002F9 24 EF            [12] 1688 	add	a,#0xef
+      0002FB F8               [12] 1689 	mov	r0,a
+      0002FC 74 08            [12] 1690 	mov	a,#0x08
+      0002FE 26               [12] 1691 	add	a,@r0
+      0002FF FA               [12] 1692 	mov	r2,a
+      000300 E4               [12] 1693 	clr	a
+      000301 08               [12] 1694 	inc	r0
+      000302 36               [12] 1695 	addc	a,@r0
+      000303 FB               [12] 1696 	mov	r3,a
+      000304 08               [12] 1697 	inc	r0
+      000305 86 04            [24] 1698 	mov	ar4,@r0
+      000307 8A 82            [24] 1699 	mov	dpl,r2
+      000309 8B 83            [24] 1700 	mov	dph,r3
+      00030B 8C F0            [24] 1701 	mov	b,r4
+      00030D 12r00r00         [24] 1702 	lcall	__gptrget
+      000310 FA               [12] 1703 	mov	r2,a
+      000311 7C 00            [12] 1704 	mov	r4,#0x00
+      000313 74 02            [12] 1705 	mov	a,#0x02
+      000315 2A               [12] 1706 	add	a,r2
+      000316 FA               [12] 1707 	mov	r2,a
+      000317 E4               [12] 1708 	clr	a
+      000318 3C               [12] 1709 	addc	a,r4
+      000319 FC               [12] 1710 	mov	r4,a
+      00031A 8A 82            [24] 1711 	mov	dpl,r2
+      00031C 8C 83            [24] 1712 	mov	dph,r4
+      00031E 12r00r00         [24] 1713 	lcall	_packetbuf_hdralloc
+      000321 E5 82            [12] 1714 	mov	a,dpl
+      000323 85 83 F0         [24] 1715 	mov	b,dph
+      000326 45 F0            [12] 1716 	orl	a,b
+      000328 70 06            [24] 1717 	jnz	00102$
+                                   1718 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:143: return 0;
+      00032A 90 00 00         [24] 1719 	mov	dptr,#0x0000
+      00032D 02r05rCD         [24] 1720 	ljmp	00110$
+      000330                       1721 00102$:
+                                   1722 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:145: hdr = (struct raw_hdr *)packetbuf_hdrptr();
+      000330 12r00r00         [24] 1723 	lcall	_packetbuf_hdrptr
+      000333 AA 82            [24] 1724 	mov	r2,dpl
+      000335 AB 83            [24] 1725 	mov	r3,dph
+      000337 AC F0            [24] 1726 	mov	r4,b
+      000339 E5 81            [12] 1727 	mov	a,sp
+      00033B 24 FB            [12] 1728 	add	a,#0xfb
+      00033D F8               [12] 1729 	mov	r0,a
+      00033E A6 02            [24] 1730 	mov	@r0,ar2
+      000340 08               [12] 1731 	inc	r0
+      000341 A6 03            [24] 1732 	mov	@r0,ar3
+      000343 08               [12] 1733 	inc	r0
+      000344 A6 04            [24] 1734 	mov	@r0,ar4
+                                   1735 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:146: hdr->channel[0] = c->channelno & 0xff;
+      000346 E5 81            [12] 1736 	mov	a,sp
+      000348 24 EF            [12] 1737 	add	a,#0xef
+      00034A F8               [12] 1738 	mov	r0,a
+      00034B 74 03            [12] 1739 	mov	a,#0x03
+      00034D 26               [12] 1740 	add	a,@r0
+      00034E FD               [12] 1741 	mov	r5,a
+      00034F E4               [12] 1742 	clr	a
+      000350 08               [12] 1743 	inc	r0
+      000351 36               [12] 1744 	addc	a,@r0
+      000352 FE               [12] 1745 	mov	r6,a
+      000353 08               [12] 1746 	inc	r0
+      000354 86 07            [24] 1747 	mov	ar7,@r0
+      000356 8D 82            [24] 1748 	mov	dpl,r5
+      000358 8E 83            [24] 1749 	mov	dph,r6
+      00035A 8F F0            [24] 1750 	mov	b,r7
+      00035C 12r00r00         [24] 1751 	lcall	__gptrget
+      00035F FB               [12] 1752 	mov	r3,a
+      000360 A3               [24] 1753 	inc	dptr
+      000361 12r00r00         [24] 1754 	lcall	__gptrget
+      000364 E5 81            [12] 1755 	mov	a,sp
+      000366 24 FB            [12] 1756 	add	a,#0xfb
+      000368 F8               [12] 1757 	mov	r0,a
+      000369 86 82            [24] 1758 	mov	dpl,@r0
+      00036B 08               [12] 1759 	inc	r0
+      00036C 86 83            [24] 1760 	mov	dph,@r0
+      00036E 08               [12] 1761 	inc	r0
+      00036F 86 F0            [24] 1762 	mov	b,@r0
+      000371 EB               [12] 1763 	mov	a,r3
+      000372 12r00r00         [24] 1764 	lcall	__gptrput
+                                   1765 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:147: hdr->channel[1] = (c->channelno >> 8) & 0xff;
+      000375 E5 81            [12] 1766 	mov	a,sp
+      000377 24 FB            [12] 1767 	add	a,#0xfb
+      000379 F8               [12] 1768 	mov	r0,a
+      00037A 74 01            [12] 1769 	mov	a,#0x01
+      00037C 26               [12] 1770 	add	a,@r0
+      00037D FA               [12] 1771 	mov	r2,a
+      00037E E4               [12] 1772 	clr	a
+      00037F 08               [12] 1773 	inc	r0
+      000380 36               [12] 1774 	addc	a,@r0
+      000381 FB               [12] 1775 	mov	r3,a
+      000382 08               [12] 1776 	inc	r0
+      000383 86 04            [24] 1777 	mov	ar4,@r0
+      000385 8D 82            [24] 1778 	mov	dpl,r5
+      000387 8E 83            [24] 1779 	mov	dph,r6
+      000389 8F F0            [24] 1780 	mov	b,r7
+      00038B 12r00r00         [24] 1781 	lcall	__gptrget
+      00038E A3               [24] 1782 	inc	dptr
+      00038F 12r00r00         [24] 1783 	lcall	__gptrget
+      000392 8A 82            [24] 1784 	mov	dpl,r2
+      000394 8B 83            [24] 1785 	mov	dph,r3
+      000396 8C F0            [24] 1786 	mov	b,r4
+      000398 12r00r00         [24] 1787 	lcall	__gptrput
+                                   1788 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:149: hdrptr = ((uint8_t *)packetbuf_hdrptr()) + sizeof(struct raw_hdr);
+      00039B 12r00r00         [24] 1789 	lcall	_packetbuf_hdrptr
+      00039E AD 82            [24] 1790 	mov	r5,dpl
+      0003A0 AE 83            [24] 1791 	mov	r6,dph
+      0003A2 AF F0            [24] 1792 	mov	r7,b
+      0003A4 E5 81            [12] 1793 	mov	a,sp
+      0003A6 24 F8            [12] 1794 	add	a,#0xf8
+      0003A8 F8               [12] 1795 	mov	r0,a
+      0003A9 74 02            [12] 1796 	mov	a,#0x02
+      0003AB 2D               [12] 1797 	add	a,r5
+      0003AC F6               [12] 1798 	mov	@r0,a
+      0003AD E4               [12] 1799 	clr	a
+      0003AE 3E               [12] 1800 	addc	a,r6
+      0003AF 08               [12] 1801 	inc	r0
+      0003B0 F6               [12] 1802 	mov	@r0,a
+      0003B1 08               [12] 1803 	inc	r0
+      0003B2 A6 07            [24] 1804 	mov	@r0,ar7
+                                   1805 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:150: byteptr = 0;
+      0003B4 E5 81            [12] 1806 	mov	a,sp
+      0003B6 24 F4            [12] 1807 	add	a,#0xf4
+      0003B8 F8               [12] 1808 	mov	r0,a
+      0003B9 E4               [12] 1809 	clr	a
+      0003BA F6               [12] 1810 	mov	@r0,a
+      0003BB 08               [12] 1811 	inc	r0
+      0003BC F6               [12] 1812 	mov	@r0,a
+                                   1813 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:151: for(a = c->attrlist; a->type != PACKETBUF_ATTR_NONE; ++a) {
+      0003BD E5 81            [12] 1814 	mov	a,sp
+      0003BF 24 EF            [12] 1815 	add	a,#0xef
+      0003C1 F8               [12] 1816 	mov	r0,a
+      0003C2 74 05            [12] 1817 	mov	a,#0x05
+      0003C4 26               [12] 1818 	add	a,@r0
+      0003C5 FA               [12] 1819 	mov	r2,a
+      0003C6 E4               [12] 1820 	clr	a
+      0003C7 08               [12] 1821 	inc	r0
+      0003C8 36               [12] 1822 	addc	a,@r0
+      0003C9 FE               [12] 1823 	mov	r6,a
+      0003CA 08               [12] 1824 	inc	r0
+      0003CB 86 07            [24] 1825 	mov	ar7,@r0
+      0003CD 8A 82            [24] 1826 	mov	dpl,r2
+      0003CF 8E 83            [24] 1827 	mov	dph,r6
+      0003D1 8F F0            [24] 1828 	mov	b,r7
+      0003D3 12r00r00         [24] 1829 	lcall	__gptrget
+      0003D6 FD               [12] 1830 	mov	r5,a
+      0003D7 A3               [24] 1831 	inc	dptr
+      0003D8 12r00r00         [24] 1832 	lcall	__gptrget
+      0003DB FE               [12] 1833 	mov	r6,a
+      0003DC A3               [24] 1834 	inc	dptr
+      0003DD 12r00r00         [24] 1835 	lcall	__gptrget
+      0003E0 FF               [12] 1836 	mov	r7,a
+      0003E1                       1837 00108$:
+      0003E1 8D 82            [24] 1838 	mov	dpl,r5
+      0003E3 8E 83            [24] 1839 	mov	dph,r6
+      0003E5 8F F0            [24] 1840 	mov	b,r7
+      0003E7 12r00r00         [24] 1841 	lcall	__gptrget
+      0003EA FA               [12] 1842 	mov	r2,a
+      0003EB BA 00 03         [24] 1843 	cjne	r2,#0x00,00131$
+      0003EE 02r05rCA         [24] 1844 	ljmp	00106$
+      0003F1                       1845 00131$:
+                                   1846 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:163: len = (a->len & 0xf8) + ((a->len & 7) ? 8: 0);
+      0003F1 74 01            [12] 1847 	mov	a,#0x01
+      0003F3 2D               [12] 1848 	add	a,r5
+      0003F4 FA               [12] 1849 	mov	r2,a
+      0003F5 E4               [12] 1850 	clr	a
+      0003F6 3E               [12] 1851 	addc	a,r6
+      0003F7 FB               [12] 1852 	mov	r3,a
+      0003F8 8F 04            [24] 1853 	mov	ar4,r7
+      0003FA 8A 82            [24] 1854 	mov	dpl,r2
+      0003FC 8B 83            [24] 1855 	mov	dph,r3
+      0003FE 8C F0            [24] 1856 	mov	b,r4
+      000400 12r00r00         [24] 1857 	lcall	__gptrget
+      000403 FA               [12] 1858 	mov	r2,a
+      000404 74 F8            [12] 1859 	mov	a,#0xF8
+      000406 5A               [12] 1860 	anl	a,r2
+      000407 FC               [12] 1861 	mov	r4,a
+      000408 E5 81            [12] 1862 	mov	a,sp
+      00040A 24 F2            [12] 1863 	add	a,#0xf2
+      00040C F8               [12] 1864 	mov	r0,a
+      00040D A6 04            [24] 1865 	mov	@r0,ar4
+      00040F 08               [12] 1866 	inc	r0
+      000410 76 00            [12] 1867 	mov	@r0,#0x00
+      000412 EA               [12] 1868 	mov	a,r2
+      000413 54 07            [12] 1869 	anl	a,#0x07
+      000415 60 04            [24] 1870 	jz	00112$
+      000417 7A 08            [12] 1871 	mov	r2,#0x08
+      000419 80 02            [24] 1872 	sjmp	00113$
+      00041B                       1873 00112$:
+      00041B 7A 00            [12] 1874 	mov	r2,#0x00
+      00041D                       1875 00113$:
+      00041D 7C 00            [12] 1876 	mov	r4,#0x00
+      00041F E5 81            [12] 1877 	mov	a,sp
+      000421 24 F2            [12] 1878 	add	a,#0xf2
+      000423 F8               [12] 1879 	mov	r0,a
+      000424 EA               [12] 1880 	mov	a,r2
+      000425 26               [12] 1881 	add	a,@r0
+      000426 FA               [12] 1882 	mov	r2,a
+      000427 EC               [12] 1883 	mov	a,r4
+      000428 08               [12] 1884 	inc	r0
+      000429 36               [12] 1885 	addc	a,@r0
+      00042A FC               [12] 1886 	mov	r4,a
+      00042B E5 81            [12] 1887 	mov	a,sp
+      00042D 24 F6            [12] 1888 	add	a,#0xf6
+      00042F F8               [12] 1889 	mov	r0,a
+      000430 A6 02            [24] 1890 	mov	@r0,ar2
+      000432 08               [12] 1891 	inc	r0
+      000433 A6 04            [24] 1892 	mov	@r0,ar4
+                                   1893 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:164: if(PACKETBUF_IS_ADDR(a->type)) {
+      000435 8D 82            [24] 1894 	mov	dpl,r5
+      000437 8E 83            [24] 1895 	mov	dph,r6
+      000439 8F F0            [24] 1896 	mov	b,r7
+      00043B 12r00r00         [24] 1897 	lcall	__gptrget
+      00043E FC               [12] 1898 	mov	r4,a
+      00043F BC 18 00         [24] 1899 	cjne	r4,#0x18,00133$
+      000442                       1900 00133$:
+      000442 50 03            [24] 1901 	jnc	00134$
+      000444 02r04rE7         [24] 1902 	ljmp	00104$
+      000447                       1903 00134$:
+                                   1904 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:167: rimeaddr = packetbuf_addr(a->type);
+      000447 C0 05            [24] 1905 	push	ar5
+      000449 C0 06            [24] 1906 	push	ar6
+      00044B C0 07            [24] 1907 	push	ar7
+      00044D 8C 82            [24] 1908 	mov	dpl,r4
+      00044F C0 07            [24] 1909 	push	ar7
+      000451 C0 06            [24] 1910 	push	ar6
+      000453 C0 05            [24] 1911 	push	ar5
+      000455 12r00r00         [24] 1912 	lcall	_packetbuf_addr
+      000458 AC 82            [24] 1913 	mov	r4,dpl
+      00045A AB 83            [24] 1914 	mov	r3,dph
+      00045C AA F0            [24] 1915 	mov	r2,b
+      00045E D0 05            [24] 1916 	pop	ar5
+      000460 D0 06            [24] 1917 	pop	ar6
+      000462 D0 07            [24] 1918 	pop	ar7
+      000464 E5 81            [12] 1919 	mov	a,sp
+      000466 24 FB            [12] 1920 	add	a,#0xfb
+      000468 F8               [12] 1921 	mov	r0,a
+      000469 A6 04            [24] 1922 	mov	@r0,ar4
+      00046B 08               [12] 1923 	inc	r0
+      00046C A6 03            [24] 1924 	mov	@r0,ar3
+      00046E 08               [12] 1925 	inc	r0
+      00046F A6 02            [24] 1926 	mov	@r0,ar2
+                                   1927 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:168: hdrptr[byteptr] = rimeaddr->u8[0];
+      000471 E5 81            [12] 1928 	mov	a,sp
+      000473 24 F5            [12] 1929 	add	a,#0xf5
+      000475 F8               [12] 1930 	mov	r0,a
+      000476 E5 81            [12] 1931 	mov	a,sp
+      000478 24 F1            [12] 1932 	add	a,#0xf1
+      00047A F9               [12] 1933 	mov	r1,a
+      00047B E7               [12] 1934 	mov	a,@r1
+      00047C 26               [12] 1935 	add	a,@r0
+      00047D FA               [12] 1936 	mov	r2,a
+      00047E 09               [12] 1937 	inc	r1
+      00047F E7               [12] 1938 	mov	a,@r1
+      000480 08               [12] 1939 	inc	r0
+      000481 36               [12] 1940 	addc	a,@r0
+      000482 FE               [12] 1941 	mov	r6,a
+      000483 08               [12] 1942 	inc	r0
+      000484 86 07            [24] 1943 	mov	ar7,@r0
+      000486 E5 81            [12] 1944 	mov	a,sp
+      000488 24 FB            [12] 1945 	add	a,#0xfb
+      00048A F8               [12] 1946 	mov	r0,a
+      00048B 86 82            [24] 1947 	mov	dpl,@r0
+      00048D 08               [12] 1948 	inc	r0
+      00048E 86 83            [24] 1949 	mov	dph,@r0
+      000490 08               [12] 1950 	inc	r0
+      000491 86 F0            [24] 1951 	mov	b,@r0
+      000493 12r00r00         [24] 1952 	lcall	__gptrget
+      000496 8A 82            [24] 1953 	mov	dpl,r2
+      000498 8E 83            [24] 1954 	mov	dph,r6
+      00049A 8F F0            [24] 1955 	mov	b,r7
+      00049C 12r00r00         [24] 1956 	lcall	__gptrput
+                                   1957 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:169: hdrptr[byteptr + 1] = rimeaddr->u8[1];
+      00049F E5 81            [12] 1958 	mov	a,sp
+      0004A1 24 F1            [12] 1959 	add	a,#0xf1
+      0004A3 F8               [12] 1960 	mov	r0,a
+      0004A4 74 01            [12] 1961 	mov	a,#0x01
+      0004A6 26               [12] 1962 	add	a,@r0
+      0004A7 FE               [12] 1963 	mov	r6,a
+      0004A8 E4               [12] 1964 	clr	a
+      0004A9 08               [12] 1965 	inc	r0
+      0004AA 36               [12] 1966 	addc	a,@r0
+      0004AB FF               [12] 1967 	mov	r7,a
+      0004AC E5 81            [12] 1968 	mov	a,sp
+      0004AE 24 F5            [12] 1969 	add	a,#0xf5
+      0004B0 F8               [12] 1970 	mov	r0,a
+      0004B1 EE               [12] 1971 	mov	a,r6
+      0004B2 26               [12] 1972 	add	a,@r0
+      0004B3 FE               [12] 1973 	mov	r6,a
+      0004B4 EF               [12] 1974 	mov	a,r7
+      0004B5 08               [12] 1975 	inc	r0
+      0004B6 36               [12] 1976 	addc	a,@r0
+      0004B7 FF               [12] 1977 	mov	r7,a
+      0004B8 08               [12] 1978 	inc	r0
+      0004B9 86 05            [24] 1979 	mov	ar5,@r0
+      0004BB E5 81            [12] 1980 	mov	a,sp
+      0004BD 24 FB            [12] 1981 	add	a,#0xfb
+      0004BF F8               [12] 1982 	mov	r0,a
+      0004C0 74 01            [12] 1983 	mov	a,#0x01
+      0004C2 26               [12] 1984 	add	a,@r0
+      0004C3 FA               [12] 1985 	mov	r2,a
+      0004C4 E4               [12] 1986 	clr	a
+      0004C5 08               [12] 1987 	inc	r0
+      0004C6 36               [12] 1988 	addc	a,@r0
+      0004C7 FB               [12] 1989 	mov	r3,a
+      0004C8 08               [12] 1990 	inc	r0
+      0004C9 86 04            [24] 1991 	mov	ar4,@r0
+      0004CB 8A 82            [24] 1992 	mov	dpl,r2
+      0004CD 8B 83            [24] 1993 	mov	dph,r3
+      0004CF 8C F0            [24] 1994 	mov	b,r4
+      0004D1 12r00r00         [24] 1995 	lcall	__gptrget
+      0004D4 FA               [12] 1996 	mov	r2,a
+      0004D5 8E 82            [24] 1997 	mov	dpl,r6
+      0004D7 8F 83            [24] 1998 	mov	dph,r7
+      0004D9 8D F0            [24] 1999 	mov	b,r5
+      0004DB 12r00r00         [24] 2000 	lcall	__gptrput
+      0004DE D0 07            [24] 2001 	pop	ar7
+      0004E0 D0 06            [24] 2002 	pop	ar6
+      0004E2 D0 05            [24] 2003 	pop	ar5
+      0004E4 02r05r8C         [24] 2004 	ljmp	00105$
+      0004E7                       2005 00104$:
+                                   2006 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:177: val = packetbuf_attr(a->type);
+      0004E7 C0 05            [24] 2007 	push	ar5
+      0004E9 C0 06            [24] 2008 	push	ar6
+      0004EB C0 07            [24] 2009 	push	ar7
+      0004ED 8C 82            [24] 2010 	mov	dpl,r4
+      0004EF C0 07            [24] 2011 	push	ar7
+      0004F1 C0 06            [24] 2012 	push	ar6
+      0004F3 C0 05            [24] 2013 	push	ar5
+      0004F5 12r00r00         [24] 2014 	lcall	_packetbuf_attr
+      0004F8 AB 82            [24] 2015 	mov	r3,dpl
+      0004FA AC 83            [24] 2016 	mov	r4,dph
+      0004FC D0 05            [24] 2017 	pop	ar5
+      0004FE D0 06            [24] 2018 	pop	ar6
+      000500 D0 07            [24] 2019 	pop	ar7
+      000502 E5 81            [12] 2020 	mov	a,sp
+      000504 24 FB            [12] 2021 	add	a,#0xfb
+      000506 F8               [12] 2022 	mov	r0,a
+      000507 A6 03            [24] 2023 	mov	@r0,ar3
+      000509 08               [12] 2024 	inc	r0
+      00050A A6 04            [24] 2025 	mov	@r0,ar4
+                                   2026 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:178: memcpy(&hdrptr[byteptr], &val, len / 8);
+      00050C C0 07            [24] 2027 	push	ar7
+      00050E C0 06            [24] 2028 	push	ar6
+      000510 C0 05            [24] 2029 	push	ar5
+      000512 74 08            [12] 2030 	mov	a,#0x08
+      000514 C0 E0            [24] 2031 	push	acc
+      000516 E4               [12] 2032 	clr	a
+      000517 C0 E0            [24] 2033 	push	acc
+      000519 E5 81            [12] 2034 	mov	a,sp
+      00051B 24 EE            [12] 2035 	add	a,#0xee
+      00051D F8               [12] 2036 	mov	r0,a
+      00051E 86 82            [24] 2037 	mov	dpl,@r0
+      000520 08               [12] 2038 	inc	r0
+      000521 86 83            [24] 2039 	mov	dph,@r0
+      000523 12r00r00         [24] 2040 	lcall	__divsint
+      000526 C8               [12] 2041 	xch	a,r0
+      000527 E5 81            [12] 2042 	mov	a,sp
+      000529 24 EA            [12] 2043 	add	a,#0xea
+      00052B C8               [12] 2044 	xch	a,r0
+      00052C A6 82            [24] 2045 	mov	@r0,dpl
+      00052E 08               [12] 2046 	inc	r0
+      00052F A6 83            [24] 2047 	mov	@r0,dph
+      000531 15 81            [12] 2048 	dec	sp
+      000533 15 81            [12] 2049 	dec	sp
+      000535 D0 05            [24] 2050 	pop	ar5
+      000537 D0 06            [24] 2051 	pop	ar6
+      000539 D0 07            [24] 2052 	pop	ar7
+      00053B E5 81            [12] 2053 	mov	a,sp
+      00053D 24 FB            [12] 2054 	add	a,#0xFB
+      00053F FA               [12] 2055 	mov	r2,a
+      000540 7E 00            [12] 2056 	mov	r6,#0x00
+      000542 7F 40            [12] 2057 	mov	r7,#0x40
+      000544 E5 81            [12] 2058 	mov	a,sp
+      000546 24 F5            [12] 2059 	add	a,#0xf5
+      000548 F8               [12] 2060 	mov	r0,a
+      000549 E5 81            [12] 2061 	mov	a,sp
+      00054B 24 F1            [12] 2062 	add	a,#0xf1
+      00054D F9               [12] 2063 	mov	r1,a
+      00054E E7               [12] 2064 	mov	a,@r1
+      00054F 26               [12] 2065 	add	a,@r0
+      000550 FB               [12] 2066 	mov	r3,a
+      000551 09               [12] 2067 	inc	r1
+      000552 E7               [12] 2068 	mov	a,@r1
+      000553 08               [12] 2069 	inc	r0
+      000554 36               [12] 2070 	addc	a,@r0
+      000555 FC               [12] 2071 	mov	r4,a
+      000556 08               [12] 2072 	inc	r0
+      000557 86 05            [24] 2073 	mov	ar5,@r0
+      000559 C0 07            [24] 2074 	push	ar7
+      00055B C0 06            [24] 2075 	push	ar6
+      00055D C0 05            [24] 2076 	push	ar5
+      00055F E5 81            [12] 2077 	mov	a,sp
+      000561 24 EC            [12] 2078 	add	a,#0xec
+      000563 F8               [12] 2079 	mov	r0,a
+      000564 E6               [12] 2080 	mov	a,@r0
+      000565 C0 E0            [24] 2081 	push	acc
+      000567 08               [12] 2082 	inc	r0
+      000568 E6               [12] 2083 	mov	a,@r0
+      000569 C0 E0            [24] 2084 	push	acc
+      00056B C0 02            [24] 2085 	push	ar2
+      00056D C0 06            [24] 2086 	push	ar6
+      00056F C0 07            [24] 2087 	push	ar7
+      000571 8B 82            [24] 2088 	mov	dpl,r3
+      000573 8C 83            [24] 2089 	mov	dph,r4
+      000575 8D F0            [24] 2090 	mov	b,r5
+      000577 12r00r00         [24] 2091 	lcall	_memcpy
+      00057A E5 81            [12] 2092 	mov	a,sp
+      00057C 24 FB            [12] 2093 	add	a,#0xfb
+      00057E F5 81            [12] 2094 	mov	sp,a
+      000580 D0 05            [24] 2095 	pop	ar5
+      000582 D0 06            [24] 2096 	pop	ar6
+      000584 D0 07            [24] 2097 	pop	ar7
+                                   2098 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:186: return 1; /* Send out packet */
+      000586 D0 07            [24] 2099 	pop	ar7
+      000588 D0 06            [24] 2100 	pop	ar6
+      00058A D0 05            [24] 2101 	pop	ar5
+                                   2102 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:178: memcpy(&hdrptr[byteptr], &val, len / 8);
+      00058C                       2103 00105$:
+                                   2104 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:183: byteptr += len / 8;
+      00058C C0 07            [24] 2105 	push	ar7
+      00058E C0 06            [24] 2106 	push	ar6
+      000590 C0 05            [24] 2107 	push	ar5
+      000592 74 08            [12] 2108 	mov	a,#0x08
+      000594 C0 E0            [24] 2109 	push	acc
+      000596 E4               [12] 2110 	clr	a
+      000597 C0 E0            [24] 2111 	push	acc
+      000599 E5 81            [12] 2112 	mov	a,sp
+      00059B 24 F1            [12] 2113 	add	a,#0xf1
+      00059D F8               [12] 2114 	mov	r0,a
+      00059E 86 82            [24] 2115 	mov	dpl,@r0
+      0005A0 08               [12] 2116 	inc	r0
+      0005A1 86 83            [24] 2117 	mov	dph,@r0
+      0005A3 12r00r00         [24] 2118 	lcall	__divsint
+      0005A6 AB 82            [24] 2119 	mov	r3,dpl
+      0005A8 AC 83            [24] 2120 	mov	r4,dph
+      0005AA 15 81            [12] 2121 	dec	sp
+      0005AC 15 81            [12] 2122 	dec	sp
+      0005AE D0 05            [24] 2123 	pop	ar5
+      0005B0 D0 06            [24] 2124 	pop	ar6
+      0005B2 D0 07            [24] 2125 	pop	ar7
+      0005B4 E5 81            [12] 2126 	mov	a,sp
+      0005B6 24 F4            [12] 2127 	add	a,#0xf4
+      0005B8 F8               [12] 2128 	mov	r0,a
+      0005B9 EB               [12] 2129 	mov	a,r3
+      0005BA 26               [12] 2130 	add	a,@r0
+      0005BB F6               [12] 2131 	mov	@r0,a
+      0005BC EC               [12] 2132 	mov	a,r4
+      0005BD 08               [12] 2133 	inc	r0
+      0005BE 36               [12] 2134 	addc	a,@r0
+      0005BF F6               [12] 2135 	mov	@r0,a
+                                   2136 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:151: for(a = c->attrlist; a->type != PACKETBUF_ATTR_NONE; ++a) {
+      0005C0 74 02            [12] 2137 	mov	a,#0x02
+      0005C2 2D               [12] 2138 	add	a,r5
+      0005C3 FD               [12] 2139 	mov	r5,a
+      0005C4 E4               [12] 2140 	clr	a
+      0005C5 3E               [12] 2141 	addc	a,r6
+      0005C6 FE               [12] 2142 	mov	r6,a
+      0005C7 02r03rE1         [24] 2143 	ljmp	00108$
+      0005CA                       2144 00106$:
+                                   2145 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:186: return 1; /* Send out packet */
+      0005CA 90 00 01         [24] 2146 	mov	dptr,#0x0001
+      0005CD                       2147 00110$:
+      0005CD E5 81            [12] 2148 	mov	a,sp
+      0005CF 24 EE            [12] 2149 	add	a,#0xEE
+      0005D1 F5 81            [12] 2150 	mov	sp,a
+      0005D3 22               [24] 2151 	ret
+                                   2152 ;------------------------------------------------------------
+                                   2153 ;Allocation info for local variables in function 'hdrsize'
+                                   2154 ;------------------------------------------------------------
+                                   2155 ;a                         Allocated to registers 
+                                   2156 ;size                      Allocated to registers r3 r4 
+                                   2157 ;len                       Allocated to stack - sp -1
+                                   2158 ;------------------------------------------------------------
+                                   2159 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:190: hdrsize(const struct packetbuf_attrlist *a)
+                                   2160 ;	-----------------------------------------
+                                   2161 ;	 function hdrsize
+                                   2162 ;	-----------------------------------------
+      0005D4                       2163 _hdrsize:
+      0005D4 05 81            [12] 2164 	inc	sp
+      0005D6 05 81            [12] 2165 	inc	sp
+      0005D8 AD 82            [24] 2166 	mov	r5,dpl
+      0005DA AE 83            [24] 2167 	mov	r6,dph
+      0005DC AF F0            [24] 2168 	mov	r7,b
+                                   2169 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:197: size = 0;
+      0005DE 7B 00            [12] 2170 	mov	r3,#0x00
+      0005E0 7C 00            [12] 2171 	mov	r4,#0x00
+      0005E2                       2172 00105$:
+                                   2173 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:198: for(; a->type != PACKETBUF_ATTR_NONE; ++a) {
+      0005E2 8D 82            [24] 2174 	mov	dpl,r5
+      0005E4 8E 83            [24] 2175 	mov	dph,r6
+      0005E6 8F F0            [24] 2176 	mov	b,r7
+      0005E8 12r00r00         [24] 2177 	lcall	__gptrget
+      0005EB FA               [12] 2178 	mov	r2,a
+      0005EC 60 51            [24] 2179 	jz	00103$
+                                   2180 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:208: len = a->len;
+      0005EE C0 03            [24] 2181 	push	ar3
+      0005F0 C0 04            [24] 2182 	push	ar4
+      0005F2 74 01            [12] 2183 	mov	a,#0x01
+      0005F4 2D               [12] 2184 	add	a,r5
+      0005F5 FA               [12] 2185 	mov	r2,a
+      0005F6 E4               [12] 2186 	clr	a
+      0005F7 3E               [12] 2187 	addc	a,r6
+      0005F8 FB               [12] 2188 	mov	r3,a
+      0005F9 8F 04            [24] 2189 	mov	ar4,r7
+      0005FB 8A 82            [24] 2190 	mov	dpl,r2
+      0005FD 8B 83            [24] 2191 	mov	dph,r3
+      0005FF 8C F0            [24] 2192 	mov	b,r4
+      000601 12r00r00         [24] 2193 	lcall	__gptrget
+      000604 FA               [12] 2194 	mov	r2,a
+      000605 E5 81            [12] 2195 	mov	a,sp
+      000607 24 FD            [12] 2196 	add	a,#0xfd
+      000609 F8               [12] 2197 	mov	r0,a
+      00060A A6 02            [24] 2198 	mov	@r0,ar2
+      00060C 08               [12] 2199 	inc	r0
+      00060D 76 00            [12] 2200 	mov	@r0,#0x00
+                                   2201 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:209: if(len < 8) {
+      00060F E5 81            [12] 2202 	mov	a,sp
+      000611 24 FD            [12] 2203 	add	a,#0xfd
+      000613 F8               [12] 2204 	mov	r0,a
+      000614 C3               [12] 2205 	clr	c
+      000615 E6               [12] 2206 	mov	a,@r0
+      000616 94 08            [12] 2207 	subb	a,#0x08
+      000618 08               [12] 2208 	inc	r0
+      000619 E6               [12] 2209 	mov	a,@r0
+      00061A 64 80            [12] 2210 	xrl	a,#0x80
+      00061C 94 80            [12] 2211 	subb	a,#0x80
+      00061E D0 04            [24] 2212 	pop	ar4
+      000620 D0 03            [24] 2213 	pop	ar3
+      000622 50 08            [24] 2214 	jnc	00102$
+                                   2215 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:210: len = 8;
+      000624 A8 81            [24] 2216 	mov	r0,sp
+      000626 18               [12] 2217 	dec	r0
+      000627 76 08            [12] 2218 	mov	@r0,#0x08
+      000629 08               [12] 2219 	inc	r0
+      00062A 76 00            [12] 2220 	mov	@r0,#0x00
+      00062C                       2221 00102$:
+                                   2222 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:212: size += len;
+      00062C A8 81            [24] 2223 	mov	r0,sp
+      00062E 18               [12] 2224 	dec	r0
+      00062F E6               [12] 2225 	mov	a,@r0
+      000630 2B               [12] 2226 	add	a,r3
+      000631 FB               [12] 2227 	mov	r3,a
+      000632 08               [12] 2228 	inc	r0
+      000633 E6               [12] 2229 	mov	a,@r0
+      000634 3C               [12] 2230 	addc	a,r4
+      000635 FC               [12] 2231 	mov	r4,a
+                                   2232 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:198: for(; a->type != PACKETBUF_ATTR_NONE; ++a) {
+      000636 74 02            [12] 2233 	mov	a,#0x02
+      000638 2D               [12] 2234 	add	a,r5
+      000639 FD               [12] 2235 	mov	r5,a
+      00063A E4               [12] 2236 	clr	a
+      00063B 3E               [12] 2237 	addc	a,r6
+      00063C FE               [12] 2238 	mov	r6,a
+      00063D 80 A3            [24] 2239 	sjmp	00105$
+      00063F                       2240 00103$:
+                                   2241 ;	/home/user/contiki/core/net/rime/chameleon-raw.c:214: return size / 8;
+      00063F 74 08            [12] 2242 	mov	a,#0x08
+      000641 C0 E0            [24] 2243 	push	acc
+      000643 E4               [12] 2244 	clr	a
+      000644 C0 E0            [24] 2245 	push	acc
+      000646 8B 82            [24] 2246 	mov	dpl,r3
+      000648 8C 83            [24] 2247 	mov	dph,r4
+      00064A 12r00r00         [24] 2248 	lcall	__divsint
+      00064D AE 82            [24] 2249 	mov	r6,dpl
+      00064F AF 83            [24] 2250 	mov	r7,dph
+      000651 15 81            [12] 2251 	dec	sp
+      000653 15 81            [12] 2252 	dec	sp
+      000655 8E 82            [24] 2253 	mov	dpl,r6
+      000657 8F 83            [24] 2254 	mov	dph,r7
+      000659 15 81            [12] 2255 	dec	sp
+      00065B 15 81            [12] 2256 	dec	sp
+      00065D 22               [24] 2257 	ret
+                                   2258 	.area CSEG    (CODE)
+                                   2259 	.area CONST   (CODE)
+      000000                       2260 _chameleon_raw:
+      000000r00s00                 2261 	.byte _input,(_input >> 8)
+      000002rEDs02                 2262 	.byte _output,(_output >> 8)
+      000004rD4s05                 2263 	.byte _hdrsize,(_hdrsize >> 8)
+                                   2264 	.area XINIT   (CODE)
+                                   2265 	.area CABS    (ABS,CODE)

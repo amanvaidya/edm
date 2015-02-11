@@ -1,0 +1,1987 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:41 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module etimer
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _process_interrupt
+                                     13 	.globl _process_post
+                                     14 	.globl _timer_expired
+                                     15 	.globl _timer_restart
+                                     16 	.globl _timer_reset
+                                     17 	.globl _timer_set
+                                     18 	.globl _clock_time
+                                     19 	.globl _etimer_process
+                                     20 	.globl _etimer_request_intr
+                                     21 	.globl _etimer_set
+                                     22 	.globl _etimer_reset
+                                     23 	.globl _etimer_restart
+                                     24 	.globl _etimer_adjust
+                                     25 	.globl _etimer_expired
+                                     26 	.globl _etimer_expiration_time
+                                     27 	.globl _etimer_start_time
+                                     28 	.globl _etimer_pending
+                                     29 	.globl _etimer_next_expiration_time
+                                     30 	.globl _etimer_stop
+                                     31 ;--------------------------------------------------------
+                                     32 ; special function registers
+                                     33 ;--------------------------------------------------------
+                                     34 	.area RSEG    (ABS,DATA)
+      000000                         35 	.org 0x0000
+                                     36 ;--------------------------------------------------------
+                                     37 ; special function bits
+                                     38 ;--------------------------------------------------------
+                                     39 	.area RSEG    (ABS,DATA)
+      000000                         40 	.org 0x0000
+                                     41 ;--------------------------------------------------------
+                                     42 ; overlayable register banks
+                                     43 ;--------------------------------------------------------
+                                     44 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         45 	.ds 8
+                                     46 ;--------------------------------------------------------
+                                     47 ; internal ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area DSEG    (DATA)
+                                     50 ;--------------------------------------------------------
+                                     51 ; overlayable items in internal ram 
+                                     52 ;--------------------------------------------------------
+                                     53 ;--------------------------------------------------------
+                                     54 ; indirectly addressable internal ram data
+                                     55 ;--------------------------------------------------------
+                                     56 	.area ISEG    (DATA)
+                                     57 ;--------------------------------------------------------
+                                     58 ; absolute internal ram data
+                                     59 ;--------------------------------------------------------
+                                     60 	.area IABS    (ABS,DATA)
+                                     61 	.area IABS    (ABS,DATA)
+                                     62 ;--------------------------------------------------------
+                                     63 ; bit data
+                                     64 ;--------------------------------------------------------
+                                     65 	.area BSEG    (BIT)
+                                     66 ;--------------------------------------------------------
+                                     67 ; paged external ram data
+                                     68 ;--------------------------------------------------------
+                                     69 	.area PSEG    (PAG,XDATA)
+                                     70 ;--------------------------------------------------------
+                                     71 ; external ram data
+                                     72 ;--------------------------------------------------------
+                                     73 	.area XSEG    (XDATA)
+      000000                         74 _timerlist:
+      000000                         75 	.ds 3
+      000003                         76 _next_expiration:
+      000003                         77 	.ds 2
+                                     78 ;--------------------------------------------------------
+                                     79 ; absolute external ram data
+                                     80 ;--------------------------------------------------------
+                                     81 	.area XABS    (ABS,XDATA)
+                                     82 ;--------------------------------------------------------
+                                     83 ; external initialized ram data
+                                     84 ;--------------------------------------------------------
+                                     85 	.area XISEG   (XDATA)
+      000000                         86 _etimer_process::
+      000000                         87 	.ds 9
+                                     88 	.area HOME    (CODE)
+                                     89 	.area GSINIT0 (CODE)
+                                     90 	.area GSINIT1 (CODE)
+                                     91 	.area GSINIT2 (CODE)
+                                     92 	.area GSINIT3 (CODE)
+                                     93 	.area GSINIT4 (CODE)
+                                     94 	.area GSINIT5 (CODE)
+                                     95 	.area GSINIT  (CODE)
+                                     96 	.area GSFINAL (CODE)
+                                     97 	.area CSEG    (CODE)
+                                     98 ;--------------------------------------------------------
+                                     99 ; global & static initialisations
+                                    100 ;--------------------------------------------------------
+                                    101 	.area HOME    (CODE)
+                                    102 	.area GSINIT  (CODE)
+                                    103 	.area GSFINAL (CODE)
+                                    104 	.area GSINIT  (CODE)
+                                    105 ;--------------------------------------------------------
+                                    106 ; Home
+                                    107 ;--------------------------------------------------------
+                                    108 	.area HOME    (CODE)
+                                    109 	.area HOME    (CODE)
+                                    110 ;--------------------------------------------------------
+                                    111 ; code
+                                    112 ;--------------------------------------------------------
+                                    113 	.area CSEG    (CODE)
+                                    114 ;------------------------------------------------------------
+                                    115 ;Allocation info for local variables in function 'update_time'
+                                    116 ;------------------------------------------------------------
+                                    117 ;tdist                     Allocated to stack - sp -1
+                                    118 ;now                       Allocated to stack - sp -3
+                                    119 ;t                         Allocated to stack - sp -6
+                                    120 ;------------------------------------------------------------
+                                    121 ;	/home/user/contiki/core/sys/etimer.c:58: update_time(void)
+                                    122 ;	-----------------------------------------
+                                    123 ;	 function update_time
+                                    124 ;	-----------------------------------------
+      000000                        125 _update_time:
+                           000007   126 	ar7 = 0x07
+                           000006   127 	ar6 = 0x06
+                           000005   128 	ar5 = 0x05
+                           000004   129 	ar4 = 0x04
+                           000003   130 	ar3 = 0x03
+                           000002   131 	ar2 = 0x02
+                           000001   132 	ar1 = 0x01
+                           000000   133 	ar0 = 0x00
+      000000 E5 81            [12]  134 	mov	a,sp
+      000002 24 07            [12]  135 	add	a,#0x07
+      000004 F5 81            [12]  136 	mov	sp,a
+                                    137 ;	/home/user/contiki/core/sys/etimer.c:64: if (timerlist == NULL) {
+      000006 90r00r00         [24]  138 	mov	dptr,#_timerlist
+      000009 E0               [24]  139 	movx	a,@dptr
+      00000A FD               [12]  140 	mov	r5,a
+      00000B A3               [24]  141 	inc	dptr
+      00000C E0               [24]  142 	movx	a,@dptr
+      00000D FE               [12]  143 	mov	r6,a
+      00000E A3               [24]  144 	inc	dptr
+      00000F E0               [24]  145 	movx	a,@dptr
+      000010 FF               [12]  146 	mov	r7,a
+      000011 ED               [12]  147 	mov	a,r5
+      000012 4E               [12]  148 	orl	a,r6
+      000013 70 0B            [24]  149 	jnz	00105$
+                                    150 ;	/home/user/contiki/core/sys/etimer.c:65: next_expiration = 0;
+      000015 90r00r03         [24]  151 	mov	dptr,#_next_expiration
+      000018 E4               [12]  152 	clr	a
+      000019 F0               [24]  153 	movx	@dptr,a
+      00001A E4               [12]  154 	clr	a
+      00001B A3               [24]  155 	inc	dptr
+      00001C F0               [24]  156 	movx	@dptr,a
+      00001D 02r01r98         [24]  157 	ljmp	00110$
+      000020                        158 00105$:
+                                    159 ;	/home/user/contiki/core/sys/etimer.c:67: now = clock_time();
+      000020 12r00r00         [24]  160 	lcall	_clock_time
+      000023 AE 82            [24]  161 	mov	r6,dpl
+      000025 AF 83            [24]  162 	mov	r7,dph
+      000027 E5 81            [12]  163 	mov	a,sp
+      000029 24 FD            [12]  164 	add	a,#0xfd
+      00002B F8               [12]  165 	mov	r0,a
+      00002C A6 06            [24]  166 	mov	@r0,ar6
+      00002E 08               [12]  167 	inc	r0
+      00002F A6 07            [24]  168 	mov	@r0,ar7
+                                    169 ;	/home/user/contiki/core/sys/etimer.c:68: t = timerlist;
+      000031 90r00r00         [24]  170 	mov	dptr,#_timerlist
+      000034 E0               [24]  171 	movx	a,@dptr
+      000035 FB               [12]  172 	mov	r3,a
+      000036 A3               [24]  173 	inc	dptr
+      000037 E0               [24]  174 	movx	a,@dptr
+      000038 FC               [12]  175 	mov	r4,a
+      000039 A3               [24]  176 	inc	dptr
+      00003A E0               [24]  177 	movx	a,@dptr
+      00003B FD               [12]  178 	mov	r5,a
+      00003C E5 81            [12]  179 	mov	a,sp
+      00003E 24 FA            [12]  180 	add	a,#0xfa
+      000040 F8               [12]  181 	mov	r0,a
+      000041 A6 03            [24]  182 	mov	@r0,ar3
+      000043 08               [12]  183 	inc	r0
+      000044 A6 04            [24]  184 	mov	@r0,ar4
+      000046 08               [12]  185 	inc	r0
+      000047 A6 05            [24]  186 	mov	@r0,ar5
+                                    187 ;	/home/user/contiki/core/sys/etimer.c:70: tdist = t->timer.start + t->timer.interval - now;
+      000049 E5 81            [12]  188 	mov	a,sp
+      00004B 24 FA            [12]  189 	add	a,#0xfa
+      00004D F8               [12]  190 	mov	r0,a
+      00004E 86 82            [24]  191 	mov	dpl,@r0
+      000050 08               [12]  192 	inc	r0
+      000051 86 83            [24]  193 	mov	dph,@r0
+      000053 08               [12]  194 	inc	r0
+      000054 86 F0            [24]  195 	mov	b,@r0
+      000056 12r00r00         [24]  196 	lcall	__gptrget
+      000059 FA               [12]  197 	mov	r2,a
+      00005A A3               [24]  198 	inc	dptr
+      00005B 12r00r00         [24]  199 	lcall	__gptrget
+      00005E FF               [12]  200 	mov	r7,a
+      00005F E5 81            [12]  201 	mov	a,sp
+      000061 24 FA            [12]  202 	add	a,#0xfa
+      000063 F8               [12]  203 	mov	r0,a
+      000064 74 02            [12]  204 	mov	a,#0x02
+      000066 26               [12]  205 	add	a,@r0
+      000067 FC               [12]  206 	mov	r4,a
+      000068 E4               [12]  207 	clr	a
+      000069 08               [12]  208 	inc	r0
+      00006A 36               [12]  209 	addc	a,@r0
+      00006B FD               [12]  210 	mov	r5,a
+      00006C 08               [12]  211 	inc	r0
+      00006D 86 06            [24]  212 	mov	ar6,@r0
+      00006F 8C 82            [24]  213 	mov	dpl,r4
+      000071 8D 83            [24]  214 	mov	dph,r5
+      000073 8E F0            [24]  215 	mov	b,r6
+      000075 12r00r00         [24]  216 	lcall	__gptrget
+      000078 FC               [12]  217 	mov	r4,a
+      000079 A3               [24]  218 	inc	dptr
+      00007A 12r00r00         [24]  219 	lcall	__gptrget
+      00007D FD               [12]  220 	mov	r5,a
+      00007E EC               [12]  221 	mov	a,r4
+      00007F 2A               [12]  222 	add	a,r2
+      000080 FA               [12]  223 	mov	r2,a
+      000081 ED               [12]  224 	mov	a,r5
+      000082 3F               [12]  225 	addc	a,r7
+      000083 FF               [12]  226 	mov	r7,a
+      000084 E5 81            [12]  227 	mov	a,sp
+      000086 24 FD            [12]  228 	add	a,#0xfd
+      000088 F8               [12]  229 	mov	r0,a
+      000089 EA               [12]  230 	mov	a,r2
+      00008A C3               [12]  231 	clr	c
+      00008B 96               [12]  232 	subb	a,@r0
+      00008C FA               [12]  233 	mov	r2,a
+      00008D EF               [12]  234 	mov	a,r7
+      00008E 08               [12]  235 	inc	r0
+      00008F 96               [12]  236 	subb	a,@r0
+      000090 FF               [12]  237 	mov	r7,a
+      000091 A8 81            [24]  238 	mov	r0,sp
+      000093 18               [12]  239 	dec	r0
+      000094 A6 02            [24]  240 	mov	@r0,ar2
+      000096 08               [12]  241 	inc	r0
+      000097 A6 07            [24]  242 	mov	@r0,ar7
+                                    243 ;	/home/user/contiki/core/sys/etimer.c:71: for(t = t->next; t != NULL; t = t->next) {
+      000099 E5 81            [12]  244 	mov	a,sp
+      00009B 24 FA            [12]  245 	add	a,#0xfa
+      00009D F8               [12]  246 	mov	r0,a
+      00009E 74 04            [12]  247 	mov	a,#0x04
+      0000A0 26               [12]  248 	add	a,@r0
+      0000A1 FB               [12]  249 	mov	r3,a
+      0000A2 E4               [12]  250 	clr	a
+      0000A3 08               [12]  251 	inc	r0
+      0000A4 36               [12]  252 	addc	a,@r0
+      0000A5 FC               [12]  253 	mov	r4,a
+      0000A6 08               [12]  254 	inc	r0
+      0000A7 86 05            [24]  255 	mov	ar5,@r0
+      0000A9 8B 82            [24]  256 	mov	dpl,r3
+      0000AB 8C 83            [24]  257 	mov	dph,r4
+      0000AD 8D F0            [24]  258 	mov	b,r5
+      0000AF E5 81            [12]  259 	mov	a,sp
+      0000B1 24 FA            [12]  260 	add	a,#0xfa
+      0000B3 F8               [12]  261 	mov	r0,a
+      0000B4 12r00r00         [24]  262 	lcall	__gptrget
+      0000B7 F6               [12]  263 	mov	@r0,a
+      0000B8 A3               [24]  264 	inc	dptr
+      0000B9 12r00r00         [24]  265 	lcall	__gptrget
+      0000BC 08               [12]  266 	inc	r0
+      0000BD F6               [12]  267 	mov	@r0,a
+      0000BE A3               [24]  268 	inc	dptr
+      0000BF 12r00r00         [24]  269 	lcall	__gptrget
+      0000C2 08               [12]  270 	inc	r0
+      0000C3 F6               [12]  271 	mov	@r0,a
+      0000C4                        272 00108$:
+      0000C4 E5 81            [12]  273 	mov	a,sp
+      0000C6 24 FA            [12]  274 	add	a,#0xfa
+      0000C8 F8               [12]  275 	mov	r0,a
+      0000C9 E4               [12]  276 	clr	a
+      0000CA C0 E0            [24]  277 	push	acc
+      0000CC E4               [12]  278 	clr	a
+      0000CD C0 E0            [24]  279 	push	acc
+      0000CF E4               [12]  280 	clr	a
+      0000D0 C0 E0            [24]  281 	push	acc
+      0000D2 86 82            [24]  282 	mov	dpl,@r0
+      0000D4 08               [12]  283 	inc	r0
+      0000D5 86 83            [24]  284 	mov	dph,@r0
+      0000D7 08               [12]  285 	inc	r0
+      0000D8 86 F0            [24]  286 	mov	b,@r0
+      0000DA 12r00r00         [24]  287 	lcall	___gptr_cmp
+      0000DD 15 81            [12]  288 	dec	sp
+      0000DF 15 81            [12]  289 	dec	sp
+      0000E1 15 81            [12]  290 	dec	sp
+      0000E3 70 03            [24]  291 	jnz	00125$
+      0000E5 02r01r84         [24]  292 	ljmp	00103$
+      0000E8                        293 00125$:
+                                    294 ;	/home/user/contiki/core/sys/etimer.c:72: if(t->timer.start + t->timer.interval - now < tdist) {
+      0000E8 E5 81            [12]  295 	mov	a,sp
+      0000EA 24 FA            [12]  296 	add	a,#0xfa
+      0000EC F8               [12]  297 	mov	r0,a
+      0000ED 86 82            [24]  298 	mov	dpl,@r0
+      0000EF 08               [12]  299 	inc	r0
+      0000F0 86 83            [24]  300 	mov	dph,@r0
+      0000F2 08               [12]  301 	inc	r0
+      0000F3 86 F0            [24]  302 	mov	b,@r0
+      0000F5 12r00r00         [24]  303 	lcall	__gptrget
+      0000F8 FC               [12]  304 	mov	r4,a
+      0000F9 A3               [24]  305 	inc	dptr
+      0000FA 12r00r00         [24]  306 	lcall	__gptrget
+      0000FD FD               [12]  307 	mov	r5,a
+      0000FE E5 81            [12]  308 	mov	a,sp
+      000100 24 FA            [12]  309 	add	a,#0xfa
+      000102 F8               [12]  310 	mov	r0,a
+      000103 74 02            [12]  311 	mov	a,#0x02
+      000105 26               [12]  312 	add	a,@r0
+      000106 FA               [12]  313 	mov	r2,a
+      000107 E4               [12]  314 	clr	a
+      000108 08               [12]  315 	inc	r0
+      000109 36               [12]  316 	addc	a,@r0
+      00010A FB               [12]  317 	mov	r3,a
+      00010B 08               [12]  318 	inc	r0
+      00010C 86 07            [24]  319 	mov	ar7,@r0
+      00010E 8A 82            [24]  320 	mov	dpl,r2
+      000110 8B 83            [24]  321 	mov	dph,r3
+      000112 8F F0            [24]  322 	mov	b,r7
+      000114 12r00r00         [24]  323 	lcall	__gptrget
+      000117 FE               [12]  324 	mov	r6,a
+      000118 A3               [24]  325 	inc	dptr
+      000119 12r00r00         [24]  326 	lcall	__gptrget
+      00011C FF               [12]  327 	mov	r7,a
+      00011D EE               [12]  328 	mov	a,r6
+      00011E 2C               [12]  329 	add	a,r4
+      00011F FA               [12]  330 	mov	r2,a
+      000120 EF               [12]  331 	mov	a,r7
+      000121 3D               [12]  332 	addc	a,r5
+      000122 FB               [12]  333 	mov	r3,a
+      000123 E5 81            [12]  334 	mov	a,sp
+      000125 24 FD            [12]  335 	add	a,#0xfd
+      000127 F8               [12]  336 	mov	r0,a
+      000128 EA               [12]  337 	mov	a,r2
+      000129 C3               [12]  338 	clr	c
+      00012A 96               [12]  339 	subb	a,@r0
+      00012B FA               [12]  340 	mov	r2,a
+      00012C EB               [12]  341 	mov	a,r3
+      00012D 08               [12]  342 	inc	r0
+      00012E 96               [12]  343 	subb	a,@r0
+      00012F FB               [12]  344 	mov	r3,a
+      000130 A8 81            [24]  345 	mov	r0,sp
+      000132 18               [12]  346 	dec	r0
+      000133 C3               [12]  347 	clr	c
+      000134 EA               [12]  348 	mov	a,r2
+      000135 96               [12]  349 	subb	a,@r0
+      000136 EB               [12]  350 	mov	a,r3
+      000137 08               [12]  351 	inc	r0
+      000138 96               [12]  352 	subb	a,@r0
+      000139 50 1B            [24]  353 	jnc	00109$
+                                    354 ;	/home/user/contiki/core/sys/etimer.c:73: tdist = t->timer.start + t->timer.interval - now;
+      00013B EE               [12]  355 	mov	a,r6
+      00013C 2C               [12]  356 	add	a,r4
+      00013D FC               [12]  357 	mov	r4,a
+      00013E EF               [12]  358 	mov	a,r7
+      00013F 3D               [12]  359 	addc	a,r5
+      000140 FD               [12]  360 	mov	r5,a
+      000141 E5 81            [12]  361 	mov	a,sp
+      000143 24 FD            [12]  362 	add	a,#0xfd
+      000145 F8               [12]  363 	mov	r0,a
+      000146 EC               [12]  364 	mov	a,r4
+      000147 C3               [12]  365 	clr	c
+      000148 96               [12]  366 	subb	a,@r0
+      000149 FC               [12]  367 	mov	r4,a
+      00014A ED               [12]  368 	mov	a,r5
+      00014B 08               [12]  369 	inc	r0
+      00014C 96               [12]  370 	subb	a,@r0
+      00014D FD               [12]  371 	mov	r5,a
+      00014E A8 81            [24]  372 	mov	r0,sp
+      000150 18               [12]  373 	dec	r0
+      000151 A6 04            [24]  374 	mov	@r0,ar4
+      000153 08               [12]  375 	inc	r0
+      000154 A6 05            [24]  376 	mov	@r0,ar5
+      000156                        377 00109$:
+                                    378 ;	/home/user/contiki/core/sys/etimer.c:71: for(t = t->next; t != NULL; t = t->next) {
+      000156 E5 81            [12]  379 	mov	a,sp
+      000158 24 FA            [12]  380 	add	a,#0xfa
+      00015A F8               [12]  381 	mov	r0,a
+      00015B 74 04            [12]  382 	mov	a,#0x04
+      00015D 26               [12]  383 	add	a,@r0
+      00015E FD               [12]  384 	mov	r5,a
+      00015F E4               [12]  385 	clr	a
+      000160 08               [12]  386 	inc	r0
+      000161 36               [12]  387 	addc	a,@r0
+      000162 FE               [12]  388 	mov	r6,a
+      000163 08               [12]  389 	inc	r0
+      000164 86 07            [24]  390 	mov	ar7,@r0
+      000166 8D 82            [24]  391 	mov	dpl,r5
+      000168 8E 83            [24]  392 	mov	dph,r6
+      00016A 8F F0            [24]  393 	mov	b,r7
+      00016C E5 81            [12]  394 	mov	a,sp
+      00016E 24 FA            [12]  395 	add	a,#0xfa
+      000170 F8               [12]  396 	mov	r0,a
+      000171 12r00r00         [24]  397 	lcall	__gptrget
+      000174 F6               [12]  398 	mov	@r0,a
+      000175 A3               [24]  399 	inc	dptr
+      000176 12r00r00         [24]  400 	lcall	__gptrget
+      000179 08               [12]  401 	inc	r0
+      00017A F6               [12]  402 	mov	@r0,a
+      00017B A3               [24]  403 	inc	dptr
+      00017C 12r00r00         [24]  404 	lcall	__gptrget
+      00017F 08               [12]  405 	inc	r0
+      000180 F6               [12]  406 	mov	@r0,a
+      000181 02r00rC4         [24]  407 	ljmp	00108$
+      000184                        408 00103$:
+                                    409 ;	/home/user/contiki/core/sys/etimer.c:76: next_expiration = now + tdist;
+      000184 E5 81            [12]  410 	mov	a,sp
+      000186 24 FD            [12]  411 	add	a,#0xfd
+      000188 F8               [12]  412 	mov	r0,a
+      000189 A9 81            [24]  413 	mov	r1,sp
+      00018B 19               [12]  414 	dec	r1
+      00018C 90r00r03         [24]  415 	mov	dptr,#_next_expiration
+      00018F E7               [12]  416 	mov	a,@r1
+      000190 26               [12]  417 	add	a,@r0
+      000191 F0               [24]  418 	movx	@dptr,a
+      000192 09               [12]  419 	inc	r1
+      000193 E7               [12]  420 	mov	a,@r1
+      000194 08               [12]  421 	inc	r0
+      000195 36               [12]  422 	addc	a,@r0
+      000196 A3               [24]  423 	inc	dptr
+      000197 F0               [24]  424 	movx	@dptr,a
+      000198                        425 00110$:
+      000198 E5 81            [12]  426 	mov	a,sp
+      00019A 24 F9            [12]  427 	add	a,#0xF9
+      00019C F5 81            [12]  428 	mov	sp,a
+      00019E 22               [24]  429 	ret
+                                    430 ;------------------------------------------------------------
+                                    431 ;Allocation info for local variables in function 'process_thread_etimer_process'
+                                    432 ;------------------------------------------------------------
+                                    433 ;ev                        Allocated to stack - sp -14
+                                    434 ;data                      Allocated to stack - sp -17
+                                    435 ;process_pt                Allocated to registers r5 r6 r7 
+                                    436 ;t                         Allocated to stack - sp -8
+                                    437 ;u                         Allocated to stack - sp -5
+                                    438 ;PT_YIELD_FLAG             Allocated to registers r4 
+                                    439 ;i                         Allocated to stack - sp -2
+                                    440 ;sloc0                     Allocated to stack - sp -11
+                                    441 ;------------------------------------------------------------
+                                    442 ;	/home/user/contiki/core/sys/etimer.c:80: PROCESS_THREAD(etimer_process, ev, data)
+                                    443 ;	-----------------------------------------
+                                    444 ;	 function process_thread_etimer_process
+                                    445 ;	-----------------------------------------
+      00019F                        446 _process_thread_etimer_process:
+      00019F E5 81            [12]  447 	mov	a,sp
+      0001A1 24 0C            [12]  448 	add	a,#0x0C
+      0001A3 F5 81            [12]  449 	mov	sp,a
+                                    450 ;	/home/user/contiki/core/sys/etimer.c:84: PROCESS_BEGIN();
+      0001A5 AD 82            [24]  451 	mov	r5,dpl
+      0001A7 AE 83            [24]  452 	mov	r6,dph
+      0001A9 AF F0            [24]  453 	mov	r7,b
+      0001AB 7C 01            [12]  454 	mov	r4,#0x01
+      0001AD 12r00r00         [24]  455 	lcall	__gptrget
+      0001B0 FA               [12]  456 	mov	r2,a
+      0001B1 A3               [24]  457 	inc	dptr
+      0001B2 12r00r00         [24]  458 	lcall	__gptrget
+      0001B5 FB               [12]  459 	mov	r3,a
+      0001B6 BA 00 05         [24]  460 	cjne	r2,#0x00,00198$
+      0001B9 BB 00 02         [24]  461 	cjne	r3,#0x00,00198$
+      0001BC 80 0B            [24]  462 	sjmp	00101$
+      0001BE                        463 00198$:
+      0001BE BA 59 05         [24]  464 	cjne	r2,#0x59,00199$
+      0001C1 BB 00 02         [24]  465 	cjne	r3,#0x00,00199$
+      0001C4 80 20            [24]  466 	sjmp	00102$
+      0001C6                        467 00199$:
+      0001C6 02r05rBD         [24]  468 	ljmp	00138$
+      0001C9                        469 00101$:
+                                    470 ;	/home/user/contiki/core/sys/etimer.c:86: timerlist = NULL;
+      0001C9 90r00r00         [24]  471 	mov	dptr,#_timerlist
+      0001CC E4               [12]  472 	clr	a
+      0001CD F0               [24]  473 	movx	@dptr,a
+      0001CE E4               [12]  474 	clr	a
+      0001CF A3               [24]  475 	inc	dptr
+      0001D0 F0               [24]  476 	movx	@dptr,a
+      0001D1 E4               [12]  477 	clr	a
+      0001D2 A3               [24]  478 	inc	dptr
+      0001D3 F0               [24]  479 	movx	@dptr,a
+                                    480 ;	/home/user/contiki/core/sys/etimer.c:88: while(1) {
+      0001D4                        481 00136$:
+                                    482 ;	/home/user/contiki/core/sys/etimer.c:89: PROCESS_YIELD();
+      0001D4 7C 00            [12]  483 	mov	r4,#0x00
+      0001D6 8D 82            [24]  484 	mov	dpl,r5
+      0001D8 8E 83            [24]  485 	mov	dph,r6
+      0001DA 8F F0            [24]  486 	mov	b,r7
+      0001DC 74 59            [12]  487 	mov	a,#0x59
+      0001DE 12r00r00         [24]  488 	lcall	__gptrput
+      0001E1 A3               [24]  489 	inc	dptr
+      0001E2 E4               [12]  490 	clr	a
+      0001E3 12r00r00         [24]  491 	lcall	__gptrput
+      0001E6                        492 00102$:
+      0001E6 EC               [12]  493 	mov	a,r4
+      0001E7 70 06            [24]  494 	jnz	00106$
+      0001E9 75 82 01         [24]  495 	mov	dpl,#0x01
+      0001EC 02r05rCF         [24]  496 	ljmp	00142$
+      0001EF                        497 00106$:
+                                    498 ;	/home/user/contiki/core/sys/etimer.c:91: if(ev == PROCESS_EVENT_EXITED) {
+      0001EF E5 81            [12]  499 	mov	a,sp
+      0001F1 24 F2            [12]  500 	add	a,#0xf2
+      0001F3 F8               [12]  501 	mov	r0,a
+      0001F4 B6 87 02         [24]  502 	cjne	@r0,#0x87,00201$
+      0001F7 80 03            [24]  503 	sjmp	00202$
+      0001F9                        504 00201$:
+      0001F9 02r03r9C         [24]  505 	ljmp	00123$
+      0001FC                        506 00202$:
+                                    507 ;	/home/user/contiki/core/sys/etimer.c:92: struct process *i = data;
+      0001FC E5 81            [12]  508 	mov	a,sp
+      0001FE 24 EF            [12]  509 	add	a,#0xef
+      000200 F8               [12]  510 	mov	r0,a
+      000201 A9 81            [24]  511 	mov	r1,sp
+      000203 19               [12]  512 	dec	r1
+      000204 19               [12]  513 	dec	r1
+      000205 E6               [12]  514 	mov	a,@r0
+      000206 F7               [12]  515 	mov	@r1,a
+      000207 08               [12]  516 	inc	r0
+      000208 09               [12]  517 	inc	r1
+      000209 E6               [12]  518 	mov	a,@r0
+      00020A F7               [12]  519 	mov	@r1,a
+      00020B 08               [12]  520 	inc	r0
+      00020C 09               [12]  521 	inc	r1
+      00020D E6               [12]  522 	mov	a,@r0
+      00020E F7               [12]  523 	mov	@r1,a
+                                    524 ;	/home/user/contiki/core/sys/etimer.c:94: while(timerlist != NULL && timerlist->i == i) {
+      00020F                        525 00109$:
+      00020F 90r00r00         [24]  526 	mov	dptr,#_timerlist
+      000212 E0               [24]  527 	movx	a,@dptr
+      000213 FA               [12]  528 	mov	r2,a
+      000214 A3               [24]  529 	inc	dptr
+      000215 E0               [24]  530 	movx	a,@dptr
+      000216 FB               [12]  531 	mov	r3,a
+      000217 A3               [24]  532 	inc	dptr
+      000218 E0               [24]  533 	movx	a,@dptr
+      000219 FC               [12]  534 	mov	r4,a
+      00021A EA               [12]  535 	mov	a,r2
+      00021B 4B               [12]  536 	orl	a,r3
+      00021C 60 78            [24]  537 	jz	00111$
+      00021E C0 05            [24]  538 	push	ar5
+      000220 C0 06            [24]  539 	push	ar6
+      000222 C0 07            [24]  540 	push	ar7
+      000224 74 07            [12]  541 	mov	a,#0x07
+      000226 2A               [12]  542 	add	a,r2
+      000227 FD               [12]  543 	mov	r5,a
+      000228 E4               [12]  544 	clr	a
+      000229 3B               [12]  545 	addc	a,r3
+      00022A FE               [12]  546 	mov	r6,a
+      00022B 8C 07            [24]  547 	mov	ar7,r4
+      00022D 8D 82            [24]  548 	mov	dpl,r5
+      00022F 8E 83            [24]  549 	mov	dph,r6
+      000231 8F F0            [24]  550 	mov	b,r7
+      000233 12r00r00         [24]  551 	lcall	__gptrget
+      000236 FD               [12]  552 	mov	r5,a
+      000237 A3               [24]  553 	inc	dptr
+      000238 12r00r00         [24]  554 	lcall	__gptrget
+      00023B FE               [12]  555 	mov	r6,a
+      00023C A3               [24]  556 	inc	dptr
+      00023D 12r00r00         [24]  557 	lcall	__gptrget
+      000240 FF               [12]  558 	mov	r7,a
+      000241 E5 81            [12]  559 	mov	a,sp
+      000243 24 FB            [12]  560 	add	a,#0xfb
+      000245 F8               [12]  561 	mov	r0,a
+      000246 C0 05            [24]  562 	push	ar5
+      000248 C0 06            [24]  563 	push	ar6
+      00024A C0 07            [24]  564 	push	ar7
+      00024C 86 82            [24]  565 	mov	dpl,@r0
+      00024E 08               [12]  566 	inc	r0
+      00024F 86 83            [24]  567 	mov	dph,@r0
+      000251 08               [12]  568 	inc	r0
+      000252 86 F0            [24]  569 	mov	b,@r0
+      000254 12r00r00         [24]  570 	lcall	___gptr_cmp
+      000257 15 81            [12]  571 	dec	sp
+      000259 15 81            [12]  572 	dec	sp
+      00025B 15 81            [12]  573 	dec	sp
+      00025D 60 08            [24]  574 	jz	00205$
+      00025F D0 07            [24]  575 	pop	ar7
+      000261 D0 06            [24]  576 	pop	ar6
+      000263 D0 05            [24]  577 	pop	ar5
+      000265 80 2F            [24]  578 	sjmp	00111$
+      000267                        579 00205$:
+      000267 D0 07            [24]  580 	pop	ar7
+      000269 D0 06            [24]  581 	pop	ar6
+      00026B D0 05            [24]  582 	pop	ar5
+                                    583 ;	/home/user/contiki/core/sys/etimer.c:95: timerlist = timerlist->next;
+      00026D 74 04            [12]  584 	mov	a,#0x04
+      00026F 2A               [12]  585 	add	a,r2
+      000270 FA               [12]  586 	mov	r2,a
+      000271 E4               [12]  587 	clr	a
+      000272 3B               [12]  588 	addc	a,r3
+      000273 FB               [12]  589 	mov	r3,a
+      000274 8A 82            [24]  590 	mov	dpl,r2
+      000276 8B 83            [24]  591 	mov	dph,r3
+      000278 8C F0            [24]  592 	mov	b,r4
+      00027A 12r00r00         [24]  593 	lcall	__gptrget
+      00027D FA               [12]  594 	mov	r2,a
+      00027E A3               [24]  595 	inc	dptr
+      00027F 12r00r00         [24]  596 	lcall	__gptrget
+      000282 FB               [12]  597 	mov	r3,a
+      000283 A3               [24]  598 	inc	dptr
+      000284 12r00r00         [24]  599 	lcall	__gptrget
+      000287 FC               [12]  600 	mov	r4,a
+      000288 90r00r00         [24]  601 	mov	dptr,#_timerlist
+      00028B EA               [12]  602 	mov	a,r2
+      00028C F0               [24]  603 	movx	@dptr,a
+      00028D EB               [12]  604 	mov	a,r3
+      00028E A3               [24]  605 	inc	dptr
+      00028F F0               [24]  606 	movx	@dptr,a
+      000290 EC               [12]  607 	mov	a,r4
+      000291 A3               [24]  608 	inc	dptr
+      000292 F0               [24]  609 	movx	@dptr,a
+      000293 02r02r0F         [24]  610 	ljmp	00109$
+      000296                        611 00111$:
+                                    612 ;	/home/user/contiki/core/sys/etimer.c:98: if(timerlist != NULL) {
+      000296 90r00r00         [24]  613 	mov	dptr,#_timerlist
+      000299 E0               [24]  614 	movx	a,@dptr
+      00029A FA               [12]  615 	mov	r2,a
+      00029B A3               [24]  616 	inc	dptr
+      00029C E0               [24]  617 	movx	a,@dptr
+      00029D FB               [12]  618 	mov	r3,a
+      00029E A3               [24]  619 	inc	dptr
+      00029F E0               [24]  620 	movx	a,@dptr
+      0002A0 FC               [12]  621 	mov	r4,a
+      0002A1 EA               [12]  622 	mov	a,r2
+      0002A2 4B               [12]  623 	orl	a,r3
+      0002A3 70 03            [24]  624 	jnz	00206$
+      0002A5 02r01rD4         [24]  625 	ljmp	00136$
+      0002A8                        626 00206$:
+                                    627 ;	/home/user/contiki/core/sys/etimer.c:99: t = timerlist;
+      0002A8 E5 81            [12]  628 	mov	a,sp
+      0002AA 24 F8            [12]  629 	add	a,#0xf8
+      0002AC F8               [12]  630 	mov	r0,a
+      0002AD A6 02            [24]  631 	mov	@r0,ar2
+      0002AF 08               [12]  632 	inc	r0
+      0002B0 A6 03            [24]  633 	mov	@r0,ar3
+      0002B2 08               [12]  634 	inc	r0
+      0002B3 A6 04            [24]  635 	mov	@r0,ar4
+                                    636 ;	/home/user/contiki/core/sys/etimer.c:100: while(t->next != NULL) {
+      0002B5                        637 00115$:
+      0002B5 E5 81            [12]  638 	mov	a,sp
+      0002B7 24 F8            [12]  639 	add	a,#0xf8
+      0002B9 F8               [12]  640 	mov	r0,a
+      0002BA 74 04            [12]  641 	mov	a,#0x04
+      0002BC 26               [12]  642 	add	a,@r0
+      0002BD FA               [12]  643 	mov	r2,a
+      0002BE E4               [12]  644 	clr	a
+      0002BF 08               [12]  645 	inc	r0
+      0002C0 36               [12]  646 	addc	a,@r0
+      0002C1 FB               [12]  647 	mov	r3,a
+      0002C2 08               [12]  648 	inc	r0
+      0002C3 86 04            [24]  649 	mov	ar4,@r0
+      0002C5 8A 82            [24]  650 	mov	dpl,r2
+      0002C7 8B 83            [24]  651 	mov	dph,r3
+      0002C9 8C F0            [24]  652 	mov	b,r4
+      0002CB E5 81            [12]  653 	mov	a,sp
+      0002CD 24 F5            [12]  654 	add	a,#0xf5
+      0002CF F8               [12]  655 	mov	r0,a
+      0002D0 12r00r00         [24]  656 	lcall	__gptrget
+      0002D3 F6               [12]  657 	mov	@r0,a
+      0002D4 A3               [24]  658 	inc	dptr
+      0002D5 12r00r00         [24]  659 	lcall	__gptrget
+      0002D8 08               [12]  660 	inc	r0
+      0002D9 F6               [12]  661 	mov	@r0,a
+      0002DA A3               [24]  662 	inc	dptr
+      0002DB 12r00r00         [24]  663 	lcall	__gptrget
+      0002DE 08               [12]  664 	inc	r0
+      0002DF F6               [12]  665 	mov	@r0,a
+      0002E0 E5 81            [12]  666 	mov	a,sp
+      0002E2 24 F5            [12]  667 	add	a,#0xf5
+      0002E4 F8               [12]  668 	mov	r0,a
+      0002E5 E6               [12]  669 	mov	a,@r0
+      0002E6 08               [12]  670 	inc	r0
+      0002E7 46               [12]  671 	orl	a,@r0
+      0002E8 70 03            [24]  672 	jnz	00207$
+      0002EA 02r01rD4         [24]  673 	ljmp	00136$
+      0002ED                        674 00207$:
+                                    675 ;	/home/user/contiki/core/sys/etimer.c:101: if(t->next->i == i) {
+      0002ED C0 05            [24]  676 	push	ar5
+      0002EF C0 06            [24]  677 	push	ar6
+      0002F1 C0 07            [24]  678 	push	ar7
+      0002F3 E5 81            [12]  679 	mov	a,sp
+      0002F5 24 F2            [12]  680 	add	a,#0xf2
+      0002F7 F8               [12]  681 	mov	r0,a
+      0002F8 74 07            [12]  682 	mov	a,#0x07
+      0002FA 26               [12]  683 	add	a,@r0
+      0002FB FD               [12]  684 	mov	r5,a
+      0002FC E4               [12]  685 	clr	a
+      0002FD 08               [12]  686 	inc	r0
+      0002FE 36               [12]  687 	addc	a,@r0
+      0002FF FE               [12]  688 	mov	r6,a
+      000300 08               [12]  689 	inc	r0
+      000301 86 07            [24]  690 	mov	ar7,@r0
+      000303 8D 82            [24]  691 	mov	dpl,r5
+      000305 8E 83            [24]  692 	mov	dph,r6
+      000307 8F F0            [24]  693 	mov	b,r7
+      000309 12r00r00         [24]  694 	lcall	__gptrget
+      00030C FD               [12]  695 	mov	r5,a
+      00030D A3               [24]  696 	inc	dptr
+      00030E 12r00r00         [24]  697 	lcall	__gptrget
+      000311 FE               [12]  698 	mov	r6,a
+      000312 A3               [24]  699 	inc	dptr
+      000313 12r00r00         [24]  700 	lcall	__gptrget
+      000316 FF               [12]  701 	mov	r7,a
+      000317 E5 81            [12]  702 	mov	a,sp
+      000319 24 FB            [12]  703 	add	a,#0xfb
+      00031B F8               [12]  704 	mov	r0,a
+      00031C C0 05            [24]  705 	push	ar5
+      00031E C0 06            [24]  706 	push	ar6
+      000320 C0 07            [24]  707 	push	ar7
+      000322 86 82            [24]  708 	mov	dpl,@r0
+      000324 08               [12]  709 	inc	r0
+      000325 86 83            [24]  710 	mov	dph,@r0
+      000327 08               [12]  711 	inc	r0
+      000328 86 F0            [24]  712 	mov	b,@r0
+      00032A 12r00r00         [24]  713 	lcall	___gptr_cmp
+      00032D 15 81            [12]  714 	dec	sp
+      00032F 15 81            [12]  715 	dec	sp
+      000331 15 81            [12]  716 	dec	sp
+      000333 60 08            [24]  717 	jz	00209$
+      000335 D0 07            [24]  718 	pop	ar7
+      000337 D0 06            [24]  719 	pop	ar6
+      000339 D0 05            [24]  720 	pop	ar5
+      00033B 80 41            [24]  721 	sjmp	00113$
+      00033D                        722 00209$:
+                                    723 ;	/home/user/contiki/core/sys/etimer.c:102: t->next = t->next->next;
+      00033D E5 81            [12]  724 	mov	a,sp
+      00033F 24 F2            [12]  725 	add	a,#0xf2
+      000341 F8               [12]  726 	mov	r0,a
+      000342 74 04            [12]  727 	mov	a,#0x04
+      000344 26               [12]  728 	add	a,@r0
+      000345 FD               [12]  729 	mov	r5,a
+      000346 E4               [12]  730 	clr	a
+      000347 08               [12]  731 	inc	r0
+      000348 36               [12]  732 	addc	a,@r0
+      000349 FE               [12]  733 	mov	r6,a
+      00034A 08               [12]  734 	inc	r0
+      00034B 86 07            [24]  735 	mov	ar7,@r0
+      00034D 8D 82            [24]  736 	mov	dpl,r5
+      00034F 8E 83            [24]  737 	mov	dph,r6
+      000351 8F F0            [24]  738 	mov	b,r7
+      000353 12r00r00         [24]  739 	lcall	__gptrget
+      000356 FD               [12]  740 	mov	r5,a
+      000357 A3               [24]  741 	inc	dptr
+      000358 12r00r00         [24]  742 	lcall	__gptrget
+      00035B FE               [12]  743 	mov	r6,a
+      00035C A3               [24]  744 	inc	dptr
+      00035D 12r00r00         [24]  745 	lcall	__gptrget
+      000360 FF               [12]  746 	mov	r7,a
+      000361 8A 82            [24]  747 	mov	dpl,r2
+      000363 8B 83            [24]  748 	mov	dph,r3
+      000365 8C F0            [24]  749 	mov	b,r4
+      000367 ED               [12]  750 	mov	a,r5
+      000368 12r00r00         [24]  751 	lcall	__gptrput
+      00036B A3               [24]  752 	inc	dptr
+      00036C EE               [12]  753 	mov	a,r6
+      00036D 12r00r00         [24]  754 	lcall	__gptrput
+      000370 A3               [24]  755 	inc	dptr
+      000371 EF               [12]  756 	mov	a,r7
+      000372 12r00r00         [24]  757 	lcall	__gptrput
+      000375 D0 07            [24]  758 	pop	ar7
+      000377 D0 06            [24]  759 	pop	ar6
+      000379 D0 05            [24]  760 	pop	ar5
+      00037B 02r02rB5         [24]  761 	ljmp	00115$
+      00037E                        762 00113$:
+                                    763 ;	/home/user/contiki/core/sys/etimer.c:104: t = t->next;
+      00037E 8A 82            [24]  764 	mov	dpl,r2
+      000380 8B 83            [24]  765 	mov	dph,r3
+      000382 8C F0            [24]  766 	mov	b,r4
+      000384 E5 81            [12]  767 	mov	a,sp
+      000386 24 F8            [12]  768 	add	a,#0xf8
+      000388 F8               [12]  769 	mov	r0,a
+      000389 12r00r00         [24]  770 	lcall	__gptrget
+      00038C F6               [12]  771 	mov	@r0,a
+      00038D A3               [24]  772 	inc	dptr
+      00038E 12r00r00         [24]  773 	lcall	__gptrget
+      000391 08               [12]  774 	inc	r0
+      000392 F6               [12]  775 	mov	@r0,a
+      000393 A3               [24]  776 	inc	dptr
+      000394 12r00r00         [24]  777 	lcall	__gptrget
+      000397 08               [12]  778 	inc	r0
+      000398 F6               [12]  779 	mov	@r0,a
+      000399 02r02rB5         [24]  780 	ljmp	00115$
+                                    781 ;	/home/user/contiki/core/sys/etimer.c:107: continue;
+      00039C                        782 00123$:
+                                    783 ;	/home/user/contiki/core/sys/etimer.c:108: } else if(ev != PROCESS_EVENT_INTR)    /*INTR INSTD POLL*/        {
+      00039C E5 81            [12]  784 	mov	a,sp
+      00039E 24 F2            [12]  785 	add	a,#0xf2
+      0003A0 F8               [12]  786 	mov	r0,a
+      0003A1 B6 F5 02         [24]  787 	cjne	@r0,#0xF5,00210$
+      0003A4 80 03            [24]  788 	sjmp	00211$
+      0003A6                        789 00210$:
+      0003A6 02r01rD4         [24]  790 	ljmp	00136$
+      0003A9                        791 00211$:
+                                    792 ;	/home/user/contiki/core/sys/etimer.c:112: again:
+      0003A9                        793 00125$:
+                                    794 ;	/home/user/contiki/core/sys/etimer.c:114: u = NULL;
+      0003A9 E5 81            [12]  795 	mov	a,sp
+      0003AB 24 FB            [12]  796 	add	a,#0xfb
+      0003AD F8               [12]  797 	mov	r0,a
+      0003AE E4               [12]  798 	clr	a
+      0003AF F6               [12]  799 	mov	@r0,a
+      0003B0 08               [12]  800 	inc	r0
+      0003B1 F6               [12]  801 	mov	@r0,a
+      0003B2 08               [12]  802 	inc	r0
+      0003B3 76 00            [12]  803 	mov	@r0,#0x00
+                                    804 ;	/home/user/contiki/core/sys/etimer.c:116: for(t = timerlist; t != NULL; t = t->next) {
+      0003B5 90r00r00         [24]  805 	mov	dptr,#_timerlist
+      0003B8 E0               [24]  806 	movx	a,@dptr
+      0003B9 FA               [12]  807 	mov	r2,a
+      0003BA A3               [24]  808 	inc	dptr
+      0003BB E0               [24]  809 	movx	a,@dptr
+      0003BC FB               [12]  810 	mov	r3,a
+      0003BD A3               [24]  811 	inc	dptr
+      0003BE E0               [24]  812 	movx	a,@dptr
+      0003BF FC               [12]  813 	mov	r4,a
+      0003C0 E5 81            [12]  814 	mov	a,sp
+      0003C2 24 F8            [12]  815 	add	a,#0xf8
+      0003C4 F8               [12]  816 	mov	r0,a
+      0003C5 A6 02            [24]  817 	mov	@r0,ar2
+      0003C7 08               [12]  818 	inc	r0
+      0003C8 A6 03            [24]  819 	mov	@r0,ar3
+      0003CA 08               [12]  820 	inc	r0
+      0003CB A6 04            [24]  821 	mov	@r0,ar4
+      0003CD                        822 00140$:
+      0003CD E5 81            [12]  823 	mov	a,sp
+      0003CF 24 F8            [12]  824 	add	a,#0xf8
+      0003D1 F8               [12]  825 	mov	r0,a
+      0003D2 E4               [12]  826 	clr	a
+      0003D3 C0 E0            [24]  827 	push	acc
+      0003D5 E4               [12]  828 	clr	a
+      0003D6 C0 E0            [24]  829 	push	acc
+      0003D8 E4               [12]  830 	clr	a
+      0003D9 C0 E0            [24]  831 	push	acc
+      0003DB 86 82            [24]  832 	mov	dpl,@r0
+      0003DD 08               [12]  833 	inc	r0
+      0003DE 86 83            [24]  834 	mov	dph,@r0
+      0003E0 08               [12]  835 	inc	r0
+      0003E1 86 F0            [24]  836 	mov	b,@r0
+      0003E3 12r00r00         [24]  837 	lcall	___gptr_cmp
+      0003E6 15 81            [12]  838 	dec	sp
+      0003E8 15 81            [12]  839 	dec	sp
+      0003EA 15 81            [12]  840 	dec	sp
+      0003EC 70 03            [24]  841 	jnz	00212$
+      0003EE 02r01rD4         [24]  842 	ljmp	00136$
+      0003F1                        843 00212$:
+                                    844 ;	/home/user/contiki/core/sys/etimer.c:117: if(timer_expired(&t->timer)) {
+      0003F1 E5 81            [12]  845 	mov	a,sp
+      0003F3 24 F8            [12]  846 	add	a,#0xf8
+      0003F5 F8               [12]  847 	mov	r0,a
+      0003F6 86 82            [24]  848 	mov	dpl,@r0
+      0003F8 08               [12]  849 	inc	r0
+      0003F9 86 83            [24]  850 	mov	dph,@r0
+      0003FB 08               [12]  851 	inc	r0
+      0003FC 86 F0            [24]  852 	mov	b,@r0
+      0003FE C0 07            [24]  853 	push	ar7
+      000400 C0 06            [24]  854 	push	ar6
+      000402 C0 05            [24]  855 	push	ar5
+      000404 12r00r00         [24]  856 	lcall	_timer_expired
+      000407 E5 82            [12]  857 	mov	a,dpl
+      000409 85 83 F0         [24]  858 	mov	b,dph
+      00040C D0 05            [24]  859 	pop	ar5
+      00040E D0 06            [24]  860 	pop	ar6
+      000410 D0 07            [24]  861 	pop	ar7
+      000412 45 F0            [12]  862 	orl	a,b
+      000414 70 03            [24]  863 	jnz	00213$
+      000416 02r05r7B         [24]  864 	ljmp	00133$
+      000419                        865 00213$:
+                                    866 ;	/home/user/contiki/core/sys/etimer.c:118: if(process_post(t->i, PROCESS_EVENT_TIMER, t) == PROCESS_ERR_OK) {
+      000419 C0 05            [24]  867 	push	ar5
+      00041B C0 06            [24]  868 	push	ar6
+      00041D C0 07            [24]  869 	push	ar7
+      00041F E5 81            [12]  870 	mov	a,sp
+      000421 24 F5            [12]  871 	add	a,#0xf5
+      000423 F8               [12]  872 	mov	r0,a
+      000424 86 02            [24]  873 	mov	ar2,@r0
+      000426 08               [12]  874 	inc	r0
+      000427 86 03            [24]  875 	mov	ar3,@r0
+      000429 08               [12]  876 	inc	r0
+      00042A 86 04            [24]  877 	mov	ar4,@r0
+      00042C E5 81            [12]  878 	mov	a,sp
+      00042E 24 F5            [12]  879 	add	a,#0xf5
+      000430 F8               [12]  880 	mov	r0,a
+      000431 E5 81            [12]  881 	mov	a,sp
+      000433 24 F2            [12]  882 	add	a,#0xf2
+      000435 F9               [12]  883 	mov	r1,a
+      000436 74 07            [12]  884 	mov	a,#0x07
+      000438 26               [12]  885 	add	a,@r0
+      000439 F7               [12]  886 	mov	@r1,a
+      00043A E4               [12]  887 	clr	a
+      00043B 08               [12]  888 	inc	r0
+      00043C 36               [12]  889 	addc	a,@r0
+      00043D 09               [12]  890 	inc	r1
+      00043E F7               [12]  891 	mov	@r1,a
+      00043F 08               [12]  892 	inc	r0
+      000440 09               [12]  893 	inc	r1
+      000441 E6               [12]  894 	mov	a,@r0
+      000442 F7               [12]  895 	mov	@r1,a
+      000443 E5 81            [12]  896 	mov	a,sp
+      000445 24 F2            [12]  897 	add	a,#0xf2
+      000447 F8               [12]  898 	mov	r0,a
+      000448 86 82            [24]  899 	mov	dpl,@r0
+      00044A 08               [12]  900 	inc	r0
+      00044B 86 83            [24]  901 	mov	dph,@r0
+      00044D 08               [12]  902 	inc	r0
+      00044E 86 F0            [24]  903 	mov	b,@r0
+      000450 12r00r00         [24]  904 	lcall	__gptrget
+      000453 FD               [12]  905 	mov	r5,a
+      000454 A3               [24]  906 	inc	dptr
+      000455 12r00r00         [24]  907 	lcall	__gptrget
+      000458 FE               [12]  908 	mov	r6,a
+      000459 A3               [24]  909 	inc	dptr
+      00045A 12r00r00         [24]  910 	lcall	__gptrget
+      00045D FF               [12]  911 	mov	r7,a
+      00045E C0 05            [24]  912 	push	ar5
+      000460 C0 02            [24]  913 	push	ar2
+      000462 C0 03            [24]  914 	push	ar3
+      000464 C0 04            [24]  915 	push	ar4
+      000466 74 88            [12]  916 	mov	a,#0x88
+      000468 C0 E0            [24]  917 	push	acc
+      00046A 8D 82            [24]  918 	mov	dpl,r5
+      00046C 8E 83            [24]  919 	mov	dph,r6
+      00046E 8F F0            [24]  920 	mov	b,r7
+      000470 12r00r00         [24]  921 	lcall	_process_post
+      000473 AE 82            [24]  922 	mov	r6,dpl
+      000475 AF 83            [24]  923 	mov	r7,dph
+      000477 E5 81            [12]  924 	mov	a,sp
+      000479 24 FC            [12]  925 	add	a,#0xfc
+      00047B F5 81            [12]  926 	mov	sp,a
+      00047D D0 05            [24]  927 	pop	ar5
+      00047F EE               [12]  928 	mov	a,r6
+      000480 4F               [12]  929 	orl	a,r7
+      000481 D0 07            [24]  930 	pop	ar7
+      000483 D0 06            [24]  931 	pop	ar6
+      000485 D0 05            [24]  932 	pop	ar5
+      000487 60 03            [24]  933 	jz	00214$
+      000489 02r05r6C         [24]  934 	ljmp	00130$
+      00048C                        935 00214$:
+                                    936 ;	/home/user/contiki/core/sys/etimer.c:123: t->i = PROCESS_NONE;
+      00048C E5 81            [12]  937 	mov	a,sp
+      00048E 24 F5            [12]  938 	add	a,#0xf5
+      000490 F8               [12]  939 	mov	r0,a
+      000491 86 82            [24]  940 	mov	dpl,@r0
+      000493 08               [12]  941 	inc	r0
+      000494 86 83            [24]  942 	mov	dph,@r0
+      000496 08               [12]  943 	inc	r0
+      000497 86 F0            [24]  944 	mov	b,@r0
+      000499 E4               [12]  945 	clr	a
+      00049A 12r00r00         [24]  946 	lcall	__gptrput
+      00049D A3               [24]  947 	inc	dptr
+      00049E E4               [12]  948 	clr	a
+      00049F 12r00r00         [24]  949 	lcall	__gptrput
+      0004A2 A3               [24]  950 	inc	dptr
+      0004A3 E4               [12]  951 	clr	a
+      0004A4 12r00r00         [24]  952 	lcall	__gptrput
+                                    953 ;	/home/user/contiki/core/sys/etimer.c:124: if(u != NULL) {
+      0004A7 E5 81            [12]  954 	mov	a,sp
+      0004A9 24 FB            [12]  955 	add	a,#0xfb
+      0004AB F8               [12]  956 	mov	r0,a
+      0004AC E6               [12]  957 	mov	a,@r0
+      0004AD 08               [12]  958 	inc	r0
+      0004AE 46               [12]  959 	orl	a,@r0
+      0004AF 60 56            [24]  960 	jz	00127$
+                                    961 ;	/home/user/contiki/core/sys/etimer.c:125: u->next = t->next;
+      0004B1 C0 05            [24]  962 	push	ar5
+      0004B3 C0 06            [24]  963 	push	ar6
+      0004B5 C0 07            [24]  964 	push	ar7
+      0004B7 E5 81            [12]  965 	mov	a,sp
+      0004B9 24 F8            [12]  966 	add	a,#0xf8
+      0004BB F8               [12]  967 	mov	r0,a
+      0004BC 74 04            [12]  968 	mov	a,#0x04
+      0004BE 26               [12]  969 	add	a,@r0
+      0004BF FA               [12]  970 	mov	r2,a
+      0004C0 E4               [12]  971 	clr	a
+      0004C1 08               [12]  972 	inc	r0
+      0004C2 36               [12]  973 	addc	a,@r0
+      0004C3 FB               [12]  974 	mov	r3,a
+      0004C4 08               [12]  975 	inc	r0
+      0004C5 86 04            [24]  976 	mov	ar4,@r0
+      0004C7 E5 81            [12]  977 	mov	a,sp
+      0004C9 24 F5            [12]  978 	add	a,#0xf5
+      0004CB F8               [12]  979 	mov	r0,a
+      0004CC 74 04            [12]  980 	mov	a,#0x04
+      0004CE 26               [12]  981 	add	a,@r0
+      0004CF FD               [12]  982 	mov	r5,a
+      0004D0 E4               [12]  983 	clr	a
+      0004D1 08               [12]  984 	inc	r0
+      0004D2 36               [12]  985 	addc	a,@r0
+      0004D3 FE               [12]  986 	mov	r6,a
+      0004D4 08               [12]  987 	inc	r0
+      0004D5 86 07            [24]  988 	mov	ar7,@r0
+      0004D7 8D 82            [24]  989 	mov	dpl,r5
+      0004D9 8E 83            [24]  990 	mov	dph,r6
+      0004DB 8F F0            [24]  991 	mov	b,r7
+      0004DD 12r00r00         [24]  992 	lcall	__gptrget
+      0004E0 FD               [12]  993 	mov	r5,a
+      0004E1 A3               [24]  994 	inc	dptr
+      0004E2 12r00r00         [24]  995 	lcall	__gptrget
+      0004E5 FE               [12]  996 	mov	r6,a
+      0004E6 A3               [24]  997 	inc	dptr
+      0004E7 12r00r00         [24]  998 	lcall	__gptrget
+      0004EA FF               [12]  999 	mov	r7,a
+      0004EB 8A 82            [24] 1000 	mov	dpl,r2
+      0004ED 8B 83            [24] 1001 	mov	dph,r3
+      0004EF 8C F0            [24] 1002 	mov	b,r4
+      0004F1 ED               [12] 1003 	mov	a,r5
+      0004F2 12r00r00         [24] 1004 	lcall	__gptrput
+      0004F5 A3               [24] 1005 	inc	dptr
+      0004F6 EE               [12] 1006 	mov	a,r6
+      0004F7 12r00r00         [24] 1007 	lcall	__gptrput
+      0004FA A3               [24] 1008 	inc	dptr
+      0004FB EF               [12] 1009 	mov	a,r7
+      0004FC 12r00r00         [24] 1010 	lcall	__gptrput
+      0004FF D0 07            [24] 1011 	pop	ar7
+      000501 D0 06            [24] 1012 	pop	ar6
+      000503 D0 05            [24] 1013 	pop	ar5
+      000505 80 2F            [24] 1014 	sjmp	00128$
+      000507                       1015 00127$:
+                                   1016 ;	/home/user/contiki/core/sys/etimer.c:127: timerlist = t->next;
+      000507 E5 81            [12] 1017 	mov	a,sp
+      000509 24 F8            [12] 1018 	add	a,#0xf8
+      00050B F8               [12] 1019 	mov	r0,a
+      00050C 74 04            [12] 1020 	mov	a,#0x04
+      00050E 26               [12] 1021 	add	a,@r0
+      00050F FA               [12] 1022 	mov	r2,a
+      000510 E4               [12] 1023 	clr	a
+      000511 08               [12] 1024 	inc	r0
+      000512 36               [12] 1025 	addc	a,@r0
+      000513 FB               [12] 1026 	mov	r3,a
+      000514 08               [12] 1027 	inc	r0
+      000515 86 04            [24] 1028 	mov	ar4,@r0
+      000517 8A 82            [24] 1029 	mov	dpl,r2
+      000519 8B 83            [24] 1030 	mov	dph,r3
+      00051B 8C F0            [24] 1031 	mov	b,r4
+      00051D 12r00r00         [24] 1032 	lcall	__gptrget
+      000520 FA               [12] 1033 	mov	r2,a
+      000521 A3               [24] 1034 	inc	dptr
+      000522 12r00r00         [24] 1035 	lcall	__gptrget
+      000525 FB               [12] 1036 	mov	r3,a
+      000526 A3               [24] 1037 	inc	dptr
+      000527 12r00r00         [24] 1038 	lcall	__gptrget
+      00052A FC               [12] 1039 	mov	r4,a
+      00052B 90r00r00         [24] 1040 	mov	dptr,#_timerlist
+      00052E EA               [12] 1041 	mov	a,r2
+      00052F F0               [24] 1042 	movx	@dptr,a
+      000530 EB               [12] 1043 	mov	a,r3
+      000531 A3               [24] 1044 	inc	dptr
+      000532 F0               [24] 1045 	movx	@dptr,a
+      000533 EC               [12] 1046 	mov	a,r4
+      000534 A3               [24] 1047 	inc	dptr
+      000535 F0               [24] 1048 	movx	@dptr,a
+      000536                       1049 00128$:
+                                   1050 ;	/home/user/contiki/core/sys/etimer.c:129: t->next = NULL;
+      000536 E5 81            [12] 1051 	mov	a,sp
+      000538 24 F8            [12] 1052 	add	a,#0xf8
+      00053A F8               [12] 1053 	mov	r0,a
+      00053B 74 04            [12] 1054 	mov	a,#0x04
+      00053D 26               [12] 1055 	add	a,@r0
+      00053E FA               [12] 1056 	mov	r2,a
+      00053F E4               [12] 1057 	clr	a
+      000540 08               [12] 1058 	inc	r0
+      000541 36               [12] 1059 	addc	a,@r0
+      000542 FB               [12] 1060 	mov	r3,a
+      000543 08               [12] 1061 	inc	r0
+      000544 86 04            [24] 1062 	mov	ar4,@r0
+      000546 8A 82            [24] 1063 	mov	dpl,r2
+      000548 8B 83            [24] 1064 	mov	dph,r3
+      00054A 8C F0            [24] 1065 	mov	b,r4
+      00054C E4               [12] 1066 	clr	a
+      00054D 12r00r00         [24] 1067 	lcall	__gptrput
+      000550 A3               [24] 1068 	inc	dptr
+      000551 E4               [12] 1069 	clr	a
+      000552 12r00r00         [24] 1070 	lcall	__gptrput
+      000555 A3               [24] 1071 	inc	dptr
+      000556 E4               [12] 1072 	clr	a
+      000557 12r00r00         [24] 1073 	lcall	__gptrput
+                                   1074 ;	/home/user/contiki/core/sys/etimer.c:130: update_time();
+      00055A C0 07            [24] 1075 	push	ar7
+      00055C C0 06            [24] 1076 	push	ar6
+      00055E C0 05            [24] 1077 	push	ar5
+      000560 12r00r00         [24] 1078 	lcall	_update_time
+      000563 D0 05            [24] 1079 	pop	ar5
+      000565 D0 06            [24] 1080 	pop	ar6
+      000567 D0 07            [24] 1081 	pop	ar7
+                                   1082 ;	/home/user/contiki/core/sys/etimer.c:131: goto again;
+      000569 02r03rA9         [24] 1083 	ljmp	00125$
+      00056C                       1084 00130$:
+                                   1085 ;	/home/user/contiki/core/sys/etimer.c:133: etimer_request_intr();
+      00056C C0 07            [24] 1086 	push	ar7
+      00056E C0 06            [24] 1087 	push	ar6
+      000570 C0 05            [24] 1088 	push	ar5
+      000572 12r05rD6         [24] 1089 	lcall	_etimer_request_intr
+      000575 D0 05            [24] 1090 	pop	ar5
+      000577 D0 06            [24] 1091 	pop	ar6
+      000579 D0 07            [24] 1092 	pop	ar7
+      00057B                       1093 00133$:
+                                   1094 ;	/home/user/contiki/core/sys/etimer.c:136: u = t;
+      00057B E5 81            [12] 1095 	mov	a,sp
+      00057D 24 F8            [12] 1096 	add	a,#0xf8
+      00057F F8               [12] 1097 	mov	r0,a
+      000580 E5 81            [12] 1098 	mov	a,sp
+      000582 24 FB            [12] 1099 	add	a,#0xfb
+      000584 F9               [12] 1100 	mov	r1,a
+      000585 E6               [12] 1101 	mov	a,@r0
+      000586 F7               [12] 1102 	mov	@r1,a
+      000587 08               [12] 1103 	inc	r0
+      000588 09               [12] 1104 	inc	r1
+      000589 E6               [12] 1105 	mov	a,@r0
+      00058A F7               [12] 1106 	mov	@r1,a
+      00058B 08               [12] 1107 	inc	r0
+      00058C 09               [12] 1108 	inc	r1
+      00058D E6               [12] 1109 	mov	a,@r0
+      00058E F7               [12] 1110 	mov	@r1,a
+                                   1111 ;	/home/user/contiki/core/sys/etimer.c:116: for(t = timerlist; t != NULL; t = t->next) {
+      00058F E5 81            [12] 1112 	mov	a,sp
+      000591 24 F8            [12] 1113 	add	a,#0xf8
+      000593 F8               [12] 1114 	mov	r0,a
+      000594 74 04            [12] 1115 	mov	a,#0x04
+      000596 26               [12] 1116 	add	a,@r0
+      000597 FA               [12] 1117 	mov	r2,a
+      000598 E4               [12] 1118 	clr	a
+      000599 08               [12] 1119 	inc	r0
+      00059A 36               [12] 1120 	addc	a,@r0
+      00059B FB               [12] 1121 	mov	r3,a
+      00059C 08               [12] 1122 	inc	r0
+      00059D 86 04            [24] 1123 	mov	ar4,@r0
+      00059F 8A 82            [24] 1124 	mov	dpl,r2
+      0005A1 8B 83            [24] 1125 	mov	dph,r3
+      0005A3 8C F0            [24] 1126 	mov	b,r4
+      0005A5 E5 81            [12] 1127 	mov	a,sp
+      0005A7 24 F8            [12] 1128 	add	a,#0xf8
+      0005A9 F8               [12] 1129 	mov	r0,a
+      0005AA 12r00r00         [24] 1130 	lcall	__gptrget
+      0005AD F6               [12] 1131 	mov	@r0,a
+      0005AE A3               [24] 1132 	inc	dptr
+      0005AF 12r00r00         [24] 1133 	lcall	__gptrget
+      0005B2 08               [12] 1134 	inc	r0
+      0005B3 F6               [12] 1135 	mov	@r0,a
+      0005B4 A3               [24] 1136 	inc	dptr
+      0005B5 12r00r00         [24] 1137 	lcall	__gptrget
+      0005B8 08               [12] 1138 	inc	r0
+      0005B9 F6               [12] 1139 	mov	@r0,a
+      0005BA 02r03rCD         [24] 1140 	ljmp	00140$
+                                   1141 ;	/home/user/contiki/core/sys/etimer.c:141: PROCESS_END();
+      0005BD                       1142 00138$:
+      0005BD 8D 82            [24] 1143 	mov	dpl,r5
+      0005BF 8E 83            [24] 1144 	mov	dph,r6
+      0005C1 8F F0            [24] 1145 	mov	b,r7
+      0005C3 E4               [12] 1146 	clr	a
+      0005C4 12r00r00         [24] 1147 	lcall	__gptrput
+      0005C7 A3               [24] 1148 	inc	dptr
+      0005C8 E4               [12] 1149 	clr	a
+      0005C9 12r00r00         [24] 1150 	lcall	__gptrput
+      0005CC 75 82 03         [24] 1151 	mov	dpl,#0x03
+      0005CF                       1152 00142$:
+      0005CF E5 81            [12] 1153 	mov	a,sp
+      0005D1 24 F4            [12] 1154 	add	a,#0xF4
+      0005D3 F5 81            [12] 1155 	mov	sp,a
+      0005D5 22               [24] 1156 	ret
+                                   1157 ;------------------------------------------------------------
+                                   1158 ;Allocation info for local variables in function 'etimer_request_intr'
+                                   1159 ;------------------------------------------------------------
+                                   1160 ;	/home/user/contiki/core/sys/etimer.c:145: etimer_request_intr(void)
+                                   1161 ;	-----------------------------------------
+                                   1162 ;	 function etimer_request_intr
+                                   1163 ;	-----------------------------------------
+      0005D6                       1164 _etimer_request_intr:
+                                   1165 ;	/home/user/contiki/core/sys/etimer.c:147: process_interrupt(&etimer_process);
+      0005D6 90r00r00         [24] 1166 	mov	dptr,#_etimer_process
+      0005D9 75 F0 00         [24] 1167 	mov	b,#0x00
+      0005DC 02r00r00         [24] 1168 	ljmp	_process_interrupt
+                                   1169 ;------------------------------------------------------------
+                                   1170 ;Allocation info for local variables in function 'add_timer'
+                                   1171 ;------------------------------------------------------------
+                                   1172 ;timer                     Allocated to stack - sp -5
+                                   1173 ;t                         Allocated to registers r5 r6 r7 
+                                   1174 ;sloc0                     Allocated to stack - sp -2
+                                   1175 ;------------------------------------------------------------
+                                   1176 ;	/home/user/contiki/core/sys/etimer.c:151: add_timer(struct etimer *timer)
+                                   1177 ;	-----------------------------------------
+                                   1178 ;	 function add_timer
+                                   1179 ;	-----------------------------------------
+      0005DF                       1180 _add_timer:
+      0005DF C0 82            [24] 1181 	push	dpl
+      0005E1 C0 83            [24] 1182 	push	dph
+      0005E3 C0 F0            [24] 1183 	push	b
+      0005E5 05 81            [12] 1184 	inc	sp
+      0005E7 05 81            [12] 1185 	inc	sp
+      0005E9 05 81            [12] 1186 	inc	sp
+                                   1187 ;	/home/user/contiki/core/sys/etimer.c:155: etimer_request_intr();
+      0005EB 12r05rD6         [24] 1188 	lcall	_etimer_request_intr
+                                   1189 ;	/home/user/contiki/core/sys/etimer.c:157: if(timer->i != PROCESS_NONE) {
+      0005EE E5 81            [12] 1190 	mov	a,sp
+      0005F0 24 FB            [12] 1191 	add	a,#0xfb
+      0005F2 F8               [12] 1192 	mov	r0,a
+      0005F3 A9 81            [24] 1193 	mov	r1,sp
+      0005F5 19               [12] 1194 	dec	r1
+      0005F6 19               [12] 1195 	dec	r1
+      0005F7 74 07            [12] 1196 	mov	a,#0x07
+      0005F9 26               [12] 1197 	add	a,@r0
+      0005FA F7               [12] 1198 	mov	@r1,a
+      0005FB E4               [12] 1199 	clr	a
+      0005FC 08               [12] 1200 	inc	r0
+      0005FD 36               [12] 1201 	addc	a,@r0
+      0005FE 09               [12] 1202 	inc	r1
+      0005FF F7               [12] 1203 	mov	@r1,a
+      000600 08               [12] 1204 	inc	r0
+      000601 09               [12] 1205 	inc	r1
+      000602 E6               [12] 1206 	mov	a,@r0
+      000603 F7               [12] 1207 	mov	@r1,a
+      000604 A8 81            [24] 1208 	mov	r0,sp
+      000606 18               [12] 1209 	dec	r0
+      000607 18               [12] 1210 	dec	r0
+      000608 86 82            [24] 1211 	mov	dpl,@r0
+      00060A 08               [12] 1212 	inc	r0
+      00060B 86 83            [24] 1213 	mov	dph,@r0
+      00060D 08               [12] 1214 	inc	r0
+      00060E 86 F0            [24] 1215 	mov	b,@r0
+      000610 12r00r00         [24] 1216 	lcall	__gptrget
+      000613 FD               [12] 1217 	mov	r5,a
+      000614 A3               [24] 1218 	inc	dptr
+      000615 12r00r00         [24] 1219 	lcall	__gptrget
+      000618 FE               [12] 1220 	mov	r6,a
+      000619 A3               [24] 1221 	inc	dptr
+      00061A 12r00r00         [24] 1222 	lcall	__gptrget
+      00061D FF               [12] 1223 	mov	r7,a
+      00061E ED               [12] 1224 	mov	a,r5
+      00061F 4E               [12] 1225 	orl	a,r6
+      000620 70 03            [24] 1226 	jnz	00123$
+      000622 02r06rB5         [24] 1227 	ljmp	00105$
+      000625                       1228 00123$:
+                                   1229 ;	/home/user/contiki/core/sys/etimer.c:158: for(t = timerlist; t != NULL; t = t->next) {
+      000625 90r00r00         [24] 1230 	mov	dptr,#_timerlist
+      000628 E0               [24] 1231 	movx	a,@dptr
+      000629 FD               [12] 1232 	mov	r5,a
+      00062A A3               [24] 1233 	inc	dptr
+      00062B E0               [24] 1234 	movx	a,@dptr
+      00062C FE               [12] 1235 	mov	r6,a
+      00062D A3               [24] 1236 	inc	dptr
+      00062E E0               [24] 1237 	movx	a,@dptr
+      00062F FF               [12] 1238 	mov	r7,a
+      000630                       1239 00107$:
+      000630 E4               [12] 1240 	clr	a
+      000631 C0 E0            [24] 1241 	push	acc
+      000633 E4               [12] 1242 	clr	a
+      000634 C0 E0            [24] 1243 	push	acc
+      000636 E4               [12] 1244 	clr	a
+      000637 C0 E0            [24] 1245 	push	acc
+      000639 8D 82            [24] 1246 	mov	dpl,r5
+      00063B 8E 83            [24] 1247 	mov	dph,r6
+      00063D 8F F0            [24] 1248 	mov	b,r7
+      00063F 12r00r00         [24] 1249 	lcall	___gptr_cmp
+      000642 15 81            [12] 1250 	dec	sp
+      000644 15 81            [12] 1251 	dec	sp
+      000646 15 81            [12] 1252 	dec	sp
+      000648 60 6B            [24] 1253 	jz	00105$
+                                   1254 ;	/home/user/contiki/core/sys/etimer.c:159: if(t == timer) {
+      00064A E5 81            [12] 1255 	mov	a,sp
+      00064C 24 FB            [12] 1256 	add	a,#0xfb
+      00064E F8               [12] 1257 	mov	r0,a
+      00064F C0 05            [24] 1258 	push	ar5
+      000651 C0 06            [24] 1259 	push	ar6
+      000653 C0 07            [24] 1260 	push	ar7
+      000655 86 82            [24] 1261 	mov	dpl,@r0
+      000657 08               [12] 1262 	inc	r0
+      000658 86 83            [24] 1263 	mov	dph,@r0
+      00065A 08               [12] 1264 	inc	r0
+      00065B 86 F0            [24] 1265 	mov	b,@r0
+      00065D 12r00r00         [24] 1266 	lcall	___gptr_cmp
+      000660 15 81            [12] 1267 	dec	sp
+      000662 15 81            [12] 1268 	dec	sp
+      000664 15 81            [12] 1269 	dec	sp
+      000666 60 02            [24] 1270 	jz	00126$
+      000668 80 2B            [24] 1271 	sjmp	00108$
+      00066A                       1272 00126$:
+                                   1273 ;	/home/user/contiki/core/sys/etimer.c:161: timer->i = PROCESS_CURRENT();
+      00066A 90r00r00         [24] 1274 	mov	dptr,#_process_current
+      00066D E0               [24] 1275 	movx	a,@dptr
+      00066E FA               [12] 1276 	mov	r2,a
+      00066F A3               [24] 1277 	inc	dptr
+      000670 E0               [24] 1278 	movx	a,@dptr
+      000671 FB               [12] 1279 	mov	r3,a
+      000672 A3               [24] 1280 	inc	dptr
+      000673 E0               [24] 1281 	movx	a,@dptr
+      000674 FC               [12] 1282 	mov	r4,a
+      000675 A8 81            [24] 1283 	mov	r0,sp
+      000677 18               [12] 1284 	dec	r0
+      000678 18               [12] 1285 	dec	r0
+      000679 86 82            [24] 1286 	mov	dpl,@r0
+      00067B 08               [12] 1287 	inc	r0
+      00067C 86 83            [24] 1288 	mov	dph,@r0
+      00067E 08               [12] 1289 	inc	r0
+      00067F 86 F0            [24] 1290 	mov	b,@r0
+      000681 EA               [12] 1291 	mov	a,r2
+      000682 12r00r00         [24] 1292 	lcall	__gptrput
+      000685 A3               [24] 1293 	inc	dptr
+      000686 EB               [12] 1294 	mov	a,r3
+      000687 12r00r00         [24] 1295 	lcall	__gptrput
+      00068A A3               [24] 1296 	inc	dptr
+      00068B EC               [12] 1297 	mov	a,r4
+      00068C 12r00r00         [24] 1298 	lcall	__gptrput
+                                   1299 ;	/home/user/contiki/core/sys/etimer.c:162: update_time();
+      00068F 12r00r00         [24] 1300 	lcall	_update_time
+                                   1301 ;	/home/user/contiki/core/sys/etimer.c:163: return;
+      000692 02r07r1E         [24] 1302 	ljmp	00109$
+      000695                       1303 00108$:
+                                   1304 ;	/home/user/contiki/core/sys/etimer.c:158: for(t = timerlist; t != NULL; t = t->next) {
+      000695 74 04            [12] 1305 	mov	a,#0x04
+      000697 2D               [12] 1306 	add	a,r5
+      000698 FA               [12] 1307 	mov	r2,a
+      000699 E4               [12] 1308 	clr	a
+      00069A 3E               [12] 1309 	addc	a,r6
+      00069B FB               [12] 1310 	mov	r3,a
+      00069C 8F 04            [24] 1311 	mov	ar4,r7
+      00069E 8A 82            [24] 1312 	mov	dpl,r2
+      0006A0 8B 83            [24] 1313 	mov	dph,r3
+      0006A2 8C F0            [24] 1314 	mov	b,r4
+      0006A4 12r00r00         [24] 1315 	lcall	__gptrget
+      0006A7 FD               [12] 1316 	mov	r5,a
+      0006A8 A3               [24] 1317 	inc	dptr
+      0006A9 12r00r00         [24] 1318 	lcall	__gptrget
+      0006AC FE               [12] 1319 	mov	r6,a
+      0006AD A3               [24] 1320 	inc	dptr
+      0006AE 12r00r00         [24] 1321 	lcall	__gptrget
+      0006B1 FF               [12] 1322 	mov	r7,a
+      0006B2 02r06r30         [24] 1323 	ljmp	00107$
+      0006B5                       1324 00105$:
+                                   1325 ;	/home/user/contiki/core/sys/etimer.c:169: timer->i = PROCESS_CURRENT();
+      0006B5 90r00r00         [24] 1326 	mov	dptr,#_process_current
+      0006B8 E0               [24] 1327 	movx	a,@dptr
+      0006B9 FD               [12] 1328 	mov	r5,a
+      0006BA A3               [24] 1329 	inc	dptr
+      0006BB E0               [24] 1330 	movx	a,@dptr
+      0006BC FE               [12] 1331 	mov	r6,a
+      0006BD A3               [24] 1332 	inc	dptr
+      0006BE E0               [24] 1333 	movx	a,@dptr
+      0006BF FF               [12] 1334 	mov	r7,a
+      0006C0 A8 81            [24] 1335 	mov	r0,sp
+      0006C2 18               [12] 1336 	dec	r0
+      0006C3 18               [12] 1337 	dec	r0
+      0006C4 86 82            [24] 1338 	mov	dpl,@r0
+      0006C6 08               [12] 1339 	inc	r0
+      0006C7 86 83            [24] 1340 	mov	dph,@r0
+      0006C9 08               [12] 1341 	inc	r0
+      0006CA 86 F0            [24] 1342 	mov	b,@r0
+      0006CC ED               [12] 1343 	mov	a,r5
+      0006CD 12r00r00         [24] 1344 	lcall	__gptrput
+      0006D0 A3               [24] 1345 	inc	dptr
+      0006D1 EE               [12] 1346 	mov	a,r6
+      0006D2 12r00r00         [24] 1347 	lcall	__gptrput
+      0006D5 A3               [24] 1348 	inc	dptr
+      0006D6 EF               [12] 1349 	mov	a,r7
+      0006D7 12r00r00         [24] 1350 	lcall	__gptrput
+                                   1351 ;	/home/user/contiki/core/sys/etimer.c:170: timer->next = timerlist;
+      0006DA E5 81            [12] 1352 	mov	a,sp
+      0006DC 24 FB            [12] 1353 	add	a,#0xfb
+      0006DE F8               [12] 1354 	mov	r0,a
+      0006DF 74 04            [12] 1355 	mov	a,#0x04
+      0006E1 26               [12] 1356 	add	a,@r0
+      0006E2 FD               [12] 1357 	mov	r5,a
+      0006E3 E4               [12] 1358 	clr	a
+      0006E4 08               [12] 1359 	inc	r0
+      0006E5 36               [12] 1360 	addc	a,@r0
+      0006E6 FE               [12] 1361 	mov	r6,a
+      0006E7 08               [12] 1362 	inc	r0
+      0006E8 86 07            [24] 1363 	mov	ar7,@r0
+      0006EA 90r00r00         [24] 1364 	mov	dptr,#_timerlist
+      0006ED E0               [24] 1365 	movx	a,@dptr
+      0006EE FA               [12] 1366 	mov	r2,a
+      0006EF A3               [24] 1367 	inc	dptr
+      0006F0 E0               [24] 1368 	movx	a,@dptr
+      0006F1 FB               [12] 1369 	mov	r3,a
+      0006F2 A3               [24] 1370 	inc	dptr
+      0006F3 E0               [24] 1371 	movx	a,@dptr
+      0006F4 FC               [12] 1372 	mov	r4,a
+      0006F5 8D 82            [24] 1373 	mov	dpl,r5
+      0006F7 8E 83            [24] 1374 	mov	dph,r6
+      0006F9 8F F0            [24] 1375 	mov	b,r7
+      0006FB EA               [12] 1376 	mov	a,r2
+      0006FC 12r00r00         [24] 1377 	lcall	__gptrput
+      0006FF A3               [24] 1378 	inc	dptr
+      000700 EB               [12] 1379 	mov	a,r3
+      000701 12r00r00         [24] 1380 	lcall	__gptrput
+      000704 A3               [24] 1381 	inc	dptr
+      000705 EC               [12] 1382 	mov	a,r4
+      000706 12r00r00         [24] 1383 	lcall	__gptrput
+                                   1384 ;	/home/user/contiki/core/sys/etimer.c:171: timerlist = timer;
+      000709 E5 81            [12] 1385 	mov	a,sp
+      00070B 24 FB            [12] 1386 	add	a,#0xfb
+      00070D F8               [12] 1387 	mov	r0,a
+      00070E 90r00r00         [24] 1388 	mov	dptr,#_timerlist
+      000711 E6               [12] 1389 	mov	a,@r0
+      000712 F0               [24] 1390 	movx	@dptr,a
+      000713 08               [12] 1391 	inc	r0
+      000714 E6               [12] 1392 	mov	a,@r0
+      000715 A3               [24] 1393 	inc	dptr
+      000716 F0               [24] 1394 	movx	@dptr,a
+      000717 08               [12] 1395 	inc	r0
+      000718 E6               [12] 1396 	mov	a,@r0
+      000719 A3               [24] 1397 	inc	dptr
+      00071A F0               [24] 1398 	movx	@dptr,a
+                                   1399 ;	/home/user/contiki/core/sys/etimer.c:173: update_time();
+      00071B 12r00r00         [24] 1400 	lcall	_update_time
+      00071E                       1401 00109$:
+      00071E E5 81            [12] 1402 	mov	a,sp
+      000720 24 FA            [12] 1403 	add	a,#0xFA
+      000722 F5 81            [12] 1404 	mov	sp,a
+      000724 22               [24] 1405 	ret
+                                   1406 ;------------------------------------------------------------
+                                   1407 ;Allocation info for local variables in function 'etimer_set'
+                                   1408 ;------------------------------------------------------------
+                                   1409 ;interval                  Allocated to stack - sp -3
+                                   1410 ;et                        Allocated to registers r5 r6 r7 
+                                   1411 ;------------------------------------------------------------
+                                   1412 ;	/home/user/contiki/core/sys/etimer.c:177: etimer_set(struct etimer *et, clock_time_t interval)
+                                   1413 ;	-----------------------------------------
+                                   1414 ;	 function etimer_set
+                                   1415 ;	-----------------------------------------
+      000725                       1416 _etimer_set:
+      000725 AD 82            [24] 1417 	mov	r5,dpl
+      000727 AE 83            [24] 1418 	mov	r6,dph
+      000729 AF F0            [24] 1419 	mov	r7,b
+                                   1420 ;	/home/user/contiki/core/sys/etimer.c:179: timer_set(&et->timer, interval);
+      00072B C0 07            [24] 1421 	push	ar7
+      00072D C0 06            [24] 1422 	push	ar6
+      00072F C0 05            [24] 1423 	push	ar5
+      000731 E5 81            [12] 1424 	mov	a,sp
+      000733 24 FA            [12] 1425 	add	a,#0xfa
+      000735 F8               [12] 1426 	mov	r0,a
+      000736 E6               [12] 1427 	mov	a,@r0
+      000737 C0 E0            [24] 1428 	push	acc
+      000739 08               [12] 1429 	inc	r0
+      00073A E6               [12] 1430 	mov	a,@r0
+      00073B C0 E0            [24] 1431 	push	acc
+      00073D 8D 82            [24] 1432 	mov	dpl,r5
+      00073F 8E 83            [24] 1433 	mov	dph,r6
+      000741 8F F0            [24] 1434 	mov	b,r7
+      000743 12r00r00         [24] 1435 	lcall	_timer_set
+      000746 15 81            [12] 1436 	dec	sp
+      000748 15 81            [12] 1437 	dec	sp
+      00074A D0 05            [24] 1438 	pop	ar5
+      00074C D0 06            [24] 1439 	pop	ar6
+      00074E D0 07            [24] 1440 	pop	ar7
+                                   1441 ;	/home/user/contiki/core/sys/etimer.c:180: add_timer(et);
+      000750 8D 82            [24] 1442 	mov	dpl,r5
+      000752 8E 83            [24] 1443 	mov	dph,r6
+      000754 8F F0            [24] 1444 	mov	b,r7
+      000756 02r05rDF         [24] 1445 	ljmp	_add_timer
+                                   1446 ;------------------------------------------------------------
+                                   1447 ;Allocation info for local variables in function 'etimer_reset'
+                                   1448 ;------------------------------------------------------------
+                                   1449 ;et                        Allocated to registers r5 r6 r7 
+                                   1450 ;------------------------------------------------------------
+                                   1451 ;	/home/user/contiki/core/sys/etimer.c:184: etimer_reset(struct etimer *et)
+                                   1452 ;	-----------------------------------------
+                                   1453 ;	 function etimer_reset
+                                   1454 ;	-----------------------------------------
+      000759                       1455 _etimer_reset:
+                                   1456 ;	/home/user/contiki/core/sys/etimer.c:186: timer_reset(&et->timer);
+      000759 AD 82            [24] 1457 	mov	r5,dpl
+      00075B AE 83            [24] 1458 	mov	r6,dph
+      00075D AF F0            [24] 1459 	mov	r7,b
+      00075F C0 07            [24] 1460 	push	ar7
+      000761 C0 06            [24] 1461 	push	ar6
+      000763 C0 05            [24] 1462 	push	ar5
+      000765 12r00r00         [24] 1463 	lcall	_timer_reset
+      000768 D0 05            [24] 1464 	pop	ar5
+      00076A D0 06            [24] 1465 	pop	ar6
+      00076C D0 07            [24] 1466 	pop	ar7
+                                   1467 ;	/home/user/contiki/core/sys/etimer.c:187: add_timer(et);
+      00076E 8D 82            [24] 1468 	mov	dpl,r5
+      000770 8E 83            [24] 1469 	mov	dph,r6
+      000772 8F F0            [24] 1470 	mov	b,r7
+      000774 02r05rDF         [24] 1471 	ljmp	_add_timer
+                                   1472 ;------------------------------------------------------------
+                                   1473 ;Allocation info for local variables in function 'etimer_restart'
+                                   1474 ;------------------------------------------------------------
+                                   1475 ;et                        Allocated to registers r5 r6 r7 
+                                   1476 ;------------------------------------------------------------
+                                   1477 ;	/home/user/contiki/core/sys/etimer.c:191: etimer_restart(struct etimer *et)
+                                   1478 ;	-----------------------------------------
+                                   1479 ;	 function etimer_restart
+                                   1480 ;	-----------------------------------------
+      000777                       1481 _etimer_restart:
+                                   1482 ;	/home/user/contiki/core/sys/etimer.c:193: timer_restart(&et->timer);
+      000777 AD 82            [24] 1483 	mov	r5,dpl
+      000779 AE 83            [24] 1484 	mov	r6,dph
+      00077B AF F0            [24] 1485 	mov	r7,b
+      00077D C0 07            [24] 1486 	push	ar7
+      00077F C0 06            [24] 1487 	push	ar6
+      000781 C0 05            [24] 1488 	push	ar5
+      000783 12r00r00         [24] 1489 	lcall	_timer_restart
+      000786 D0 05            [24] 1490 	pop	ar5
+      000788 D0 06            [24] 1491 	pop	ar6
+      00078A D0 07            [24] 1492 	pop	ar7
+                                   1493 ;	/home/user/contiki/core/sys/etimer.c:194: add_timer(et);
+      00078C 8D 82            [24] 1494 	mov	dpl,r5
+      00078E 8E 83            [24] 1495 	mov	dph,r6
+      000790 8F F0            [24] 1496 	mov	b,r7
+      000792 02r05rDF         [24] 1497 	ljmp	_add_timer
+                                   1498 ;------------------------------------------------------------
+                                   1499 ;Allocation info for local variables in function 'etimer_adjust'
+                                   1500 ;------------------------------------------------------------
+                                   1501 ;timediff                  Allocated to stack - sp -6
+                                   1502 ;et                        Allocated to stack - sp -2
+                                   1503 ;------------------------------------------------------------
+                                   1504 ;	/home/user/contiki/core/sys/etimer.c:198: etimer_adjust(struct etimer *et, int timediff)
+                                   1505 ;	-----------------------------------------
+                                   1506 ;	 function etimer_adjust
+                                   1507 ;	-----------------------------------------
+      000795                       1508 _etimer_adjust:
+      000795 C0 82            [24] 1509 	push	dpl
+      000797 C0 83            [24] 1510 	push	dph
+      000799 C0 F0            [24] 1511 	push	b
+                                   1512 ;	/home/user/contiki/core/sys/etimer.c:200: et->timer.start += timediff;
+      00079B A8 81            [24] 1513 	mov	r0,sp
+      00079D 18               [12] 1514 	dec	r0
+      00079E 18               [12] 1515 	dec	r0
+      00079F 86 82            [24] 1516 	mov	dpl,@r0
+      0007A1 08               [12] 1517 	inc	r0
+      0007A2 86 83            [24] 1518 	mov	dph,@r0
+      0007A4 08               [12] 1519 	inc	r0
+      0007A5 86 F0            [24] 1520 	mov	b,@r0
+      0007A7 12r00r00         [24] 1521 	lcall	__gptrget
+      0007AA FB               [12] 1522 	mov	r3,a
+      0007AB A3               [24] 1523 	inc	dptr
+      0007AC 12r00r00         [24] 1524 	lcall	__gptrget
+      0007AF FC               [12] 1525 	mov	r4,a
+      0007B0 E5 81            [12] 1526 	mov	a,sp
+      0007B2 24 FA            [12] 1527 	add	a,#0xfa
+      0007B4 F8               [12] 1528 	mov	r0,a
+      0007B5 86 02            [24] 1529 	mov	ar2,@r0
+      0007B7 08               [12] 1530 	inc	r0
+      0007B8 86 07            [24] 1531 	mov	ar7,@r0
+      0007BA EA               [12] 1532 	mov	a,r2
+      0007BB 2B               [12] 1533 	add	a,r3
+      0007BC FB               [12] 1534 	mov	r3,a
+      0007BD EF               [12] 1535 	mov	a,r7
+      0007BE 3C               [12] 1536 	addc	a,r4
+      0007BF FC               [12] 1537 	mov	r4,a
+      0007C0 A8 81            [24] 1538 	mov	r0,sp
+      0007C2 18               [12] 1539 	dec	r0
+      0007C3 18               [12] 1540 	dec	r0
+      0007C4 86 82            [24] 1541 	mov	dpl,@r0
+      0007C6 08               [12] 1542 	inc	r0
+      0007C7 86 83            [24] 1543 	mov	dph,@r0
+      0007C9 08               [12] 1544 	inc	r0
+      0007CA 86 F0            [24] 1545 	mov	b,@r0
+      0007CC EB               [12] 1546 	mov	a,r3
+      0007CD 12r00r00         [24] 1547 	lcall	__gptrput
+      0007D0 A3               [24] 1548 	inc	dptr
+      0007D1 EC               [12] 1549 	mov	a,r4
+      0007D2 12r00r00         [24] 1550 	lcall	__gptrput
+                                   1551 ;	/home/user/contiki/core/sys/etimer.c:201: update_time();
+      0007D5 12r00r00         [24] 1552 	lcall	_update_time
+      0007D8 15 81            [12] 1553 	dec	sp
+      0007DA 15 81            [12] 1554 	dec	sp
+      0007DC 15 81            [12] 1555 	dec	sp
+      0007DE 22               [24] 1556 	ret
+                                   1557 ;------------------------------------------------------------
+                                   1558 ;Allocation info for local variables in function 'etimer_expired'
+                                   1559 ;------------------------------------------------------------
+                                   1560 ;et                        Allocated to registers r5 r6 r7 
+                                   1561 ;------------------------------------------------------------
+                                   1562 ;	/home/user/contiki/core/sys/etimer.c:205: etimer_expired(struct etimer *et)
+                                   1563 ;	-----------------------------------------
+                                   1564 ;	 function etimer_expired
+                                   1565 ;	-----------------------------------------
+      0007DF                       1566 _etimer_expired:
+      0007DF AD 82            [24] 1567 	mov	r5,dpl
+      0007E1 AE 83            [24] 1568 	mov	r6,dph
+      0007E3 AF F0            [24] 1569 	mov	r7,b
+                                   1570 ;	/home/user/contiki/core/sys/etimer.c:207: return et->i == PROCESS_NONE;
+      0007E5 74 07            [12] 1571 	mov	a,#0x07
+      0007E7 2D               [12] 1572 	add	a,r5
+      0007E8 FD               [12] 1573 	mov	r5,a
+      0007E9 E4               [12] 1574 	clr	a
+      0007EA 3E               [12] 1575 	addc	a,r6
+      0007EB FE               [12] 1576 	mov	r6,a
+      0007EC 8D 82            [24] 1577 	mov	dpl,r5
+      0007EE 8E 83            [24] 1578 	mov	dph,r6
+      0007F0 8F F0            [24] 1579 	mov	b,r7
+      0007F2 12r00r00         [24] 1580 	lcall	__gptrget
+      0007F5 FD               [12] 1581 	mov	r5,a
+      0007F6 A3               [24] 1582 	inc	dptr
+      0007F7 12r00r00         [24] 1583 	lcall	__gptrget
+      0007FA FE               [12] 1584 	mov	r6,a
+      0007FB A3               [24] 1585 	inc	dptr
+      0007FC 12r00r00         [24] 1586 	lcall	__gptrget
+      0007FF FF               [12] 1587 	mov	r7,a
+      000800 E4               [12] 1588 	clr	a
+      000801 C0 E0            [24] 1589 	push	acc
+      000803 E4               [12] 1590 	clr	a
+      000804 C0 E0            [24] 1591 	push	acc
+      000806 E4               [12] 1592 	clr	a
+      000807 C0 E0            [24] 1593 	push	acc
+      000809 8D 82            [24] 1594 	mov	dpl,r5
+      00080B 8E 83            [24] 1595 	mov	dph,r6
+      00080D 8F F0            [24] 1596 	mov	b,r7
+      00080F 12r00r00         [24] 1597 	lcall	___gptr_cmp
+      000812 15 81            [12] 1598 	dec	sp
+      000814 15 81            [12] 1599 	dec	sp
+      000816 15 81            [12] 1600 	dec	sp
+      000818 70 04            [24] 1601 	jnz	00103$
+      00081A 74 01            [12] 1602 	mov	a,#0x01
+      00081C 80 01            [24] 1603 	sjmp	00104$
+      00081E                       1604 00103$:
+      00081E E4               [12] 1605 	clr	a
+      00081F                       1606 00104$:
+      00081F FD               [12] 1607 	mov	r5,a
+      000820 33               [12] 1608 	rlc	a
+      000821 95 E0            [12] 1609 	subb	a,acc
+      000823 8D 82            [24] 1610 	mov	dpl,r5
+      000825 F5 83            [12] 1611 	mov	dph,a
+      000827 22               [24] 1612 	ret
+                                   1613 ;------------------------------------------------------------
+                                   1614 ;Allocation info for local variables in function 'etimer_expiration_time'
+                                   1615 ;------------------------------------------------------------
+                                   1616 ;et                        Allocated to registers r5 r6 r7 
+                                   1617 ;------------------------------------------------------------
+                                   1618 ;	/home/user/contiki/core/sys/etimer.c:211: etimer_expiration_time(struct etimer *et)
+                                   1619 ;	-----------------------------------------
+                                   1620 ;	 function etimer_expiration_time
+                                   1621 ;	-----------------------------------------
+      000828                       1622 _etimer_expiration_time:
+                                   1623 ;	/home/user/contiki/core/sys/etimer.c:213: return et->timer.start + et->timer.interval;
+      000828 AD 82            [24] 1624 	mov	r5,dpl
+      00082A AE 83            [24] 1625 	mov	r6,dph
+      00082C AF F0            [24] 1626 	mov	r7,b
+      00082E 12r00r00         [24] 1627 	lcall	__gptrget
+      000831 FB               [12] 1628 	mov	r3,a
+      000832 A3               [24] 1629 	inc	dptr
+      000833 12r00r00         [24] 1630 	lcall	__gptrget
+      000836 FC               [12] 1631 	mov	r4,a
+      000837 74 02            [12] 1632 	mov	a,#0x02
+      000839 2D               [12] 1633 	add	a,r5
+      00083A FD               [12] 1634 	mov	r5,a
+      00083B E4               [12] 1635 	clr	a
+      00083C 3E               [12] 1636 	addc	a,r6
+      00083D FE               [12] 1637 	mov	r6,a
+      00083E 8D 82            [24] 1638 	mov	dpl,r5
+      000840 8E 83            [24] 1639 	mov	dph,r6
+      000842 8F F0            [24] 1640 	mov	b,r7
+      000844 12r00r00         [24] 1641 	lcall	__gptrget
+      000847 FD               [12] 1642 	mov	r5,a
+      000848 A3               [24] 1643 	inc	dptr
+      000849 12r00r00         [24] 1644 	lcall	__gptrget
+      00084C FE               [12] 1645 	mov	r6,a
+      00084D ED               [12] 1646 	mov	a,r5
+      00084E 2B               [12] 1647 	add	a,r3
+      00084F FB               [12] 1648 	mov	r3,a
+      000850 EE               [12] 1649 	mov	a,r6
+      000851 3C               [12] 1650 	addc	a,r4
+      000852 8B 82            [24] 1651 	mov	dpl,r3
+      000854 F5 83            [12] 1652 	mov	dph,a
+      000856 22               [24] 1653 	ret
+                                   1654 ;------------------------------------------------------------
+                                   1655 ;Allocation info for local variables in function 'etimer_start_time'
+                                   1656 ;------------------------------------------------------------
+                                   1657 ;et                        Allocated to registers r5 r6 r7 
+                                   1658 ;------------------------------------------------------------
+                                   1659 ;	/home/user/contiki/core/sys/etimer.c:217: etimer_start_time(struct etimer *et)
+                                   1660 ;	-----------------------------------------
+                                   1661 ;	 function etimer_start_time
+                                   1662 ;	-----------------------------------------
+      000857                       1663 _etimer_start_time:
+                                   1664 ;	/home/user/contiki/core/sys/etimer.c:219: return et->timer.start;
+      000857 12r00r00         [24] 1665 	lcall	__gptrget
+      00085A FD               [12] 1666 	mov	r5,a
+      00085B A3               [24] 1667 	inc	dptr
+      00085C 12r00r00         [24] 1668 	lcall	__gptrget
+      00085F 8D 82            [24] 1669 	mov	dpl,r5
+      000861 F5 83            [12] 1670 	mov	dph,a
+      000863 22               [24] 1671 	ret
+                                   1672 ;------------------------------------------------------------
+                                   1673 ;Allocation info for local variables in function 'etimer_pending'
+                                   1674 ;------------------------------------------------------------
+                                   1675 ;	/home/user/contiki/core/sys/etimer.c:223: etimer_pending(void)
+                                   1676 ;	-----------------------------------------
+                                   1677 ;	 function etimer_pending
+                                   1678 ;	-----------------------------------------
+      000864                       1679 _etimer_pending:
+                                   1680 ;	/home/user/contiki/core/sys/etimer.c:225: return timerlist != NULL;
+      000864 90r00r00         [24] 1681 	mov	dptr,#_timerlist
+      000867 E0               [24] 1682 	movx	a,@dptr
+      000868 FD               [12] 1683 	mov	r5,a
+      000869 A3               [24] 1684 	inc	dptr
+      00086A E0               [24] 1685 	movx	a,@dptr
+      00086B FE               [12] 1686 	mov	r6,a
+      00086C A3               [24] 1687 	inc	dptr
+      00086D E0               [24] 1688 	movx	a,@dptr
+      00086E FF               [12] 1689 	mov	r7,a
+      00086F E4               [12] 1690 	clr	a
+      000870 C0 E0            [24] 1691 	push	acc
+      000872 E4               [12] 1692 	clr	a
+      000873 C0 E0            [24] 1693 	push	acc
+      000875 E4               [12] 1694 	clr	a
+      000876 C0 E0            [24] 1695 	push	acc
+      000878 8D 82            [24] 1696 	mov	dpl,r5
+      00087A 8E 83            [24] 1697 	mov	dph,r6
+      00087C 8F F0            [24] 1698 	mov	b,r7
+      00087E 12r00r00         [24] 1699 	lcall	___gptr_cmp
+      000881 15 81            [12] 1700 	dec	sp
+      000883 15 81            [12] 1701 	dec	sp
+      000885 15 81            [12] 1702 	dec	sp
+      000887 70 04            [24] 1703 	jnz	00103$
+      000889 74 01            [12] 1704 	mov	a,#0x01
+      00088B 80 01            [24] 1705 	sjmp	00104$
+      00088D                       1706 00103$:
+      00088D E4               [12] 1707 	clr	a
+      00088E                       1708 00104$:
+      00088E FD               [12] 1709 	mov	r5,a
+      00088F B4 01 00         [24] 1710 	cjne	a,#0x01,00105$
+      000892                       1711 00105$:
+      000892 E4               [12] 1712 	clr	a
+      000893 33               [12] 1713 	rlc	a
+      000894 FD               [12] 1714 	mov	r5,a
+      000895 33               [12] 1715 	rlc	a
+      000896 95 E0            [12] 1716 	subb	a,acc
+      000898 8D 82            [24] 1717 	mov	dpl,r5
+      00089A F5 83            [12] 1718 	mov	dph,a
+      00089C 22               [24] 1719 	ret
+                                   1720 ;------------------------------------------------------------
+                                   1721 ;Allocation info for local variables in function 'etimer_next_expiration_time'
+                                   1722 ;------------------------------------------------------------
+                                   1723 ;	/home/user/contiki/core/sys/etimer.c:229: etimer_next_expiration_time(void)
+                                   1724 ;	-----------------------------------------
+                                   1725 ;	 function etimer_next_expiration_time
+                                   1726 ;	-----------------------------------------
+      00089D                       1727 _etimer_next_expiration_time:
+                                   1728 ;	/home/user/contiki/core/sys/etimer.c:231: return etimer_pending() ? next_expiration : 0;
+      00089D 12r08r64         [24] 1729 	lcall	_etimer_pending
+      0008A0 E5 82            [12] 1730 	mov	a,dpl
+      0008A2 85 83 F0         [24] 1731 	mov	b,dph
+      0008A5 45 F0            [12] 1732 	orl	a,b
+      0008A7 60 0A            [24] 1733 	jz	00103$
+      0008A9 90r00r03         [24] 1734 	mov	dptr,#_next_expiration
+      0008AC E0               [24] 1735 	movx	a,@dptr
+      0008AD FE               [12] 1736 	mov	r6,a
+      0008AE A3               [24] 1737 	inc	dptr
+      0008AF E0               [24] 1738 	movx	a,@dptr
+      0008B0 FF               [12] 1739 	mov	r7,a
+      0008B1 80 04            [24] 1740 	sjmp	00104$
+      0008B3                       1741 00103$:
+      0008B3 7E 00            [12] 1742 	mov	r6,#0x00
+      0008B5 7F 00            [12] 1743 	mov	r7,#0x00
+      0008B7                       1744 00104$:
+      0008B7 8E 82            [24] 1745 	mov	dpl,r6
+      0008B9 8F 83            [24] 1746 	mov	dph,r7
+      0008BB 22               [24] 1747 	ret
+                                   1748 ;------------------------------------------------------------
+                                   1749 ;Allocation info for local variables in function 'etimer_stop'
+                                   1750 ;------------------------------------------------------------
+                                   1751 ;et                        Allocated to stack - sp -2
+                                   1752 ;t                         Allocated to registers r2 r3 r4 
+                                   1753 ;------------------------------------------------------------
+                                   1754 ;	/home/user/contiki/core/sys/etimer.c:235: etimer_stop(struct etimer *et)
+                                   1755 ;	-----------------------------------------
+                                   1756 ;	 function etimer_stop
+                                   1757 ;	-----------------------------------------
+      0008BC                       1758 _etimer_stop:
+      0008BC C0 82            [24] 1759 	push	dpl
+      0008BE C0 83            [24] 1760 	push	dph
+      0008C0 C0 F0            [24] 1761 	push	b
+                                   1762 ;	/home/user/contiki/core/sys/etimer.c:240: if(et == timerlist) {
+      0008C2 90r00r00         [24] 1763 	mov	dptr,#_timerlist
+      0008C5 E0               [24] 1764 	movx	a,@dptr
+      0008C6 FA               [12] 1765 	mov	r2,a
+      0008C7 A3               [24] 1766 	inc	dptr
+      0008C8 E0               [24] 1767 	movx	a,@dptr
+      0008C9 FB               [12] 1768 	mov	r3,a
+      0008CA A3               [24] 1769 	inc	dptr
+      0008CB E0               [24] 1770 	movx	a,@dptr
+      0008CC FC               [12] 1771 	mov	r4,a
+      0008CD A8 81            [24] 1772 	mov	r0,sp
+      0008CF 18               [12] 1773 	dec	r0
+      0008D0 18               [12] 1774 	dec	r0
+      0008D1 C0 02            [24] 1775 	push	ar2
+      0008D3 C0 03            [24] 1776 	push	ar3
+      0008D5 C0 04            [24] 1777 	push	ar4
+      0008D7 86 82            [24] 1778 	mov	dpl,@r0
+      0008D9 08               [12] 1779 	inc	r0
+      0008DA 86 83            [24] 1780 	mov	dph,@r0
+      0008DC 08               [12] 1781 	inc	r0
+      0008DD 86 F0            [24] 1782 	mov	b,@r0
+      0008DF 12r00r00         [24] 1783 	lcall	___gptr_cmp
+      0008E2 15 81            [12] 1784 	dec	sp
+      0008E4 15 81            [12] 1785 	dec	sp
+      0008E6 15 81            [12] 1786 	dec	sp
+      0008E8 60 02            [24] 1787 	jz	00129$
+      0008EA 80 2E            [24] 1788 	sjmp	00105$
+      0008EC                       1789 00129$:
+                                   1790 ;	/home/user/contiki/core/sys/etimer.c:241: timerlist = timerlist->next;
+      0008EC 74 04            [12] 1791 	mov	a,#0x04
+      0008EE 2A               [12] 1792 	add	a,r2
+      0008EF FD               [12] 1793 	mov	r5,a
+      0008F0 E4               [12] 1794 	clr	a
+      0008F1 3B               [12] 1795 	addc	a,r3
+      0008F2 FE               [12] 1796 	mov	r6,a
+      0008F3 8C 07            [24] 1797 	mov	ar7,r4
+      0008F5 8D 82            [24] 1798 	mov	dpl,r5
+      0008F7 8E 83            [24] 1799 	mov	dph,r6
+      0008F9 8F F0            [24] 1800 	mov	b,r7
+      0008FB 12r00r00         [24] 1801 	lcall	__gptrget
+      0008FE FD               [12] 1802 	mov	r5,a
+      0008FF A3               [24] 1803 	inc	dptr
+      000900 12r00r00         [24] 1804 	lcall	__gptrget
+      000903 FE               [12] 1805 	mov	r6,a
+      000904 A3               [24] 1806 	inc	dptr
+      000905 12r00r00         [24] 1807 	lcall	__gptrget
+      000908 FF               [12] 1808 	mov	r7,a
+      000909 90r00r00         [24] 1809 	mov	dptr,#_timerlist
+      00090C ED               [12] 1810 	mov	a,r5
+      00090D F0               [24] 1811 	movx	@dptr,a
+      00090E EE               [12] 1812 	mov	a,r6
+      00090F A3               [24] 1813 	inc	dptr
+      000910 F0               [24] 1814 	movx	@dptr,a
+      000911 EF               [12] 1815 	mov	a,r7
+      000912 A3               [24] 1816 	inc	dptr
+      000913 F0               [24] 1817 	movx	@dptr,a
+                                   1818 ;	/home/user/contiki/core/sys/etimer.c:242: update_time();
+      000914 12r00r00         [24] 1819 	lcall	_update_time
+      000917 02r09rBB         [24] 1820 	ljmp	00106$
+      00091A                       1821 00105$:
+                                   1822 ;	/home/user/contiki/core/sys/etimer.c:246: for(t = timerlist; t != NULL && t->next != et; t = t->next);
+      00091A                       1823 00109$:
+      00091A E4               [12] 1824 	clr	a
+      00091B C0 E0            [24] 1825 	push	acc
+      00091D E4               [12] 1826 	clr	a
+      00091E C0 E0            [24] 1827 	push	acc
+      000920 E4               [12] 1828 	clr	a
+      000921 C0 E0            [24] 1829 	push	acc
+      000923 8A 82            [24] 1830 	mov	dpl,r2
+      000925 8B 83            [24] 1831 	mov	dph,r3
+      000927 8C F0            [24] 1832 	mov	b,r4
+      000929 12r00r00         [24] 1833 	lcall	___gptr_cmp
+      00092C 15 81            [12] 1834 	dec	sp
+      00092E 15 81            [12] 1835 	dec	sp
+      000930 15 81            [12] 1836 	dec	sp
+      000932 60 42            [24] 1837 	jz	00101$
+      000934 74 04            [12] 1838 	mov	a,#0x04
+      000936 2A               [12] 1839 	add	a,r2
+      000937 FD               [12] 1840 	mov	r5,a
+      000938 E4               [12] 1841 	clr	a
+      000939 3B               [12] 1842 	addc	a,r3
+      00093A FE               [12] 1843 	mov	r6,a
+      00093B 8C 07            [24] 1844 	mov	ar7,r4
+      00093D 8D 82            [24] 1845 	mov	dpl,r5
+      00093F 8E 83            [24] 1846 	mov	dph,r6
+      000941 8F F0            [24] 1847 	mov	b,r7
+      000943 12r00r00         [24] 1848 	lcall	__gptrget
+      000946 FD               [12] 1849 	mov	r5,a
+      000947 A3               [24] 1850 	inc	dptr
+      000948 12r00r00         [24] 1851 	lcall	__gptrget
+      00094B FE               [12] 1852 	mov	r6,a
+      00094C A3               [24] 1853 	inc	dptr
+      00094D 12r00r00         [24] 1854 	lcall	__gptrget
+      000950 FF               [12] 1855 	mov	r7,a
+      000951 A8 81            [24] 1856 	mov	r0,sp
+      000953 18               [12] 1857 	dec	r0
+      000954 18               [12] 1858 	dec	r0
+      000955 C0 05            [24] 1859 	push	ar5
+      000957 C0 06            [24] 1860 	push	ar6
+      000959 C0 07            [24] 1861 	push	ar7
+      00095B 86 82            [24] 1862 	mov	dpl,@r0
+      00095D 08               [12] 1863 	inc	r0
+      00095E 86 83            [24] 1864 	mov	dph,@r0
+      000960 08               [12] 1865 	inc	r0
+      000961 86 F0            [24] 1866 	mov	b,@r0
+      000963 12r00r00         [24] 1867 	lcall	___gptr_cmp
+      000966 15 81            [12] 1868 	dec	sp
+      000968 15 81            [12] 1869 	dec	sp
+      00096A 15 81            [12] 1870 	dec	sp
+      00096C 60 08            [24] 1871 	jz	00101$
+      00096E 8D 02            [24] 1872 	mov	ar2,r5
+      000970 8E 03            [24] 1873 	mov	ar3,r6
+      000972 8F 04            [24] 1874 	mov	ar4,r7
+      000974 80 A4            [24] 1875 	sjmp	00109$
+      000976                       1876 00101$:
+                                   1877 ;	/home/user/contiki/core/sys/etimer.c:248: if(t != NULL) {
+      000976 EA               [12] 1878 	mov	a,r2
+      000977 4B               [12] 1879 	orl	a,r3
+      000978 60 41            [24] 1880 	jz	00106$
+                                   1881 ;	/home/user/contiki/core/sys/etimer.c:252: t->next = et->next;
+      00097A 74 04            [12] 1882 	mov	a,#0x04
+      00097C 2A               [12] 1883 	add	a,r2
+      00097D FA               [12] 1884 	mov	r2,a
+      00097E E4               [12] 1885 	clr	a
+      00097F 3B               [12] 1886 	addc	a,r3
+      000980 FB               [12] 1887 	mov	r3,a
+      000981 A8 81            [24] 1888 	mov	r0,sp
+      000983 18               [12] 1889 	dec	r0
+      000984 18               [12] 1890 	dec	r0
+      000985 74 04            [12] 1891 	mov	a,#0x04
+      000987 26               [12] 1892 	add	a,@r0
+      000988 FD               [12] 1893 	mov	r5,a
+      000989 E4               [12] 1894 	clr	a
+      00098A 08               [12] 1895 	inc	r0
+      00098B 36               [12] 1896 	addc	a,@r0
+      00098C FE               [12] 1897 	mov	r6,a
+      00098D 08               [12] 1898 	inc	r0
+      00098E 86 07            [24] 1899 	mov	ar7,@r0
+      000990 8D 82            [24] 1900 	mov	dpl,r5
+      000992 8E 83            [24] 1901 	mov	dph,r6
+      000994 8F F0            [24] 1902 	mov	b,r7
+      000996 12r00r00         [24] 1903 	lcall	__gptrget
+      000999 FD               [12] 1904 	mov	r5,a
+      00099A A3               [24] 1905 	inc	dptr
+      00099B 12r00r00         [24] 1906 	lcall	__gptrget
+      00099E FE               [12] 1907 	mov	r6,a
+      00099F A3               [24] 1908 	inc	dptr
+      0009A0 12r00r00         [24] 1909 	lcall	__gptrget
+      0009A3 FF               [12] 1910 	mov	r7,a
+      0009A4 8A 82            [24] 1911 	mov	dpl,r2
+      0009A6 8B 83            [24] 1912 	mov	dph,r3
+      0009A8 8C F0            [24] 1913 	mov	b,r4
+      0009AA ED               [12] 1914 	mov	a,r5
+      0009AB 12r00r00         [24] 1915 	lcall	__gptrput
+      0009AE A3               [24] 1916 	inc	dptr
+      0009AF EE               [12] 1917 	mov	a,r6
+      0009B0 12r00r00         [24] 1918 	lcall	__gptrput
+      0009B3 A3               [24] 1919 	inc	dptr
+      0009B4 EF               [12] 1920 	mov	a,r7
+      0009B5 12r00r00         [24] 1921 	lcall	__gptrput
+                                   1922 ;	/home/user/contiki/core/sys/etimer.c:254: update_time();
+      0009B8 12r00r00         [24] 1923 	lcall	_update_time
+      0009BB                       1924 00106$:
+                                   1925 ;	/home/user/contiki/core/sys/etimer.c:259: et->next = NULL;
+      0009BB A8 81            [24] 1926 	mov	r0,sp
+      0009BD 18               [12] 1927 	dec	r0
+      0009BE 18               [12] 1928 	dec	r0
+      0009BF 74 04            [12] 1929 	mov	a,#0x04
+      0009C1 26               [12] 1930 	add	a,@r0
+      0009C2 FD               [12] 1931 	mov	r5,a
+      0009C3 E4               [12] 1932 	clr	a
+      0009C4 08               [12] 1933 	inc	r0
+      0009C5 36               [12] 1934 	addc	a,@r0
+      0009C6 FE               [12] 1935 	mov	r6,a
+      0009C7 08               [12] 1936 	inc	r0
+      0009C8 86 07            [24] 1937 	mov	ar7,@r0
+      0009CA 8D 82            [24] 1938 	mov	dpl,r5
+      0009CC 8E 83            [24] 1939 	mov	dph,r6
+      0009CE 8F F0            [24] 1940 	mov	b,r7
+      0009D0 E4               [12] 1941 	clr	a
+      0009D1 12r00r00         [24] 1942 	lcall	__gptrput
+      0009D4 A3               [24] 1943 	inc	dptr
+      0009D5 E4               [12] 1944 	clr	a
+      0009D6 12r00r00         [24] 1945 	lcall	__gptrput
+      0009D9 A3               [24] 1946 	inc	dptr
+      0009DA E4               [12] 1947 	clr	a
+      0009DB 12r00r00         [24] 1948 	lcall	__gptrput
+                                   1949 ;	/home/user/contiki/core/sys/etimer.c:261: et->i = PROCESS_NONE;
+      0009DE A8 81            [24] 1950 	mov	r0,sp
+      0009E0 18               [12] 1951 	dec	r0
+      0009E1 18               [12] 1952 	dec	r0
+      0009E2 74 07            [12] 1953 	mov	a,#0x07
+      0009E4 26               [12] 1954 	add	a,@r0
+      0009E5 FD               [12] 1955 	mov	r5,a
+      0009E6 E4               [12] 1956 	clr	a
+      0009E7 08               [12] 1957 	inc	r0
+      0009E8 36               [12] 1958 	addc	a,@r0
+      0009E9 FE               [12] 1959 	mov	r6,a
+      0009EA 08               [12] 1960 	inc	r0
+      0009EB 86 07            [24] 1961 	mov	ar7,@r0
+      0009ED 8D 82            [24] 1962 	mov	dpl,r5
+      0009EF 8E 83            [24] 1963 	mov	dph,r6
+      0009F1 8F F0            [24] 1964 	mov	b,r7
+      0009F3 E4               [12] 1965 	clr	a
+      0009F4 12r00r00         [24] 1966 	lcall	__gptrput
+      0009F7 A3               [24] 1967 	inc	dptr
+      0009F8 E4               [12] 1968 	clr	a
+      0009F9 12r00r00         [24] 1969 	lcall	__gptrput
+      0009FC A3               [24] 1970 	inc	dptr
+      0009FD E4               [12] 1971 	clr	a
+      0009FE 12r00r00         [24] 1972 	lcall	__gptrput
+      000A01 15 81            [12] 1973 	dec	sp
+      000A03 15 81            [12] 1974 	dec	sp
+      000A05 15 81            [12] 1975 	dec	sp
+      000A07 22               [24] 1976 	ret
+                                   1977 	.area CSEG    (CODE)
+                                   1978 	.area CONST   (CODE)
+                                   1979 	.area XINIT   (CODE)
+      000000                       1980 __xinit__etimer_process:
+                                   1981 ; generic printIvalPtr
+      000000 00 00 00              1982 	.byte #0x00,#0x00,#0x00
+      000003r9Fs01                 1983 	.byte _process_thread_etimer_process,(_process_thread_etimer_process >> 8)
+      000005 00 00                 1984 	.byte #0x00,#0x00	; 0
+      000007 00                    1985 	.db #0x00	; 0
+      000008 00                    1986 	.db #0x00	; 0
+                                   1987 	.area CABS    (ABS,CODE)

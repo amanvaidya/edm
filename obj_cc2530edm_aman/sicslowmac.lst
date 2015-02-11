@@ -1,0 +1,1077 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Tue Feb 10 06:19:36 2015
+                                      5 ;--------------------------------------------------------
+                                      6 	.module sicslowmac
+                                      7 	.optsdcc -mmcs51 --model-large
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _sicslowmac_driver
+                                     13 	.globl _send_list
+                                     14 	.globl _random_rand
+                                     15 	.globl _queuebuf_to_packetbuf
+                                     16 	.globl _packetbuf_addr
+                                     17 	.globl _packetbuf_set_addr
+                                     18 	.globl _packetbuf_attr
+                                     19 	.globl _packetbuf_hdrreduce
+                                     20 	.globl _packetbuf_hdralloc
+                                     21 	.globl _packetbuf_totlen
+                                     22 	.globl _packetbuf_datalen
+                                     23 	.globl _packetbuf_hdrptr
+                                     24 	.globl _packetbuf_dataptr
+                                     25 	.globl _frame802154_parse
+                                     26 	.globl _frame802154_create
+                                     27 	.globl _frame802154_hdrlen
+                                     28 	.globl _rimeaddr_cmp
+                                     29 	.globl _rimeaddr_copy
+                                     30 	.globl _memset
+                                     31 ;--------------------------------------------------------
+                                     32 ; special function registers
+                                     33 ;--------------------------------------------------------
+                                     34 	.area RSEG    (ABS,DATA)
+      000000                         35 	.org 0x0000
+                                     36 ;--------------------------------------------------------
+                                     37 ; special function bits
+                                     38 ;--------------------------------------------------------
+                                     39 	.area RSEG    (ABS,DATA)
+      000000                         40 	.org 0x0000
+                                     41 ;--------------------------------------------------------
+                                     42 ; overlayable register banks
+                                     43 ;--------------------------------------------------------
+                                     44 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         45 	.ds 8
+                                     46 ;--------------------------------------------------------
+                                     47 ; internal ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area DSEG    (DATA)
+                                     50 ;--------------------------------------------------------
+                                     51 ; overlayable items in internal ram 
+                                     52 ;--------------------------------------------------------
+                                     53 ;--------------------------------------------------------
+                                     54 ; indirectly addressable internal ram data
+                                     55 ;--------------------------------------------------------
+                                     56 	.area ISEG    (DATA)
+                                     57 ;--------------------------------------------------------
+                                     58 ; absolute internal ram data
+                                     59 ;--------------------------------------------------------
+                                     60 	.area IABS    (ABS,DATA)
+                                     61 	.area IABS    (ABS,DATA)
+                                     62 ;--------------------------------------------------------
+                                     63 ; bit data
+                                     64 ;--------------------------------------------------------
+                                     65 	.area BSEG    (BIT)
+                                     66 ;--------------------------------------------------------
+                                     67 ; paged external ram data
+                                     68 ;--------------------------------------------------------
+                                     69 	.area PSEG    (PAG,XDATA)
+                                     70 ;--------------------------------------------------------
+                                     71 ; external ram data
+                                     72 ;--------------------------------------------------------
+                                     73 	.area XSEG    (XDATA)
+      000000                         74 _mac_dsn:
+      000000                         75 	.ds 1
+                                     76 ;--------------------------------------------------------
+                                     77 ; absolute external ram data
+                                     78 ;--------------------------------------------------------
+                                     79 	.area XABS    (ABS,XDATA)
+                                     80 ;--------------------------------------------------------
+                                     81 ; external initialized ram data
+                                     82 ;--------------------------------------------------------
+                                     83 	.area XISEG   (XDATA)
+      000000                         84 _mac_dst_pan_id:
+      000000                         85 	.ds 2
+      000002                         86 _mac_src_pan_id:
+      000002                         87 	.ds 2
+                                     88 	.area HOME    (CODE)
+                                     89 	.area GSINIT0 (CODE)
+                                     90 	.area GSINIT1 (CODE)
+                                     91 	.area GSINIT2 (CODE)
+                                     92 	.area GSINIT3 (CODE)
+                                     93 	.area GSINIT4 (CODE)
+                                     94 	.area GSINIT5 (CODE)
+                                     95 	.area GSINIT  (CODE)
+                                     96 	.area GSFINAL (CODE)
+                                     97 	.area CSEG    (CODE)
+                                     98 ;--------------------------------------------------------
+                                     99 ; global & static initialisations
+                                    100 ;--------------------------------------------------------
+                                    101 	.area HOME    (CODE)
+                                    102 	.area GSINIT  (CODE)
+                                    103 	.area GSFINAL (CODE)
+                                    104 	.area GSINIT  (CODE)
+                                    105 ;--------------------------------------------------------
+                                    106 ; Home
+                                    107 ;--------------------------------------------------------
+                                    108 	.area HOME    (CODE)
+                                    109 	.area HOME    (CODE)
+                                    110 ;--------------------------------------------------------
+                                    111 ; code
+                                    112 ;--------------------------------------------------------
+                                    113 	.area CSEG    (CODE)
+                                    114 ;------------------------------------------------------------
+                                    115 ;Allocation info for local variables in function 'is_broadcast_addr'
+                                    116 ;------------------------------------------------------------
+                                    117 ;addr                      Allocated to stack - sp -4
+                                    118 ;mode                      Allocated to registers r7 
+                                    119 ;i                         Allocated to registers 
+                                    120 ;------------------------------------------------------------
+                                    121 ;	/home/user/contiki/core/net/mac/sicslowmac.c:85: is_broadcast_addr(uint8_t mode, uint8_t *addr)
+                                    122 ;	-----------------------------------------
+                                    123 ;	 function is_broadcast_addr
+                                    124 ;	-----------------------------------------
+      000000                        125 _is_broadcast_addr:
+                           000007   126 	ar7 = 0x07
+                           000006   127 	ar6 = 0x06
+                           000005   128 	ar5 = 0x05
+                           000004   129 	ar4 = 0x04
+                           000003   130 	ar3 = 0x03
+                           000002   131 	ar2 = 0x02
+                           000001   132 	ar1 = 0x01
+                           000000   133 	ar0 = 0x00
+      000000 AF 82            [24]  134 	mov	r7,dpl
+                                    135 ;	/home/user/contiki/core/net/mac/sicslowmac.c:87: int i = mode == FRAME802154_SHORTADDRMODE ? 2 : 8;
+      000002 BF 02 04         [24]  136 	cjne	r7,#0x02,00108$
+      000005 7F 02            [12]  137 	mov	r7,#0x02
+      000007 80 02            [24]  138 	sjmp	00109$
+      000009                        139 00108$:
+      000009 7F 08            [12]  140 	mov	r7,#0x08
+      00000B                        141 00109$:
+      00000B 8F 06            [24]  142 	mov	ar6,r7
+      00000D 7F 00            [12]  143 	mov	r7,#0x00
+                                    144 ;	/home/user/contiki/core/net/mac/sicslowmac.c:88: while(i-- > 0) {
+      00000F                        145 00103$:
+      00000F 8E 04            [24]  146 	mov	ar4,r6
+      000011 8F 05            [24]  147 	mov	ar5,r7
+      000013 1E               [12]  148 	dec	r6
+      000014 BE FF 01         [24]  149 	cjne	r6,#0xFF,00124$
+      000017 1F               [12]  150 	dec	r7
+      000018                        151 00124$:
+      000018 C3               [12]  152 	clr	c
+      000019 E4               [12]  153 	clr	a
+      00001A 9C               [12]  154 	subb	a,r4
+      00001B E4               [12]  155 	clr	a
+      00001C 64 80            [12]  156 	xrl	a,#0x80
+      00001E 8D F0            [24]  157 	mov	b,r5
+      000020 63 F0 80         [24]  158 	xrl	b,#0x80
+      000023 95 F0            [12]  159 	subb	a,b
+      000025 50 22            [24]  160 	jnc	00105$
+                                    161 ;	/home/user/contiki/core/net/mac/sicslowmac.c:89: if(addr[i] != 0xff) {
+      000027 E5 81            [12]  162 	mov	a,sp
+      000029 24 FC            [12]  163 	add	a,#0xfc
+      00002B F8               [12]  164 	mov	r0,a
+      00002C EE               [12]  165 	mov	a,r6
+      00002D 26               [12]  166 	add	a,@r0
+      00002E FB               [12]  167 	mov	r3,a
+      00002F EF               [12]  168 	mov	a,r7
+      000030 08               [12]  169 	inc	r0
+      000031 36               [12]  170 	addc	a,@r0
+      000032 FC               [12]  171 	mov	r4,a
+      000033 08               [12]  172 	inc	r0
+      000034 86 05            [24]  173 	mov	ar5,@r0
+      000036 8B 82            [24]  174 	mov	dpl,r3
+      000038 8C 83            [24]  175 	mov	dph,r4
+      00003A 8D F0            [24]  176 	mov	b,r5
+      00003C 12r00r00         [24]  177 	lcall	__gptrget
+      00003F FB               [12]  178 	mov	r3,a
+      000040 BB FF 02         [24]  179 	cjne	r3,#0xFF,00126$
+      000043 80 CA            [24]  180 	sjmp	00103$
+      000045                        181 00126$:
+                                    182 ;	/home/user/contiki/core/net/mac/sicslowmac.c:90: return 0;
+      000045 90 00 00         [24]  183 	mov	dptr,#0x0000
+      000048 22               [24]  184 	ret
+      000049                        185 00105$:
+                                    186 ;	/home/user/contiki/core/net/mac/sicslowmac.c:93: return 1;
+      000049 90 00 01         [24]  187 	mov	dptr,#0x0001
+      00004C 22               [24]  188 	ret
+                                    189 ;------------------------------------------------------------
+                                    190 ;Allocation info for local variables in function 'send_packet'
+                                    191 ;------------------------------------------------------------
+                                    192 ;ptr                       Allocated to stack - sp -58
+                                    193 ;sent                      Allocated to stack - sp -53
+                                    194 ;params                    Allocated to stack - sp -48
+                                    195 ;len                       Allocated to registers r4 
+                                    196 ;ret                       Allocated to registers r6 r7 
+                                    197 ;sloc0                     Allocated to stack - sp -51
+                                    198 ;------------------------------------------------------------
+                                    199 ;	/home/user/contiki/core/net/mac/sicslowmac.c:97: send_packet(mac_callback_t sent, void *ptr)
+                                    200 ;	-----------------------------------------
+                                    201 ;	 function send_packet
+                                    202 ;	-----------------------------------------
+      00004D                        203 _send_packet:
+      00004D C0 82            [24]  204 	push	dpl
+      00004F C0 83            [24]  205 	push	dph
+      000051 E5 81            [12]  206 	mov	a,sp
+      000053 24 34            [12]  207 	add	a,#0x34
+                                    208 ;	/home/user/contiki/core/net/mac/sicslowmac.c:103: memset(&params, 0, sizeof(params));
+      000055 F5 81            [12]  209 	mov	sp,a
+      000057 24 D0            [12]  210 	add	a,#0xD0
+      000059 F9               [12]  211 	mov	r1,a
+      00005A FB               [12]  212 	mov	r3,a
+      00005B 7C 00            [12]  213 	mov	r4,#0x00
+      00005D 7D 40            [12]  214 	mov	r5,#0x40
+      00005F C0 01            [24]  215 	push	ar1
+      000061 74 31            [12]  216 	mov	a,#0x31
+      000063 C0 E0            [24]  217 	push	acc
+      000065 E4               [12]  218 	clr	a
+      000066 C0 E0            [24]  219 	push	acc
+      000068 E4               [12]  220 	clr	a
+      000069 C0 E0            [24]  221 	push	acc
+      00006B 8B 82            [24]  222 	mov	dpl,r3
+      00006D 8C 83            [24]  223 	mov	dph,r4
+      00006F 8D F0            [24]  224 	mov	b,r5
+      000071 12r00r00         [24]  225 	lcall	_memset
+      000074 15 81            [12]  226 	dec	sp
+      000076 15 81            [12]  227 	dec	sp
+      000078 15 81            [12]  228 	dec	sp
+      00007A D0 01            [24]  229 	pop	ar1
+                                    230 ;	/home/user/contiki/core/net/mac/sicslowmac.c:106: params.fcf.frame_type = FRAME802154_DATAFRAME;
+      00007C 77 01            [12]  231 	mov	@r1,#0x01
+                                    232 ;	/home/user/contiki/core/net/mac/sicslowmac.c:107: params.fcf.security_enabled = 0;
+      00007E E9               [12]  233 	mov	a,r1
+      00007F 04               [12]  234 	inc	a
+      000080 F8               [12]  235 	mov	r0,a
+      000081 76 00            [12]  236 	mov	@r0,#0x00
+                                    237 ;	/home/user/contiki/core/net/mac/sicslowmac.c:108: params.fcf.frame_pending = 0;
+      000083 74 02            [12]  238 	mov	a,#0x02
+      000085 29               [12]  239 	add	a,r1
+      000086 F8               [12]  240 	mov	r0,a
+      000087 76 00            [12]  241 	mov	@r0,#0x00
+                                    242 ;	/home/user/contiki/core/net/mac/sicslowmac.c:109: params.fcf.ack_required = packetbuf_attr(PACKETBUF_ATTR_RELIABLE);
+      000089 74 03            [12]  243 	mov	a,#0x03
+      00008B 29               [12]  244 	add	a,r1
+      00008C F8               [12]  245 	mov	r0,a
+      00008D 75 82 0C         [24]  246 	mov	dpl,#0x0C
+      000090 C0 01            [24]  247 	push	ar1
+      000092 C0 00            [24]  248 	push	ar0
+      000094 12r00r00         [24]  249 	lcall	_packetbuf_attr
+      000097 AC 82            [24]  250 	mov	r4,dpl
+      000099 D0 00            [24]  251 	pop	ar0
+      00009B D0 01            [24]  252 	pop	ar1
+      00009D A6 04            [24]  253 	mov	@r0,ar4
+                                    254 ;	/home/user/contiki/core/net/mac/sicslowmac.c:110: params.fcf.panid_compression = 0;
+      00009F 74 04            [12]  255 	mov	a,#0x04
+      0000A1 29               [12]  256 	add	a,r1
+      0000A2 F8               [12]  257 	mov	r0,a
+      0000A3 76 00            [12]  258 	mov	@r0,#0x00
+                                    259 ;	/home/user/contiki/core/net/mac/sicslowmac.c:113: params.fcf.frame_version = FRAME802154_IEEE802154_2003;
+      0000A5 74 06            [12]  260 	mov	a,#0x06
+      0000A7 29               [12]  261 	add	a,r1
+      0000A8 F8               [12]  262 	mov	r0,a
+      0000A9 76 00            [12]  263 	mov	@r0,#0x00
+                                    264 ;	/home/user/contiki/core/net/mac/sicslowmac.c:116: params.seq = mac_dsn++;
+      0000AB 74 08            [12]  265 	mov	a,#0x08
+      0000AD 29               [12]  266 	add	a,r1
+      0000AE F8               [12]  267 	mov	r0,a
+      0000AF 90r00r00         [24]  268 	mov	dptr,#_mac_dsn
+      0000B2 E0               [24]  269 	movx	a,@dptr
+      0000B3 FD               [12]  270 	mov	r5,a
+      0000B4 90r00r00         [24]  271 	mov	dptr,#_mac_dsn
+      0000B7 04               [12]  272 	inc	a
+      0000B8 F0               [24]  273 	movx	@dptr,a
+      0000B9 A6 05            [24]  274 	mov	@r0,ar5
+                                    275 ;	/home/user/contiki/core/net/mac/sicslowmac.c:123: params.fcf.src_addr_mode = FRAME802154_LONGADDRMODE;
+      0000BB 74 07            [12]  276 	mov	a,#0x07
+      0000BD 29               [12]  277 	add	a,r1
+      0000BE F8               [12]  278 	mov	r0,a
+      0000BF 76 03            [12]  279 	mov	@r0,#0x03
+                                    280 ;	/home/user/contiki/core/net/mac/sicslowmac.c:124: params.dest_pid = mac_dst_pan_id;
+      0000C1 74 09            [12]  281 	mov	a,#0x09
+      0000C3 29               [12]  282 	add	a,r1
+      0000C4 F8               [12]  283 	mov	r0,a
+      0000C5 90r00r00         [24]  284 	mov	dptr,#_mac_dst_pan_id
+      0000C8 E0               [24]  285 	movx	a,@dptr
+      0000C9 FC               [12]  286 	mov	r4,a
+      0000CA A3               [24]  287 	inc	dptr
+      0000CB E0               [24]  288 	movx	a,@dptr
+      0000CC FD               [12]  289 	mov	r5,a
+      0000CD A6 04            [24]  290 	mov	@r0,ar4
+      0000CF 08               [12]  291 	inc	r0
+      0000D0 A6 05            [24]  292 	mov	@r0,ar5
+                                    293 ;	/home/user/contiki/core/net/mac/sicslowmac.c:130: if(rimeaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER), &rimeaddr_null)) {
+      0000D2 75 82 19         [24]  294 	mov	dpl,#0x19
+      0000D5 C0 01            [24]  295 	push	ar1
+      0000D7 12r00r00         [24]  296 	lcall	_packetbuf_addr
+      0000DA AB 82            [24]  297 	mov	r3,dpl
+      0000DC AC 83            [24]  298 	mov	r4,dph
+      0000DE AD F0            [24]  299 	mov	r5,b
+      0000E0 74r00            [12]  300 	mov	a,#_rimeaddr_null
+      0000E2 C0 E0            [24]  301 	push	acc
+      0000E4 74s00            [12]  302 	mov	a,#(_rimeaddr_null >> 8)
+      0000E6 C0 E0            [24]  303 	push	acc
+      0000E8 74 80            [12]  304 	mov	a,#0x80
+      0000EA C0 E0            [24]  305 	push	acc
+      0000EC 8B 82            [24]  306 	mov	dpl,r3
+      0000EE 8C 83            [24]  307 	mov	dph,r4
+      0000F0 8D F0            [24]  308 	mov	b,r5
+      0000F2 12r00r00         [24]  309 	lcall	_rimeaddr_cmp
+      0000F5 AC 82            [24]  310 	mov	r4,dpl
+      0000F7 AD 83            [24]  311 	mov	r5,dph
+      0000F9 15 81            [12]  312 	dec	sp
+      0000FB 15 81            [12]  313 	dec	sp
+      0000FD 15 81            [12]  314 	dec	sp
+      0000FF D0 01            [24]  315 	pop	ar1
+      000101 EC               [12]  316 	mov	a,r4
+      000102 4D               [12]  317 	orl	a,r5
+      000103 60 14            [24]  318 	jz	00102$
+                                    319 ;	/home/user/contiki/core/net/mac/sicslowmac.c:132: params.fcf.dest_addr_mode = FRAME802154_SHORTADDRMODE;
+      000105 74 05            [12]  320 	mov	a,#0x05
+      000107 29               [12]  321 	add	a,r1
+      000108 F8               [12]  322 	mov	r0,a
+      000109 76 02            [12]  323 	mov	@r0,#0x02
+                                    324 ;	/home/user/contiki/core/net/mac/sicslowmac.c:133: params.dest_addr[0] = 0xFF;
+      00010B 74 0B            [12]  325 	mov	a,#0x0B
+      00010D 29               [12]  326 	add	a,r1
+      00010E F8               [12]  327 	mov	r0,a
+      00010F 76 FF            [12]  328 	mov	@r0,#0xFF
+                                    329 ;	/home/user/contiki/core/net/mac/sicslowmac.c:134: params.dest_addr[1] = 0xFF;
+      000111 74 0C            [12]  330 	mov	a,#0x0C
+      000113 29               [12]  331 	add	a,r1
+      000114 F8               [12]  332 	mov	r0,a
+      000115 76 FF            [12]  333 	mov	@r0,#0xFF
+      000117 80 37            [24]  334 	sjmp	00103$
+      000119                        335 00102$:
+                                    336 ;	/home/user/contiki/core/net/mac/sicslowmac.c:138: packetbuf_addr(PACKETBUF_ADDR_RECEIVER));
+      000119 75 82 19         [24]  337 	mov	dpl,#0x19
+      00011C C0 01            [24]  338 	push	ar1
+      00011E 12r00r00         [24]  339 	lcall	_packetbuf_addr
+      000121 AB 82            [24]  340 	mov	r3,dpl
+      000123 AC 83            [24]  341 	mov	r4,dph
+      000125 AD F0            [24]  342 	mov	r5,b
+      000127 D0 01            [24]  343 	pop	ar1
+                                    344 ;	/home/user/contiki/core/net/mac/sicslowmac.c:137: rimeaddr_copy((rimeaddr_t *)&params.dest_addr,
+      000129 74 0B            [12]  345 	mov	a,#0x0B
+      00012B 29               [12]  346 	add	a,r1
+      00012C FA               [12]  347 	mov	r2,a
+      00012D 7E 00            [12]  348 	mov	r6,#0x00
+      00012F 7F 40            [12]  349 	mov	r7,#0x40
+      000131 C0 01            [24]  350 	push	ar1
+      000133 C0 03            [24]  351 	push	ar3
+      000135 C0 04            [24]  352 	push	ar4
+      000137 C0 05            [24]  353 	push	ar5
+      000139 8A 82            [24]  354 	mov	dpl,r2
+      00013B 8E 83            [24]  355 	mov	dph,r6
+      00013D 8F F0            [24]  356 	mov	b,r7
+      00013F 12r00r00         [24]  357 	lcall	_rimeaddr_copy
+      000142 15 81            [12]  358 	dec	sp
+      000144 15 81            [12]  359 	dec	sp
+      000146 15 81            [12]  360 	dec	sp
+      000148 D0 01            [24]  361 	pop	ar1
+                                    362 ;	/home/user/contiki/core/net/mac/sicslowmac.c:139: params.fcf.dest_addr_mode = FRAME802154_LONGADDRMODE;
+      00014A 74 05            [12]  363 	mov	a,#0x05
+      00014C 29               [12]  364 	add	a,r1
+      00014D F8               [12]  365 	mov	r0,a
+      00014E 76 03            [12]  366 	mov	@r0,#0x03
+                                    367 ;	/home/user/contiki/core/net/mac/sicslowmac.c:175: }
+                                    368 ;	/home/user/contiki/core/net/mac/sicslowmac.c:139: params.fcf.dest_addr_mode = FRAME802154_LONGADDRMODE;
+      000150                        369 00103$:
+                                    370 ;	/home/user/contiki/core/net/mac/sicslowmac.c:143: params.src_pid = mac_src_pan_id;
+      000150 74 13            [12]  371 	mov	a,#0x13
+      000152 29               [12]  372 	add	a,r1
+      000153 F8               [12]  373 	mov	r0,a
+      000154 90r00r02         [24]  374 	mov	dptr,#_mac_src_pan_id
+      000157 E0               [24]  375 	movx	a,@dptr
+      000158 FC               [12]  376 	mov	r4,a
+      000159 A3               [24]  377 	inc	dptr
+      00015A E0               [24]  378 	movx	a,@dptr
+      00015B FD               [12]  379 	mov	r5,a
+      00015C A6 04            [24]  380 	mov	@r0,ar4
+      00015E 08               [12]  381 	inc	r0
+      00015F A6 05            [24]  382 	mov	@r0,ar5
+                                    383 ;	/home/user/contiki/core/net/mac/sicslowmac.c:152: rimeaddr_copy((rimeaddr_t *)&params.src_addr, &rimeaddr_node_addr);
+      000161 74 15            [12]  384 	mov	a,#0x15
+      000163 29               [12]  385 	add	a,r1
+      000164 FD               [12]  386 	mov	r5,a
+      000165 7C 00            [12]  387 	mov	r4,#0x00
+      000167 7B 40            [12]  388 	mov	r3,#0x40
+      000169 C0 01            [24]  389 	push	ar1
+      00016B 74r00            [12]  390 	mov	a,#_rimeaddr_node_addr
+      00016D C0 E0            [24]  391 	push	acc
+      00016F 74s00            [12]  392 	mov	a,#(_rimeaddr_node_addr >> 8)
+      000171 C0 E0            [24]  393 	push	acc
+      000173 E4               [12]  394 	clr	a
+      000174 C0 E0            [24]  395 	push	acc
+      000176 8D 82            [24]  396 	mov	dpl,r5
+      000178 8C 83            [24]  397 	mov	dph,r4
+      00017A 8B F0            [24]  398 	mov	b,r3
+      00017C 12r00r00         [24]  399 	lcall	_rimeaddr_copy
+      00017F 15 81            [12]  400 	dec	sp
+      000181 15 81            [12]  401 	dec	sp
+      000183 15 81            [12]  402 	dec	sp
+      000185 D0 01            [24]  403 	pop	ar1
+                                    404 ;	/home/user/contiki/core/net/mac/sicslowmac.c:155: params.payload = packetbuf_dataptr();
+      000187 74 2D            [12]  405 	mov	a,#0x2D
+      000189 29               [12]  406 	add	a,r1
+      00018A F8               [12]  407 	mov	r0,a
+      00018B C0 01            [24]  408 	push	ar1
+      00018D C0 00            [24]  409 	push	ar0
+      00018F 12r00r00         [24]  410 	lcall	_packetbuf_dataptr
+      000192 AB 82            [24]  411 	mov	r3,dpl
+      000194 AC 83            [24]  412 	mov	r4,dph
+      000196 AD F0            [24]  413 	mov	r5,b
+      000198 D0 00            [24]  414 	pop	ar0
+      00019A D0 01            [24]  415 	pop	ar1
+      00019C A6 03            [24]  416 	mov	@r0,ar3
+      00019E 08               [12]  417 	inc	r0
+      00019F A6 04            [24]  418 	mov	@r0,ar4
+      0001A1 08               [12]  419 	inc	r0
+      0001A2 A6 05            [24]  420 	mov	@r0,ar5
+                                    421 ;	/home/user/contiki/core/net/mac/sicslowmac.c:156: params.payload_len = packetbuf_datalen();
+      0001A4 74 30            [12]  422 	mov	a,#0x30
+      0001A6 29               [12]  423 	add	a,r1
+      0001A7 F8               [12]  424 	mov	r0,a
+      0001A8 C0 01            [24]  425 	push	ar1
+      0001AA C0 00            [24]  426 	push	ar0
+      0001AC 12r00r00         [24]  427 	lcall	_packetbuf_datalen
+      0001AF AC 82            [24]  428 	mov	r4,dpl
+      0001B1 D0 00            [24]  429 	pop	ar0
+      0001B3 D0 01            [24]  430 	pop	ar1
+      0001B5 A6 04            [24]  431 	mov	@r0,ar4
+                                    432 ;	/home/user/contiki/core/net/mac/sicslowmac.c:157: len = frame802154_hdrlen(&params);
+      0001B7 89 05            [24]  433 	mov	ar5,r1
+      0001B9 7C 00            [12]  434 	mov	r4,#0x00
+      0001BB 7B 40            [12]  435 	mov	r3,#0x40
+      0001BD 8D 82            [24]  436 	mov	dpl,r5
+      0001BF 8C 83            [24]  437 	mov	dph,r4
+      0001C1 8B F0            [24]  438 	mov	b,r3
+      0001C3 C0 01            [24]  439 	push	ar1
+      0001C5 12r00r00         [24]  440 	lcall	_frame802154_hdrlen
+      0001C8 AC 82            [24]  441 	mov	r4,dpl
+      0001CA D0 01            [24]  442 	pop	ar1
+                                    443 ;	/home/user/contiki/core/net/mac/sicslowmac.c:158: if(packetbuf_hdralloc(len)) {
+      0001CC 7D 00            [12]  444 	mov	r5,#0x00
+      0001CE 8C 82            [24]  445 	mov	dpl,r4
+      0001D0 8D 83            [24]  446 	mov	dph,r5
+      0001D2 C0 05            [24]  447 	push	ar5
+      0001D4 C0 04            [24]  448 	push	ar4
+      0001D6 C0 01            [24]  449 	push	ar1
+      0001D8 12r00r00         [24]  450 	lcall	_packetbuf_hdralloc
+      0001DB E5 82            [12]  451 	mov	a,dpl
+      0001DD 85 83 F0         [24]  452 	mov	b,dph
+      0001E0 D0 01            [24]  453 	pop	ar1
+      0001E2 D0 04            [24]  454 	pop	ar4
+      0001E4 D0 05            [24]  455 	pop	ar5
+      0001E6 45 F0            [12]  456 	orl	a,b
+      0001E8 70 03            [24]  457 	jnz	00129$
+      0001EA 02r03r07         [24]  458 	ljmp	00111$
+      0001ED                        459 00129$:
+                                    460 ;	/home/user/contiki/core/net/mac/sicslowmac.c:160: frame802154_create(&params, packetbuf_hdrptr(), len);
+      0001ED C0 05            [24]  461 	push	ar5
+      0001EF C0 04            [24]  462 	push	ar4
+      0001F1 C0 01            [24]  463 	push	ar1
+      0001F3 12r00r00         [24]  464 	lcall	_packetbuf_hdrptr
+      0001F6 AA 82            [24]  465 	mov	r2,dpl
+      0001F8 AB 83            [24]  466 	mov	r3,dph
+      0001FA AF F0            [24]  467 	mov	r7,b
+      0001FC D0 01            [24]  468 	pop	ar1
+      0001FE D0 04            [24]  469 	pop	ar4
+      000200 D0 05            [24]  470 	pop	ar5
+      000202 E5 81            [12]  471 	mov	a,sp
+      000204 24 CD            [12]  472 	add	a,#0xcd
+      000206 F8               [12]  473 	mov	r0,a
+      000207 A6 02            [24]  474 	mov	@r0,ar2
+      000209 08               [12]  475 	inc	r0
+      00020A A6 03            [24]  476 	mov	@r0,ar3
+      00020C 08               [12]  477 	inc	r0
+      00020D A6 07            [24]  478 	mov	@r0,ar7
+      00020F 89 06            [24]  479 	mov	ar6,r1
+      000211 8E 03            [24]  480 	mov	ar3,r6
+      000213 7E 00            [12]  481 	mov	r6,#0x00
+      000215 7F 40            [12]  482 	mov	r7,#0x40
+      000217 C0 04            [24]  483 	push	ar4
+      000219 C0 05            [24]  484 	push	ar5
+      00021B E5 81            [12]  485 	mov	a,sp
+      00021D 24 CB            [12]  486 	add	a,#0xcb
+      00021F F8               [12]  487 	mov	r0,a
+      000220 E6               [12]  488 	mov	a,@r0
+      000221 C0 E0            [24]  489 	push	acc
+      000223 08               [12]  490 	inc	r0
+      000224 E6               [12]  491 	mov	a,@r0
+      000225 C0 E0            [24]  492 	push	acc
+      000227 08               [12]  493 	inc	r0
+      000228 E6               [12]  494 	mov	a,@r0
+      000229 C0 E0            [24]  495 	push	acc
+      00022B 8B 82            [24]  496 	mov	dpl,r3
+      00022D 8E 83            [24]  497 	mov	dph,r6
+      00022F 8F F0            [24]  498 	mov	b,r7
+      000231 12r00r00         [24]  499 	lcall	_frame802154_create
+      000234 E5 81            [12]  500 	mov	a,sp
+      000236 24 FB            [12]  501 	add	a,#0xfb
+      000238 F5 81            [12]  502 	mov	sp,a
+                                    503 ;	/home/user/contiki/core/net/mac/sicslowmac.c:166: ret = NETSTACK_RADIO.send(packetbuf_hdrptr(), packetbuf_totlen());
+      00023A 90r00r06         [24]  504 	mov	dptr,#(_cc2530_rf_driver + 0x0006)
+      00023D E4               [12]  505 	clr	a
+      00023E 93               [24]  506 	movc	a,@a+dptr
+      00023F FE               [12]  507 	mov	r6,a
+      000240 A3               [24]  508 	inc	dptr
+      000241 E4               [12]  509 	clr	a
+      000242 93               [24]  510 	movc	a,@a+dptr
+      000243 FF               [12]  511 	mov	r7,a
+      000244 C0 07            [24]  512 	push	ar7
+      000246 C0 06            [24]  513 	push	ar6
+      000248 12r00r00         [24]  514 	lcall	_packetbuf_totlen
+      00024B C8               [12]  515 	xch	a,r0
+      00024C E5 81            [12]  516 	mov	a,sp
+      00024E 24 CB            [12]  517 	add	a,#0xcb
+      000250 C8               [12]  518 	xch	a,r0
+      000251 A6 82            [24]  519 	mov	@r0,dpl
+      000253 08               [12]  520 	inc	r0
+      000254 A6 83            [24]  521 	mov	@r0,dph
+      000256 12r00r00         [24]  522 	lcall	_packetbuf_hdrptr
+      000259 AA 82            [24]  523 	mov	r2,dpl
+      00025B AB 83            [24]  524 	mov	r3,dph
+      00025D AD F0            [24]  525 	mov	r5,b
+      00025F D0 06            [24]  526 	pop	ar6
+      000261 D0 07            [24]  527 	pop	ar7
+      000263 E5 81            [12]  528 	mov	a,sp
+      000265 24 CD            [12]  529 	add	a,#0xcd
+      000267 F8               [12]  530 	mov	r0,a
+      000268 E6               [12]  531 	mov	a,@r0
+      000269 C0 E0            [24]  532 	push	acc
+      00026B 08               [12]  533 	inc	r0
+      00026C E6               [12]  534 	mov	a,@r0
+      00026D C0 E0            [24]  535 	push	acc
+      00026F 12r02r74         [24]  536 	lcall	00130$
+      000272 80 0B            [24]  537 	sjmp	00131$
+      000274                        538 00130$:
+      000274 C0 06            [24]  539 	push	ar6
+      000276 C0 07            [24]  540 	push	ar7
+      000278 8A 82            [24]  541 	mov	dpl,r2
+      00027A 8B 83            [24]  542 	mov	dph,r3
+      00027C 8D F0            [24]  543 	mov	b,r5
+      00027E 22               [24]  544 	ret
+      00027F                        545 00131$:
+      00027F AE 82            [24]  546 	mov	r6,dpl
+      000281 AF 83            [24]  547 	mov	r7,dph
+      000283 15 81            [12]  548 	dec	sp
+      000285 15 81            [12]  549 	dec	sp
+                                    550 ;	/home/user/contiki/core/net/mac/sicslowmac.c:167: if(sent) {
+      000287 E5 81            [12]  551 	mov	a,sp
+      000289 24 CB            [12]  552 	add	a,#0xcb
+      00028B F8               [12]  553 	mov	r0,a
+      00028C E6               [12]  554 	mov	a,@r0
+      00028D 08               [12]  555 	inc	r0
+      00028E 46               [12]  556 	orl	a,@r0
+      00028F 60 76            [24]  557 	jz	00111$
+                                    558 ;	/home/user/contiki/core/net/mac/sicslowmac.c:168: switch(ret) {
+      000291 BE 00 05         [24]  559 	cjne	r6,#0x00,00133$
+      000294 BF 00 02         [24]  560 	cjne	r7,#0x00,00133$
+      000297 80 08            [24]  561 	sjmp	00104$
+      000299                        562 00133$:
+                                    563 ;	/home/user/contiki/core/net/mac/sicslowmac.c:169: case RADIO_TX_OK:
+      000299 BE 01 6B         [24]  564 	cjne	r6,#0x01,00111$
+      00029C BF 00 68         [24]  565 	cjne	r7,#0x00,00111$
+      00029F 80 33            [24]  566 	sjmp	00105$
+      0002A1                        567 00104$:
+                                    568 ;	/home/user/contiki/core/net/mac/sicslowmac.c:170: sent(ptr, MAC_TX_OK, 1);
+      0002A1 74 01            [12]  569 	mov	a,#0x01
+      0002A3 C0 E0            [24]  570 	push	acc
+      0002A5 E4               [12]  571 	clr	a
+      0002A6 C0 E0            [24]  572 	push	acc
+      0002A8 E4               [12]  573 	clr	a
+      0002A9 C0 E0            [24]  574 	push	acc
+      0002AB C0 E0            [24]  575 	push	acc
+      0002AD 12r02rB2         [24]  576 	lcall	00135$
+      0002B0 80 1A            [24]  577 	sjmp	00136$
+      0002B2                        578 00135$:
+      0002B2 E5 81            [12]  579 	mov	a,sp
+      0002B4 24 C5            [12]  580 	add	a,#0xc5
+      0002B6 F8               [12]  581 	mov	r0,a
+      0002B7 E6               [12]  582 	mov	a,@r0
+      0002B8 C0 E0            [24]  583 	push	acc
+      0002BA 08               [12]  584 	inc	r0
+      0002BB E6               [12]  585 	mov	a,@r0
+      0002BC C0 E0            [24]  586 	push	acc
+      0002BE E5 81            [12]  587 	mov	a,sp
+      0002C0 24 BE            [12]  588 	add	a,#0xbe
+      0002C2 F8               [12]  589 	mov	r0,a
+      0002C3 86 82            [24]  590 	mov	dpl,@r0
+      0002C5 08               [12]  591 	inc	r0
+      0002C6 86 83            [24]  592 	mov	dph,@r0
+      0002C8 08               [12]  593 	inc	r0
+      0002C9 86 F0            [24]  594 	mov	b,@r0
+      0002CB 22               [24]  595 	ret
+      0002CC                        596 00136$:
+      0002CC E5 81            [12]  597 	mov	a,sp
+      0002CE 24 FC            [12]  598 	add	a,#0xfc
+      0002D0 F5 81            [12]  599 	mov	sp,a
+                                    600 ;	/home/user/contiki/core/net/mac/sicslowmac.c:171: break;
+                                    601 ;	/home/user/contiki/core/net/mac/sicslowmac.c:172: case RADIO_TX_ERR:
+      0002D2 80 33            [24]  602 	sjmp	00111$
+      0002D4                        603 00105$:
+                                    604 ;	/home/user/contiki/core/net/mac/sicslowmac.c:173: sent(ptr, MAC_TX_ERR, 1);
+      0002D4 74 01            [12]  605 	mov	a,#0x01
+      0002D6 C0 E0            [24]  606 	push	acc
+      0002D8 E4               [12]  607 	clr	a
+      0002D9 C0 E0            [24]  608 	push	acc
+      0002DB 74 04            [12]  609 	mov	a,#0x04
+      0002DD C0 E0            [24]  610 	push	acc
+      0002DF E4               [12]  611 	clr	a
+      0002E0 C0 E0            [24]  612 	push	acc
+      0002E2 12r02rE7         [24]  613 	lcall	00137$
+      0002E5 80 1A            [24]  614 	sjmp	00138$
+      0002E7                        615 00137$:
+      0002E7 E5 81            [12]  616 	mov	a,sp
+      0002E9 24 C5            [12]  617 	add	a,#0xc5
+      0002EB F8               [12]  618 	mov	r0,a
+      0002EC E6               [12]  619 	mov	a,@r0
+      0002ED C0 E0            [24]  620 	push	acc
+      0002EF 08               [12]  621 	inc	r0
+      0002F0 E6               [12]  622 	mov	a,@r0
+      0002F1 C0 E0            [24]  623 	push	acc
+      0002F3 E5 81            [12]  624 	mov	a,sp
+      0002F5 24 BE            [12]  625 	add	a,#0xbe
+      0002F7 F8               [12]  626 	mov	r0,a
+      0002F8 86 82            [24]  627 	mov	dpl,@r0
+      0002FA 08               [12]  628 	inc	r0
+      0002FB 86 83            [24]  629 	mov	dph,@r0
+      0002FD 08               [12]  630 	inc	r0
+      0002FE 86 F0            [24]  631 	mov	b,@r0
+      000300 22               [24]  632 	ret
+      000301                        633 00138$:
+      000301 E5 81            [12]  634 	mov	a,sp
+      000303 24 FC            [12]  635 	add	a,#0xfc
+      000305 F5 81            [12]  636 	mov	sp,a
+                                    637 ;	/home/user/contiki/core/net/mac/sicslowmac.c:175: }
+      000307                        638 00111$:
+      000307 E5 81            [12]  639 	mov	a,sp
+      000309 24 CA            [12]  640 	add	a,#0xCA
+      00030B F5 81            [12]  641 	mov	sp,a
+      00030D 22               [24]  642 	ret
+                                    643 ;------------------------------------------------------------
+                                    644 ;Allocation info for local variables in function 'send_list'
+                                    645 ;------------------------------------------------------------
+                                    646 ;ptr                       Allocated to stack - sp -4
+                                    647 ;buf_list                  Allocated to stack - sp -7
+                                    648 ;sent                      Allocated to registers r6 r7 
+                                    649 ;------------------------------------------------------------
+                                    650 ;	/home/user/contiki/core/net/mac/sicslowmac.c:183: send_list(mac_callback_t sent, void *ptr, struct rdc_buf_list *buf_list)
+                                    651 ;	-----------------------------------------
+                                    652 ;	 function send_list
+                                    653 ;	-----------------------------------------
+      00030E                        654 _send_list:
+      00030E AE 82            [24]  655 	mov	r6,dpl
+      000310 AF 83            [24]  656 	mov	r7,dph
+                                    657 ;	/home/user/contiki/core/net/mac/sicslowmac.c:185: if(buf_list != NULL) {
+      000312 E5 81            [12]  658 	mov	a,sp
+      000314 24 F9            [12]  659 	add	a,#0xf9
+      000316 F8               [12]  660 	mov	r0,a
+      000317 E6               [12]  661 	mov	a,@r0
+      000318 08               [12]  662 	inc	r0
+      000319 46               [12]  663 	orl	a,@r0
+      00031A 60 56            [24]  664 	jz	00103$
+                                    665 ;	/home/user/contiki/core/net/mac/sicslowmac.c:186: queuebuf_to_packetbuf(buf_list->buf);
+      00031C E5 81            [12]  666 	mov	a,sp
+      00031E 24 F9            [12]  667 	add	a,#0xf9
+      000320 F8               [12]  668 	mov	r0,a
+      000321 86 03            [24]  669 	mov	ar3,@r0
+      000323 08               [12]  670 	inc	r0
+      000324 86 04            [24]  671 	mov	ar4,@r0
+      000326 08               [12]  672 	inc	r0
+      000327 86 05            [24]  673 	mov	ar5,@r0
+      000329 74 03            [12]  674 	mov	a,#0x03
+      00032B 2B               [12]  675 	add	a,r3
+      00032C FB               [12]  676 	mov	r3,a
+      00032D E4               [12]  677 	clr	a
+      00032E 3C               [12]  678 	addc	a,r4
+      00032F FC               [12]  679 	mov	r4,a
+      000330 8B 82            [24]  680 	mov	dpl,r3
+      000332 8C 83            [24]  681 	mov	dph,r4
+      000334 8D F0            [24]  682 	mov	b,r5
+      000336 12r00r00         [24]  683 	lcall	__gptrget
+      000339 FB               [12]  684 	mov	r3,a
+      00033A A3               [24]  685 	inc	dptr
+      00033B 12r00r00         [24]  686 	lcall	__gptrget
+      00033E FC               [12]  687 	mov	r4,a
+      00033F A3               [24]  688 	inc	dptr
+      000340 12r00r00         [24]  689 	lcall	__gptrget
+      000343 FD               [12]  690 	mov	r5,a
+      000344 8B 82            [24]  691 	mov	dpl,r3
+      000346 8C 83            [24]  692 	mov	dph,r4
+      000348 8D F0            [24]  693 	mov	b,r5
+      00034A C0 07            [24]  694 	push	ar7
+      00034C C0 06            [24]  695 	push	ar6
+      00034E 12r00r00         [24]  696 	lcall	_queuebuf_to_packetbuf
+      000351 D0 06            [24]  697 	pop	ar6
+      000353 D0 07            [24]  698 	pop	ar7
+                                    699 ;	/home/user/contiki/core/net/mac/sicslowmac.c:187: send_packet(sent, ptr);
+      000355 E5 81            [12]  700 	mov	a,sp
+      000357 24 FC            [12]  701 	add	a,#0xfc
+      000359 F8               [12]  702 	mov	r0,a
+      00035A E6               [12]  703 	mov	a,@r0
+      00035B C0 E0            [24]  704 	push	acc
+      00035D 08               [12]  705 	inc	r0
+      00035E E6               [12]  706 	mov	a,@r0
+      00035F C0 E0            [24]  707 	push	acc
+      000361 08               [12]  708 	inc	r0
+      000362 E6               [12]  709 	mov	a,@r0
+      000363 C0 E0            [24]  710 	push	acc
+      000365 8E 82            [24]  711 	mov	dpl,r6
+      000367 8F 83            [24]  712 	mov	dph,r7
+      000369 12r00r4D         [24]  713 	lcall	_send_packet
+      00036C 15 81            [12]  714 	dec	sp
+      00036E 15 81            [12]  715 	dec	sp
+      000370 15 81            [12]  716 	dec	sp
+      000372                        717 00103$:
+      000372 22               [24]  718 	ret
+                                    719 ;------------------------------------------------------------
+                                    720 ;Allocation info for local variables in function 'input_packet'
+                                    721 ;------------------------------------------------------------
+                                    722 ;frame                     Allocated to stack - sp -48
+                                    723 ;len                       Allocated to registers r3 r2 
+                                    724 ;sloc0                     Allocated to stack - sp -51
+                                    725 ;------------------------------------------------------------
+                                    726 ;	/home/user/contiki/core/net/mac/sicslowmac.c:192: input_packet(void)
+                                    727 ;	-----------------------------------------
+                                    728 ;	 function input_packet
+                                    729 ;	-----------------------------------------
+      000373                        730 _input_packet:
+      000373 E5 81            [12]  731 	mov	a,sp
+      000375 24 34            [12]  732 	add	a,#0x34
+      000377 F5 81            [12]  733 	mov	sp,a
+                                    734 ;	/home/user/contiki/core/net/mac/sicslowmac.c:197: len = packetbuf_datalen();
+      000379 12r00r00         [24]  735 	lcall	_packetbuf_datalen
+      00037C AE 82            [24]  736 	mov	r6,dpl
+      00037E AF 83            [24]  737 	mov	r7,dph
+      000380 8E 03            [24]  738 	mov	ar3,r6
+      000382 8F 02            [24]  739 	mov	ar2,r7
+                                    740 ;	/home/user/contiki/core/net/mac/sicslowmac.c:199: if(frame802154_parse(packetbuf_dataptr(), len, &frame) &&
+      000384 E5 81            [12]  741 	mov	a,sp
+      000386 24 D0            [12]  742 	add	a,#0xD0
+      000388 FD               [12]  743 	mov	r5,a
+      000389 E5 81            [12]  744 	mov	a,sp
+      00038B 24 CD            [12]  745 	add	a,#0xcd
+      00038D F8               [12]  746 	mov	r0,a
+      00038E A6 05            [24]  747 	mov	@r0,ar5
+      000390 08               [12]  748 	inc	r0
+      000391 76 00            [12]  749 	mov	@r0,#0x00
+      000393 08               [12]  750 	inc	r0
+      000394 76 40            [12]  751 	mov	@r0,#0x40
+      000396 C0 05            [24]  752 	push	ar5
+      000398 C0 03            [24]  753 	push	ar3
+      00039A C0 02            [24]  754 	push	ar2
+      00039C 12r00r00         [24]  755 	lcall	_packetbuf_dataptr
+      00039F AC 82            [24]  756 	mov	r4,dpl
+      0003A1 AE 83            [24]  757 	mov	r6,dph
+      0003A3 AF F0            [24]  758 	mov	r7,b
+      0003A5 D0 02            [24]  759 	pop	ar2
+      0003A7 D0 03            [24]  760 	pop	ar3
+      0003A9 C0 03            [24]  761 	push	ar3
+      0003AB C0 02            [24]  762 	push	ar2
+      0003AD E5 81            [12]  763 	mov	a,sp
+      0003AF 24 CA            [12]  764 	add	a,#0xca
+      0003B1 F8               [12]  765 	mov	r0,a
+      0003B2 E6               [12]  766 	mov	a,@r0
+      0003B3 C0 E0            [24]  767 	push	acc
+      0003B5 08               [12]  768 	inc	r0
+      0003B6 E6               [12]  769 	mov	a,@r0
+      0003B7 C0 E0            [24]  770 	push	acc
+      0003B9 08               [12]  771 	inc	r0
+      0003BA E6               [12]  772 	mov	a,@r0
+      0003BB C0 E0            [24]  773 	push	acc
+      0003BD C0 03            [24]  774 	push	ar3
+      0003BF C0 02            [24]  775 	push	ar2
+      0003C1 8C 82            [24]  776 	mov	dpl,r4
+      0003C3 8E 83            [24]  777 	mov	dph,r6
+      0003C5 8F F0            [24]  778 	mov	b,r7
+      0003C7 12r00r00         [24]  779 	lcall	_frame802154_parse
+      0003CA AE 82            [24]  780 	mov	r6,dpl
+      0003CC AF 83            [24]  781 	mov	r7,dph
+      0003CE E5 81            [12]  782 	mov	a,sp
+      0003D0 24 FB            [12]  783 	add	a,#0xfb
+      0003D2 F5 81            [12]  784 	mov	sp,a
+      0003D4 D0 02            [24]  785 	pop	ar2
+      0003D6 D0 03            [24]  786 	pop	ar3
+      0003D8 D0 05            [24]  787 	pop	ar5
+      0003DA EE               [12]  788 	mov	a,r6
+      0003DB 4F               [12]  789 	orl	a,r7
+      0003DC 70 03            [24]  790 	jnz	00136$
+      0003DE 02r04rDC         [24]  791 	ljmp	00113$
+      0003E1                        792 00136$:
+                                    793 ;	/home/user/contiki/core/net/mac/sicslowmac.c:200: packetbuf_hdrreduce(len - frame.payload_len)) {
+      0003E1 74 30            [12]  794 	mov	a,#0x30
+      0003E3 2D               [12]  795 	add	a,r5
+      0003E4 F9               [12]  796 	mov	r1,a
+      0003E5 87 07            [24]  797 	mov	ar7,@r1
+      0003E7 7E 00            [12]  798 	mov	r6,#0x00
+      0003E9 EB               [12]  799 	mov	a,r3
+      0003EA C3               [12]  800 	clr	c
+      0003EB 9F               [12]  801 	subb	a,r7
+      0003EC FF               [12]  802 	mov	r7,a
+      0003ED EA               [12]  803 	mov	a,r2
+      0003EE 9E               [12]  804 	subb	a,r6
+      0003EF FE               [12]  805 	mov	r6,a
+      0003F0 8F 82            [24]  806 	mov	dpl,r7
+      0003F2 8E 83            [24]  807 	mov	dph,r6
+      0003F4 C0 05            [24]  808 	push	ar5
+      0003F6 12r00r00         [24]  809 	lcall	_packetbuf_hdrreduce
+      0003F9 E5 82            [12]  810 	mov	a,dpl
+      0003FB 85 83 F0         [24]  811 	mov	b,dph
+      0003FE D0 05            [24]  812 	pop	ar5
+      000400 45 F0            [12]  813 	orl	a,b
+      000402 70 03            [24]  814 	jnz	00137$
+      000404 02r04rDC         [24]  815 	ljmp	00113$
+      000407                        816 00137$:
+                                    817 ;	/home/user/contiki/core/net/mac/sicslowmac.c:201: if(frame.fcf.dest_addr_mode) {
+      000407 74 05            [12]  818 	mov	a,#0x05
+      000409 2D               [12]  819 	add	a,r5
+      00040A F9               [12]  820 	mov	r1,a
+      00040B E7               [12]  821 	mov	a,@r1
+      00040C FF               [12]  822 	mov	r7,a
+      00040D 70 03            [24]  823 	jnz	00138$
+      00040F 02r04rA9         [24]  824 	ljmp	00109$
+      000412                        825 00138$:
+                                    826 ;	/home/user/contiki/core/net/mac/sicslowmac.c:202: if(frame.dest_pid != mac_src_pan_id &&
+      000412 74 09            [12]  827 	mov	a,#0x09
+      000414 2D               [12]  828 	add	a,r5
+      000415 F9               [12]  829 	mov	r1,a
+      000416 87 04            [24]  830 	mov	ar4,@r1
+      000418 09               [12]  831 	inc	r1
+      000419 87 06            [24]  832 	mov	ar6,@r1
+      00041B 90r00r02         [24]  833 	mov	dptr,#_mac_src_pan_id
+      00041E E0               [24]  834 	movx	a,@dptr
+      00041F FA               [12]  835 	mov	r2,a
+      000420 A3               [24]  836 	inc	dptr
+      000421 E0               [24]  837 	movx	a,@dptr
+      000422 FB               [12]  838 	mov	r3,a
+      000423 EC               [12]  839 	mov	a,r4
+      000424 B5 02 06         [24]  840 	cjne	a,ar2,00139$
+      000427 EE               [12]  841 	mov	a,r6
+      000428 B5 03 02         [24]  842 	cjne	a,ar3,00139$
+      00042B 80 0B            [24]  843 	sjmp	00102$
+      00042D                        844 00139$:
+                                    845 ;	/home/user/contiki/core/net/mac/sicslowmac.c:203: frame.dest_pid != FRAME802154_BROADCASTPANDID) {
+      00042D BC FF 05         [24]  846 	cjne	r4,#0xFF,00140$
+      000430 BE FF 02         [24]  847 	cjne	r6,#0xFF,00140$
+      000433 80 03            [24]  848 	sjmp	00102$
+      000435                        849 00140$:
+                                    850 ;	/home/user/contiki/core/net/mac/sicslowmac.c:206: return;
+      000435 02r04rDC         [24]  851 	ljmp	00113$
+      000438                        852 00102$:
+                                    853 ;	/home/user/contiki/core/net/mac/sicslowmac.c:208: if(!is_broadcast_addr(frame.fcf.dest_addr_mode, frame.dest_addr)) {
+      000438 74 0B            [12]  854 	mov	a,#0x0B
+      00043A 2D               [12]  855 	add	a,r5
+      00043B FE               [12]  856 	mov	r6,a
+      00043C 7C 00            [12]  857 	mov	r4,#0x00
+      00043E 7B 40            [12]  858 	mov	r3,#0x40
+      000440 C0 05            [24]  859 	push	ar5
+      000442 C0 06            [24]  860 	push	ar6
+      000444 C0 04            [24]  861 	push	ar4
+      000446 C0 03            [24]  862 	push	ar3
+      000448 8F 82            [24]  863 	mov	dpl,r7
+      00044A 12r00r00         [24]  864 	lcall	_is_broadcast_addr
+      00044D AE 82            [24]  865 	mov	r6,dpl
+      00044F AF 83            [24]  866 	mov	r7,dph
+      000451 15 81            [12]  867 	dec	sp
+      000453 15 81            [12]  868 	dec	sp
+      000455 15 81            [12]  869 	dec	sp
+      000457 D0 05            [24]  870 	pop	ar5
+      000459 EE               [12]  871 	mov	a,r6
+      00045A 4F               [12]  872 	orl	a,r7
+      00045B 70 4C            [24]  873 	jnz	00109$
+                                    874 ;	/home/user/contiki/core/net/mac/sicslowmac.c:209: packetbuf_set_addr(PACKETBUF_ADDR_RECEIVER, (rimeaddr_t *)&frame.dest_addr);
+      00045D 74 0B            [12]  875 	mov	a,#0x0B
+      00045F 2D               [12]  876 	add	a,r5
+      000460 FF               [12]  877 	mov	r7,a
+      000461 7E 00            [12]  878 	mov	r6,#0x00
+      000463 7C 40            [12]  879 	mov	r4,#0x40
+      000465 C0 05            [24]  880 	push	ar5
+      000467 C0 07            [24]  881 	push	ar7
+      000469 C0 06            [24]  882 	push	ar6
+      00046B C0 04            [24]  883 	push	ar4
+      00046D 75 82 19         [24]  884 	mov	dpl,#0x19
+      000470 12r00r00         [24]  885 	lcall	_packetbuf_set_addr
+      000473 15 81            [12]  886 	dec	sp
+      000475 15 81            [12]  887 	dec	sp
+      000477 15 81            [12]  888 	dec	sp
+                                    889 ;	/home/user/contiki/core/net/mac/sicslowmac.c:212: &rimeaddr_node_addr)) {
+                                    890 ;	/home/user/contiki/core/net/mac/sicslowmac.c:211: if(!rimeaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER),
+      000479 75 82 19         [24]  891 	mov	dpl,#0x19
+      00047C 12r00r00         [24]  892 	lcall	_packetbuf_addr
+      00047F AC 82            [24]  893 	mov	r4,dpl
+      000481 AE 83            [24]  894 	mov	r6,dph
+      000483 AF F0            [24]  895 	mov	r7,b
+      000485 74r00            [12]  896 	mov	a,#_rimeaddr_node_addr
+      000487 C0 E0            [24]  897 	push	acc
+      000489 74s00            [12]  898 	mov	a,#(_rimeaddr_node_addr >> 8)
+      00048B C0 E0            [24]  899 	push	acc
+      00048D E4               [12]  900 	clr	a
+      00048E C0 E0            [24]  901 	push	acc
+      000490 8C 82            [24]  902 	mov	dpl,r4
+      000492 8E 83            [24]  903 	mov	dph,r6
+      000494 8F F0            [24]  904 	mov	b,r7
+      000496 12r00r00         [24]  905 	lcall	_rimeaddr_cmp
+      000499 AE 82            [24]  906 	mov	r6,dpl
+      00049B AF 83            [24]  907 	mov	r7,dph
+      00049D 15 81            [12]  908 	dec	sp
+      00049F 15 81            [12]  909 	dec	sp
+      0004A1 15 81            [12]  910 	dec	sp
+      0004A3 D0 05            [24]  911 	pop	ar5
+      0004A5 EE               [12]  912 	mov	a,r6
+      0004A6 4F               [12]  913 	orl	a,r7
+                                    914 ;	/home/user/contiki/core/net/mac/sicslowmac.c:215: return;
+      0004A7 60 33            [24]  915 	jz	00113$
+      0004A9                        916 00109$:
+                                    917 ;	/home/user/contiki/core/net/mac/sicslowmac.c:220: packetbuf_set_addr(PACKETBUF_ADDR_SENDER, (rimeaddr_t *)&frame.src_addr);
+      0004A9 74 15            [12]  918 	mov	a,#0x15
+      0004AB 2D               [12]  919 	add	a,r5
+      0004AC FD               [12]  920 	mov	r5,a
+      0004AD 7F 00            [12]  921 	mov	r7,#0x00
+      0004AF 7E 40            [12]  922 	mov	r6,#0x40
+      0004B1 C0 05            [24]  923 	push	ar5
+      0004B3 C0 07            [24]  924 	push	ar7
+      0004B5 C0 06            [24]  925 	push	ar6
+      0004B7 75 82 18         [24]  926 	mov	dpl,#0x18
+      0004BA 12r00r00         [24]  927 	lcall	_packetbuf_set_addr
+      0004BD 15 81            [12]  928 	dec	sp
+      0004BF 15 81            [12]  929 	dec	sp
+      0004C1 15 81            [12]  930 	dec	sp
+                                    931 ;	/home/user/contiki/core/net/mac/sicslowmac.c:226: NETSTACK_MAC.input();
+      0004C3 90r00r07         [24]  932 	mov	dptr,#(_csma_driver + 0x0007)
+      0004C6 E4               [12]  933 	clr	a
+      0004C7 93               [24]  934 	movc	a,@a+dptr
+      0004C8 FE               [12]  935 	mov	r6,a
+      0004C9 A3               [24]  936 	inc	dptr
+      0004CA E4               [12]  937 	clr	a
+      0004CB 93               [24]  938 	movc	a,@a+dptr
+      0004CC FF               [12]  939 	mov	r7,a
+      0004CD C0 07            [24]  940 	push	ar7
+      0004CF C0 06            [24]  941 	push	ar6
+      0004D1 8E 82            [24]  942 	mov	dpl,r6
+      0004D3 8F 83            [24]  943 	mov	dph,r7
+      0004D5 12r00r00         [24]  944 	lcall	__sdcc_call_dptr
+      0004D8 D0 06            [24]  945 	pop	ar6
+      0004DA D0 07            [24]  946 	pop	ar7
+      0004DC                        947 00113$:
+      0004DC E5 81            [12]  948 	mov	a,sp
+      0004DE 24 CC            [12]  949 	add	a,#0xCC
+      0004E0 F5 81            [12]  950 	mov	sp,a
+      0004E2 22               [24]  951 	ret
+                                    952 ;------------------------------------------------------------
+                                    953 ;Allocation info for local variables in function 'on'
+                                    954 ;------------------------------------------------------------
+                                    955 ;	/home/user/contiki/core/net/mac/sicslowmac.c:233: on(void)
+                                    956 ;	-----------------------------------------
+                                    957 ;	 function on
+                                    958 ;	-----------------------------------------
+      0004E3                        959 _on:
+                                    960 ;	/home/user/contiki/core/net/mac/sicslowmac.c:235: return NETSTACK_RADIO.on();
+      0004E3 90r00r10         [24]  961 	mov	dptr,#(_cc2530_rf_driver + 0x0010)
+      0004E6 E4               [12]  962 	clr	a
+      0004E7 93               [24]  963 	movc	a,@a+dptr
+      0004E8 FE               [12]  964 	mov	r6,a
+      0004E9 A3               [24]  965 	inc	dptr
+      0004EA E4               [12]  966 	clr	a
+      0004EB 93               [24]  967 	movc	a,@a+dptr
+      0004EC FF               [12]  968 	mov	r7,a
+      0004ED 8E 82            [24]  969 	mov	dpl,r6
+      0004EF 8F 83            [24]  970 	mov	dph,r7
+      0004F1 02r00r00         [24]  971 	ljmp	__sdcc_call_dptr
+                                    972 ;------------------------------------------------------------
+                                    973 ;Allocation info for local variables in function 'off'
+                                    974 ;------------------------------------------------------------
+                                    975 ;keep_radio_on             Allocated to registers r6 r7 
+                                    976 ;------------------------------------------------------------
+                                    977 ;	/home/user/contiki/core/net/mac/sicslowmac.c:239: off(int keep_radio_on)
+                                    978 ;	-----------------------------------------
+                                    979 ;	 function off
+                                    980 ;	-----------------------------------------
+      0004F4                        981 _off:
+      0004F4 AE 82            [24]  982 	mov	r6,dpl
+      0004F6 AF 83            [24]  983 	mov	r7,dph
+                                    984 ;	/home/user/contiki/core/net/mac/sicslowmac.c:241: if(keep_radio_on) {
+      0004F8 EE               [12]  985 	mov	a,r6
+      0004F9 4F               [12]  986 	orl	a,r7
+      0004FA 60 11            [24]  987 	jz	00102$
+                                    988 ;	/home/user/contiki/core/net/mac/sicslowmac.c:242: return NETSTACK_RADIO.on();
+      0004FC 90r00r10         [24]  989 	mov	dptr,#(_cc2530_rf_driver + 0x0010)
+      0004FF E4               [12]  990 	clr	a
+      000500 93               [24]  991 	movc	a,@a+dptr
+      000501 FE               [12]  992 	mov	r6,a
+      000502 A3               [24]  993 	inc	dptr
+      000503 E4               [12]  994 	clr	a
+      000504 93               [24]  995 	movc	a,@a+dptr
+      000505 FF               [12]  996 	mov	r7,a
+      000506 8E 82            [24]  997 	mov	dpl,r6
+      000508 8F 83            [24]  998 	mov	dph,r7
+      00050A 02r00r00         [24]  999 	ljmp	__sdcc_call_dptr
+      00050D                       1000 00102$:
+                                   1001 ;	/home/user/contiki/core/net/mac/sicslowmac.c:244: return NETSTACK_RADIO.off();
+      00050D 90r00r12         [24] 1002 	mov	dptr,#(_cc2530_rf_driver + 0x0012)
+      000510 E4               [12] 1003 	clr	a
+      000511 93               [24] 1004 	movc	a,@a+dptr
+      000512 FE               [12] 1005 	mov	r6,a
+      000513 A3               [24] 1006 	inc	dptr
+      000514 E4               [12] 1007 	clr	a
+      000515 93               [24] 1008 	movc	a,@a+dptr
+      000516 FF               [12] 1009 	mov	r7,a
+      000517 8E 82            [24] 1010 	mov	dpl,r6
+      000519 8F 83            [24] 1011 	mov	dph,r7
+      00051B 02r00r00         [24] 1012 	ljmp	__sdcc_call_dptr
+                                   1013 ;------------------------------------------------------------
+                                   1014 ;Allocation info for local variables in function 'init'
+                                   1015 ;------------------------------------------------------------
+                                   1016 ;	/home/user/contiki/core/net/mac/sicslowmac.c:249: init(void)
+                                   1017 ;	-----------------------------------------
+                                   1018 ;	 function init
+                                   1019 ;	-----------------------------------------
+      00051E                       1020 _init:
+                                   1021 ;	/home/user/contiki/core/net/mac/sicslowmac.c:251: mac_dsn = random_rand() % 256;
+      00051E 12r00r00         [24] 1022 	lcall	_random_rand
+      000521 E5 82            [12] 1023 	mov	a,dpl
+      000523 85 83 F0         [24] 1024 	mov	b,dph
+      000526 FE               [12] 1025 	mov	r6,a
+      000527 90r00r00         [24] 1026 	mov	dptr,#_mac_dsn
+      00052A EE               [12] 1027 	mov	a,r6
+      00052B F0               [24] 1028 	movx	@dptr,a
+                                   1029 ;	/home/user/contiki/core/net/mac/sicslowmac.c:253: NETSTACK_RADIO.on();
+      00052C 90r00r10         [24] 1030 	mov	dptr,#(_cc2530_rf_driver + 0x0010)
+      00052F E4               [12] 1031 	clr	a
+      000530 93               [24] 1032 	movc	a,@a+dptr
+      000531 FE               [12] 1033 	mov	r6,a
+      000532 A3               [24] 1034 	inc	dptr
+      000533 E4               [12] 1035 	clr	a
+      000534 93               [24] 1036 	movc	a,@a+dptr
+      000535 FF               [12] 1037 	mov	r7,a
+      000536 C0 07            [24] 1038 	push	ar7
+      000538 C0 06            [24] 1039 	push	ar6
+      00053A 8E 82            [24] 1040 	mov	dpl,r6
+      00053C 8F 83            [24] 1041 	mov	dph,r7
+      00053E 12r00r00         [24] 1042 	lcall	__sdcc_call_dptr
+      000541 D0 06            [24] 1043 	pop	ar6
+      000543 D0 07            [24] 1044 	pop	ar7
+      000545 22               [24] 1045 	ret
+                                   1046 ;------------------------------------------------------------
+                                   1047 ;Allocation info for local variables in function 'channel_check_interval'
+                                   1048 ;------------------------------------------------------------
+                                   1049 ;	/home/user/contiki/core/net/mac/sicslowmac.c:257: channel_check_interval(void)
+                                   1050 ;	-----------------------------------------
+                                   1051 ;	 function channel_check_interval
+                                   1052 ;	-----------------------------------------
+      000546                       1053 _channel_check_interval:
+                                   1054 ;	/home/user/contiki/core/net/mac/sicslowmac.c:259: return 0;
+      000546 90 00 00         [24] 1055 	mov	dptr,#0x0000
+      000549 22               [24] 1056 	ret
+                                   1057 	.area CSEG    (CODE)
+                                   1058 	.area CONST   (CODE)
+      000000                       1059 _sicslowmac_driver:
+      000000r11s00 80              1060 	.byte _str_0,(_str_0 >> 8),#0x80
+      000003r1Es05                 1061 	.byte _init,(_init >> 8)
+      000005r4Ds00                 1062 	.byte _send_packet,(_send_packet >> 8)
+      000007r0Es03                 1063 	.byte _send_list,(_send_list >> 8)
+      000009r73s03                 1064 	.byte _input_packet,(_input_packet >> 8)
+      00000BrE3s04                 1065 	.byte _on,(_on >> 8)
+      00000DrF4s04                 1066 	.byte _off,(_off >> 8)
+      00000Fr46s05                 1067 	.byte _channel_check_interval,(_channel_check_interval >> 8)
+      000011                       1068 _str_0:
+      000011 73 69 63 73 6C 6F 77  1069 	.ascii "sicslowmac"
+             6D 61 63
+      00001B 00                    1070 	.db 0x00
+                                   1071 	.area XINIT   (CODE)
+      000000                       1072 __xinit__mac_dst_pan_id:
+      000000 49 54                 1073 	.byte #0x49,#0x54	; 21577
+      000002                       1074 __xinit__mac_src_pan_id:
+      000002 49 54                 1075 	.byte #0x49,#0x54	; 21577
+                                   1076 	.area CABS    (ABS,CODE)
